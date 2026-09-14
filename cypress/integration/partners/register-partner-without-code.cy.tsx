@@ -18,9 +18,10 @@ describe('Register without access code', () => {
     cy.get('button[type="submit"]').contains('Create account').click();
     cy.waitForAuthenticatedApp();
     cy.get('h2', { timeout: 8000 }).should('contain', 'Help us understand');
-    cy.get('a').contains('Skip').click();
+    cy.get('a').contains('Go to library').click();
     cy.wait(2000); // Waiting for dom to rerender
-    cy.get('h3').contains('Dating, boundaries, and relationships').click();
+    // Skip lands on the library, where each result is an anchor card.
+    cy.get('a[aria-label="Dating, boundaries, and relationships"]', { timeout: 8000 }).click();
     cy.get('h3').contains('What are boundaries').click();
   });
 
@@ -40,10 +41,10 @@ describe('Register without access code', () => {
     cy.get('button[type="submit"]').contains('Create account').click();
     cy.waitForAuthenticatedApp();
     cy.get('h2', { timeout: 8000 }).should('contain', 'Help us understand');
-    cy.get('a').contains('Skip').click();
+    cy.get('a').contains('Go to library').click();
     cy.wait(2000); // Waiting for dom to rerender
     // Bumble partner content is available, confirming the partner was attached at signup
-    cy.get('h3').contains('Dating, boundaries, and relationships').click();
+    cy.get('a[aria-label="Dating, boundaries, and relationships"]', { timeout: 8000 }).click();
     cy.get('h3').contains('What are boundaries').click();
   });
 

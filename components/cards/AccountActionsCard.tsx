@@ -4,6 +4,12 @@ import ConfirmDialog from '@/components/forms/ConfirmDialog';
 import { useRouter } from '@/i18n/routing';
 import { useDeleteUserMutation } from '@/lib/api';
 import { ErrorDisplay, FEEDBACK_FORM_URL } from '@/lib/constants/common';
+import {
+  DELETE_ACCOUNT_ERROR,
+  DELETE_ACCOUNT_REQUEST,
+  DELETE_ACCOUNT_SUCCESS,
+} from '@/lib/constants/events';
+import logEvent from '@/lib/utils/logEvent';
 import theme from '@/styles/theme';
 import { Box, Button, Card, CardContent, lighten, Link, Typography } from '@mui/material';
 import { getAuth, signOut } from 'firebase/auth';
@@ -36,14 +42,17 @@ const AccountActionsCard = () => {
 
   const deleteAccountConfirmHandler = async (confirmed: boolean) => {
     if (confirmed) {
+      logEvent(DELETE_ACCOUNT_REQUEST);
       const response = await deleteUser({});
 
       if ((response as any)?.data?.id) {
+        logEvent(DELETE_ACCOUNT_SUCCESS);
         setError(undefined);
         router.push('/');
         const auth = getAuth();
         signOut(auth);
       } else {
+        logEvent(DELETE_ACCOUNT_ERROR);
         setError(
           t.rich('updateError', {
             link: (children) => (

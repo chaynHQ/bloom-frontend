@@ -3,6 +3,7 @@ import { act, renderHook } from '@testing-library/react';
 import Cookies from 'js-cookie';
 import { setPwaDismissed } from '../store/userSlice';
 import { useAppDispatch, useTypedSelector } from './store';
+import { notifyCookieConsentDecided } from './useCookieConsentDecided';
 import usePWA from './usePwa';
 
 // Mocking track functions for vercel and GA4
@@ -27,6 +28,15 @@ describe('usePWA hook', () => {
   const originalUserAgent = navigator.userAgent;
   const originalMatchMedia = window.matchMedia;
 
+  // The PWA banner only shows once the cookie banner has been answered, so every test needs to
+  // declare the cookies that are set — `analyticsConsent` is written on accept ('true') and on
+  // decline ('false').
+  const mockCookies = (cookies: Record<string, string>) => {
+    Cookies.get = jest.fn((name?: string) =>
+      name ? cookies[name] : cookies,
+    ) as unknown as typeof Cookies.get;
+  };
+
   beforeEach(() => {
     dispatchMock = jest.fn();
     (useAppDispatch as jest.MockedFunction<typeof useAppDispatch>).mockReturnValue(dispatchMock);
@@ -46,7 +56,7 @@ describe('usePWA hook', () => {
       })),
     });
 
-    Cookies.get = jest.fn();
+    mockCookies({ analyticsConsent: 'true' });
     Cookies.set = jest.fn();
 
     // Reset global variable between tests
@@ -67,19 +77,47 @@ describe('usePWA hook', () => {
 
   it('should show Generic banner initially', () => {
     (window as any).beforeinstallpromptEvent = {};
-    Cookies.get = jest.fn().mockReturnValue(undefined);
 
     const { result } = renderHook(() => usePWA());
     expect(result.current.bannerState).toBe('Generic');
   });
 
   it('should hide banner if dismissed in cookies', () => {
-    Cookies.get = jest
-      .fn()
-      .mockImplementation((key) => (key === 'pwaBannerDismissed' ? 'true' : undefined));
+    mockCookies({ analyticsConsent: 'true', pwaBannerDismissed: 'true' });
 
     const { result } = renderHook(() => usePWA());
     expect(result.current.bannerState).toBe('Hidden');
+  });
+
+  it('should hide the banner until the cookie banner has been answered', () => {
+    (window as any).beforeinstallpromptEvent = {};
+    mockCookies({});
+
+    const { result } = renderHook(() => usePWA());
+    expect(result.current.bannerState).toBe('Hidden');
+  });
+
+  it('should show the banner when cookies were declined', () => {
+    (window as any).beforeinstallpromptEvent = {};
+    mockCookies({ analyticsConsent: 'false' });
+
+    const { result } = renderHook(() => usePWA());
+    expect(result.current.bannerState).toBe('Generic');
+  });
+
+  it('should show the banner as soon as the cookie banner is answered', () => {
+    (window as any).beforeinstallpromptEvent = {};
+    mockCookies({});
+
+    const { result } = renderHook(() => usePWA());
+    expect(result.current.bannerState).toBe('Hidden');
+
+    act(() => {
+      mockCookies({ analyticsConsent: 'true' });
+      notifyCookieConsentDecided();
+    });
+
+    expect(result.current.bannerState).toBe('Generic');
   });
 
   it('should hide banner if already dismissed', () => {
@@ -122,6 +160,8 @@ describe('usePWA hook', () => {
       cookiesAccepted: false,
       pwaDismissed: false,
     }));
+    // Cookies were declined, so no analytics cookie may be written.
+    mockCookies({ analyticsConsent: 'false' });
 
     const { result } = renderHook(() => usePWA());
 
@@ -190,7 +230,7 @@ describe('usePWA hook', () => {
       cookiesAccepted: true,
       pwaDismissed: false,
     }));
-    Cookies.get = jest.fn().mockReturnValue(undefined);
+    mockCookies({ analyticsConsent: 'true' });
     Object.defineProperty(window, 'matchMedia', {
       writable: true,
       value: jest.fn().mockImplementation(() => ({
@@ -230,7 +270,7 @@ describe('usePWA hook', () => {
       pwaDismissed: false,
     }));
 
-    Cookies.get = jest.fn().mockReturnValue(undefined);
+    mockCookies({ analyticsConsent: 'true' });
 
     const { result } = renderHook(() => usePWA());
 

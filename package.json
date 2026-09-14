@@ -20,7 +20,6 @@
     "lint:fix": "eslint . --fix",
     "type-check": "tsc -p tsconfig.json",
     "format": "prettier . --write",
-    "format:precommit": "prettier --write .",
     "test": "jest",
     "test:watch": "jest --watch",
     "cypress": "cypress open",
@@ -42,6 +41,15 @@
     "postinstall": "husky",
     "prepare": "husky",
     "knip": "knip"
+  },
+  "lint-staged": {
+    "*.{js,jsx,mjs,ts,tsx}": [
+      "eslint --fix --no-warn-ignored",
+      "prettier --write"
+    ],
+    "*.{json,md,css,yml,yaml}": [
+      "prettier --write"
+    ]
   },
   "dependencies": {
     "@emotion/cache": "^11.14.0",
@@ -71,7 +79,6 @@
     "next-intl": "^4.13.1",
     "next-pwa": "^5.6.0",
     "nextjs-hotjar": "^1.2.0",
-    "nuka-carousel": "^8.2.0",
     "phone": "^3.1.71",
     "react": "19.2.7",
     "react-cookie-consent": "^10.0.1",
@@ -85,10 +92,10 @@
   },
   "devDependencies": {
     "@cypress/code-coverage": "^4.0.3",
-    "@eslint/eslintrc": "^3.3.6",
-    "@next/bundle-analyzer": "16.2.12",
+    "@eslint/eslintrc": "^3.3.7",
+    "@next/bundle-analyzer": "16.3.4",
     "@testing-library/dom": "^10.4.0",
-    "@testing-library/react": "^16.3.2",
+    "@testing-library/react": "^16.3.3",
     "@types/jest": "^30.0.0",
     "@types/js-cookie": "^3.0.2",
     "@types/newrelic": "^9.14.8",
@@ -98,16 +105,16 @@
     "cypress": "^15.19.0",
     "dotenv": "^17.4.2",
     "eslint": "9.39.2",
-    "eslint-config-next": "16.2.12",
+    "eslint-config-next": "16.3.4",
     "eslint-config-prettier": "^10.1.5",
     "husky": "^9.0.11",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^30.4.2",
-    "jest-environment-jsdom": "^30.4.1",
-    "knip": "^6.30.0",
+    "jest": "^30.5.1",
+    "jest-environment-jsdom": "^30.5.1",
+    "knip": "^6.35.1",
+    "lint-staged": "^17.5.1",
     "mailslurp-client": "^17.4.0",
     "nyc": "^18.0.0",
-    "pre-commit": "^2.0.0",
     "prettier": "^3.9.6",
     "typescript": "^6.0.3"
   }

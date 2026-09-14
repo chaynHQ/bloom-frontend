@@ -115,18 +115,17 @@ export default function useLoadUser() {
 
   // 3b. Handle get user error
   useEffect(() => {
-    const handleLogout = async () => {
-      await logout();
-    };
-
     if (userResourceError || isInvalidUserResourceResponse) {
       const errorMessage = userResourceError
         ? getErrorMessage(userResourceError) || 'error'
         : invalidUserResourceError;
 
-      handleLogout();
-      dispatch(setLoadError(errorMessage));
-      dispatch(setUserLoading(false));
+      // Sign out first: this clears redux state (clearUserSlice preserves loadError), so setting
+      // the error afterwards guarantees it survives for the login form to display.
+      logout().finally(() => {
+        dispatch(setLoadError(errorMessage));
+        dispatch(setUserLoading(false));
+      });
 
       if (userResourceError) {
         rollbar.error(

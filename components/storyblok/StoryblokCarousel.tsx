@@ -1,6 +1,7 @@
 'use client';
 
-import Carousel, { CarouselItemContainer } from '@/components/common/Carousel';
+import { CardCarousel } from '@/components/common/CardCarousel';
+import { STORYBLOK_CAROUSEL_PAGED } from '@/lib/constants/events';
 import { Box } from '@mui/material';
 import { SbBlokData, storyblokEditable } from '@storyblok/react/rsc';
 import { Component as DynamicComponent } from './DynamicComponent';
@@ -18,45 +19,30 @@ interface StoryblokCarouselProps {
   _uid: string;
   _editable: string;
   items: Array<SbBlokData>;
-  theme: 'primary' | 'secondary';
   number_desktop_slides?: number;
   number_mobile_slides?: number;
 }
 
 const StoryblokCarousel = (props: StoryblokCarouselProps) => {
-  const {
-    _uid,
-    _editable,
-    items,
-    theme = 'primary',
-    number_mobile_slides,
-    number_desktop_slides,
-  } = props;
+  const { _uid, _editable, items, number_mobile_slides, number_desktop_slides } = props;
   return (
-    <Box {...storyblokEditable({ _uid, _editable, items, theme })}>
-      <Carousel
-        theme={theme}
-        title={_uid}
-        items={items.map((item, index: number) => {
+    <Box {...storyblokEditable({ _uid, _editable, items })}>
+      <CardCarousel
+        controls
+        eventName={STORYBLOK_CAROUSEL_PAGED}
+        slidesPerView={{
+          xs: number_mobile_slides || 1,
+          sm: number_desktop_slides || 1,
+          md: number_desktop_slides || 1,
+        }}
+      >
+        {items.flatMap((item, index: number) => {
           const component = components.find((c) => c.name === item.component);
-          if (component) {
-            const Component = component.component;
-
-            return (
-              <CarouselItemContainer
-                slidesPerScreen={[
-                  number_mobile_slides || 1,
-                  number_desktop_slides || 1,
-                  number_desktop_slides || 1,
-                ]}
-                key={index}
-              >
-                <Component {...item} key={index} />
-              </CarouselItemContainer>
-            );
-          }
+          if (!component) return [];
+          const Component = component.component;
+          return [<Component {...item} key={index} />];
         })}
-      />
+      </CardCarousel>
     </Box>
   );
 };

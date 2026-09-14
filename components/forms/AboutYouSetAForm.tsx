@@ -122,7 +122,7 @@ const AboutYouSetAForm = () => {
           logEvent(ABOUT_YOU_SETA_SUCCESS);
           logEvent(SIGNUP_SURVEY_COMPLETED);
 
-          router.push('/courses');
+          router.push('/library');
           setLoading(false);
         })
         .catch(function (error) {

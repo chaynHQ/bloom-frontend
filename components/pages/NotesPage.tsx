@@ -1,6 +1,6 @@
 'use client';
 
-import DirectionalIcon from '@/components/common/DirectionalIcon';
+import { BackLink } from '@/components/common/BackLink';
 import NoDataAvailable from '@/components/common/NoDataAvailable';
 import NotesSteps from '@/components/common/NotesSteps';
 import RegisterNotesForm from '@/components/forms/RegisterNotesForm';
@@ -9,14 +9,15 @@ import WhatsappUnsubscribeForm from '@/components/forms/WhatsappUnsubscribeForm'
 import StoryblokPageSection from '@/components/storyblok/StoryblokPageSection';
 import { useRouter } from '@/i18n/routing';
 import { useGetSubscriptionsUserQuery } from '@/lib/api';
+import { NOTES_VIEWED } from '@/lib/constants/events';
+import { useLogEventOnce } from '@/lib/hooks/useLogEventOnce';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import { hasWhatsappSubscription } from '@/lib/utils/whatsappUtils';
 import illustrationActivites from '@/public/illustration_activites.svg';
 import notesExample from '@/public/notes_example.png';
-import { rowStyle } from '@/styles/common';
+import { pageHeaderPaddingTop, pageHeaderPaddingTopMobile, rowStyle } from '@/styles/common';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import SmsFailedOutlined from '@mui/icons-material/SmsFailedOutlined';
 import {
   Accordion,
@@ -26,17 +27,16 @@ import {
   Card,
   CardContent,
   Container,
-  IconButton,
   Typography,
 } from '@mui/material';
 import { ISbStoryData } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useMemo } from 'react';
-import { backButtonStyle, backIconStyle } from '../layout/Header';
 
 const headerContainerStyle = {
   minHeight: { xs: 220, lg: 360 },
+  paddingTop: { xs: pageHeaderPaddingTopMobile, md: pageHeaderPaddingTop },
   paddingBottom: { xs: '2.5rem !important', md: '5rem !important' },
   background: {
     xs: 'linear-gradient(180deg, #F3D6D8 53.12%, #FFEAE1 100%)',
@@ -52,7 +52,6 @@ const headerContentStyle = {
   paddingBottom: { xs: 4, md: 6 },
   maxWidth: 1200,
   margin: '0 auto',
-  mt: { md: -2.5 },
 } as const;
 
 const textContentStyle = {
@@ -150,6 +149,7 @@ export default function NotesPage({ story }: Props) {
     [userActiveSubscriptions],
   );
   const userId = useTypedSelector((state) => state.user.id);
+  useLogEventOnce(NOTES_VIEWED, { notes_logged_in: Boolean(userId) });
 
   useGetSubscriptionsUserQuery(undefined, {
     skip: !userId,
@@ -283,15 +283,7 @@ export default function NotesPage({ story }: Props) {
   return (
     <Box>
       <Container sx={headerContainerStyle}>
-        <IconButton
-          sx={backButtonStyle}
-          onClick={() => router.back()}
-          aria-label={tS('navigateBack')}
-        >
-          <DirectionalIcon>
-            <KeyboardArrowLeftIcon sx={backIconStyle} />
-          </DirectionalIcon>
-        </IconButton>
+        <BackLink label={tS('back')} onSelect={() => router.back()} inlineOnDesktop={false} />
         <Box sx={headerContentStyle}>
           <Box sx={textContentStyle}>
             <Typography variant="h1" component="h1">

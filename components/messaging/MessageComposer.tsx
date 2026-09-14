@@ -89,8 +89,8 @@ const textFieldStyle = {
   '& .MuiOutlinedInput-root': {
     backgroundColor: 'common.white',
     '& fieldset': { borderColor: 'secondary.main' },
-    '&:hover fieldset': { borderColor: 'secondary.dark' },
-    '&.Mui-focused fieldset': { borderColor: 'secondary.dark', borderWidth: '1.5px' },
+    '&:hover:not(.Mui-focused) fieldset': { borderColor: 'primary.dark' },
+    '&.Mui-focused fieldset': { borderColor: 'secondary.main', borderWidth: 2 },
     '&.Mui-disabled fieldset': { borderColor: 'divider' },
   },
 } as const;

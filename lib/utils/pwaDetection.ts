@@ -1,3 +1,5 @@
+import { ANALYTICS_CONSENT_COOKIE } from '@/lib/hooks/useCookieConsentDecided';
+import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
 
 export interface PWAStatus {
@@ -126,10 +128,12 @@ export const usePWAStatus = () => {
 };
 
 /**
- * Store PWA status in local storage
+ * Store PWA status in local storage. This is analytics-only (nothing reads it back
+ * to drive the UI), so it is written only once the visitor has accepted cookies.
  */
 export const storePWAStatus = (status: PWAStatus | null): void => {
   if (typeof localStorage === 'undefined' || !status) return;
+  if (Cookies.get(ANALYTICS_CONSENT_COOKIE) !== 'true') return;
 
   localStorage.setItem('pwaInstalled', String(status.isInstalled));
   localStorage.setItem('pwaInstallSource', status.installSource);

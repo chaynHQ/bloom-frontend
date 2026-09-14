@@ -1,0 +1,83 @@
+{
+  "Library": {
+    "metadata": {
+      "title": "Library",
+      "description": "Bloom ke courses aur single sessions ek hi jagah par explore kariye."
+    },
+    "title": "Hamari library explore kariye",
+    "introduction": "Bloom ke sessions aur courses, jo aapko seekhne, chintan karne aur apne anubhavon ko samajhne mein madad karte hain — ek surakshit aur sashakt banane wali jagah mein.",
+    "exploreByTheme": "Theme se explore kariye",
+    "filterHeading": "Library filter kariye",
+    "filterButtonLabel": "Filter",
+    "searchPlaceholder": "Keywords se search kariye…",
+    "searchLabel": "Library mein search kariye",
+    "reset": "Reset",
+    "resultsHeading": "Library",
+    "resultsCount": "{count, plural, one {# result} other {# results}}",
+    "kindLabel": "Content ke prakaar se filter kariye",
+    "kind": {
+      "all": "Sabhi",
+      "course": "Courses",
+      "session": "Single sessions"
+    },
+    "contentTypeHeading": "Content type",
+    "contentTypes": {
+      "course": "Course",
+      "audio": "Audio",
+      "written": "Likhit",
+      "video": "Video",
+      "activity": "Activity",
+      "grounding": "Grounding"
+    },
+    "lengthHeading": "Samay",
+    "lengths": {
+      "under10": "10 min se kam",
+      "10to20": "10–20 min",
+      "over20": "20 min se zyada"
+    },
+    "sessionCount": "{count, plural, one {# session} other {# sessions}}",
+    "duration": "{minutes} min",
+    "courseDuration": "~{hours} ghante {minutes} min",
+    "courseDurationHoursOnly": "~{hours} ghante",
+    "partOfCourse": "Course ka hissa: {course}",
+    "accountNeeded": "Account chahiye",
+    "loadMore": "Aur dikhaiye",
+    "noResults": {
+      "title": "In filters ke liye koi result nahi mila",
+      "body": "Ek-do filter hataakar dekhiye, ya koi doosri theme explore kariye — library mein aapke liye aur bhi bahut kuch hai.",
+      "action": "Filters hataiye"
+    },
+    "themes": {
+      "recognising-abuse": {
+        "label": "Abuse ko pehchanna",
+        "blurb": "Rishton mein aur rozmarra zindagi mein abuse ko naam dena",
+        "description": "Abuse hamesha saaf dikhai nahi deta. Jaaniye ki yeh rishton mein aur rozmarra zindagi mein kaise dikh sakta hai, aur un anubhavon ke liye shabd dhoondhiye jinhe naam dena mushkil raha hai."
+      },
+      "why-abuse-happens": {
+        "label": "Abuse kyun hota hai",
+        "blurb": "Abuse ke peeche ki samajik aur vyavasthagat vajahon ke bare mein jaaniye",
+        "description": "Abuse sirf ek vyakti ke faislon se nahi banta. Un samajik, sanskritik aur vyavasthagat shaktiyon ko samjhiye jo abuse ko hone deti hain — aur yeh ki isme se kuch bhi aapki galti nahi hai."
+      },
+      "body-after-trauma": {
+        "label": "Trauma ke baad aapka sharir",
+        "blurb": "Trauma sharir mein kaise basta hai",
+        "description": "Trauma jitna mann mein hota hai, utna hi sharir mein bhi. Jaaniye ki aapka nervous system aapke anubhavon par kaise pratikriya karta hai, aur suraksha mehsoos karne ke komal, sharir-aadhaarit tareeke."
+      },
+      "setting-boundaries": {
+        "label": "Boundaries banana",
+        "blurb": "Bhavnatmak, sharirik, yaun aur digital boundaries",
+        "description": "Boundaries zindagi ke har hisse mein aapki bhalai ki raksha karti hain. Jaaniye ki bhavnatmak, sharirik, yaun aur digital boundaries ko kaise pehchanein, banayein aur banaye rakhein."
+      },
+      "healing-journey": {
+        "label": "Aapki healing journey",
+        "blurb": "Shok, vikaas aur recovery ke beech apna raasta dhoondhna",
+        "description": "Healing seedhi rekha mein nahi chalti. Shok, vikaas aur recovery se guzarne ke liye saath aur tools paiye — us raftaar se jo aapko sahi lage."
+      },
+      "staying-safe": {
+        "label": "Abhi surakshit rehna",
+        "blurb": "Safety planning aur chalti hui hinsa se nipatna",
+        "description": "Agar aap abhi bhi hinsa mein hain ya uske kareeb hain, toh suraksha sabse pehle aati hai. Safety planning ke liye aur un palon se nipatne ke liye vyavaharik sahayata paiye jab cheezein surakshit na lagein."
+      }
+    }
+  }
+}

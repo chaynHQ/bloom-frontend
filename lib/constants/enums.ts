@@ -21,14 +21,14 @@ export enum COURSE_CATEGORIES {
 }
 
 export enum RESOURCE_CATEGORIES {
-  SHORT_VIDEO = 'short_video',
-  SINGLE_VIDEO = 'single_video',
-  CONVERSATION = 'resource_conversation',
+  VIDEO = 'video',
+  AUDIO = 'audio',
+  WRITTEN = 'written',
+  ACTIVITY = 'activity',
 }
 
 export enum EXERCISE_CATEGORIES {
   GROUNDING = 'grounding',
-  ACTIVITIES = 'activities',
 }
 
 export type RELATED_CONTENT_CATEGORIES =
@@ -77,10 +77,6 @@ export enum PROGRESS_STATUS {
   NOT_STARTED = 'Not started',
 }
 
-export enum STORYBLOK_TAGS {
-  SOMATICS = 'somatics',
-}
-
 export enum STORYBLOK_COLORS {
   PRIMARY_LIGHT = 'primary.light',
   PRIMARY_DARK = 'primary.dark',
@@ -90,6 +86,9 @@ export enum STORYBLOK_COLORS {
   COMMON_WHITE = 'common.white',
   BACKGROUND_DEFAULT = 'background.default',
   BLOOM_GRADIENT = 'bloomGradient',
+  BLOOM_GRADIENT_PEACH = 'bloomGradientPeach',
+  PAGE_BACKGROUND = 'pageBackground',
+  PALE_PRIMARY_LIGHT = 'palePrimaryLight',
 }
 
 export enum STORYBLOK_REFERENCE_CATEGORIES {

@@ -54,7 +54,7 @@ export default function AboutYouPage() {
 
   const headerProps = {
     partnerLogoSrc: bloomLogo,
-    partnerLogoAlt: 'alt.welcomeToBloom',
+    partnerLogoAlt: 'alt.bloomLogo',
     imageSrc: illustrationBloomHeadYellow,
     imageAlt: 'alt.bloomHead',
     showWelcomeSubtext: true,
@@ -92,9 +92,9 @@ export default function AboutYouPage() {
             }}
             color="secondary"
             component={i18nLink}
-            href={typeof return_url === 'string' ? return_url : '/courses'}
+            href={typeof return_url === 'string' ? return_url : '/library'}
           >
-            {t('goToCourses')}
+            {t('goToLibrary')}
           </Button>
           <Box sx={formContainerStyle}>
             <Card>

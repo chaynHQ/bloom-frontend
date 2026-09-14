@@ -3,7 +3,8 @@
 import RegisterForm, { PartnerRegisterForm } from '@/components/forms/RegisterForm';
 import PartnerHeader from '@/components/layout/PartnerHeader';
 import { Link as i18nLink, useRouter } from '@/i18n/routing';
-import { generatePartnershipPromoLogoClick } from '@/lib/constants/events';
+import { generatePartnershipPromoLogoClick, REGISTER_VIEWED } from '@/lib/constants/events';
+import { useLogEventOnce } from '@/lib/hooks/useLogEventOnce';
 import { getAllPartnersContent, getPartnerContent } from '@/lib/constants/partners';
 import { useTypedSelector } from '@/lib/hooks/store';
 import useReferralPartner from '@/lib/hooks/useReferralPartner';
@@ -84,6 +85,8 @@ export default function RegisterPage() {
   const code = searchParams.get('code');
   const partner = searchParams.get('partner');
 
+  useLogEventOnce(REGISTER_VIEWED, { register_partner: partner || entryPartnerReferral || null });
+
   // Derive partner content and code param from URL and state.
   // Prefer an explicit ?partner query, else fall back to a referral captured on entry
   // (welcome link or partner UTM link) so the partner is still attached when signing up
@@ -135,12 +138,16 @@ export default function RegisterPage() {
     }
   }, [router, partner, code, partnerContent, entryPartnerReferral, entryPartnerAccessCode]);
 
+  // Without a partnership lockup, PartnerHeader renders the translated "Welcome to" line beside
+  // the plain Bloom logo.
+  const partnershipLogo = partnerContent?.partnershipLogo;
+
   const headerProps = {
-    partnerLogoSrc: partnerContent?.partnershipLogo || bloomLogo,
-    partnerLogoAlt: 'alt.welcomeToBloom',
+    partnerLogoSrc: partnershipLogo || bloomLogo,
+    partnerLogoAlt: partnershipLogo ? 'alt.welcomeToBloom' : 'alt.bloomLogo',
     imageSrc: partnerContent?.bloomGirlIllustration || illustrationBloomHeadYellow,
     imageAlt: 'alt.bloomHead',
-    showWelcomeSubtext: partnerContent === null,
+    showWelcomeSubtext: !partnershipLogo,
   };
   const ExtraContent = (
     <>

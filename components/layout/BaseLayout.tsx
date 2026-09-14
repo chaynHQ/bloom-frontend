@@ -1,16 +1,18 @@
 import { AuthGuard } from '@/components/guards/AuthGuard';
+import ConsentedAnalytics from '@/components/layout/ConsentedAnalytics';
 import CookieBanner from '@/components/layout/CookieBanner';
 import Footer from '@/components/layout/Footer';
 import LeaveSiteButton from '@/components/layout/LeaveSiteButton';
-import MobileBottomNav, { mobileBottomNavHeight } from '@/components/layout/MobileBottomNav';
+import MobileBottomNav from '@/components/layout/MobileBottomNav';
 import ReferralPartnerTracker from '@/components/layout/ReferralPartnerTracker';
 import TopBar from '@/components/layout/TopBar';
+import AppThemeProvider from '@/components/providers/AppThemeProvider';
 import { ReduxProvider } from '@/components/providers/ReduxProvider';
 import StoryblokProvider from '@/components/providers/StoryblokProvider';
+import { mobileBottomNavHeight } from '@/lib/constants/banners';
 import { ENVIRONMENT } from '@/lib/constants/common';
 import { ENVIRONMENTS } from '@/lib/constants/enums';
 import firebase from '@/lib/firebase';
-import AppThemeProvider from '@/components/providers/AppThemeProvider';
 import { clientConfig } from '@/lib/rollbar';
 import { getLocaleDirection } from '@/lib/utils/getLocaleDirection';
 import '@/styles/globals.css';
@@ -25,22 +27,22 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { Montserrat, Noto_Sans_Arabic, Open_Sans } from 'next/font/google';
 import Script from 'next/script';
-import { Hotjar } from 'nextjs-hotjar';
 import { ReactNode, Suspense } from 'react';
 import { DesktopPwaBanner } from '../banner/DesktopPwaBanner';
 import { FruitzRetirementBanner } from '../banner/FruitzRetirementBanner';
+import RedesignNewsBanner from '../banner/RedesignNewsBanner';
 
 // 'latin-ext' adds the glyphs Turkish needs (ç, ğ, ı, ş, ö, ü).
 const openSans = Open_Sans({
   subsets: ['latin', 'latin-ext'],
-  weight: ['300', '400', '500'],
+  weight: ['300', '400', '500', '600'],
   variable: '--font-open-sans',
   display: 'swap',
 });
 
 const montserrat = Montserrat({
   subsets: ['latin', 'latin-ext'],
-  weight: ['300', '400', '500'],
+  weight: ['300', '400', '500', '600'],
   variable: '--font-montserrat',
   display: 'swap',
 });
@@ -102,7 +104,20 @@ export default async function BaseLayout({ children, locale }: BaseLayoutProps) 
                 <StoryblokProvider>
                   <body>
                     {/*
-                      PWA installation events (like `beforeinstallprompt`) must be captured 
+                      Google Consent Mode default. Runs during HTML parse — before the GA tag,
+                      which <GoogleAnalytics/> loads after `</body>` — so GA sets no cookies until
+                      the visitor accepts. CookieBanner sends the `consent` `update` on accept/decline.
+                    */}
+                    <script
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          'window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}' +
+                          "gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});" +
+                          "gtag('set','ads_data_redaction',true);",
+                      }}
+                    />
+                    {/*
+                      PWA installation events (like `beforeinstallprompt`) must be captured
                       before React hydration. These events fire only once and are lost if not 
                       handled early. That's why we include this script before hydration — 
                       to bind the event listener in time.
@@ -112,8 +127,13 @@ export default async function BaseLayout({ children, locale }: BaseLayoutProps) 
                       <ReferralPartnerTracker />
                     </Suspense>
                     <TopBar />
+                    {/* Sits at the top of the page flow, directly beneath the fixed TopBar. */}
+                    <RedesignNewsBanner />
                     <LeaveSiteButton />
                     <DesktopPwaBanner />
+
+                    {/* Before <main> so keyboard focus runs TopBar → bottom nav → page content. */}
+                    <MobileBottomNav />
 
                     <main>
                       <FruitzRetirementBanner />
@@ -122,15 +142,14 @@ export default async function BaseLayout({ children, locale }: BaseLayoutProps) 
                     </main>
                     <Footer />
                     <Box sx={{ height: { xs: mobileBottomNavHeight, md: 0 } }} />
-                    <MobileBottomNav />
                     <CookieBanner />
-                    {!!process.env.NEXT_PUBLIC_HOTJAR_ID && ENVIRONMENT !== ENVIRONMENTS.LOCAL && (
-                      <Hotjar id={process.env.NEXT_PUBLIC_HOTJAR_ID} sv={6} strategy="lazyOnload" />
+                    {ENVIRONMENT !== ENVIRONMENTS.LOCAL && (
+                      <ConsentedAnalytics hotjarId={process.env.NEXT_PUBLIC_HOTJAR_ID} />
                     )}
                     <Analytics />
                   </body>
                   <GoogleAnalytics
-                    debugMode={true}
+                    debugMode={ENVIRONMENT !== ENVIRONMENTS.PRODUCTION}
                     gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID || ''}
                   />
                 </StoryblokProvider>

@@ -21,7 +21,6 @@ jest.mock('@/components/storyblok/StoryblokStatement', () => () => null);
 jest.mock('@/components/storyblok/StoryblokTeamMemberCard', () => () => null);
 jest.mock('@/components/storyblok/StoryblokTeamMembersCards', () => () => null);
 jest.mock('@/components/storyblok/StoryblokVideo', () => () => null);
-jest.mock('@/components/storyblok/StoryblokWelcomePage', () => () => null);
 
 const mockGet = jest.fn();
 

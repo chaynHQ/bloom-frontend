@@ -53,6 +53,8 @@ cypress.env.json
 newrelic_agent.log
 
 # Typescript
-tsconfig.tsbuildinfo
+*.tsbuildinfo
 # Storyblok translation working files (snapshots, proposals, todo/done arrays)
 .storyblok-translation/
+# Storyblok provisioning snapshots (component schemas and stories, taken before any write)
+.storyblok-provision/

@@ -3,8 +3,8 @@
     "bloom": "Bloom",
     "references": "Ressources",
     "metadata": {
-      "title": "Rejoins-nous sur ton chemin de guérison",
-      "description": "Bloom est là pour te permettre d’apprendre, de guérir et d’évoluer vers un avenir confiant. Il vous est proposé par Chayn, une organisation mondiale à but non lucratif, dirigée par des survivants et des alliés du monde entier.",
+      "title": "Rejoignez-nous sur votre chemin de guérison",
+      "description": "Bloom est là pour vous permettre d’apprendre, de guérir et d’évoluer vers un avenir confiant. Bloom vous est proposé par Chayn, une organisation mondiale à but non lucratif, dirigée par des survivants et des alliés du monde entier.",
       "imageAlt": "Illustration d'un visage et d'épaules d'une personne, avec de grandes feuilles et des fleurs épanouies au-dessus d'eux. Le logo typographique Bloom est inclus."
     },
     "leaveSite": {
@@ -12,8 +12,14 @@
       "wikiLink": "https://fr.wikipedia.org/wiki/Main_Page",
       "googleLink": "https://www.google.com/search?sca_esv=c4520c9ea19d39e2&sca_upv=1&sxsrf=ADLYWIJsWd_US7O_7h8nLSz9BCKJPTO1vQ:1715343863085&q=M%C3%A8mes+mignons+de+b%C3%A9b%C3%A9s+animaux&uds=ADvngMjlq4BAf9untq-rYu8LNgazbV0jY4hHywaFk6P89ct0x9nNB0ONSZ3eLkU8zyeC0UwDLFw7lJoQGuJc_e3_7CVrqHu4jRtpEEDMrbPsbDywsdmOy7hSG1VxQFddcqbKSgnQHy7KQoF5HUS6Ko_i5zig7dIomrnoaTWbcF2y3Toq6LicSUJKXY0QKtG8Cf4MYjBnjXyOPWcpGQaRZGvoxf9wlWE21lgDGfgoreurmdqVsHuKTLIiwz18PjZ7Z4RavQeLzrYYsWRmhXLVNc5NObfC9cRRhAh82GWLuL3rbtSVel-fEfPoUmCyPI8aMn0HOlg22JSeIP3g8wxUzLSOYQb1tF7SWw&udm=2&prmd=ivsnbmtz&sa=X&ved=2ahUKEwibyYHtiYOGAxXnZWwGHag9APgQtKgLegQIEBAB&biw=1277&bih=659&dpr=1.5"
     },
-    "navigateBack": "Revenir à la page précédente",
     "navigateTo": "Aller vers",
+    "back": "Back",
+    "carousel": {
+      "regionLabel": "Carrousel de contenus",
+      "previous": "{name} : précédent",
+      "next": "{name} : suivant",
+      "goToPage": "{name} : aller à {page} sur {pages}"
+    },
     "footer": {
       "fundedByTitle": "Financé par",
       "chaynDescription": "Bloom vous est présenté par <link>Chayn</link>, une organisation mondiale à but non lucratif, dirigée par des personnes survivantes et des sympathisant·es du monde entier. Elle crée des ressources pour soutenir la guérison des personnes survivantes aux violences basées sur le genre.",
@@ -42,6 +48,10 @@
       "closeModal": "Arrêter la transcription",
       "description": "Lire la transcription de la vidéo- "
     },
+    "audioTranscript": {
+      "title": "Transcription de l’audio"
+    },
+    "currentSession": "Session actuelle",
     "progressStatus": {
       "started": "Démarré",
       "completed": "Complet",
@@ -61,9 +71,9 @@
     },
     "notFound": {
       "title": "404 - Page introuvable",
-      "authenticatedDescription": "Cette page n'a pas pu être trouvée. Vérifiez l'URLou retournez à la page des cours.",
+      "authenticatedDescription": "Cette page n’a pas pu être trouvée. Vérifiez l’URL ou retournez à la page de la bibliothèque.",
       "unauthenticatedDescription": "Cette page n'a pas pu être trouvée. Vérifiez l'URL ou retournez à la page d'accueil.",
-      "authenticatedRedirectButton": "Retour à la page des cours.",
+      "authenticatedRedirectButton": "Retour à la page de la bibliothèque",
       "unauthenticatedRedirectButton": "Retour à la page d'accueil"
     },
     "alt": {
@@ -84,11 +94,12 @@
       "leafMixBee": "Illustration de deux feuilles avec une abeille qui vole par dessus.",
       "leafMixDots": "Illustration de trois feuilles avec une fleur au milieu, et des points sortant de la fleur.",
       "personTea": "Illustration d'une personne assise, tenant une tasse de thé.",
+      "resourceCardDefault": "Illustration d'une carte de ressource Bloom",
       "personSitting": "Illustration d'une personne assise",
       "chooseTherapist": "Illustration du profil latéral du visage d'une personne, avec une fleur.",
       "dateSelector": "Illustration d'un calendrier avec un cœur au milieu",
       "change": "Illustration d'un cycle - trois soleils dans un cercle avec des flèches entre eux",
-      "notes": "Illustration of a mobile with a message bubble containing a heart on the screen",
+      "notes": "Illustration d'un téléphone avec une bulle de message contenant un cœur à l'écran",
       "confidential": "Illustration d'un document avec un cadenas dans un coin",
       "cookieCat": "Illustration d'un chat au repos avec un cookie",
       "fruitzLogo": "Logo de Fruitz",
@@ -106,44 +117,17 @@
       "acceptLabel": "Accepter les Cookies",
       "declineLabel": "Reject Cookies"
     },
-    "signUpTodayPromo": {
-      "title": "Ouvre un compte gratuit aujourd’hui",
-      "description1": "Bloom est une plateforme en ligne qui t’aide à guérir des traumatismes. Que ce soit par les cours vidéo, les activités de réflexion ou la messagerie, il y a de nombreuses façons différentes de s’engager avec Bloom.",
-      "description2": "Inscris-toi ci-dessous pour avoir accès à l’ensemble de notre contenu et pour explorer tout ce que Bloom a à t’offrir.",
-      "button": "Commencer"
-    },
-    "loginDialog": {
-      "title": "Connectez-vous ou créez un compte",
-      "description": "Inscrivez-vous gratuitement pour accéder à tout notre contenu et explorer tout ce que Bloom a à offrir",
-      "loginButton": "Se connecter",
-      "registerButton": "Créer un compte",
-      "backButton": "Annuler"
-    },
-    "exerciseNames": {
-      "activities-thought-diaries": "Journaux de pensées",
-      "activities-stream-of-consciousness-journaling": "Écrire son journal : le flux de conscience",
-      "activities-timelines": "Chronologie",
-      "activities-trust-mapping": "Le trust mapping",
-      "activities-mapping-fear-and-stress-in-our-bodies": "Comprendre la peur et le stress dans notre corps",
-      "activities-letter-to-a-part-of-my-body": "Une lettre pour une partie de mon corps",
-      "activities-accelerators-and-brakes": "Accélérateurs et freins",
-      "activities-ideal-sexual-being": "L'être sexuel idéal",
-      "grounding-visual-breathing": "Respiration visuelle",
-      "grounding-slow-breathing": "Respiration lente",
-      "grounding-box-breathing": "Respiration en boîte",
-      "grounding-drifting-clouds-meditation": "Méditation sur les nuages dérivants",
-      "grounding-positive-coping-statement": "Déclaration d’adaptation positive",
-      "grounding-finger-focus": "Focus sur les doigts",
-      "grounding-day-walkthrough": "Observer la journée",
-      "grounding-what-can-you-hear": "Pouvez-vous m’entendre?",
-      "grounding-listen-to-your-voice": "Écoutez votre voix",
-      "grounding-calming-colours": "Revenir de votre espace de sécurité",
-      "grounding-coming-back-to-your-safe-space": "Couleurs apaisantes",
-      "grounding-best-check-in": "BEST check-in",
-      "grounding-compassionate-body-scan": "Analyse corporelle compatissant",
-      "grounding-touching-and-feeling-textures": "Toucher et sentir les textures",
-      "grouding-sound-of-claps": "Bruit des applaudissements",
-      "grounding-affirming-ourselves": "S'affirmer (pression ferme)"
+    "supportSection": {
+      "title": "Trouver du soutien",
+      "introduction": "Vous préférez parler à quelqu’un ? Les services de soutien de Bloom sont là chaque fois que vous en avez besoin.",
+      "messaging": {
+        "title": "Messagerie individuelle",
+        "description": "Des réponses attentives à vos questions et à vos réflexions, de la part de notre équipe multilingue, sous 1 à 2 jours."
+      },
+      "notes": {
+        "title": "Notes de Bloom",
+        "description": "Le soutien de Bloom, directement sur votre WhatsApp, deux fois par semaine."
+      }
     },
     "pwaBanner": {
       "mobileDescription": "Installez l'application pour y accéder depuis votre écran d'accueil",
@@ -160,8 +144,29 @@
       "buttonText": "S'abonner"
     },
     "characterCount": "{current}/{max} caractères",
-    "scrollToSignUp": {
-      "button": "Inscris-toi gratuitement"
+    "signUpSection": {
+      "title": "Conçu pour vous",
+      "introduction": "Bloom est là pour vous, qui que vous soyez et où que vous soyez.",
+      "multilingual": "Multilingue",
+      "freeAndAnonymous": "Gratuit et anonyme",
+      "exploreAtYourPace": "Explorez à votre rythme",
+      "cta": "Rejoignez Bloom, toujours gratuit",
+      "ctaMessaging": "Rejoignez Bloom pour envoyer un message"
+    },
+    "librarySections": {
+      "continueLearning": {
+        "heading": "Reprenez là où vous en étiez"
+      },
+      "sessions": {
+        "heading": "Sessions individuelles",
+        "introduction": "Des sessions sur comprendre les abus, poser des limites, guérir, et bien plus encore.",
+        "browseAll": "Voir toutes les sessions"
+      },
+      "courses": {
+        "heading": "Cours",
+        "introduction": "Un point de départ accompagné. Chaque cours vous guide à travers un ensemble de sessions, à votre rythme.",
+        "browseAll": "Voir tous les cours"
+      }
     }
   }
 }

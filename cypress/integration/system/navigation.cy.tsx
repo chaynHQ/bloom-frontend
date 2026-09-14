@@ -15,7 +15,7 @@ describe('Navigation', () => {
       cy.get(`[qa-id=login-menu-button]`).should('exist');
       cy.get(`[qa-id=secondary-nav-therapy-button]`).should('not.exist');
       cy.get(`[qa-id=secondary-nav-notes-button]`).should('exist');
-      cy.get(`[qa-id=secondary-nav-courses-button]`).should('exist');
+      cy.get(`[qa-id=secondary-nav-library-button]`).should('exist');
     });
   });
   describe('A logged in public user', () => {
@@ -37,7 +37,7 @@ describe('Navigation', () => {
       cy.get(`[qa-id=login-menu-button]`).should('not.exist');
       cy.get(`[qa-id=secondary-nav-therapy-button]`).should('not.exist');
       cy.get(`[qa-id=secondary-nav-notes-button]`).should('exist');
-      cy.get(`[qa-id=secondary-nav-courses-button]`).should('exist');
+      cy.get(`[qa-id=secondary-nav-library-button]`).should('exist');
     });
     after(() => {
       cy.logout();
@@ -83,7 +83,7 @@ describe('Navigation', () => {
       cy.get(`[qa-id=login-menu-button]`).should('not.exist');
       cy.get(`[qa-id=secondary-nav-therapy-button]`).should('not.exist');
       cy.get(`[qa-id=secondary-nav-notes-button]`).should('exist');
-      cy.get(`[qa-id=secondary-nav-courses-button]`).should('exist');
+      cy.get(`[qa-id=secondary-nav-library-button]`).should('exist');
     });
     after(() => {
       cy.logout();
@@ -129,7 +129,7 @@ describe('Navigation', () => {
       cy.get(`[qa-id=login-menu-button]`).should('not.exist');
       cy.get(`[qa-id=secondary-nav-therapy-button]`).should('exist');
       cy.get(`[qa-id=secondary-nav-notes-button]`).should('exist');
-      cy.get(`[qa-id=secondary-nav-courses-button]`).should('exist');
+      cy.get(`[qa-id=secondary-nav-library-button]`).should('exist');
     });
     after(() => {
       cy.logout();
@@ -156,7 +156,7 @@ describe('Navigation', () => {
       cy.get(`[qa-id=login-menu-button]`).should('not.exist');
       cy.get(`[qa-id=secondary-nav-therapy-button]`).should('not.exist');
       cy.get(`[qa-id=secondary-nav-notes-button]`).should('exist');
-      cy.get(`[qa-id=secondary-nav-courses-button]`).should('exist');
+      cy.get(`[qa-id=secondary-nav-library-button]`).should('exist');
     });
     after(() => {
       cy.logout();

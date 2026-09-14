@@ -6,7 +6,9 @@ module.exports = {
   collectCoverageFrom: ['**/*.{js,jsx,ts,tsx}', '!**/*.d.ts', '!**/node_modules/**'],
   modulePaths: ['<rootDir>'],
   moduleNameMapper: {
-    '@/(.*)': '<rootDir>/$1',
+    /* Asset and style mocks must precede the `@/` alias — Jest applies the first matching
+       mapper, and `@/(.*)` would otherwise resolve `@/public/x.svg` to the real file, which
+       babel-jest can't parse. */
 
     /* Handle CSS imports (with CSS modules)
     https://jestjs.io/docs/webpack#mocking-css-modules */
@@ -18,6 +20,8 @@ module.exports = {
     /* Handle image imports
     https://jestjs.io/docs/webpack#handling-static-assets */
     '^.+\\.(jpg|jpeg|png|gif|webp|svg)$': '<rootDir>/__mocks__/fileMock.js',
+
+    '@/(.*)': '<rootDir>/$1',
   },
   modulePathIgnorePatterns: ['tests/cypress'],
   testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/.next/'],

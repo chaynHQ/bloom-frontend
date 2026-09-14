@@ -1,0 +1,33 @@
+import LoadingContainer from '@/components/common/LoadingContainer';
+import LibraryPage from '@/components/pages/LibraryPage';
+import { getLibraryStories } from '@/lib/utils/getLibraryStories';
+import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
+import { getTranslations } from 'next-intl/server';
+import { Suspense } from 'react';
+
+export const revalidate = 14400; // invalidate every 4 hours, matching the other content pages
+
+type Params = Promise<{ locale: string }>;
+
+export async function generateMetadata({ params }: { params: Params }) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'Library' });
+
+  return generateMetadataBasic({
+    title: t('metadata.title'),
+    description: t('metadata.description'),
+  });
+}
+
+export default async function Page({ params }: { params: Params }) {
+  const { locale } = await params;
+  const stories = await getLibraryStories(locale);
+
+  // useSearchParams needs a Suspense boundary; the fallback needs real height, or the App
+  // Router measures an empty segment and skips its scroll-to-top when navigating here.
+  return (
+    <Suspense fallback={<LoadingContainer />}>
+      <LibraryPage stories={stories} />
+    </Suspense>
+  );
+}

@@ -52,7 +52,7 @@ const StoryblokVideo = (props: StoryblokVideoProps) => {
   return (
     <Video
       url={video.url}
-      eventPrefix="STORYBLOK"
+      eventPrefix="STORYBLOK_VIDEO"
       eventData={eventUserData}
       title={title}
       containerStyles={containerStyle}

@@ -1,7 +1,8 @@
 'use client';
 
 import type { Direction } from '@/lib/utils/getLocaleDirection';
-import { createTheme, lighten, responsiveFontSizes, type Theme } from '@mui/material/styles';
+import { contentRailGutter } from '@/styles/common';
+import { alpha, createTheme, lighten, responsiveFontSizes, type Theme } from '@mui/material/styles';
 
 // If you want to declare custom colours that aren't officially in the palette, add them here
 declare module '@mui/material/styles' {
@@ -9,13 +10,54 @@ declare module '@mui/material/styles' {
     palePrimaryLight: string;
     bloomGradient: string;
     bloomGradientVertical: string;
+    bloomGradientSoft: string;
+    bloomGradientSoftUp: string;
+    bloomGradientPeach: string;
+    cardSurface: string;
+    cardBorder: string;
+    sectionSurface: string;
+    panelSurface: string;
+    pageBackground: string;
+    inputBorder: string;
+    sectionBorder: string;
+    chipBackground: string;
+    chipBackgroundHover: string;
+    badgeBlue: string;
+    badgeBlueBorder: string;
+    supportArrowPanel: string;
+    audioTrack: string;
+    audioButton: string;
   }
   interface PaletteOptions {
     palePrimaryLight?: string;
     paleSecondaryLight?: string;
     bloomGradient?: string;
     bloomGradientVertical?: string;
+    bloomGradientSoft?: string;
+    bloomGradientSoftUp?: string;
+    bloomGradientPeach?: string;
     overlayBackground?: string;
+    cardSurface?: string;
+    cardBorder?: string;
+    sectionSurface?: string;
+    panelSurface?: string;
+    pageBackground?: string;
+    inputBorder?: string;
+    sectionBorder?: string;
+    chipBackground?: string;
+    chipBackgroundHover?: string;
+    badgeBlue?: string;
+    badgeBlueBorder?: string;
+    supportArrowPanel?: string;
+    audioTrack?: string;
+    audioButton?: string;
+  }
+
+  interface TypographyVariants {
+    headingFontFamily: string;
+  }
+  interface TypographyVariantsOptions {
+    headingFontFamily?: string;
   }
 }
 
@@ -26,6 +68,14 @@ const bodyFontFamily = (direction: Direction) =>
   direction === 'rtl' ? 'var(--font-arabic), var(--font-open-sans)' : 'var(--font-open-sans)';
 const headingFontFamily = (direction: Direction) =>
   direction === 'rtl' ? 'var(--font-arabic), var(--font-montserrat)' : 'var(--font-montserrat)';
+
+// Headings and card titles are pure black in the design; body copy sits at grey.800.
+const headingColor = '#000000';
+const bodyColor = '#424242';
+
+// Brand interaction shades of `primary.dark` (#EA0050). See Figma: Bloom Modularisation 2026 → CTAs.
+const brandFillHover = '#B8003D'; // contained hover; outlined border + label hover
+const outlinedLabel = '#D00047'; // outlined (primary) resting label
 
 /**
  * Builds the MUI theme for a given text direction. MUI v9 + Emotion emit CSS logical
@@ -53,43 +103,85 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
       background: {
         default: '#FEF6F2',
       },
+      text: {
+        primary: bodyColor,
+      },
       error: {
         main: '#EA0050',
+      },
+      // Completed / success state, e.g. the session playlist tick.
+      success: {
+        main: '#4B9B47',
       },
       palePrimaryLight: '#F9eded',
       paleSecondaryLight: '#FFF8F4',
       overlayBackground: 'rgba(0, 0, 0, 0.4)',
       bloomGradient: 'linear-gradient(#F3D6D8, #FFEAE1)',
       bloomGradientVertical: 'linear-gradient(to left, #FFBFA4 0%, #FFEAE1 100%)',
+      bloomGradientSoft: 'linear-gradient(180deg, #FCE7E1 0%, #FEE9E1 100%)',
+      bloomGradientSoftUp: 'linear-gradient(0deg, #F9E2E3 0%, #FFEAE1 100%)',
+      // Peach down to `sectionSurface`, so the section fades into the pale pink band below it. The
+      // middle stop keeps the fade in the warm peach family rather than passing through beige.
+      bloomGradientPeach: 'linear-gradient(180deg, #FFE3D3 0%, #FEEAE2 40%, #FAF1F2 100%)',
+      cardSurface: '#FFFCFA',
+      cardBorder: '#EBE0E1',
+      sectionSurface: '#FAF1F2',
+      panelSurface: '#FCF8F8',
+      pageBackground: '#FFF2EB',
+      inputBorder: '#DECECF',
+      sectionBorder: '#DECECF',
+      chipBackground: '#FFD8C7',
+      chipBackgroundHover: '#FFC9B2',
+      badgeBlue: '#DFF0F5',
+      badgeBlueBorder: '#CCE7F0',
+      supportArrowPanel: '#F9E2E3',
+      // Rail and border of the resource audio player, sitting a shade under `sectionSurface`.
+      audioTrack: '#F7D9DB',
+      // Play/pause button of the resource audio player — the Bloom mark red (see app/icon.svg),
+      // a softer raspberry than the magenta `primary.dark` CTA fill.
+      audioButton: '#DC3D52',
     },
     shape: {
       borderRadius: 20,
     },
     typography: {
       fontFamily: bodyFontFamily(direction),
+      headingFontFamily: headingFontFamily(direction),
       h1: {
         fontFamily: headingFontFamily(direction),
-        fontSize: '2.25rem',
+        fontSize: '2rem',
         fontWeight: 400,
         marginBottom: '1.25rem',
-        lineHeight: 1.4,
+        lineHeight: 40 / 32,
+        color: headingColor,
       },
       h2: {
         fontFamily: headingFontFamily(direction),
-        fontSize: '1.875rem',
+        fontSize: '1.5rem',
         fontWeight: 400,
         marginBottom: '1.25rem',
+        lineHeight: 32 / 24,
+        color: headingColor,
+        '@media (min-width:900px)': {
+          fontSize: '1.75rem',
+          lineHeight: 36 / 28,
+        },
       },
       h3: {
         fontFamily: headingFontFamily(direction),
         fontSize: '1.375rem',
         marginBottom: '1rem',
-        fontWeight: 400,
-        lineHeight: 1.4,
+        fontWeight: 500,
+        lineHeight: 28 / 22,
+        color: headingColor,
       },
       h4: {
-        fontSize: '1rem',
+        fontFamily: headingFontFamily(direction),
+        fontSize: '1.125rem',
         fontWeight: 500,
+        lineHeight: 24 / 18,
+        letterSpacing: '0.15px',
+        color: headingColor,
       },
       subtitle1: {
         fontSize: '1.375rem',
@@ -98,11 +190,11 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
       },
       body1: {
         fontSize: '1rem',
-        lineHeight: 1.5,
+        lineHeight: 24 / 16,
       },
       body2: {
         fontSize: '0.875rem',
-        lineHeight: 1.5,
+        lineHeight: 20 / 14,
       },
     },
   });
@@ -117,6 +209,20 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
       },
     },
     components: {
+      // No ripple anywhere; keyboard focus is shown with a solid primary.dark outline instead.
+      MuiButtonBase: {
+        defaultProps: {
+          disableRipple: true,
+        },
+        styleOverrides: {
+          root: {
+            '&.Mui-focusVisible': {
+              outline: `2px solid ${theme.palette.primary.dark}`,
+              outlineOffset: 2,
+            },
+          },
+        },
+      },
       MuiContainer: {
         styleOverrides: {
           root: {
@@ -145,8 +251,8 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
             [theme.breakpoints.up('lg')]: {
               paddingTop: 120,
               paddingBottom: 120,
-              paddingInlineStart: 'calc((100vw - 1000px) / 2) !important',
-              paddingInlineEnd: 'calc((100vw - 1000px) / 2) !important',
+              paddingInlineStart: `${contentRailGutter()} !important`,
+              paddingInlineEnd: `${contentRailGutter()} !important`,
             },
           },
         },
@@ -191,7 +297,8 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
       MuiButton: {
         styleOverrides: {
           root: {
-            fontWeight: 'bold',
+            fontFamily: headingFontFamily(direction),
+            fontWeight: 500,
             borderRadius: '100px',
             textTransform: 'unset',
             paddingInline: 24,
@@ -200,19 +307,15 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
             '&:hover': {
               backgroundColor: lighten(theme.palette.primary.main, 0.1),
             },
-            '& .MuiTouchRipple-root span': {
-              backgroundColor: theme.palette.primary.dark,
-              opacity: 0.1,
-            },
             '@media (min-width:900px)': {
-              '&.MuiButton-sizeMedium': {
-                fontSize: '1rem',
-              },
               '&.MuiButton-sizeLarge': {
                 fontSize: '1.125rem',
+                letterSpacing: '0.15px',
               },
             },
           },
+          sizeMedium: { minHeight: 44 },
+          sizeLarge: { minHeight: 48 },
           // MUI hard-codes physical margins on the button icons (startIcon: marginRight/Left,
           // endIcon: the mirror). Those don't flip for RTL because this app relies on CSS
           // logical properties + `dir` rather than stylis-plugin-rtl, so in Arabic the icon
@@ -232,11 +335,22 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
           }),
         },
         variants: [
+          // Outlined brand button ("Secondary/Outlined" in Figma).
           {
             props: { variant: 'outlined', color: 'primary' },
             style: {
-              color: '#000000',
+              color: outlinedLabel,
               borderColor: theme.palette.primary.dark,
+              '&:hover': {
+                backgroundColor: alpha(brandFillHover, 0.05),
+                borderColor: brandFillHover,
+                color: brandFillHover,
+              },
+              '&.Mui-disabled': {
+                color: outlinedLabel,
+                borderColor: theme.palette.primary.dark,
+                opacity: 0.5,
+              },
             },
           },
           {
@@ -257,10 +371,6 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
               '&:hover': {
                 backgroundColor: lighten(theme.palette.secondary.dark, 0.2),
               },
-              '& .MuiTouchRipple-root span': {
-                backgroundColor: theme.palette.secondary.dark,
-                opacity: 0.1,
-              },
               '&.Mui-disabled': {
                 backgroundColor: lighten(theme.palette.secondary.main, 0.2),
                 color: theme.palette.grey[800],
@@ -272,27 +382,34 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
             style: {
               color: '#000000',
               borderColor: theme.palette.secondary.dark,
-              '& .MuiTouchRipple-root span': {
-                backgroundColor: theme.palette.secondary.dark,
-                opacity: 0.1,
-              },
               '&:hover': {
                 backgroundColor: theme.palette.secondary.light,
                 borderColor: theme.palette.secondary.dark,
               },
             },
           },
+          // Bloom's primary call-to-action ("Primary On Light" in Figma). CMS buttons reach it via
+          // getButtonStyleProps. Hover darkens to the brand hover shade; disabled is the resting
+          // fill at half opacity. Focus outline comes from the global MuiButtonBase rule.
           {
             props: { variant: 'contained', color: 'error' },
             style: {
+              borderColor: 'transparent',
               backgroundColor: theme.palette.primary.dark,
               color: theme.palette.common.white,
+              transition: theme.transitions.create('background-color', {
+                duration: theme.transitions.duration.short,
+              }),
               '&:hover': {
-                backgroundColor: lighten(theme.palette.primary.dark, 0.3),
+                backgroundColor: brandFillHover,
+              },
+              '&:active': {
+                backgroundColor: brandFillHover,
               },
               '&.Mui-disabled': {
-                backgroundColor: lighten(theme.palette.primary.dark, 0.3),
+                backgroundColor: theme.palette.primary.dark,
                 color: `${theme.palette.common.white} !important`,
+                opacity: 0.5,
               },
             },
           },
@@ -304,13 +421,6 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
             '&:hover': {
               backgroundColor: theme.palette.primary.main,
             },
-            '& .MuiTouchRipple-root span': {
-              backgroundColor: theme.palette.primary.main,
-              opacity: 0.2,
-            },
-          },
-          focusHighlight: {
-            backgroundColor: lighten(theme.palette.primary.main, 0.2),
           },
         },
       },
@@ -353,11 +463,6 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
               fontWeight: 400,
 
               ':hover': { backgroundColor: theme.palette.background.default },
-
-              '& .MuiTouchRipple-root span': {
-                backgroundColor: theme.palette.primary.main,
-                opacity: 0.2,
-              },
             },
           },
         },
@@ -406,10 +511,16 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
         styleOverrides: {
           root: {
             backgroundColor: theme.palette.background.default,
+            transition: theme.transitions.create('background-color', {
+              duration: theme.transitions.duration.shortest,
+            }),
             '&:hover': { backgroundColor: theme.palette.common.white },
             '.Mui-disabled &:hover': { backgroundColor: theme.palette.common.white },
-            '& .MuiTouchRipple-root span': {
-              display: 'none',
+            // The card clips its content, so the focus ring sits inset rather than around it.
+            '&.MuiCardActionArea-root.Mui-focusVisible': {
+              outline: `2px solid ${theme.palette.primary.dark}`,
+              outlineOffset: -2,
+              '.MuiCardActionArea-focusHighlight': { opacity: 0 },
             },
           },
           focusHighlight: {
@@ -462,14 +573,40 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
           },
         },
       },
+      // Inputs: hover border is primary.dark, focus border is secondary.main.
       MuiInput: {
         styleOverrides: {
           underline: {
             ':after': {
-              borderColor: theme.palette.secondary.dark,
+              borderColor: theme.palette.secondary.main,
             },
             '&:hover:not(.Mui-disabled)::before': {
+              borderColor: theme.palette.primary.dark,
+            },
+          },
+        },
+      },
+      MuiFilledInput: {
+        styleOverrides: {
+          underline: {
+            ':after': {
               borderColor: theme.palette.secondary.main,
+            },
+            '&:hover:not(.Mui-disabled, .Mui-error)::before': {
+              borderColor: theme.palette.primary.dark,
+            },
+          },
+        },
+      },
+      MuiOutlinedInput: {
+        styleOverrides: {
+          root: {
+            '&:hover:not(.Mui-focused):not(.Mui-disabled) .MuiOutlinedInput-notchedOutline': {
+              borderColor: theme.palette.primary.dark,
+            },
+            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+              borderColor: theme.palette.secondary.main,
+              borderWidth: 2,
             },
           },
         },

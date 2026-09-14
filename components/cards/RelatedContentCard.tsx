@@ -3,9 +3,6 @@
 import DirectionalIcon from '@/components/common/DirectionalIcon';
 import { Link as i18nLink } from '@/i18n/routing';
 import { RELATED_CONTENT_CATEGORIES } from '@/lib/constants/enums';
-import { RELATED_CONTENT_CARD_CLICK } from '@/lib/constants/events';
-import { useTypedSelector } from '@/lib/hooks/store';
-import logEvent, { getEventUserData } from '@/lib/utils/logEvent';
 import { ArrowForwardIos } from '@mui/icons-material';
 import { Box, Card, CardActionArea, CardContent, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
@@ -41,29 +38,17 @@ interface RelatedContentProps {
   href: string;
   category: RELATED_CONTENT_CATEGORIES;
   duration?: string;
+  onSelect?: () => void;
 }
 
 export const RelatedContentCard = (props: RelatedContentProps) => {
-  const { title, href, category, duration } = props;
-  const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
-  const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
+  const { title, href, category, duration, onSelect } = props;
 
   const t = useTranslations('Resources.relatedContent');
-  const handleClick = () => {
-    logEvent(RELATED_CONTENT_CARD_CLICK, eventUserData);
-  };
 
   return (
     <Card sx={cardStyle}>
-      <CardActionArea
-        href={href}
-        component={i18nLink}
-        onClick={() => {
-          handleClick();
-        }}
-      >
+      <CardActionArea href={href} component={i18nLink} onClick={onSelect}>
         <CardContent sx={cardContentStyle}>
           <Box
             sx={{

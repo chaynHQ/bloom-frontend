@@ -1,6 +1,7 @@
 'use client';
 
 import { getImageSizes } from '@/lib/utils/imageSizes';
+import { pageHeaderPaddingTop } from '@/styles/common';
 import { Container, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image, { StaticImageData } from 'next/image';
@@ -8,7 +9,8 @@ import * as React from 'react';
 
 const headerContainerStyles = {
   backgroundColor: 'common.white',
-  paddingY: '40px !important',
+  paddingTop: pageHeaderPaddingTop,
+  paddingBottom: '40px !important',
 } as const;
 
 interface PartnerAdminHeaderProps {

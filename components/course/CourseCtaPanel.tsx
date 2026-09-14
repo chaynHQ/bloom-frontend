@@ -1,0 +1,85 @@
+'use client';
+
+import { SignUpCard } from '@/components/course/SignUpCard';
+import { Link as i18nLink } from '@/i18n/routing';
+import { type UserAuthStatus } from '@/lib/hooks/useUserAuthStatus';
+import { Box, Button, Skeleton } from '@mui/material';
+
+// Positioning only — stays pinned beside the course copy as the page scrolls into the session list.
+const wrapperStyle = {
+  flexShrink: 0,
+  alignSelf: { md: 'flex-start' },
+  position: { md: 'sticky' },
+  top: { md: 'calc(9rem + var(--top-banner-height, 0px))' },
+  width: { xs: '100%', md: 360 },
+} as const;
+
+// On desktop the illustration stacks above the title in the copy column; offsetting the panel by
+// its height drops it down so it sits alongside the title rather than the illustration.
+const CTA_ILLUSTRATION_OFFSET = 'calc(135px + 16px)';
+
+const panelFrameStyle = {
+  p: 2,
+  borderRadius: '8px',
+  border: '1px solid',
+  borderColor: 'cardBorder',
+  backgroundColor: 'pageBackground',
+} as const;
+
+// The button fills the panel; the theme otherwise caps buttons at 25rem.
+const ctaButtonStyle = { maxWidth: 'none' } as const;
+
+interface CourseCtaPanelProps {
+  // `'signedIn'` → begin/continue button; `'signedOut'` → the "Access the full course" card;
+  // `'resolving'` → a button-height placeholder, so auth settling doesn't swap a whole card in/out.
+  userAuthStatus: UserAuthStatus;
+  // The session to resume; absent when the course has no sessions yet (button just logs the click).
+  ctaHref?: string;
+  ctaLabel: string;
+  onCtaClick: () => void;
+  // The course hero image pushes the panel down to line up with the title rather than the image.
+  offsetForIllustration: boolean;
+  courseName: string;
+  courseUuid: string;
+}
+
+export function CourseCtaPanel({
+  userAuthStatus,
+  ctaHref,
+  ctaLabel,
+  onCtaClick,
+  offsetForIllustration,
+  courseName,
+  courseUuid,
+}: CourseCtaPanelProps) {
+  return (
+    <Box
+      sx={{
+        ...wrapperStyle,
+        ...(offsetForIllustration && { mt: { md: CTA_ILLUSTRATION_OFFSET } }),
+      }}
+    >
+      {userAuthStatus === 'resolving' ? (
+        <Box sx={panelFrameStyle}>
+          <Skeleton variant="rounded" height={40} sx={ctaButtonStyle} />
+        </Box>
+      ) : userAuthStatus === 'signedIn' ? (
+        <Box sx={panelFrameStyle}>
+          <Button
+            qa-id="course-cta"
+            variant="contained"
+            color="error"
+            fullWidth
+            sx={ctaButtonStyle}
+            onClick={onCtaClick}
+            {...(ctaHref ? { component: i18nLink, href: ctaHref } : {})}
+          >
+            {ctaLabel}
+          </Button>
+        </Box>
+      ) : (
+        <SignUpCard source="course" contentName={courseName} contentUuid={courseUuid} />
+      )}
+    </Box>
+  );
+}

@@ -35,7 +35,7 @@
       "titleA": "Aapko Bloom se kya chahiye",
       "descriptionALine1": "Abtak aapke uttaron ke liye shukriya!",
       "descriptionALine2": "Kyuki aap hamare naye user hain, hum samjhna chahte hain ki hamari sevaon ko istemaal karne se pehle aapn kesa mehsoos kar rahe hain. Hum yeh poochte hain taki hum measure kar sakein ki Bloom ka istemaal karne se survivours par kya asar pad raha hai taki hum sahi cheezo par focus kar paye.",
-      "goToCourses": "Skip karke courses par jayein",
+      "goToLibrary": "Library pe jaiye",
       "demographicForm": {
         "genderLabel": "Kripya ek ya ek se adhik option chuniye jis bhi ling se aap pehchaan karte hain.",
         "genderHelpText": "Hum yeh aap se pooch rahe hain taki hum behtar samjh sakein ki humare user kis ling se pehchaan karte hain, taki hum zada sahit aur ling-pushti jankaari wale sansadhan bana sakein. Aap “Batana pasand nahi karte” option bhi chun sakte hain.",
@@ -141,8 +141,8 @@
       },
       "emailRemindersSettings": {
         "title": "Email Reminders",
-        "introduction": "Trauma se guzarna mushkil ho sakta hai, khासकर yedi aap ise akela kar rahe hain.",
-        "description": "Hum aapki upchar yaatra mein shirsha par रहने mein aapki madad kar sakte hain, agar aap thodi der ke liye sign in nahi karte hain to saumya anusmarak ke saath.",
+        "introduction": "Trauma se guzarna mushkil ho sakta hai, khaaskar yedi aap ise akela kar rahe hain.",
+        "description": "Hum aapki upchar yaatra mein track par rehne mein aapki madad kar sakte hain, agar aap thodi der ke liye sign in nahi karte hain to saumya anusmarak ke saath.",
         "fieldLabel": "Yaad dilaya jaaye:",
         "twoWeeksLabel": "Do saptah baad",
         "oneMonthLabel": "Ek mahine ke baad",
@@ -150,7 +150,7 @@
         "neverLabel": "Kabhi nahi",
         "update": "Aap is setting ko kabhi bhi update kar sakte hain",
         "submitLabel": "Email Reminders Save karen",
-        "updateError": "Aapki email reminders settings ko update karne mein koi error hui. Is page ko refresh karke punah try karen, ya <link>Bloom team se संपर्क करें।</link>"
+        "updateError": "Aapki email reminders settings ko update karne mein koi error hui. Is page ko refresh karke punah try karen, ya <link>Bloom team se sampark karein.</link>"
       }
     }
   }

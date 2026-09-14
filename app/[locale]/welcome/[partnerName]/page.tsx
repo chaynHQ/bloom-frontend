@@ -1,8 +1,9 @@
-import StoryblokWelcomePage from '@/components/storyblok/StoryblokWelcomePage';
+import WelcomePage from '@/components/pages/WelcomePage';
 import { routing } from '@/i18n/routing';
 import { STORYBLOK_ENVIRONMENT } from '@/lib/constants/common';
 import { getStoryblokStory } from '@/lib/storyblok';
 import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
+import { getLibraryStories } from '@/lib/utils/getLibraryStories';
 import { ISbResult, ISbStoriesParams, getStoryblokApi } from '@storyblok/react/rsc';
 import { notFound } from 'next/navigation';
 
@@ -24,7 +25,8 @@ export async function generateMetadata({ params }: { params: Params }) {
   if (!story) return;
 
   return generateMetadataBasic({
-    title: story.content.title,
+    // `title` is the hero headline; `seo_title` overrides the document title when set.
+    title: story.content.seo_title || story.content.title,
     description: story.content.seo_description,
   });
 }
@@ -61,11 +63,14 @@ export async function generateStaticParams() {
 export default async function Page({ params }: { params: Params }) {
   const { locale, partnerName } = await params;
 
-  const story = await getStory(locale, partnerName);
+  const [story, libraryStories] = await Promise.all([
+    getStory(locale, partnerName),
+    getLibraryStories(locale),
+  ]);
 
   if (!story) {
     notFound();
   }
 
-  return <StoryblokWelcomePage story={story} />;
+  return <WelcomePage story={story} libraryStories={libraryStories} partnerName={partnerName} />;
 }

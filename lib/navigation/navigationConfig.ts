@@ -1,27 +1,24 @@
 import {
-  DRAWER_ACTIVITIES_CLICKED,
   DRAWER_ADMIN_CLICKED,
   DRAWER_CHAT_CLICKED,
-  DRAWER_COURSES_CLICKED,
   DRAWER_GROUNDING_CLICKED,
   DRAWER_IMMEDIATE_HELP_CLICKED,
+  DRAWER_LIBRARY_CLICKED,
   DRAWER_NOTES_CLICKED,
   DRAWER_OUR_BLOOM_TEAM_CLICKED,
   DRAWER_THERAPY_CLICKED,
   HEADER_ADMIN_CLICKED,
   HEADER_IMMEDIATE_HELP_CLICKED,
   HEADER_OUR_BLOOM_TEAM_CLICKED,
-  SECONDARY_HEADER_ACTIVITIES_CLICKED,
   SECONDARY_HEADER_CHAT_CLICKED,
-  SECONDARY_HEADER_COURSES_CLICKED,
   SECONDARY_HEADER_GROUNDING_CLICKED,
+  SECONDARY_HEADER_LIBRARY_CLICKED,
   SECONDARY_HEADER_NOTES_CLICKED,
   SECONDARY_HEADER_THERAPY_CLICKED,
 } from '@/lib/constants/events';
-import activitiesIcon from '@/public/activities_icon.svg';
 import chatIcon from '@/public/chat_icon.svg';
-import courseIcon from '@/public/course_icon.svg';
 import groundingIcon from '@/public/grounding_icon.svg';
+import librarySignpostIcon from '@/public/courses_signpost.svg';
 import notesFromBloomIcon from '@/public/notes_from_bloom_icon.svg';
 import therapyIcon from '@/public/therapy_icon.svg';
 
@@ -52,31 +49,13 @@ interface NavigationConfigOptions {
 
 const getMainNavItemsBase = (isMobile = false): MainNavItem[] => [
   {
-    key: 'courses',
-    href: '/courses',
-    icon: courseIcon,
-    event: isMobile ? DRAWER_COURSES_CLICKED : SECONDARY_HEADER_COURSES_CLICKED,
-    translationKey: 'courses',
-    altTranslationKey: 'alt.courseIcon',
-    qaIdPrefix: 'courses',
-  },
-  {
-    key: 'messaging',
-    href: '/messaging',
-    icon: chatIcon,
-    event: isMobile ? DRAWER_CHAT_CLICKED : SECONDARY_HEADER_CHAT_CLICKED,
-    translationKey: 'messaging',
-    altTranslationKey: 'alt.chatIcon',
-    qaIdPrefix: 'messaging',
-  },
-  {
-    key: 'activities',
-    href: '/activities',
-    icon: activitiesIcon,
-    event: isMobile ? DRAWER_ACTIVITIES_CLICKED : SECONDARY_HEADER_ACTIVITIES_CLICKED,
-    translationKey: 'activities',
-    altTranslationKey: 'alt.activitiesIcon',
-    qaIdPrefix: 'activities',
+    key: 'library',
+    href: '/library',
+    icon: librarySignpostIcon,
+    event: isMobile ? DRAWER_LIBRARY_CLICKED : SECONDARY_HEADER_LIBRARY_CLICKED,
+    translationKey: 'library',
+    altTranslationKey: 'alt.libraryIcon',
+    qaIdPrefix: 'library',
   },
   {
     key: 'grounding',
@@ -86,6 +65,15 @@ const getMainNavItemsBase = (isMobile = false): MainNavItem[] => [
     translationKey: 'grounding',
     altTranslationKey: 'alt.groundingIcon',
     qaIdPrefix: 'grounding',
+  },
+  {
+    key: 'messaging',
+    href: '/messaging',
+    icon: chatIcon,
+    event: isMobile ? DRAWER_CHAT_CLICKED : SECONDARY_HEADER_CHAT_CLICKED,
+    translationKey: 'messaging',
+    altTranslationKey: 'alt.chatIcon',
+    qaIdPrefix: 'messaging',
   },
   {
     key: 'notes',

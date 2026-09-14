@@ -1,13 +1,15 @@
 'use client';
 
-import DirectionalIcon from '@/components/common/DirectionalIcon';
+import { BackLink } from '@/components/common/BackLink';
 import LoginForm from '@/components/forms/LoginForm';
 import { useRouter } from '@/i18n/routing';
+import { LOGIN_VIEWED } from '@/lib/constants/events';
+import { useLogEventOnce } from '@/lib/hooks/useLogEventOnce';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import illustrationLeafMix from '@/public/illustration_leaf_mix.svg';
+import { pageHeaderPaddingTop, pageHeaderPaddingTopMobile } from '@/styles/common';
 import theme from '@/styles/theme';
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-import { Box, Card, CardContent, IconButton, Typography } from '@mui/material';
+import { Box, Card, CardContent, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
 import Image from 'next/image';
@@ -24,8 +26,7 @@ const headerContainerStyle = {
   justifyContent: 'center',
   alignItems: 'center',
   paddingBottom: { xs: '2.5rem !important', md: '5rem !important' },
-  paddingTop: { xs: '0', md: '6.5rem ' },
-  paddingY: '2rem',
+  paddingTop: { xs: pageHeaderPaddingTopMobile, md: pageHeaderPaddingTop },
   paddingX: '2rem',
   background: {
     xs: theme.palette.bloomGradient,
@@ -42,25 +43,11 @@ const headerContentStyle = {
   width: '100%',
 };
 
-const backButtonStyle = {
-  display: { md: 'none' },
-  width: '2.5rem',
-  marginInlineStart: '-0.675rem',
-  marginY: { xs: 1.5, sm: 2 },
-  paddingInlineEnd: '1rem',
-  alignSelf: 'start',
-} as const;
-
-const backIconStyle = {
-  height: '1.75rem',
-  width: '1.75rem',
-  color: 'primary.dark',
-} as const;
-
 export default function LoginPage() {
   const t = useTranslations('Auth');
   const tS = useTranslations('Shared');
   const router = useRouter();
+  useLogEventOnce(LOGIN_VIEWED, {});
 
   const headerProps = {
     imageSrc: illustrationLeafMix,
@@ -73,15 +60,7 @@ export default function LoginPage() {
         <title>{`${t('login.title')} • Bloom`}</title>
       </Head>
       <Box sx={headerContainerStyle}>
-        <IconButton
-          sx={backButtonStyle}
-          onClick={() => router.back()}
-          aria-label={tS('navigateBack')}
-        >
-          <DirectionalIcon>
-            <KeyboardArrowLeftIcon sx={backIconStyle} />
-          </DirectionalIcon>
-        </IconButton>
+        <BackLink label={tS('back')} onSelect={() => router.back()} inlineOnDesktop={false} />
         <Box sx={headerContentStyle}>
           <Box
             sx={{

@@ -92,8 +92,10 @@ const slice = createSlice({
   name: 'user',
   initialState: initialState,
   reducers: {
-    clearUserSlice: () => {
-      return initialState;
+    clearUserSlice: (state) => {
+      // Preserve loadError: a failed getUser forces a logout, and that logout clears state here.
+      // Without this the "couldn't load your account" message is wiped before the login form shows it.
+      return { ...initialState, loadError: state.loadError };
     },
     setUserToken(state, action: PayloadAction<string>) {
       state.token = action.payload;
@@ -119,7 +121,7 @@ const slice = createSlice({
     setAuthStateLoading(state, action: PayloadAction<boolean>) {
       state.authStateLoading = action.payload;
     },
-    setLoadError(state, action: PayloadAction<string>) {
+    setLoadError(state, action: PayloadAction<string | null>) {
       state.loadError = action.payload;
     },
     setPwaDismissed(state, action: PayloadAction<boolean>) {
@@ -135,7 +137,7 @@ const slice = createSlice({
       return Object.assign({}, state, payload);
     });
     builder.addMatcher(api.endpoints.getUser.matchFulfilled, (state, { payload }) => {
-      return Object.assign({}, state, payload.user);
+      return Object.assign({}, state, { loadError: null }, payload.user);
     });
     builder.addMatcher(api.endpoints.subscribeToWhatsapp.matchFulfilled, (state, { payload }) => {
       if (isSubscriptionActive(payload)) {

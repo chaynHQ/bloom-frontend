@@ -47,9 +47,11 @@ export async function generateStaticParams() {
     'courses',
     'about-our-courses',
     'messaging',
-    'shorts',
-    'videos',
-    'conversations',
+    'video',
+    'audio',
+    'written',
+    'activity',
+    'grounding',
     'policies',
   ];
 

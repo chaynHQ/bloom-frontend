@@ -15,21 +15,27 @@
     "meetTheTeam": "L'équipe Bloom",
     "immediateHelp": "Aide immédiate",
     "therapy": "Thérapie",
-    "courses": "Cours",
+    "library": "Bibliothèque",
     "applyCode": "Appliquer un code",
     "account": "Compte",
     "secondaryNavigationMenu": "Secondary navigation menu",
     "notes": "Notes",
     "alt": {
+      "libraryIcon": "Illustration d'un panneau indicateur",
       "therapyIcon": "Illustration d'une tête avec une fleur",
-      "courseIcon": "Illustration d'une icône de lecture, un triangle pointant vers la droite. Un petit soleil se trouve à l'avant",
       "notesIcon": "Illustration d'un téléphone portable avec un cœur au centre",
       "chatIcon": "Deux bulles se croisent sur un fond rose. La première contient un cœur rose. La seconde a des lignes droites.",
-      "activitiesIcon": "A book with a small yellow fire on its cover.",
       "groundingIcon": "A twig with small pink flowers."
     },
     "messaging": "Messagerie",
-    "grounding": "Exercices",
-    "activities": "Activités"
+    "grounding": "Exercices"
+  },
+  "RedesignBanner": {
+    "regionLabel": "Actualités de la refonte de Bloom",
+    "headline": "Bloom fait peau neuve !",
+    "supportingText": "Les cours, les sessions et les activités sont désormais réunis dans la Bibliothèque : plus faciles à parcourir et à filtrer 💜",
+    "feedback": "Donner votre avis",
+    "feedbackShort": "Avis",
+    "dismiss": "Fermer"
   }
 }

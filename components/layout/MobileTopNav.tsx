@@ -2,12 +2,14 @@
 
 import { Link as i18nLink } from '@/i18n/routing';
 import {
+  DRAWER_LOGIN_CLICKED,
   HEADER_NAVIGATION_MENU_CLOSED,
   HEADER_NAVIGATION_MENU_OPENED,
 } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { getTopNavItems } from '@/lib/navigation/navigationConfig';
 import logEvent from '@/lib/utils/logEvent';
+import { navMenuLinkStyle, onDarkNavItemFocusStyle } from '@/styles/common';
 import CloseIcon from '@mui/icons-material/Close';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Box, Button, Drawer, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
@@ -17,33 +19,31 @@ import { useMemo } from 'react';
 
 export const navDrawerButtonStyle = {
   color: 'common.white',
+  flexShrink: 0,
+  padding: 0,
+  minWidth: 34,
+  width: 34,
+  height: 34,
+  borderRadius: '50%',
   ':hover': { backgroundColor: 'background.default', color: 'primary.dark' },
-  '& .MuiButton-startIcon': {
-    mx: 0,
-    '& svg': { fontSize: { xs: '1.25rem', sm: '1.5rem' } },
-  },
-  '& .MuiTouchRipple-root span': {
-    backgroundColor: 'primary.main',
-    opacity: 0.2,
-  },
-  px: { xs: 0.75, sm: 1 },
-  minWidth: 'unset',
-  width: { xs: 32, sm: 38 },
-  height: { xs: 32, sm: 38 },
+  '&[aria-expanded="true"]': { backgroundColor: 'background.default', color: 'primary.dark' },
+  '& .MuiButton-startIcon': { mx: 0 },
+  '& .MuiSvgIcon-root': { fontSize: '1.5rem' },
+  ...onDarkNavItemFocusStyle,
 } as const;
 
 const listStyle = {
   display: 'flex',
-  flexDirection: { xs: 'column', md: 'row' },
-  height: '100%',
+  flexDirection: 'column',
+  alignItems: 'flex-start',
+  gap: 0.5,
   marginY: 0,
-  paddingY: 3,
-  paddingX: { xs: 0, sm: '5%' },
+  paddingY: 2,
+  paddingInline: 2,
 } as const;
 
 const listItemStyle = {
   width: 'auto',
-  color: 'common.white',
 } as const;
 
 const listItemTextStyle = {
@@ -52,18 +52,7 @@ const listItemTextStyle = {
   textAlign: 'start',
   span: {
     fontSize: 16,
-    fontWeight: 500,
-  },
-} as const;
-
-const listButtonStyle = {
-  borderRadius: 20,
-  fontFamily: 'Monterrat, sans-serif',
-  paddingY: 0.25,
-
-  '& .MuiTouchRipple-root span': {
-    backgroundColor: 'primary.main',
-    opacity: 0.2,
+    lineHeight: '24px',
   },
 } as const;
 
@@ -71,6 +60,10 @@ const MobileTopNav = () => {
   const t = useTranslations('Navigation');
 
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const userId = useTypedSelector((state) => state.user.id);
+  const userLoading = useTypedSelector(
+    (state) => state.user.authStateLoading || state.user.loading,
+  );
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -92,6 +85,7 @@ const MobileTopNav = () => {
       {open ? (
         <Button
           aria-label={t('menuClose')}
+          size="small"
           onClick={handleClose}
           startIcon={<CloseIcon />}
           sx={navDrawerButtonStyle}
@@ -102,6 +96,7 @@ const MobileTopNav = () => {
           aria-haspopup="true"
           aria-expanded={open ? 'true' : undefined}
           aria-label={t('menuOpen')}
+          size="small"
           onClick={handleClick}
           startIcon={<MenuIcon />}
           sx={navDrawerButtonStyle}
@@ -109,21 +104,40 @@ const MobileTopNav = () => {
       )}
       <Drawer
         hideBackdrop={false}
-        sx={{ width: '100%', top: { xs: 48, sm: 64 } }}
+        sx={{ width: '100%', top: 64 }}
         anchor="top"
         open={open}
         onClose={handleClose}
         slotProps={{
           paper: {
-            sx: { backgroundColor: 'primary.dark', top: { xs: 48, sm: 64 } },
+            sx: {
+              backgroundColor: 'primary.dark',
+              '--focus-ring-color': '#fff',
+              top: 64,
+            },
           },
         }}
       >
         <List sx={listStyle} onClick={() => setAnchorEl && setAnchorEl(null)}>
+          {!userLoading && !userId && (
+            <ListItem sx={listItemStyle} disablePadding>
+              <ListItemButton
+                sx={navMenuLinkStyle}
+                component={i18nLink}
+                href="/auth/login"
+                qa-id="login-menu-button"
+                onClick={() => {
+                  logEvent(DRAWER_LOGIN_CLICKED);
+                }}
+              >
+                <ListItemText sx={listItemTextStyle} primary={t('login')} />
+              </ListItemButton>
+            </ListItem>
+          )}
           {navigationLinks.map((link) => (
             <ListItem sx={listItemStyle} key={link.key} disablePadding>
               <ListItemButton
-                sx={listButtonStyle}
+                sx={navMenuLinkStyle}
                 component={link.href.startsWith('/') ? i18nLink : 'a'}
                 href={link.href}
                 target={link.target || '_self'}

@@ -3,16 +3,11 @@ import { PartnerAdmin } from '@/lib/store/partnerAdminSlice';
 
 export default function hasAccessToPage(
   loggedIn: boolean,
-  availableForPreviewOrPreLogin: boolean,
   partnersWithAccess: Array<string>,
   partnerAccesses: PartnerAccesses,
   partnerAdmin: PartnerAdmin,
   referralPartner?: string | null,
 ): boolean {
-  if (!availableForPreviewOrPreLogin && !loggedIn) {
-    return false;
-  }
-
   // A referral partner is a pre-login marketing hint (set from welcome/register paths or a partner
   // name in UTM link data). It must never reduce the access of an authenticated user, whose real
   // entitlements come from their partner accesses / admin role below. Ignoring it once logged in
