@@ -3,7 +3,7 @@
 import { Link as i18nLink } from '@/i18n/routing';
 import { BASE_URL } from '@/lib/constants/common';
 import { STORYBLOK_COLORS } from '@/lib/constants/enums';
-import { generateStoryblokButtonEvent } from '@/lib/constants/events';
+import { STORYBLOK_BUTTON_CLICKED } from '@/lib/constants/events';
 import { getButtonStyleProps } from '@/lib/utils/buttonStyles';
 import logEvent from '@/lib/utils/logEvent';
 import { Box, Button } from '@mui/material';
@@ -47,7 +47,7 @@ const StoryblokButton = (props: StoryblokButtonProps) => {
         component={link.cached_url.startsWith(BASE_URL || '/') ? i18nLink : 'a'}
         size={size}
         onClick={() => {
-          logEvent(generateStoryblokButtonEvent(text));
+          logEvent(STORYBLOK_BUTTON_CLICKED, { button_text: text });
         }}
       >
         {text}
