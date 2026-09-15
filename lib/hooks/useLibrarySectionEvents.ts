@@ -13,8 +13,8 @@ export function useLibrarySectionEvents(surface: string, eventData: object) {
         card_section: section,
         card_item_name: item.title,
         card_item_storyblok_uuid: item.id,
-        card_item_kind: item.kind,
-        card_item_format: item.format ?? null,
+        session_type: item.kind,
+        resource_type: item.format ?? null,
         card_item_progress: PROGRESS_STATUS_BY_ITEM_PROGRESS[item.progress ?? 'none'],
         card_item_position: index + 1, // 1-based rank within the section
         ...eventData,
