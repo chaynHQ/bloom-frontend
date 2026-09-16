@@ -7,7 +7,7 @@ describe('Audio Flow', () => {
     cy.createUser({ emailInput: email, passwordInput: password });
   });
 
-  it.skip('Should allow a user to navigate to the library, select an audio resource, log in and play it', () => {
+  it('Should allow a user to navigate to the library, select an audio resource, log in and play it', () => {
     // User visits the home page
     cy.visit('/');
 

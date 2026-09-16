@@ -297,7 +297,7 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
   // "what do people filter for" is a single group-by on library_filter_value. results_count comes
   // from the incoming filters, since the URL (and the state derived from it) hasn't updated yet.
   const logFilterChange = (
-    group: 'theme' | 'format' | 'length' | 'kind',
+    group: 'theme' | 'resource_type' | 'length' | 'session_type',
     value: string,
     action: 'add' | 'remove',
     next: LibraryFilters,
@@ -311,7 +311,7 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
     });
 
   const setListFilter = (
-    group: 'theme' | 'format' | 'length',
+    group: 'theme' | 'resource_type' | 'length',
     prev: readonly string[],
     next: readonly string[],
     nextFilters: LibraryFilters,
@@ -328,7 +328,7 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
   const setThemes = (next: ThemeKey[]) =>
     setListFilter('theme', themes, next, { ...currentFilters, themes: next });
   const setFormats = (next: Format[]) =>
-    setListFilter('format', formats, next, { ...currentFilters, formats: next });
+    setListFilter('resource_type', formats, next, { ...currentFilters, formats: next });
   const setLengths = (next: LengthBucket[]) =>
     setListFilter('length', lengths, next, { ...currentFilters, lengths: next });
 
@@ -340,7 +340,7 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
         : { ...currentFilters, kind: next };
     // On a remove, report the kind being cleared rather than the literal "all".
     logFilterChange(
-      'kind',
+      'session_type',
       next === 'all' ? kind : next,
       next === 'all' ? 'remove' : 'add',
       nextFilters,
@@ -393,9 +393,9 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
   useLogEventOnce(
     LIBRARY_VIEWED,
     {
-      library_kind: kind,
+      session_type: kind,
       library_themes: reportList(themes),
-      library_formats: reportList(formats),
+      resource_type: reportList(formats),
       library_lengths: reportList(lengths),
       library_search_active: Boolean(urlKeyword),
       library_logged_in: isLoggedIn,
@@ -430,8 +430,8 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
       logEvent(LIBRARY_ITEM_CLICKED, {
         library_item_name: item.title,
         library_item_storyblok_uuid: item.id,
-        library_item_kind: item.kind,
-        library_item_format: item.format ?? null,
+        session_type: item.kind,
+        resource_type: item.format ?? null,
         library_item_themes: reportList(item.themes),
         library_item_progress: PROGRESS_STATUS_BY_ITEM_PROGRESS[item.progress ?? 'none'],
         library_item_position: index + 1, // 1-based rank in the filtered results
@@ -457,7 +457,7 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
 
   const logFiltersCleared = () =>
     logEvent(LIBRARY_FILTERS_CLEARED, {
-      library_formats: reportList(formats),
+      resource_type: reportList(formats),
       library_lengths: reportList(lengths),
       library_had_search_term: Boolean(keyword),
       library_results_count: resultsCount,

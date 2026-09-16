@@ -63,7 +63,6 @@ const CreateAccessCodeForm = () => {
       feature_courses: true,
       feature_live_chat: true,
       feature_therapy: includeTherapy,
-      therapy_sessions_remaining: therapySessionsRemaining,
     };
 
     logEvent(CREATE_PARTNER_ACCESS_REQUEST, eventData);
