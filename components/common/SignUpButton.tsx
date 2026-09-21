@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react';
 
 interface Props {
   labelKey?: 'cta' | 'ctaMessaging';
-  // Reported as `sign_up_section_source` on the click event.
+  // Reported as `sign_up_source` on the click event.
   source: string;
 }
 
@@ -37,7 +37,7 @@ const SignUpButton = ({ labelKey = 'cta', source }: Props) => {
 
   const handleClick = () => {
     logEvent(SIGN_UP_HERO_BUTTON_CLICKED, {
-      sign_up_section_source: source,
+      sign_up_source: source,
       ...getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin),
     });
   };
