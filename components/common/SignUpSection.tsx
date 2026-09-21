@@ -92,7 +92,7 @@ export function SignUpSection({
           href={registerPath}
           onClick={() =>
             logEvent(SIGN_UP_TODAY_BANNER_BUTTON_CLICKED, {
-              sign_up_section_source: source,
+              sign_up_source: source,
               ...getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin),
             })
           }

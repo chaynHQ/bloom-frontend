@@ -1,7 +1,7 @@
 'use client';
 
 import { STORYBLOK_COLORS } from '@/lib/constants/enums';
-import { generateStoryblokButtonEvent } from '@/lib/constants/events';
+import { STORYBLOK_BUTTON_CLICKED } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { getButtonStyleProps } from '@/lib/utils/buttonStyles';
 import logEvent, { getEventUserData } from '@/lib/utils/logEvent';
@@ -37,7 +37,7 @@ const BloomButton = (props: BloomButtonProps) => {
       size={size}
       onClick={() => {
         if (clickHandler) clickHandler();
-        logEvent(generateStoryblokButtonEvent(text), eventUserData);
+        logEvent(STORYBLOK_BUTTON_CLICKED, { button_text: text, ...eventUserData });
       }}
     >
       {text}
