@@ -5,6 +5,7 @@ import { routing } from '@/i18n/routing';
 import { STORYBLOK_ENVIRONMENT } from '@/lib/constants/common';
 import { getStoryblokStory } from '@/lib/storyblok';
 import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
+import { isInvalidSlugPageRequest } from '@/lib/utils/validateSlugPageRequest';
 import { notFound } from 'next/navigation';
 
 export const dynamicParams = false;
@@ -18,6 +19,8 @@ async function getStory(locale: string, slug: string) {
 
 export async function generateMetadata({ params }: { params: Params }) {
   const { locale, slug } = await params;
+  if (isInvalidSlugPageRequest(locale, slug)) return;
+
   const story = await getStory(locale, slug);
 
   if (!story) return;
@@ -71,6 +74,10 @@ export async function generateStaticParams() {
 
 export default async function Page({ params }: { params: Params }) {
   const { locale, slug } = await params;
+
+  if (isInvalidSlugPageRequest(locale, slug)) {
+    notFound();
+  }
 
   const story = await getStory(locale, slug);
 

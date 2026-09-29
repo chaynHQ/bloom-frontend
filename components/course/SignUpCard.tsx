@@ -104,8 +104,8 @@ export function SignUpCard({
     () => ({
       sign_up_source: SIGN_UP_SOURCE_PARAM[source],
       sign_up_prompt_placement: embedded ? 'media' : 'page',
-      unlock_item_type: isCourseCopy ? 'course' : (format ?? null),
-      unlock_item_name: contentName ?? null,
+      resource_type: isCourseCopy ? 'course' : (format ?? null),
+      card_item_name: contentName ?? null,
       unlock_item_storyblok_uuid: contentUuid ?? null,
       ...getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin),
     }),

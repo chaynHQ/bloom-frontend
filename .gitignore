@@ -58,3 +58,6 @@ newrelic_agent.log
 .storyblok-translation/
 # Storyblok provisioning snapshots (component schemas and stories, taken before any write)
 .storyblok-provision/
+# Storyblok ⇄ Lokalise: the committed baseline lives in storyblok-lokalise/, but the
+# files you download back from Lokalise are transient — drop them in incoming/.
+storyblok-lokalise/incoming/

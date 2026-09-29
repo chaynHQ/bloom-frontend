@@ -71,7 +71,7 @@ const StoryblokLinkCard = (props: StoryblokLinkCardProps) => {
           hideArrow={hide_arrow}
           qaId="storyblok-link-card"
           onSelect={() =>
-            logEvent(STORYBLOK_LINK_CARD_CLICKED, { link_card_name: event_name || title })
+            logEvent(STORYBLOK_LINK_CARD_CLICKED, { card_item_name: event_name || title })
           }
         />
       </ScrollReveal>

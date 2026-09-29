@@ -57,7 +57,6 @@ const ApplyCodeForm = () => {
         feature_courses: true,
         feature_live_chat: partnerAccessResponse.data.featureLiveChat,
         feature_therapy: partnerAccessResponse.data.featureTherapy,
-        therapy_sessions_remaining: partnerAccessResponse.data.therapySessionsRemaining,
       };
       logEvent(ASSIGN_NEW_PARTNER_ACCESS_SUCCESS, eventData);
       setNewPartnerAccess(partnerAccessResponse.data);

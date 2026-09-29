@@ -1,6 +1,6 @@
 'use client';
 
-import { ACCORDION_OPENED, generateAccordionEvent } from '@/lib/constants/events';
+import { ACCORDION_OPENED } from '@/lib/constants/events';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import logEvent from '@/lib/utils/logEvent';
 import { RichTextOptions } from '@/lib/utils/richText';
@@ -76,9 +76,6 @@ const StoryblokAccordion = (props: StoryblokAccordionProps) => {
     (accordionTitle: string) => (_event: React.SyntheticEvent, isExpanded: boolean) => {
       if (isExpanded) {
         logEvent(ACCORDION_OPENED, { accordionTitle: accordionTitle });
-        logEvent(generateAccordionEvent(accordionTitle), {
-          accordionTitle: accordionTitle,
-        });
       }
     };
   const scrollRef = useRef(null);

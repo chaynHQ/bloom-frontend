@@ -189,7 +189,7 @@ const StoryblokSessionPage = ({
     logEvent(SESSION_CARD_CLICKED, {
       ...eventData,
       card_surface: 'playlist',
-      selected_session_name: session.name,
+      card_item_name: session.name,
       selected_session_storyblok_uuid: session.uuid,
       selected_session_position: session.position,
     });

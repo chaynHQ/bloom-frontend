@@ -29,7 +29,7 @@ the backend event-log names live in `EVENT_LOG_NAME` in [`lib/constants/enums.ts
   (`sessionId`, `feedbackTags`, `count`, `active`, `partner`, `message`) for dashboard continuity.
 - **Event-user data** — most non-trivial events spread `getEventUserData(...)`: `account_type`, `registered_at`,
   and (when the user has partner access) `partner`, `partner_live_chat`, `partner_therapy`,
-  `partner_therapy_remaining`, `partner_therapy_redeemed`, `partner_activated_at`.
+  `partner_activated_at`.
 - **Content identity** — content events carry the name **and** the Storyblok uuid
   (`resource_name` + `resource_storyblok_uuid`, `course_name` + `course_storyblok_uuid`, …) plus `*_themes`
   and `*_progress` where they apply.
@@ -69,14 +69,13 @@ the backend event-log names live in `EVENT_LOG_NAME` in [`lib/constants/enums.ts
 
 ## Partner access
 
-| Event                                                                          | Fires                                                                 | Key params                         |
-| ------------------------------------------------------------------------------ | --------------------------------------------------------------------- | ---------------------------------- |
-| `ASSIGN_NEW_PARTNER_VIEWED`                                                    | `ApplyACodePage` mount                                                | —                                  |
-| `ASSIGN_NEW_PARTNER_ACCESS_REQUEST/SUCCESS/ERROR/INVALID`                      | `ApplyCodeForm`                                                       | `message` on error/invalid         |
-| `VALIDATE_ACCESS_CODE_REQUEST/SUCCESS/ERROR/INVALID`                           | `RegisterForm`                                                        | `partner`, `message`               |
-| `GET_STARTED_WITH_<PARTNER>_CLICKED`                                           | `generateGetStartedPartnerEvent` — **defined, not currently emitted** | —                                  |
-| `PARTNERSHIP_PROMO_<PARTNER>_LOGO_CLICKED`                                     | `RegisterPage` partner logos                                          | —                                  |
-| `<PARTNER>_PROMO_GET_STARTED_CLICKED`, `<PARTNER>_PROMO_GO_TO_COURSES_CLICKED` | `WelcomePage` hero CTA                                                | event-user data, `welcome_partner` |
+| Event                                                                          | Fires                        | Key params                         |
+| ------------------------------------------------------------------------------ | ---------------------------- | ---------------------------------- |
+| `ASSIGN_NEW_PARTNER_VIEWED`                                                    | `ApplyACodePage` mount       | —                                  |
+| `ASSIGN_NEW_PARTNER_ACCESS_REQUEST/SUCCESS/ERROR/INVALID`                      | `ApplyCodeForm`              | `message` on error/invalid         |
+| `VALIDATE_ACCESS_CODE_REQUEST/SUCCESS/ERROR/INVALID`                           | `RegisterForm`               | `partner`, `message`               |
+| `PARTNERSHIP_PROMO_<PARTNER>_LOGO_CLICKED`                                     | `RegisterPage` partner logos | —                                  |
+| `<PARTNER>_PROMO_GET_STARTED_CLICKED`, `<PARTNER>_PROMO_GO_TO_COURSES_CLICKED` | `WelcomePage` hero CTA       | event-user data, `welcome_partner` |
 
 ## Navigation
 
@@ -96,7 +95,10 @@ the backend event-log names live in `EVENT_LOG_NAME` in [`lib/constants/enums.ts
 
 All carry event-user data. Card-click and browse-all events come from `useLibrarySectionEvents('home', …)`
 and share the cross-surface card params: `card_surface`, `card_section`, `card_item_name`,
-`card_item_storyblok_uuid`, `card_item_kind`, `card_item_format`, `card_item_progress`, `card_item_position`.
+`card_item_storyblok_uuid`, `session_type`, `resource_type`, `card_item_progress`, `card_item_position`.
+`session_type` (`course` \| `session`) and `resource_type` (`video` \| `audio` \| `written` \| `activity`)
+are shared, reusable dimension names — the same two params also appear on the Library events below,
+rather than each surface minting its own `*_kind` / `*_format`.
 The card click is `COURSE_CARD_CLICKED` or `RESOURCE_CARD_CLICKED` depending on the card's kind — see
 [Card clicks](#card-clicks).
 
@@ -127,15 +129,15 @@ carry the same `card_*` params as [Home](#home) with `card_surface = welcome`.
 
 All carry event-user data. Filter params report `none` when empty, otherwise a comma-joined list.
 
-| Event                          | Fires                                                                                       | Key params                                                                                                                                                                                       |
-| ------------------------------ | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `LIBRARY_VIEWED`               | `LibraryPage` (after auth)                                                                  | `library_kind`, `library_themes`, `library_formats`, `library_lengths`, `library_search_active`, `library_logged_in`, `library_results_count`                                                    |
-| `LIBRARY_SEARCHED`             | debounced search term                                                                       | `library_search_term_length` (term itself never sent), `library_results_count`                                                                                                                   |
-| `LIBRARY_FILTERED`             | one per filter add / remove — a theme card, a format or length checkbox, or the kind toggle | `library_filter_group` (`theme` \| `format` \| `length` \| `kind`), `library_filter_value` (the single value toggled), `library_filter_action` (`add` \| `remove`), `library_results_count`      |
-| `LIBRARY_FILTERS_CLEARED`      | clear-filters / clear-all                                                                   | `library_formats`, `library_lengths`, `library_had_search_term`, `library_results_count`                                                                                                         |
-| `LIBRARY_LOAD_MORE_CLICKED`    | "load more"                                                                                 | `library_results_count`, `library_visible_count`                                                                                                                                                 |
-| `LIBRARY_ITEM_CLICKED`         | a result card                                                                               | `library_item_name`, `library_item_storyblok_uuid`, `library_item_kind`, `library_item_format`, `library_item_themes`, `library_item_progress`, `library_item_position`, `library_results_count` |
-| `LIBRARY_SUPPORT_CARD_CLICKED` | `SupportSection` card                                                                       | `support_card`                                                                                                                                                                                   |
+| Event                          | Fires                                                                                       | Key params                                                                                                                                                                                                 |
+| ------------------------------ | ------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `LIBRARY_VIEWED`               | `LibraryPage` (after auth)                                                                  | `session_type`, `library_themes`, `resource_type`, `library_lengths`, `library_search_active`, `library_logged_in`, `library_results_count`                                                                |
+| `LIBRARY_SEARCHED`             | debounced search term                                                                       | `library_search_term_length` (term itself never sent), `library_results_count`                                                                                                                             |
+| `LIBRARY_FILTERED`             | one per filter add / remove — a theme card, a format or length checkbox, or the kind toggle | `library_filter_group` (`theme` \| `resource_type` \| `length` \| `session_type`), `library_filter_value` (the single value toggled), `library_filter_action` (`add` \| `remove`), `library_results_count` |
+| `LIBRARY_FILTERS_CLEARED`      | clear-filters / clear-all                                                                   | `resource_type`, `library_lengths`, `library_had_search_term`, `library_results_count`                                                                                                                     |
+| `LIBRARY_LOAD_MORE_CLICKED`    | "load more"                                                                                 | `library_results_count`, `library_visible_count`                                                                                                                                                           |
+| `LIBRARY_ITEM_CLICKED`         | a result card                                                                               | `library_item_name`, `library_item_storyblok_uuid`, `session_type`, `resource_type`, `library_item_themes`, `library_item_progress`, `library_item_position`, `library_results_count`                      |
+| `LIBRARY_SUPPORT_CARD_CLICKED` | `SupportSection` card                                                                       | `support_card`                                                                                                                                                                                             |
 
 ## Grounding
 
@@ -153,34 +155,34 @@ All carry event-user data. Filter params report `none` when empty, otherwise a c
 
 `eventData` on every course event: `course_name`, `course_storyblok_uuid`, `course_progress`, `course_themes`.
 
-| Event                                                                       | Fires                                                     | Key params                                                                            |
-| --------------------------------------------------------------------------- | --------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| `COURSE_OVERVIEW_VIEWED`                                                    | `StoryblokCoursePage` (after auth)                        | eventData                                                                             |
-| `COURSE_START_CLICKED`                                                      | "begin / continue course" (signed-in)                     | `course_cta_target`                                                                   |
-| `SESSION_CARD_CLICKED`                                                      | a session in the list                                     | `card_surface = course`, `session_name`, `session_storyblok_uuid`, `session_position` |
-| `COURSE_OTHER_COURSE_CLICKED`                                               | an "other courses" card                                   | `other_course_name`, `other_course_storyblok_uuid`, `other_course_position`           |
-| `COURSE_INTRO_VIDEO_STARTED/PLAYED/PAUSED/FINISHED`                         | `CourseIntroduction` `<Video eventPrefix="COURSE_INTRO">` | `video_duration`, position                                                            |
-| `COURSE_INTRO_VIDEO_TRANSCRIPT_OPENED/CLOSED` (`COURSE_INTRO_TRANSCRIPT_*`) | intro transcript toggle                                   | eventData, `course_name`                                                              |
+| Event                                                                       | Fires                                                           | Key params                                                                            |
+| --------------------------------------------------------------------------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `COURSE_OVERVIEW_VIEWED`                                                    | `StoryblokCoursePage` (after auth)                              | eventData                                                                             |
+| `COURSE_START_CLICKED`                                                      | "begin / continue course" (signed-in)                           | `course_cta_target`                                                                   |
+| `SESSION_CARD_CLICKED`                                                      | a session in the list                                           | `card_surface = course`, `session_name`, `session_storyblok_uuid`, `session_position` |
+| `COURSE_OTHER_COURSE_CLICKED`                                               | an "other courses" card                                         | `other_course_name`, `other_course_storyblok_uuid`, `other_course_position`           |
+| `COURSE_INTRO_VIDEO_STARTED/PLAYED/PAUSED/FINISHED`                         | `CourseIntroduction` `<Video eventPrefix="COURSE_INTRO_VIDEO">` | `video_duration`, position                                                            |
+| `COURSE_INTRO_VIDEO_TRANSCRIPT_OPENED/CLOSED` (`COURSE_INTRO_TRANSCRIPT_*`) | intro transcript toggle                                         | eventData, `course_name`                                                              |
 
 ## Sessions
 
 `eventData` on every session event: `session_name`, `session_storyblok_uuid`, `session_progress`,
 `session_themes`, `course_name`, `course_storyblok_uuid`.
 
-| Event                                                                                                                                                                                           | Fires                                                                 | Key params                                                                                                         |
-| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| `SESSION_VIEWED`                                                                                                                                                                                | `StoryblokSessionPage` (after auth)                                   | eventData                                                                                                          |
-| `SESSION_STARTED_REQUEST/SUCCESS/ERROR`                                                                                                                                                         | first video play or transcript open (`SessionMediaCard`)              | eventData                                                                                                          |
-| `SESSION_COMPLETE_REQUEST/SUCCESS/ERROR`                                                                                                                                                        | "mark complete" (`SessionActions`)                                    | `error` on error                                                                                                   |
-| `SESSION_VIDEO_STARTED/PLAYED/PAUSED/FINISHED`                                                                                                                                                  | `<Video eventPrefix="SESSION">`                                       | `video_duration`, position                                                                                         |
-| `SESSION_VIDEO_TRANSCRIPT_OPENED/CLOSED` (`SESSION_TRANSCRIPT_*`)                                                                                                                               | transcript toggle                                                     | eventData                                                                                                          |
-| `SESSION_VIDEO_EXPANDED/COLLAPSED`, `SESSION_ACTIVITY_EXPANDED/COLLAPSED`, `SESSION_BONUS_CONTENT_EXPANDED/COLLAPSED`, `SESSION_CHAT_EXPANDED/COLLAPSED`, `SESSION_FEEDBACK_EXPANDED/COLLAPSED` | `SessionContentCard` toggle (`${eventPrefix}_${EXPANDED\|COLLAPSED}`) | eventData                                                                                                          |
-| `SESSION_CHAT_VIDEO_VIDEO_STARTED/…`                                                                                                                                                            | `<Video eventPrefix="SESSION_CHAT_VIDEO">` in `SessionChat`           | `video_duration`                                                                                                   |
-| `SESSION_CHAT_BUTTON_CLICKED`                                                                                                                                                                   | "go to chat" button                                                   | eventData                                                                                                          |
-| `SESSION_PLAYLIST_OPENED`                                                                                                                                                                       | mobile playlist opened                                                | eventData                                                                                                          |
-| `SESSION_CARD_CLICKED`                                                                                                                                                                          | a session in the playlist                                             | `card_surface = playlist`, `selected_session_name`, `selected_session_storyblok_uuid`, `selected_session_position` |
-| `SESSION_NEXT_CLICKED`                                                                                                                                                                          | "next session" (`SessionActions`)                                     | next-session details                                                                                               |
-| `SESSION_FEEDBACK_SUBMITTED`                                                                                                                                                                    | `SessionFeedbackForm` submit                                          | eventData, `feedback_tag`, `feedbackTags` (legacy key)                                                             |
+| Event                                                                                                                                                                                           | Fires                                                                 | Key params                                                                                                                     |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `SESSION_VIEWED`                                                                                                                                                                                | `StoryblokSessionPage` (after auth)                                   | eventData                                                                                                                      |
+| `SESSION_STARTED_REQUEST/SUCCESS/ERROR`                                                                                                                                                         | first video play or transcript open (`SessionMediaCard`)              | eventData                                                                                                                      |
+| `SESSION_COMPLETE_REQUEST/SUCCESS/ERROR`                                                                                                                                                        | "mark complete" (`SessionActions`)                                    | `error` on error                                                                                                               |
+| `SESSION_VIDEO_STARTED/PLAYED/PAUSED/FINISHED`                                                                                                                                                  | `<Video eventPrefix="SESSION">`                                       | `video_duration`, position                                                                                                     |
+| `SESSION_VIDEO_TRANSCRIPT_OPENED/CLOSED` (`SESSION_TRANSCRIPT_*`)                                                                                                                               | transcript toggle                                                     | eventData                                                                                                                      |
+| `SESSION_VIDEO_EXPANDED/COLLAPSED`, `SESSION_ACTIVITY_EXPANDED/COLLAPSED`, `SESSION_BONUS_CONTENT_EXPANDED/COLLAPSED`, `SESSION_CHAT_EXPANDED/COLLAPSED`, `SESSION_FEEDBACK_EXPANDED/COLLAPSED` | `SessionContentCard` toggle (`${eventPrefix}_${EXPANDED\|COLLAPSED}`) | eventData                                                                                                                      |
+| `SESSION_CHAT_VIDEO_STARTED/…`                                                                                                                                                                  | `<Video eventPrefix="SESSION_CHAT_VIDEO">` in `SessionChat`           | `video_duration`                                                                                                               |
+| `SESSION_CHAT_BUTTON_CLICKED`                                                                                                                                                                   | "go to chat" button                                                   | eventData                                                                                                                      |
+| `SESSION_PLAYLIST_OPENED`                                                                                                                                                                       | mobile playlist opened                                                | eventData                                                                                                                      |
+| `SESSION_CARD_CLICKED`                                                                                                                                                                          | a session in the playlist                                             | `card_surface = playlist`, `card_item_name` (shared dimension), `selected_session_storyblok_uuid`, `selected_session_position` |
+| `SESSION_NEXT_CLICKED`                                                                                                                                                                          | "next session" (`SessionActions`)                                     | `card_item_name` (shared dimension, the next session's name), `next_session_storyblok_uuid`                                    |
+| `SESSION_FEEDBACK_SUBMITTED`                                                                                                                                                                    | `SessionFeedbackForm` submit                                          | eventData, `feedback_tag`, `feedbackTags` (legacy key)                                                                         |
 
 ## Resources — video, audio, written, activity
 
@@ -192,23 +194,23 @@ overlay (see [Grounding](#grounding)). They are **not** merged: each is a distin
 The family is selected by an `eventPrefix` string. `eventData` on every event:
 `resource_category`, `resource_name`, `resource_storyblok_uuid`, `resource_progress`, `resource_themes`.
 
-| Event (per family prefix)                        | Fires                                                                                                   | Key params                                                              |
-| ------------------------------------------------ | ------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
-| `${PREFIX}_VIEWED`                               | page mount, after auth (`useStoryblokResourcePage`)                                                     | eventData                                                               |
-| `${PREFIX}_STARTED_REQUEST/SUCCESS/ERROR`        | first engagement — media play, transcript open, or (written/activity) page open (`useResourceProgress`) | eventData                                                               |
-| `${PREFIX}_COMPLETE_REQUEST/SUCCESS/ERROR`       | media finished or "mark complete" pressed                                                               | eventData + `resource_completion_method` (`media_complete` \| `manual`) |
-| `${PREFIX}_VIDEO_STARTED/PLAYED/PAUSED/FINISHED` | `<Video>` — `RESOURCE_VIDEO` only                                                                       | `video_duration`, `video_current_time`, `video_current_percentage`      |
-| `${PREFIX}_AUDIO_STARTED/PLAYED/PAUSED/FINISHED` | `ResourceAudioPlayer` — `RESOURCE_AUDIO` only                                                           | `audio_duration`, `audio_current_time`, `audio_current_percentage`      |
-| `${PREFIX}_TRANSCRIPT_OPENED/CLOSED`             | transcript toggle (`ResourcePageLayout`) — video / audio only                                           | eventData                                                               |
-| `${PREFIX}_VISIT_SESSION`                        | "watch the full session" link                                                                           | eventData, `related_session_name`, `related_session_href`               |
-| `RESOURCE_FEEDBACK_VIEWED`                       | feedback dialog opens (after "mark complete")                                                           | eventData, `category`                                                   |
-| `RESOURCE_FEEDBACK_DISMISSED`                    | dialog closed without submitting                                                                        | eventData, `category`                                                   |
-| `RESOURCE_FEEDBACK_SUBMITTED`                    | feedback submitted                                                                                      | eventData, `feedback_tag`, `category` + `feedbackTags` (legacy keys)    |
+| Event (per family prefix)                       | Fires                                                                                                   | Key params                                                              |
+| ----------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| `${PREFIX}_VIEWED`                              | page mount, after auth (`useStoryblokResourcePage`)                                                     | eventData                                                               |
+| `${PREFIX}_STARTED_REQUEST/SUCCESS/ERROR`       | first engagement — media play, transcript open, or (written/activity) page open (`useResourceProgress`) | eventData                                                               |
+| `${PREFIX}_COMPLETE_REQUEST/SUCCESS/ERROR`      | media finished or "mark complete" pressed                                                               | eventData + `resource_completion_method` (`media_complete` \| `manual`) |
+| `RESOURCE_VIDEO_STARTED/PLAYED/PAUSED/FINISHED` | `<Video eventPrefix="RESOURCE_VIDEO">` — `RESOURCE_VIDEO` only                                          | `video_duration`, `video_current_time`, `video_current_percentage`      |
+| `RESOURCE_AUDIO_STARTED/PLAYED/PAUSED/FINISHED` | `ResourceAudioPlayer eventPrefix="RESOURCE_AUDIO"` — `RESOURCE_AUDIO` only                              | `audio_duration`, `audio_current_time`, `audio_current_percentage`      |
+| `${PREFIX}_TRANSCRIPT_OPENED/CLOSED`            | transcript toggle (`ResourcePageLayout`) — video / audio only                                           | eventData                                                               |
+| `${PREFIX}_VISIT_SESSION`                       | "watch the full session" link                                                                           | eventData, `related_session_name`, `related_session_href`               |
+| `RESOURCE_FEEDBACK_VIEWED`                      | feedback dialog opens (after "mark complete")                                                           | eventData, `category`                                                   |
+| `RESOURCE_FEEDBACK_DISMISSED`                   | dialog closed without submitting                                                                        | eventData, `category`                                                   |
+| `RESOURCE_FEEDBACK_SUBMITTED`                   | feedback submitted                                                                                      | eventData, `feedback_tag`, `category` + `feedbackTags` (legacy keys)    |
 
-The media sub-events carry the media word twice — `RESOURCE_VIDEO_VIDEO_STARTED`,
-`RESOURCE_AUDIO_AUDIO_STARTED` — because the family prefix (`RESOURCE_VIDEO`) and the player component
-suffix (`_VIDEO_STARTED` from `<Video>`) are both present. This is the intended, consistent form.
-`RESOURCE_WRITTEN` / `RESOURCE_ACTIVITY` have no media sub-events (text content).
+The media sub-events are **not** doubled — the player component appends its suffix (`_STARTED` /
+`_PLAYED` / `_PAUSED` / `_FINISHED`) directly to the `eventPrefix` it's given (`RESOURCE_VIDEO`,
+`RESOURCE_AUDIO`), giving `RESOURCE_VIDEO_STARTED` / `RESOURCE_AUDIO_STARTED`, matching the constants
+in `events.ts` exactly. `RESOURCE_WRITTEN` / `RESOURCE_ACTIVITY` have no media sub-events (text content).
 
 ## Card clicks
 
@@ -239,16 +241,16 @@ The related-**resources** carousel (`StoryblokRelatedContent` at the bottom of a
 | `RELATED_RESOURCES_CAROUSEL_PAGED` | `StoryblokRelatedContent` / `ResourceCarousel` carousel                                                                               | `carousel_page`, `carousel_pages`                                                                                    |
 | `RELATED_GROUNDING_CAROUSEL_PAGED` | `ResourceGroundingSection` carousel (grounding card click is `GROUNDING_EXERCISE_CLICKED` with `grounding_context = resource_moment`) | `carousel_page`, `carousel_pages`                                                                                    |
 | `STORYBLOK_CAROUSEL_PAGED`         | `StoryblokCarousel`                                                                                                                   | `carousel_page`, `carousel_pages`                                                                                    |
-| `STORYBLOK_LINK_CARD_CLICKED`      | `StoryblokLinkCard`                                                                                                                   | `link_card_name`                                                                                                     |
+| `STORYBLOK_LINK_CARD_CLICKED`      | `StoryblokLinkCard`                                                                                                                   | `card_item_name` (shared dimension)                                                                                  |
 
 ## Sign-up unlock prompts
 
-| Event                                 | Fires                                                                                                                                           | Key params                                                                                                                                                                                        |
-| ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `SIGN_UP_UNLOCK_BUTTON_CLICKED`       | the `SignUpCard` "sign up" button (gated course / session / resource for a signed-out visitor)                                                  | `sign_up_source` (`course` \| `session` \| `resource` \| `related_session`), `sign_up_prompt_placement` (`media` \| `page`), `unlock_item_type`, `unlock_item_name`, `unlock_item_storyblok_uuid` |
-| `SIGN_UP_UNLOCK_LOGIN_CLICKED`        | the card's "log in" link                                                                                                                        | same                                                                                                                                                                                              |
-| `SIGN_UP_TODAY_BANNER_BUTTON_CLICKED` | `SignUpSection` CTA (name kept from the removed `SignUpBanner`)                                                                                 | `sign_up_section_source`                                                                                                                                                                          |
-| `SIGN_UP_HERO_BUTTON_CLICKED`         | `SignUpButton` — page-header CTA for signed-out visitors on library / grounding / messaging / partially-public content pages; links to register | `sign_up_section_source`                                                                                                                                                                          |
+| Event                                 | Fires                                                                                                                                           | Key params                                                                                                                                                                                                                                                        |
+| ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `SIGN_UP_UNLOCK_BUTTON_CLICKED`       | the `SignUpCard` "sign up" button (gated course / session / resource for a signed-out visitor)                                                  | `sign_up_source` (`course` \| `session` \| `resource` \| `related_session`), `sign_up_prompt_placement` (`media` \| `page`), `resource_type` (shared dimension, `course` or a resource format), `card_item_name` (shared dimension), `unlock_item_storyblok_uuid` |
+| `SIGN_UP_UNLOCK_LOGIN_CLICKED`        | the card's "log in" link                                                                                                                        | same                                                                                                                                                                                                                                                              |
+| `SIGN_UP_TODAY_BANNER_BUTTON_CLICKED` | `SignUpSection` CTA (name kept from the removed `SignUpBanner`)                                                                                 | `sign_up_source` (shared dimension, unified with the sign-up funnel above)                                                                                                                                                                                        |
+| `SIGN_UP_HERO_BUTTON_CLICKED`         | `SignUpButton` — page-header CTA for signed-out visitors on library / grounding / messaging / partially-public content pages; links to register | `sign_up_source` (shared dimension, unified with the sign-up funnel above)                                                                                                                                                                                        |
 
 The sign-up section and card have no `*_VIEWED` events — page views cover "saw the prompt".
 
@@ -264,17 +266,20 @@ The sign-up section and card have no `*_VIEWED` events — page views cover "saw
 
 ## Therapy
 
-| Event                                                                             | Fires                                                                                                                     | Key params           |
-| --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | -------------------- |
-| `THERAPY_BOOKING_VIEWED`                                                          | `BookTherapyPage` mount                                                                                                   | —                    |
-| `THERAPY_BOOKING_OPENED`                                                          | Simplybook widget opened                                                                                                  | —                    |
-| `THERAPY_BOOKINGS_VIEWED`                                                         | `TherapyBookings` list                                                                                                    | `count`              |
-| `THERAPY_BOOKINGS_LOAD_ERROR`                                                     | list load failed                                                                                                          | `error`              |
-| `THERAPY_BOOKING_EXPANDED` / `THERAPY_BOOKING_COLLAPSED`                          | a booking row toggled                                                                                                     | `sessionId`          |
-| `THERAPY_BOOKING_CANCEL_DIALOG_OPENED` / `_CLOSED`                                | cancel dialog                                                                                                             | `sessionId`          |
-| `THERAPY_BOOKING_CANCEL_CONFIRMED`                                                | cancel confirmed                                                                                                          | `sessionId`          |
-| `THERAPY_BOOKING_CANCELLED` / `THERAPY_BOOKING_CANCELLED_ERROR`                   | cancel API result                                                                                                         | `sessionId`, `error` |
-| `THERAPY_CONFIRMATION_VIEWED`, `THERAPY_FAQ_OPENED`, `THERAPY_VIDEO_LINK_CLICKED` | **defined, not currently emitted** (booking confirmation is inside the Simplybook iframe; the video link renders as text) | —                    |
+| Event                                                           | Fires                    | Key params           |
+| --------------------------------------------------------------- | ------------------------ | -------------------- |
+| `THERAPY_BOOKING_VIEWED`                                        | `BookTherapyPage` mount  | —                    |
+| `THERAPY_BOOKING_OPENED`                                        | Simplybook widget opened | —                    |
+| `THERAPY_BOOKINGS_VIEWED`                                       | `TherapyBookings` list   | `count`              |
+| `THERAPY_BOOKINGS_LOAD_ERROR`                                   | list load failed         | `error`              |
+| `THERAPY_BOOKING_EXPANDED` / `THERAPY_BOOKING_COLLAPSED`        | a booking row toggled    | `sessionId`          |
+| `THERAPY_BOOKING_CANCEL_DIALOG_OPENED` / `_CLOSED`              | cancel dialog            | `sessionId`          |
+| `THERAPY_BOOKING_CANCEL_CONFIRMED`                              | cancel confirmed         | `sessionId`          |
+| `THERAPY_BOOKING_CANCELLED` / `THERAPY_BOOKING_CANCELLED_ERROR` | cancel API result        | `sessionId`, `error` |
+
+`THERAPY_CONFIRMATION_VIEWED`, `THERAPY_FAQ_OPENED`, `THERAPY_VIDEO_LINK_CLICKED` were removed — declared
+but never wired to a call site (booking confirmation is inside the Simplybook iframe; the video link
+renders as text).
 
 ## Notes / WhatsApp
 
@@ -330,12 +335,19 @@ The sign-up section and card have no `*_VIEWED` events — page views cover "saw
 
 ## Storyblok generic components
 
-| Event                                                                 | Fires                                                                | Key params       |
-| --------------------------------------------------------------------- | -------------------------------------------------------------------- | ---------------- |
-| `STORYBLOK_BUTTON_<TEXT>_CLICKED`                                     | `StoryblokButton` / common `Button` (`generateStoryblokButtonEvent`) | event-user data  |
-| `ACCORDION_OPENED` + `ACCORDION_<TITLE>`                              | `StoryblokAccordion`                                                 | `accordionTitle` |
-| `FAQ_OPENED`                                                          | **defined, not currently emitted**                                   | —                |
-| `STORYBLOK_VIDEO_STARTED/…`, `STORYBLOK_AUDIO_PLAYER_AUDIO_STARTED/…` | `StoryblokVideo` / `StoryblokAudio` (`eventPrefix`)                  | media position   |
+| Event                                            | Fires                                                                  | Key params                     |
+| ------------------------------------------------ | ---------------------------------------------------------------------- | ------------------------------ |
+| `STORYBLOK_BUTTON_CLICKED`                       | `StoryblokButton` / common `Button`                                    | `button_text`, event-user data |
+| `ACCORDION_OPENED`                               | `StoryblokAccordion`                                                   | `accordionTitle`               |
+| `STORYBLOK_VIDEO_STARTED/PLAYED/PAUSED/FINISHED` | `StoryblokVideo` `<Video eventPrefix="STORYBLOK_VIDEO">`               | media position                 |
+| `STORYBLOK_AUDIO_STARTED/PLAYED/PAUSED/FINISHED` | `StoryblokAudio` `<ResourceAudioPlayer eventPrefix="STORYBLOK_AUDIO">` | media position                 |
+
+`STORYBLOK_BUTTON_CLICKED` and `ACCORDION_OPENED` used to also fire a second, per-content event
+(`STORYBLOK_BUTTON_<TEXT>_CLICKED`, `ACCORDION_<TITLE>`) with the button text / accordion title baked
+into the event _name_. Removed: GA4 caps a property at 500 distinct event names, and Storyblok content
+editors could create an unbounded number of these across 6 locales. The same information is on `button_text`
+/ `accordionTitle` as a parameter instead, which is what a GA4 custom dimension is for. `FAQ_OPENED` was
+removed — declared but never wired to a call site.
 
 ## Feedback
 

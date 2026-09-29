@@ -111,7 +111,7 @@ export const SessionActions = ({
           onClick={() =>
             logEvent(SESSION_NEXT_CLICKED, {
               ...eventData,
-              next_session_name: nextSession.name,
+              card_item_name: nextSession.name,
               next_session_storyblok_uuid: nextSession.uuid,
             })
           }
