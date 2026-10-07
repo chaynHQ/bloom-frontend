@@ -345,7 +345,7 @@ renders as text).
 `STORYBLOK_BUTTON_CLICKED` and `ACCORDION_OPENED` used to also fire a second, per-content event
 (`STORYBLOK_BUTTON_<TEXT>_CLICKED`, `ACCORDION_<TITLE>`) with the button text / accordion title baked
 into the event _name_. Removed: GA4 caps a property at 500 distinct event names, and Storyblok content
-editors could create an unbounded number of these across 6 locales. The same information is on `button_text`
+editors could create an unbounded number of these across every locale. The same information is on `button_text`
 / `accordionTitle` as a parameter instead, which is what a GA4 custom dimension is for. `FAQ_OPENED` was
 removed — declared but never wired to a call site.
 

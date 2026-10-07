@@ -7,11 +7,6 @@ export type Direction = 'ltr' | 'rtl';
  */
 export const RTL_LOCALES: readonly string[] = ['ar'];
 
-/**
- * Returns the text direction for a given locale.
- * Note: Turkish ('tr') is a left-to-right language despite being one of the
- * newly added locales — only Arabic ('ar') is RTL.
- */
 export const getLocaleDirection = (locale: string): Direction =>
   RTL_LOCALES.includes(locale) ? 'rtl' : 'ltr';
 
