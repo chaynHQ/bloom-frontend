@@ -98,7 +98,7 @@ describe('TR/AR resource review (logged in)', { testIsolation: false }, () => {
           cy.writeFile(`${REVIEW_DIR}/results/${String(i).padStart(3, '0')}.json`, result);
         });
         const shot = `${String(i).padStart(3, '0')}_${p.id.replace(/[/:?=]/g, '_')}`;
-        cy.screenshot(shot, { capture: 'viewport' });
+        cy.screenshot(shot, { capture: Cypress.env('FULL') ? 'fullPage' : 'viewport' });
         cy.window().then((win) => {
           const d = win.document;
           const target =

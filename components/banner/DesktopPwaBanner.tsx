@@ -66,10 +66,10 @@ export const DesktopPwaBanner = () => {
       {bannerState === 'Generic' ? (
         <Stack
           direction="row"
-          spacing={1}
           sx={{
+            gap: 1,
             mt: 1.5,
-            ml: 'auto',
+            marginInlineStart: 'auto',
           }}
         >
           <Button

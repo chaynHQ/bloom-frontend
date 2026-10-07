@@ -154,7 +154,11 @@ export function SessionPlaylist({
 
       <Box
         component="ol"
-        sx={{ ...listStyle, listStyle: 'none', ...(flushList && { '& > li': { pl: 0 } }) }}
+        sx={{
+          ...listStyle,
+          listStyle: 'none',
+          ...(flushList && { '& > li': { paddingInlineStart: 0 } }),
+        }}
       >
         {sessions.map((session) => {
           const isCurrent = session.uuid === currentSessionUuid;

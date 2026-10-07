@@ -194,7 +194,7 @@ const SessionFeedbackForm = (props: SessionFeedbackFormProps) => {
           color="secondary"
           type="submit"
           loading={loading}
-          sx={{ ml: 'auto', display: 'block' }}
+          sx={{ marginInlineStart: 'auto', display: 'block' }}
         >
           {t('sendButtonText')}
         </LoadingButton>

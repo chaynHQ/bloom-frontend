@@ -30,8 +30,8 @@ const floatingStyle = {
   display: { xs: 'inline-flex', md: 'none' },
   gap: 0.5,
   py: 0.5,
-  pl: 1,
-  pr: 1.5,
+  paddingInlineStart: 1,
+  paddingInlineEnd: 1.5,
   minWidth: 0,
   textTransform: 'none',
   fontFamily: 'headingFontFamily',
@@ -91,7 +91,7 @@ export function BackLink({
         onClick={onSelect}
         aria-label={label}
         size="small"
-        sx={[floatingStyle, !inlineOnDesktop && { pr: 1 }]}
+        sx={[floatingStyle, !inlineOnDesktop && { paddingInlineEnd: 1 }]}
       >
         <DirectionalIcon>
           <ArrowBackRounded sx={iconStyle} />

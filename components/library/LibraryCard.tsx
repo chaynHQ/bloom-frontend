@@ -1,4 +1,5 @@
 import { CardStatusBadge } from '@/components/cards/CardStatusBadge';
+import DirectionalIcon from '@/components/common/DirectionalIcon';
 import { FormatBadge } from '@/components/common/FormatBadge';
 import { Link as i18nLink } from '@/i18n/routing';
 import { getImageSizes } from '@/lib/utils/imageSizes';
@@ -79,6 +80,8 @@ const metaLabelStyle = {
 } as const;
 
 const spacerStyle = { flexGrow: 1 } as const;
+
+const arrowStyle = { display: 'flex', my: 'auto' } as const;
 
 function Meta({ icon, text }: { icon: ReactNode; text: string }) {
   return (
@@ -169,7 +172,11 @@ export function LibraryCard({
               )
             )}
             <Box sx={spacerStyle} />
-            <ArrowForwardRounded sx={{ fontSize: 18, color: 'secondary.dark', my: 'auto' }} />
+            <Box sx={arrowStyle}>
+              <DirectionalIcon>
+                <ArrowForwardRounded sx={{ fontSize: 18, color: 'secondary.dark' }} />
+              </DirectionalIcon>
+            </Box>
           </Box>
         </Box>
       </CardActionArea>
