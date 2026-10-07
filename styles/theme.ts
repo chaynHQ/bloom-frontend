@@ -615,6 +615,8 @@ export const createAppTheme = (direction: Direction = 'ltr'): Theme => {
         styleOverrides: {
           root: {
             color: theme.palette.grey[800],
+            // MUI pins the label with physical `left: 0` / `top left`, so mirror it for RTL.
+            ...(isRtl && { left: 'auto', right: 0, transformOrigin: 'top right' }),
 
             '&.Mui-focused': {
               color: theme.palette.text.primary,

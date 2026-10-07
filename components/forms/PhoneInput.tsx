@@ -1,5 +1,6 @@
 'use client';
 
+import { useIsRtl } from '@/lib/hooks/useIsRtl';
 import {
   BaseTextFieldProps,
   InputAdornment,
@@ -18,7 +19,12 @@ import {
 } from 'react-international-phone';
 import 'react-international-phone/style.css';
 
-const inputStyles = { width: '100%', '.MuiInput-root': { mt: 2.5 } } as const;
+const inputStyles = {
+  width: '100%',
+  '.MuiInput-root': { mt: 2.5 },
+  // Browsers force tel inputs to LTR; keep that for the digits but let the placeholder follow the page.
+  '& input:placeholder-shown': { direction: 'inherit' },
+} as const;
 
 const selectStyles = {
   width: 'max-content',
@@ -35,18 +41,21 @@ const selectStyles = {
   },
 } as const;
 
-const menuProps = {
-  style: {
-    height: '20rem',
-    width: '30rem',
-    top: '0.5rem',
-    insetInlineStart: '-1.75rem',
-  },
-  transformOrigin: {
-    vertical: 'top',
-    horizontal: 'left',
-  },
-} as const;
+// The menu opens from the select's centre towards the inline end. MUI doesn't mirror an explicit
+// origin, so the side is picked per direction.
+const menuProps = (isRtl: boolean) =>
+  ({
+    style: {
+      height: '20rem',
+      width: '30rem',
+      top: '0.5rem',
+      insetInlineStart: '-1.75rem',
+    },
+    transformOrigin: {
+      vertical: 'top',
+      horizontal: isRtl ? 'right' : 'left',
+    },
+  }) as const;
 
 interface PhoneInputProps extends BaseTextFieldProps {
   value: string;
@@ -60,6 +69,7 @@ const PhoneInput = (props: PhoneInputProps) => {
   // Phone number validation is not included in this component, see whatsapp example
   // Follows example https://github.com/goveo/react-international-phone/blob/master/src/stories/UiLibsExample/components/MuiPhone.tsx
   const t = useTranslations('Whatsapp.form');
+  const isRtl = useIsRtl();
 
   const { inputValue, handlePhoneValueChange, inputRef, country, setCountry } = usePhoneInput({
     defaultCountry: 'gb',
@@ -92,7 +102,7 @@ const PhoneInput = (props: PhoneInputProps) => {
               style={{ marginInlineEnd: '2px', marginInlineStart: '-8px' }}
             >
               <Select
-                MenuProps={menuProps}
+                MenuProps={menuProps(isRtl)}
                 sx={selectStyles}
                 value={country.iso2}
                 onChange={(e) => setCountry(e.target.value as CountryIso2)}

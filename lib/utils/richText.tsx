@@ -25,6 +25,7 @@ import {
   MARK_LINK,
   NODE_EMOJI,
   NODE_HEADING,
+  NODE_OL,
   NODE_PARAGRAPH,
   RenderOptions,
 } from 'storyblok-rich-text-react-renderer';
@@ -51,6 +52,10 @@ export const RichTextOptions: RenderOptions = {
     ['quote_card']: (props: any) => <StoryblokQuoteCard {...props} />,
   },
   nodeResolvers: {
+    // A numbered list that resumes after a paragraph carries its start number in `order`.
+    [NODE_OL]: (children: ReactNode | null, attrs?: { order?: number }) => (
+      <ol start={attrs?.order && attrs.order > 1 ? attrs.order : undefined}>{children}</ol>
+    ),
     [NODE_PARAGRAPH]: (children: ReactNode | null) => (
       <Typography
         sx={{

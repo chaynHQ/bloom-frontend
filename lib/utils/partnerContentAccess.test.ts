@@ -5,6 +5,7 @@ import { ISbStoryData } from '@storyblok/react/rsc';
 import {
   filterStoriesForLocaleAndPartnerAccess,
   getUserContentPartners,
+  storyAvailableInLocale,
 } from './partnerContentAccess';
 
 const partnerAAccess = {
@@ -119,5 +120,19 @@ describe('filterStoriesForLocaleAndPartnerAccess', () => {
   it('is case-insensitive for partner names', () => {
     const result = filterStoriesForLocaleAndPartnerAccess(mockResources, 'fr', ['PARTNER3']);
     expect(result.map((s) => s.uuid)).toEqual(['2']);
+  });
+});
+
+describe('storyAvailableInLocale', () => {
+  it('hides a story authored only in another language from English', () => {
+    expect(storyAvailableInLocale(['tr'], 'en')).toBe(false);
+    expect(storyAvailableInLocale(['tr'], 'tr')).toBe(true);
+  });
+  it('maps English onto "default"', () => {
+    expect(storyAvailableInLocale(['default', 'de'], 'en')).toBe(true);
+  });
+  it('treats a story with no languages as English-only', () => {
+    expect(storyAvailableInLocale([], 'en')).toBe(true);
+    expect(storyAvailableInLocale(undefined, 'de')).toBe(false);
   });
 });

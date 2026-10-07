@@ -42,6 +42,7 @@ const StoryblokResourceAudioPage = ({ story: initialStory }: { story: ISbStoryDa
     content,
     storyUuid,
     isSignedIn,
+    availableInLocale,
     contentAccessStatus,
     resourceProgress,
     resourceId,
@@ -77,6 +78,10 @@ const StoryblokResourceAudioPage = ({ story: initialStory }: { story: ISbStoryDa
     related_grounding,
     related_session,
   } = content;
+
+  if (!availableInLocale) {
+    return <ContentUnavailable reason="language" />;
+  }
 
   if (contentAccessStatus === 'accessDenied') {
     return <ContentUnavailable />;

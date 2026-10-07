@@ -61,3 +61,5 @@ newrelic_agent.log
 # Storyblok ⇄ Lokalise: the committed baseline lives in storyblok-lokalise/, but the
 # files you download back from Lokalise are transient — drop them in incoming/.
 storyblok-lokalise/incoming/
+# Arabic/Turkish resource upload source media and transcripts — local only, never committed
+content_upload/

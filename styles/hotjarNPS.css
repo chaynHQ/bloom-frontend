@@ -127,12 +127,12 @@
   appearance: none;
   background-color: #ff976a !important;
   outline: unset !important;
-  margin-left: -1px;
+  margin-inline-start: -1px;
 }
 
 ._hj-widget-container ._hj-s3UIi__styles__globalStyles input[type='range' i]::-moz-range-thumb {
   appearance: none;
   background-color: #ff976a !important;
   outline: unset !important;
-  margin-left: -1px;
+  margin-inline-start: -1px;
 }

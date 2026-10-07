@@ -53,6 +53,7 @@ export const StoryblokTextResourcePage = ({
     content,
     storyUuid,
     isSignedIn,
+    availableInLocale,
     contentAccessStatus,
     resourceProgress,
     resourceId,
@@ -90,6 +91,10 @@ export const StoryblokTextResourcePage = ({
   useEffect(() => {
     start();
   }, [start]);
+
+  if (!availableInLocale) {
+    return <ContentUnavailable reason="language" />;
+  }
 
   if (contentAccessStatus === 'accessDenied') {
     return <ContentUnavailable />;

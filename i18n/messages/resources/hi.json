@@ -91,6 +91,10 @@
       "exercisesCount": "{count, plural, one {# exercise} other {# exercises}}",
       "loadMore": "Aur dikhaiye",
       "duration": "{minutes} min"
+    },
+    "languageUnavailable": {
+      "title": "Yeh resource abhi aapki bhasha mein uplabdh nahi hai.",
+      "introduction": "Hum Bloom ke resources ko aur bhashaon mein laane par kaam kar rahe hain. Tab tak, aapki bhasha mein jo uplabdh hai use <contactLink>Library</contactLink> mein dekhiye."
     }
   }
 }

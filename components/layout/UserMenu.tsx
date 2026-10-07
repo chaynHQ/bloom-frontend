@@ -17,6 +17,7 @@ import {
   SECONDARY_HEADER_THERAPY_CLICKED,
 } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
+import { useIsRtl } from '@/lib/hooks/useIsRtl';
 import logEvent from '@/lib/utils/logEvent';
 import { navDropdownOrigin, navDropdownPaperStyle, navDropdownRootStyle } from '@/styles/common';
 import { Event } from '@mui/icons-material';
@@ -28,6 +29,7 @@ const menuItemStyle = {
 
 export default function UserMenu() {
   const t = useTranslations('Navigation');
+  const isRtl = useIsRtl();
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
 
@@ -74,7 +76,7 @@ export default function UserMenu() {
         onClose={handleClose}
         elevation={0}
         sx={navDropdownRootStyle}
-        {...navDropdownOrigin}
+        {...navDropdownOrigin(isRtl)}
         slotProps={{
           list: {
             id: 'user-menu',

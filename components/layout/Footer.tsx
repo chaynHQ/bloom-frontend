@@ -4,6 +4,7 @@ import { PARTNER_SOCIAL_LINK_CLICKED, SOCIAL_LINK_CLICKED } from '@/lib/constant
 import { PartnerContent, getPartnerContent } from '@/lib/constants/partners';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { useCookieReferralPartner } from '@/lib/hooks/useCookieReferralPartner';
+import { useIsRtl } from '@/lib/hooks/useIsRtl';
 import bloomLogo from '@/public/bloom_logo.svg';
 import comicReliefLogo from '@/public/comic_relief_logo.png';
 import communityFundLogo from '@/public/community_fund_logo.svg';
@@ -94,6 +95,7 @@ const fundingLogosContainerStyle = {
 const Footer = () => {
   const tS = useTranslations('Shared');
   const searchParams = useSearchParams();
+  const isRtl = useIsRtl();
 
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
@@ -205,7 +207,7 @@ const Footer = () => {
                       sizes={getImageSizes(logoContainerStyle.width)}
                       style={{
                         objectFit: 'contain',
-                        objectPosition: 'left',
+                        objectPosition: isRtl ? 'right' : 'left',
                       }}
                     />
                   </Link>
