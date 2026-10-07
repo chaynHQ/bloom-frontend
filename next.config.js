@@ -26,7 +26,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
 
-// The locale segment of the prefixed paths below. Mirrors ALL_LOCALES in i18n/routing.ts.
+// The locale segment of the prefixed paths below. Mirrors routing.locales in i18n/routing.ts.
 const LOCALE_PATTERN = ':locale(en|es|de|fr|pt|hi|ar|tr)';
 
 module.exports = withBundleAnalyzer(

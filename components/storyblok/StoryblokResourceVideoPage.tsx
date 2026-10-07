@@ -48,6 +48,7 @@ const StoryblokResourceVideoPage = ({ story: initialStory }: { story: ISbStoryDa
     content,
     storyUuid,
     isSignedIn,
+    availableInLocale,
     contentAccessStatus,
     resourceProgress,
     resourceId,
@@ -88,6 +89,10 @@ const StoryblokResourceVideoPage = ({ story: initialStory }: { story: ISbStoryDa
     () => references?.filter((r) => r.is_key_reference) ?? [],
     [references],
   );
+
+  if (!availableInLocale) {
+    return <ContentUnavailable reason="language" />;
+  }
 
   if (contentAccessStatus === 'accessDenied') {
     return <ContentUnavailable />;

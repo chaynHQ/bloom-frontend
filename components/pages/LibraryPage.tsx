@@ -82,7 +82,7 @@ const sidebarStyle = {
   flexShrink: 0,
   pt: BROWSE_PY,
   pb: { xs: 0, md: 6 },
-  pr: { md: SIDEBAR_GUTTER },
+  paddingInlineEnd: { md: SIDEBAR_GUTTER },
   borderInlineEnd: { md: '1px solid' },
   borderColor: { md: 'cardBorder' },
 } as const;
@@ -127,13 +127,13 @@ const searchChipStyle = {
     fontSize: '0.875rem',
     fontWeight: 500,
     color: 'grey.800',
-    pl: 1.5,
-    pr: 0.5,
+    paddingInlineStart: 1.5,
+    paddingInlineEnd: 0.5,
   },
   // MUI's default delete icon is a 22px glyph with negative margins.
   '& .MuiChip-deleteIcon': {
     m: 0,
-    mr: 1,
+    marginInlineEnd: 1,
     fontSize: 18,
     color: 'grey.700',
     '&:hover': { color: 'grey.900' },
@@ -145,7 +145,7 @@ const resultsColumnStyle = {
   minWidth: 0,
   pt: BROWSE_PY,
   pb: 6,
-  pl: { md: SIDEBAR_GUTTER },
+  paddingInlineStart: { md: SIDEBAR_GUTTER },
 } as const;
 
 const resultsHeaderStyle = {

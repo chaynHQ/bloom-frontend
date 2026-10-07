@@ -19,10 +19,18 @@ const imageContainerStyle = {
 interface ContentUnavailableProps {
   title?: string;
   message?: TextNode;
+  // 'language': the content exists, just not in the viewer's language (yet).
+  reason?: 'access' | 'language';
 }
 
-export const ContentUnavailable = ({ title, message }: ContentUnavailableProps) => {
-  const t = useTranslations('Courses.accessGuard');
+export const ContentUnavailable = ({
+  title,
+  message,
+  reason = 'access',
+}: ContentUnavailableProps) => {
+  const t = useTranslations(
+    reason === 'language' ? 'Resources.languageUnavailable' : 'Courses.accessGuard',
+  );
   const tS = useTranslations('Shared');
 
   return (

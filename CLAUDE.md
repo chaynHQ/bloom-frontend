@@ -38,7 +38,7 @@ Cypress tests need additional env vars (see `docs/configure-cypress.md`) and a s
 
 ### Routing & Internationalisation
 
-All routes live under `app/[locale]/` — Next.js App Router with `next-intl`. Supported locales: `en`, `de`, `fr`, `es`, `pt`, `hi` (default: `en`, prefix omitted via `localePrefix: 'as-needed'`). The middleware in `middleware.ts` handles locale routing. Use `Link`, `redirect`, `usePathname`, `useRouter` from `i18n/routing` (not `next/navigation`) to keep locale context.
+All routes live under `app/[locale]/` — Next.js App Router with `next-intl`. Supported locales: `en`, `de`, `fr`, `es`, `pt`, `hi`, `ar`, `tr` (default: `en`, prefix omitted via `localePrefix: 'as-needed'`). The middleware in `middleware.ts` handles locale routing. Use `Link`, `redirect`, `usePathname`, `useRouter` from `i18n/routing` (not `next/navigation`) to keep locale context.
 
 Translation strings live in `i18n/messages/`. The `next-intl` plugin is wired in `next.config.js`.
 

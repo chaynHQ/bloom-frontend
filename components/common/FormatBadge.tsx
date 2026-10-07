@@ -36,8 +36,8 @@ const badgeStyle = {
   alignSelf: 'flex-start',
   height: 32,
   mb: 2,
-  pl: 1,
-  pr: 1.5,
+  paddingInlineStart: 1,
+  paddingInlineEnd: 1.5,
   borderRadius: '8px',
   border: '1px solid',
 } as const;

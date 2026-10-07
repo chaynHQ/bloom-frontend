@@ -91,6 +91,10 @@
       "exercisesCount": "{count, plural, zero {لا تمارين} one {تمرين واحد} two {تمرينان} few {# تمارين} many {# تمرينًا} other {# تمرين}}",
       "loadMore": "عرض المزيد",
       "duration": "{minutes, plural, zero {# دقيقة} one {دقيقة واحدة} two {دقيقتان} few {# دقائق} many {# دقيقة} other {# دقيقة}}"
+    },
+    "languageUnavailable": {
+      "title": "هذا المورد غير متاح بلغتك بعد",
+      "introduction": "نعمل على توفير موارد Bloom بمزيد من اللغات. في هذه الأثناء، يمكنك استكشاف ما هو متاح بلغتك في <contactLink>المكتبة</contactLink>."
     }
   }
 }

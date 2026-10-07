@@ -325,7 +325,8 @@ export const MessageComposer = ({
               size="small"
               disabled={isDisabled}
               sx={textFieldStyle}
-              slotProps={{ htmlInput: { maxLength: 10_000, dir: 'auto' } }}
+              // An empty dir="auto" field resolves to LTR, so only switch once there's text to detect from.
+              slotProps={{ htmlInput: { maxLength: 10_000, dir: draft ? 'auto' : undefined } }}
             />
             <Tooltip title={t('send')}>
               <span>

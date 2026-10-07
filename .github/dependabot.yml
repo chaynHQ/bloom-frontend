@@ -11,9 +11,9 @@ updates:
       time: '09:00'
       timezone: 'Europe/London'
     assignees:
-      - annarhughes
+      - annachayn
     reviewers:
-      - annarhughes
+      - annachayn
     groups:
       dev-deps:
         dependency-type: 'development'
@@ -37,9 +37,9 @@ updates:
       time: '09:00'
       timezone: 'Europe/London'
     assignees:
-      - annarhughes
+      - annachayn
     reviewers:
-      - annarhughes
+      - annachayn
     groups:
       actions-deps:
         patterns:

@@ -2,6 +2,7 @@
 
 import { routing, usePathname, useRouter } from '@/i18n/routing';
 import { HEADER_LANGUAGE_MENU_CLICKED, generateLanguageMenuEvent } from '@/lib/constants/events';
+import { useIsRtl } from '@/lib/hooks/useIsRtl';
 import logEvent from '@/lib/utils/logEvent';
 import {
   navBarControlStyle,
@@ -57,6 +58,7 @@ export default function LanguageMenu() {
   const params = useParams();
   const locale = useLocale();
   const t = useTranslations('Navigation');
+  const isRtl = useIsRtl();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -106,7 +108,7 @@ export default function LanguageMenu() {
         onClose={handleClose}
         elevation={0}
         sx={navDropdownRootStyle}
-        {...navDropdownOrigin}
+        {...navDropdownOrigin(isRtl)}
         slotProps={{
           list: {
             id: 'language-menu',

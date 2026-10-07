@@ -121,10 +121,15 @@ export const navDropdownRootStyle = {
   '&.MuiMenu-root': { top: 0 },
 } as const;
 
-export const navDropdownOrigin = {
-  anchorOrigin: { vertical: 'bottom', horizontal: 'right' },
-  transformOrigin: { vertical: 'top', horizontal: 'right' },
-} as const;
+// Aligns the menu to the trigger's inline-end edge. MUI only mirrors its default origins, not
+// explicit ones, so the side is picked per direction.
+export const navDropdownOrigin = (isRtl: boolean) => {
+  const horizontal = isRtl ? 'left' : 'right';
+  return {
+    anchorOrigin: { vertical: 'bottom', horizontal },
+    transformOrigin: { vertical: 'top', horizontal },
+  } as const;
+};
 
 // Dropdown surface for the nav bar's language / account menus.
 export const navDropdownPaperStyle = {

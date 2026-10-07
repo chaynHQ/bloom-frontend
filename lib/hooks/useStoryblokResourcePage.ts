@@ -1,6 +1,6 @@
 'use client';
 
-import { LANGUAGES, PROGRESS_STATUS, RESOURCE_CATEGORIES } from '@/lib/constants/enums';
+import { PROGRESS_STATUS, RESOURCE_CATEGORIES } from '@/lib/constants/enums';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { useContentAccessStatus } from '@/lib/hooks/useContentAccessStatus';
 import { useLogEventOnce } from '@/lib/hooks/useLogEventOnce';
@@ -11,6 +11,7 @@ import { Resource } from '@/lib/store/resourcesSlice';
 import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
 import hasAccessToPage from '@/lib/utils/hasAccessToPage';
 import { normaliseSlug } from '@/lib/utils/libraryData';
+import { storyAvailableInLocale } from '@/lib/utils/partnerContentAccess';
 import { toResourceContributors } from '@/lib/utils/resourceContributors';
 import { useStoryblokState } from '@storyblok/react';
 import { ISbStoryData } from '@storyblok/react/rsc';
@@ -75,15 +76,18 @@ export function useStoryblokResourcePage<T extends ResourceStoryContent>({
   const userAuthStatus = useUserAuthStatus();
   const isSignedIn = userAuthStatus === 'signedIn';
 
+  // A resource can exist in some languages only (including not yet in English). Signing in can't
+  // change that, so pages show "not available in your language" before any auth/partner gating.
+  const availableInLocale = storyAvailableInLocale(languages, locale);
+
   const hasPageAccess = useMemo(() => {
     const isPublicContent = included_for_partners.some((p) => p.toLowerCase() === 'public');
-    const availableForLocale = locale === LANGUAGES.en || languages.includes(locale);
     return (
       (isPublicContent ||
         hasAccessToPage(isSignedIn, included_for_partners, partnerAccesses, partnerAdmin)) &&
-      availableForLocale
+      availableInLocale
     );
-  }, [partnerAccesses, included_for_partners, isSignedIn, partnerAdmin, locale, languages]);
+  }, [partnerAccesses, included_for_partners, isSignedIn, partnerAdmin, availableInLocale]);
 
   const { resourceProgress, resourceId } = useMemo(() => {
     const userResource = resources.find((r: Resource) => r.storyblokUuid === storyUuid);
@@ -150,6 +154,7 @@ export function useStoryblokResourcePage<T extends ResourceStoryContent>({
     content,
     storyUuid,
     isSignedIn,
+    availableInLocale,
     contentAccessStatus,
     resourceProgress,
     resourceId,
