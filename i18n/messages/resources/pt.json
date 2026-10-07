@@ -91,6 +91,10 @@
       "exercisesCount": "{count, plural, one {# exercício} other {# exercícios}}",
       "loadMore": "Ver mais",
       "duration": "{minutes} min"
+    },
+    "languageUnavailable": {
+      "title": "Este recurso ainda não está disponível no seu idioma",
+      "introduction": "Estamos trabalhando para levar os recursos do Bloom a mais idiomas. Enquanto isso, explore o que já está disponível no seu idioma na <contactLink>biblioteca</contactLink>."
     }
   }
 }

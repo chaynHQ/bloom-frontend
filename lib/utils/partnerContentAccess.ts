@@ -27,19 +27,21 @@ interface FilterableStory {
   content?: Record<string, any> | null;
 }
 
-// Whether a story is visible to a viewer in the given locale: its language list must include the
-// locale (a story with none set is treated as source-language English), and its
-// `included_for_partners` must intersect the viewer's partners (an empty list means everyone).
+// A story's `languages` must include the locale (English is Storyblok's `default`); a story with
+// none set is treated as source-language English.
+export function storyAvailableInLocale(languages: string[] | undefined, locale: string): boolean {
+  const contentLanguage = locale === 'en' ? 'default' : locale;
+  return languages?.length ? languages.includes(contentLanguage) : contentLanguage === 'default';
+}
+
+// Whether a story is visible to a viewer in the given locale (see `storyAvailableInLocale`) and its
+// `included_for_partners` intersects the viewer's partners (an empty list means everyone).
 function storyMatchesLocaleAndPartnerAccess(
   story: FilterableStory,
   locale: string,
   userPartners: string[],
 ): boolean {
-  const contentLanguage = locale === 'en' ? 'default' : locale;
-  const languages: string[] | undefined = story?.content?.languages;
-  const matchesLanguage = languages?.length
-    ? languages.includes(contentLanguage)
-    : contentLanguage === 'default';
+  const matchesLanguage = storyAvailableInLocale(story?.content?.languages, locale);
 
   const includedForPartners: string[] = story?.content?.included_for_partners ?? [];
   const partners = userPartners.map((partner) => partner.toLowerCase());
