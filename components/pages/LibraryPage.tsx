@@ -20,6 +20,7 @@ import { useLibraryItems } from '@/lib/hooks/useLibraryItems';
 import { rememberLibraryPath } from '@/lib/hooks/useLibraryReturnHref';
 import { useUserAuthStatus } from '@/lib/hooks/useUserAuthStatus';
 import {
+  featureItems,
   filterLibraryItems,
   FORMAT_KEYS,
   KIND_KEYS,
@@ -36,7 +37,6 @@ import {
   type ThemeKey,
 } from '@/lib/utils/libraryData';
 import logEvent, { getEventUserData } from '@/lib/utils/logEvent';
-import illustrationCourses from '@/public/illustration_courses.svg';
 import CloseRounded from '@mui/icons-material/CloseRounded';
 import SearchRounded from '@mui/icons-material/SearchRounded';
 import TuneRounded from '@mui/icons-material/TuneRounded';
@@ -51,9 +51,12 @@ import {
   ToggleButtonGroup,
   Typography,
 } from '@mui/material';
+import { useStoryblokState } from '@storyblok/react';
+import { ISbStoryData } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 import { SupportSection } from '../common/SupportSection';
 import Header from '../layout/Header';
 import { FilterGroups } from '../library/FilterGroups';
@@ -211,9 +214,29 @@ const cardGridStyle = {
 
 const reportList = (values: string[]) => (values.length ? values.join(',') : 'none');
 
-export default function LibraryPage({ stories }: { stories: LibraryStories }) {
+// The `library_page` content type in Storyblok.
+interface LibraryPageContent {
+  title: string;
+  introduction: StoryblokRichtext;
+  header_image?: { filename: string; alt?: string };
+  featured_content?: string[];
+}
+
+export default function LibraryPage({
+  story: initialStory,
+  stories,
+}: {
+  story: ISbStoryData;
+  stories: LibraryStories;
+}) {
   const t = useTranslations('Library');
-  const items = useLibraryItems(stories);
+  const story = useStoryblokState(initialStory) ?? initialStory;
+  const content = story.content as LibraryPageContent;
+  const libraryItems = useLibraryItems(stories);
+  const { items, featuredIds } = useMemo(
+    () => featureItems(libraryItems, content.featured_content),
+    [libraryItems, content.featured_content],
+  );
 
   // Filters live in the URL query string, so back navigation and reloads restore them while a
   // fresh visit to /library starts clean. The search box keeps local state for responsiveness
@@ -435,11 +458,12 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
         library_item_themes: reportList(item.themes),
         library_item_progress: PROGRESS_STATUS_BY_ITEM_PROGRESS[item.progress ?? 'none'],
         library_item_position: index + 1, // 1-based rank in the filtered results
+        library_item_featured: featuredIds.has(item.id),
         library_results_count: resultsCount,
         ...eventUserData,
       });
     },
-    [resultsCount, eventUserData],
+    [resultsCount, eventUserData, featuredIds],
   );
 
   const loadMore = () => {
@@ -478,10 +502,10 @@ export default function LibraryPage({ stories }: { stories: LibraryStories }) {
   return (
     <Box>
       <Header
-        title={t('title')}
-        imageSrc={illustrationCourses}
-        imageAlt="alt.personSitting"
-        introduction={t('introduction')}
+        title={content.title}
+        introduction={content.introduction}
+        imageSrc={content.header_image?.filename}
+        imageAlt={content.header_image?.alt ? `alt.${content.header_image.alt}` : undefined}
         cta={!isLoggedIn ? <SignUpButton source="library" /> : undefined}
       />
 

@@ -276,6 +276,28 @@ export function filterLibraryItems(items: LibraryItem[], filters: LibraryFilters
   return matches.sort((a, b) => titleMatchesFirst(a) - titleMatchesFirst(b));
 }
 
+export const MAX_FEATURED_ITEMS = 5;
+
+// Moves the items picked in the library story's `featured_content` to the front, in the picked
+// order. Picks that aren't in `items` (unavailable in this locale or to this partner) are skipped,
+// and the cap holds even if the Storyblok field is changed to allow more.
+export function featureItems(
+  items: LibraryItem[],
+  featuredContent: string[] | undefined,
+): { items: LibraryItem[]; featuredIds: Set<string> } {
+  const byId = new Map(items.map((item) => [item.id, item]));
+  const featured = [...new Set(featuredContent ?? [])]
+    .map((id) => byId.get(id))
+    .filter((item): item is LibraryItem => Boolean(item))
+    .slice(0, MAX_FEATURED_ITEMS);
+  const featuredIds = new Set(featured.map((item) => item.id));
+
+  return {
+    items: [...featured, ...items.filter((item) => !featuredIds.has(item.id))],
+    featuredIds,
+  };
+}
+
 export function toggle<T>(list: T[], value: T): T[] {
   return list.includes(value) ? list.filter((v) => v !== value) : [...list, value];
 }

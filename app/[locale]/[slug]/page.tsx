@@ -56,6 +56,7 @@ export async function generateStaticParams() {
     'activity',
     'grounding',
     'policies',
+    'library',
   ];
 
   Object.keys(data.links).forEach((linkKey) => {

@@ -1,5 +1,6 @@
 import {
   bucketOf,
+  featureItems,
   filterLibraryItems,
   libraryFiltersToQuery,
   normaliseSlug,
@@ -344,6 +345,68 @@ describe('bucketOf', () => {
     [21, 'over20'],
   ])('puts %i minutes in the %s bucket', (minutes, bucket) => {
     expect(bucketOf(minutes)).toBe(bucket);
+  });
+});
+
+describe('featureItems', () => {
+  const item = (id: string) => ({ id }) as LibraryItem;
+  const items = ['a', 'b', 'c', 'd', 'e', 'f', 'g'].map(item);
+  const ids = (list: LibraryItem[]) => list.map((entry) => entry.id);
+
+  it('moves the picks to the front in the picked order, keeping the rest in order', () => {
+    const result = featureItems(items, ['e', 'b']);
+
+    expect(ids(result.items)).toEqual(['e', 'b', 'a', 'c', 'd', 'f', 'g']);
+    expect([...result.featuredIds]).toEqual(['e', 'b']);
+  });
+
+  it('skips picks the viewer cannot see, without leaving a gap', () => {
+    expect(ids(featureItems(items, ['not-in-locale', 'c']).items)).toEqual([
+      'c',
+      'a',
+      'b',
+      'd',
+      'e',
+      'f',
+      'g',
+    ]);
+  });
+
+  it('caps the featured items at five, counting only visible picks', () => {
+    const result = featureItems(items, ['hidden', 'g', 'f', 'e', 'd', 'c', 'b']);
+
+    expect(ids(result.items).slice(0, 5)).toEqual(['g', 'f', 'e', 'd', 'c']);
+    expect(ids(result.items).slice(5)).toEqual(['a', 'b']);
+    expect(result.featuredIds.size).toBe(5);
+  });
+
+  it('ignores a pick made twice', () => {
+    expect(ids(featureItems(items, ['c', 'c']).items)).toEqual(['c', 'a', 'b', 'd', 'e', 'f', 'g']);
+  });
+
+  it('keeps the default order with no picks', () => {
+    expect(ids(featureItems(items, undefined).items)).toEqual(ids(items));
+    expect(ids(featureItems(items, []).items)).toEqual(ids(items));
+    expect(featureItems(items, undefined).featuredIds.size).toBe(0);
+  });
+
+  it('keeps featured items first through filters and search, which preserve order', () => {
+    const lesson = (id: string, title: string) =>
+      ({ id, kind: 'session', themes: ['healing-journey'], title, description: '' }) as LibraryItem;
+    const featured = featureItems(
+      [lesson('x', 'Fear in the body'), lesson('y', 'Body image'), lesson('z', 'Anger')],
+      ['y'],
+    ).items;
+    const filters: LibraryFilters = {
+      keyword: '',
+      kind: 'all',
+      themes: ['healing-journey'],
+      formats: [],
+      lengths: [],
+    };
+
+    expect(ids(filterLibraryItems(featured, filters))).toEqual(['y', 'x', 'z']);
+    expect(ids(filterLibraryItems(featured, { ...filters, keyword: 'body' }))).toEqual(['y', 'x']);
   });
 });
 
