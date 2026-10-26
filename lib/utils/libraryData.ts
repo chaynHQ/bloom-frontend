@@ -117,11 +117,33 @@ export function toLibraryStory(story: ISbStoryData): LibraryStory {
   };
 }
 
+// The `cdn/links` fields that place a folder among its siblings.
+export interface StoryblokFolderLink {
+  id: number;
+  is_folder: boolean;
+  position: number;
+}
+
+// A course story is its folder's start page, so its own `position` never differs between courses.
+// Ordering by the folder's position lets editors reorder courses by dragging their folders in
+// Storyblok. Stories whose folder isn't listed keep their incoming order, after the rest.
+export function sortByFolderPosition<T extends { parent_id: number | null }>(
+  stories: T[],
+  links: StoryblokFolderLink[],
+): T[] {
+  const folderPositions = new Map(
+    links.filter((link) => link.is_folder).map((link) => [link.id, link.position]),
+  );
+  const positionOf = (story: T) =>
+    folderPositions.get(story.parent_id ?? -1) ?? Number.MAX_SAFE_INTEGER;
+  return [...stories].sort((a, b) => positionOf(a) - positionOf(b));
+}
+
 export interface LibraryStories {
   courses: LibraryStory[];
   // Lessons nested inside a course (Session / session_iba blocks), surfaced as single sessions.
   courseSessions: LibraryStory[];
-  // Every standalone resource, flattened across the format folders (video, audio, written, activity).
+  // Every standalone resource, flattened across the format folders (audio, video, written, activity).
   resources: LibraryStory[];
 }
 

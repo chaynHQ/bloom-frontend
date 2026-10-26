@@ -77,6 +77,6 @@ export function useLibraryItems(stories: LibraryStories): LibraryItem[] {
       withProgress(storyToLibraryItem(story, locale), resourcesProgress),
     );
 
-    return [...courseItems, ...sessionItems, ...courseSessionItems];
+    return [...courseItems, ...courseSessionItems, ...sessionItems];
   }, [stories, locale, userPartners, coursesProgress, resourcesProgress]);
 }

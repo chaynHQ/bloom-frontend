@@ -6,6 +6,7 @@ import {
   parentCourseSlug,
   parseLibraryFilters,
   pathRequiresAccount,
+  sortByFolderPosition,
   storyToLibraryItem,
   toggle,
   toLibraryStory,
@@ -229,6 +230,51 @@ describe('parentCourseSlug', () => {
     expect(parentCourseSlug('de/courses/managing-anxiety/what-is-anxiety')).toBe(
       'de/courses/managing-anxiety',
     );
+  });
+});
+
+describe('sortByFolderPosition', () => {
+  const course = (slug: string, parent_id: number | null) => ({ slug, parent_id });
+  const folder = (id: number, position: number) => ({ id, is_folder: true, position });
+  const slugs = (stories: { slug: string }[]) => stories.map((story) => story.slug);
+
+  it('orders course start pages by their folder position', () => {
+    const stories = [course('healing', 1), course('society', 2), course('recovering', 3)];
+    const links = [folder(1, 70), folder(2, 60), folder(3, 10)];
+
+    expect(slugs(sortByFolderPosition(stories, links))).toEqual([
+      'recovering',
+      'society',
+      'healing',
+    ]);
+  });
+
+  it('puts stories with an unlisted folder last, in their incoming order', () => {
+    const stories = [course('orphan-a', 9), course('rootless', null), course('listed', 1)];
+
+    expect(slugs(sortByFolderPosition(stories, [folder(1, 0)]))).toEqual([
+      'listed',
+      'orphan-a',
+      'rootless',
+    ]);
+  });
+
+  it('only reads folder links', () => {
+    const stories = [course('a', 1), course('b', 2)];
+    const links = [folder(1, 20), folder(2, 10), { id: 1, is_folder: false, position: -100 }];
+
+    expect(slugs(sortByFolderPosition(stories, links))).toEqual(['b', 'a']);
+  });
+
+  it('keeps the incoming order without links, and leaves the input untouched', () => {
+    const stories = [course('a', 1), course('b', 2)];
+
+    expect(slugs(sortByFolderPosition(stories, []))).toEqual(['a', 'b']);
+    expect(slugs(sortByFolderPosition(stories, [folder(1, 20), folder(2, 10)]))).toEqual([
+      'b',
+      'a',
+    ]);
+    expect(slugs(stories)).toEqual(['a', 'b']);
   });
 });
 
