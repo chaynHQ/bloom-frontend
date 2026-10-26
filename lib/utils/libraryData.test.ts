@@ -1,11 +1,13 @@
 import {
   bucketOf,
+  featureItems,
   filterLibraryItems,
   libraryFiltersToQuery,
   normaliseSlug,
   parentCourseSlug,
   parseLibraryFilters,
   pathRequiresAccount,
+  sortByFolderPosition,
   storyToLibraryItem,
   toggle,
   toLibraryStory,
@@ -232,6 +234,51 @@ describe('parentCourseSlug', () => {
   });
 });
 
+describe('sortByFolderPosition', () => {
+  const course = (slug: string, parent_id: number | null) => ({ slug, parent_id });
+  const folder = (id: number, position: number) => ({ id, is_folder: true, position });
+  const slugs = (stories: { slug: string }[]) => stories.map((story) => story.slug);
+
+  it('orders course start pages by their folder position', () => {
+    const stories = [course('healing', 1), course('society', 2), course('recovering', 3)];
+    const links = [folder(1, 70), folder(2, 60), folder(3, 10)];
+
+    expect(slugs(sortByFolderPosition(stories, links))).toEqual([
+      'recovering',
+      'society',
+      'healing',
+    ]);
+  });
+
+  it('puts stories with an unlisted folder last, in their incoming order', () => {
+    const stories = [course('orphan-a', 9), course('rootless', null), course('listed', 1)];
+
+    expect(slugs(sortByFolderPosition(stories, [folder(1, 0)]))).toEqual([
+      'listed',
+      'orphan-a',
+      'rootless',
+    ]);
+  });
+
+  it('only reads folder links', () => {
+    const stories = [course('a', 1), course('b', 2)];
+    const links = [folder(1, 20), folder(2, 10), { id: 1, is_folder: false, position: -100 }];
+
+    expect(slugs(sortByFolderPosition(stories, links))).toEqual(['b', 'a']);
+  });
+
+  it('keeps the incoming order without links, and leaves the input untouched', () => {
+    const stories = [course('a', 1), course('b', 2)];
+
+    expect(slugs(sortByFolderPosition(stories, []))).toEqual(['a', 'b']);
+    expect(slugs(sortByFolderPosition(stories, [folder(1, 20), folder(2, 10)]))).toEqual([
+      'b',
+      'a',
+    ]);
+    expect(slugs(stories)).toEqual(['a', 'b']);
+  });
+});
+
 // A conservative floor: every course lesson path reads as needing an account. AuthGuard no longer
 // blocks session pages — the session page itself opens the first lesson of a Public course — and
 // useLibraryItems lifts the badge for those first lessons via `freeFirstSessionUuids`. Resources
@@ -298,6 +345,68 @@ describe('bucketOf', () => {
     [21, 'over20'],
   ])('puts %i minutes in the %s bucket', (minutes, bucket) => {
     expect(bucketOf(minutes)).toBe(bucket);
+  });
+});
+
+describe('featureItems', () => {
+  const item = (id: string) => ({ id }) as LibraryItem;
+  const items = ['a', 'b', 'c', 'd', 'e', 'f', 'g'].map(item);
+  const ids = (list: LibraryItem[]) => list.map((entry) => entry.id);
+
+  it('moves the picks to the front in the picked order, keeping the rest in order', () => {
+    const result = featureItems(items, ['e', 'b']);
+
+    expect(ids(result.items)).toEqual(['e', 'b', 'a', 'c', 'd', 'f', 'g']);
+    expect([...result.featuredIds]).toEqual(['e', 'b']);
+  });
+
+  it('skips picks the viewer cannot see, without leaving a gap', () => {
+    expect(ids(featureItems(items, ['not-in-locale', 'c']).items)).toEqual([
+      'c',
+      'a',
+      'b',
+      'd',
+      'e',
+      'f',
+      'g',
+    ]);
+  });
+
+  it('caps the featured items at five, counting only visible picks', () => {
+    const result = featureItems(items, ['hidden', 'g', 'f', 'e', 'd', 'c', 'b']);
+
+    expect(ids(result.items).slice(0, 5)).toEqual(['g', 'f', 'e', 'd', 'c']);
+    expect(ids(result.items).slice(5)).toEqual(['a', 'b']);
+    expect(result.featuredIds.size).toBe(5);
+  });
+
+  it('ignores a pick made twice', () => {
+    expect(ids(featureItems(items, ['c', 'c']).items)).toEqual(['c', 'a', 'b', 'd', 'e', 'f', 'g']);
+  });
+
+  it('keeps the default order with no picks', () => {
+    expect(ids(featureItems(items, undefined).items)).toEqual(ids(items));
+    expect(ids(featureItems(items, []).items)).toEqual(ids(items));
+    expect(featureItems(items, undefined).featuredIds.size).toBe(0);
+  });
+
+  it('keeps featured items first through filters and search, which preserve order', () => {
+    const lesson = (id: string, title: string) =>
+      ({ id, kind: 'session', themes: ['healing-journey'], title, description: '' }) as LibraryItem;
+    const featured = featureItems(
+      [lesson('x', 'Fear in the body'), lesson('y', 'Body image'), lesson('z', 'Anger')],
+      ['y'],
+    ).items;
+    const filters: LibraryFilters = {
+      keyword: '',
+      kind: 'all',
+      themes: ['healing-journey'],
+      formats: [],
+      lengths: [],
+    };
+
+    expect(ids(filterLibraryItems(featured, filters))).toEqual(['y', 'x', 'z']);
+    expect(ids(filterLibraryItems(featured, { ...filters, keyword: 'body' }))).toEqual(['y', 'x']);
   });
 });
 

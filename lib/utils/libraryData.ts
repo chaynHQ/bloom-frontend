@@ -117,11 +117,31 @@ export function toLibraryStory(story: ISbStoryData): LibraryStory {
   };
 }
 
+export interface StoryblokFolderLink {
+  id: number;
+  is_folder: boolean;
+  position: number;
+}
+
+// A course story is its folder's start page, so its own `position` never varies; editors order
+// courses by dragging the folders. Stories in an unlisted folder sort last.
+export function sortByFolderPosition<T extends { parent_id: number | null }>(
+  stories: T[],
+  links: StoryblokFolderLink[],
+): T[] {
+  const folderPositions = new Map(
+    links.filter((link) => link.is_folder).map((link) => [link.id, link.position]),
+  );
+  const positionOf = (story: T) =>
+    folderPositions.get(story.parent_id ?? -1) ?? Number.MAX_SAFE_INTEGER;
+  return [...stories].sort((a, b) => positionOf(a) - positionOf(b));
+}
+
 export interface LibraryStories {
   courses: LibraryStory[];
   // Lessons nested inside a course (Session / session_iba blocks), surfaced as single sessions.
   courseSessions: LibraryStory[];
-  // Every standalone resource, flattened across the format folders (video, audio, written, activity).
+  // Every standalone resource, flattened across the format folders (audio, video, written, activity).
   resources: LibraryStory[];
 }
 
@@ -252,6 +272,26 @@ export function filterLibraryItems(items: LibraryItem[], filters: LibraryFilters
   const titleMatchesFirst = (item: LibraryItem) =>
     item.title.toLowerCase().includes(search) ? 0 : 1;
   return matches.sort((a, b) => titleMatchesFirst(a) - titleMatchesFirst(b));
+}
+
+const MAX_FEATURED_ITEMS = 5;
+
+// Picks this viewer can't see are skipped; the cap holds even if Storyblok allows more.
+export function featureItems(
+  items: LibraryItem[],
+  featuredContent: string[] | undefined,
+): { items: LibraryItem[]; featuredIds: Set<string> } {
+  const byId = new Map(items.map((item) => [item.id, item]));
+  const featured = [...new Set(featuredContent ?? [])]
+    .map((id) => byId.get(id))
+    .filter((item): item is LibraryItem => Boolean(item))
+    .slice(0, MAX_FEATURED_ITEMS);
+  const featuredIds = new Set(featured.map((item) => item.id));
+
+  return {
+    items: [...featured, ...items.filter((item) => !featuredIds.has(item.id))],
+    featuredIds,
+  };
 }
 
 export function toggle<T>(list: T[], value: T): T[] {

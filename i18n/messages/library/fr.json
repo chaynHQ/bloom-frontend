@@ -1,11 +1,5 @@
 {
   "Library": {
-    "metadata": {
-      "title": "Bibliothèque",
-      "description": "Découvrez les cours et les sessions individuelles de Bloom, réunis au même endroit."
-    },
-    "title": "Explorez notre bibliothèque",
-    "introduction": "Des sessions et des cours de Bloom, pour vous aider à apprendre, à réfléchir et à cheminer avec ce que vous avez vécu, dans un espace sûr où puiser de la force.",
     "exploreByTheme": "Explorer par thème",
     "filterHeading": "Filtrer la bibliothèque",
     "filterButtonLabel": "Filtrer",
