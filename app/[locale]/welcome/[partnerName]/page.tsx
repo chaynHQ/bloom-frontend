@@ -28,6 +28,8 @@ export async function generateMetadata({ params }: { params: Params }) {
     // `title` is the hero headline; `seo_title` overrides the document title when set.
     title: story.content.seo_title || story.content.title,
     description: story.content.seo_description,
+    locale,
+    path: `/welcome/${partnerName}`,
   });
 }
 

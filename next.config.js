@@ -128,6 +128,11 @@ module.exports = withBundleAnalyzer(
             destination: '/library',
             permanent: false,
           },
+          {
+            source: `/${LOCALE_PATTERN}/about-our-courses`,
+            destination: '/:locale/library',
+            permanent: false,
+          },
           // The old Courses landing route; individual course pages are unaffected.
           {
             source: '/courses',

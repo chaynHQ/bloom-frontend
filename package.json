@@ -76,6 +76,7 @@
     "gemoji": "^8.1.0",
     "js-cookie": "^3.0.8",
     "minimatch": "^10.2.5",
+    "minisearch": "7.2.0",
     "newrelic": "^14.1.2",
     "next": "16.2.11",
     "next-intl": "^4.13.1",

@@ -1,56 +1,152 @@
+import { routing } from '@/i18n/routing';
+import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
-import { BASE_URL } from '../constants/common';
-import { LANGUAGES } from '../constants/enums';
+import { SITE_URL } from '../constants/common';
+import { toPlainText } from './libraryData';
+
+const META_DESCRIPTION_MAX = 160;
 
 interface MetadataBasic {
   title: string;
   titleParent?: string;
-  description?: string;
+  // A plain string or a Storyblok rich-text document; trimmed to META_DESCRIPTION_MAX.
+  description?: unknown;
+  // With `path` (locale-free, e.g. "/courses/anxiety"), the page gets its own canonical URL,
+  // hreflang links and share URL. Without it, none are set rather than inheriting the homepage's.
+  locale?: string;
+  path?: string;
+  // A Storyblok story's `languages` field; leave unset for pages that exist in every locale.
+  languages?: string[];
+  // A Storyblok image asset URL for the share card.
+  image?: string;
+  // Private, utility and not-yet-launched pages, kept out of search results.
+  noIndex?: boolean;
 }
 
-// Appends "• Bloom" and prepends paths (e.g. "Session • ") to title
-// This is helpful for browser tab information
+const NO_INDEX = { index: false, follow: true } as const;
+
+const SHARE_IMAGE = { width: 1200, height: 630 } as const;
+const SHARE_IMAGE_MIN_WIDTH = 600;
+
+// Appends "• Bloom" and the section (e.g. "• Video") after the title, so search results and
+// browser tabs lead with the topic.
 export function generateMetadataTitle(title: string, parent?: string): string {
-  return parent ? `${parent} • ${title} • Bloom` : `${title} • Bloom`;
+  return parent ? `${title} • ${parent} • Bloom` : `${title} • Bloom`;
 }
 
-// Overrides the description, title and og:title meta tags of otherwise inherited generateMetadataBase
-export function generateMetadataBasic({ title, titleParent, description }: MetadataBasic) {
+function openGraphLocale(locale: string) {
+  if (locale === 'en') return 'en_GB';
+  if (locale === 'hi') return 'hi_IN';
+  return `${locale}_${locale.toUpperCase()}`;
+}
+
+export function localisedPath(locale: string, path: string) {
+  const prefix = locale === routing.defaultLocale ? '' : `/${locale}`;
+  return `${prefix}${path}` || '/';
+}
+
+// Storyblok marks the source language "default"; no languages set means English only.
+export function storyLocales(languages?: string[]): string[] {
+  if (!languages?.length) return [routing.defaultLocale];
+  return routing.locales.filter((locale) =>
+    languages.includes(locale === routing.defaultLocale ? 'default' : locale),
+  );
+}
+
+function trimDescription(text: string) {
+  const plain = text.replace(/\s+/g, ' ').trim();
+  if (plain.length <= META_DESCRIPTION_MAX) return plain || undefined;
+  const cut = plain.slice(0, META_DESCRIPTION_MAX - 1);
+  return `${cut.slice(0, cut.lastIndexOf(' ')).replace(/[\s.,;:!?—–-]+$/, '')}…`;
+}
+
+// A Storyblok image cropped to the share card's shape by Storyblok's image service, read from the
+// size in its asset path. SVGs and small images return undefined: social platforms don't render
+// the first and blur the second, so the default share image is better.
+export function storyblokShareImage(url?: string) {
+  const size = url?.match(/^https:\/\/a\.storyblok\.com\/f\/\d+\/(\d+)x(\d+)\//);
+  if (!url || !size || /\.svg$/i.test(url)) return undefined;
+  const [width, height] = [Number(size[1]), Number(size[2])];
+  const cropWidth = Math.min(
+    SHARE_IMAGE.width,
+    width,
+    Math.floor((height * SHARE_IMAGE.width) / SHARE_IMAGE.height),
+  );
+  if (cropWidth < SHARE_IMAGE_MIN_WIDTH) return undefined;
+  const cropHeight = Math.round((cropWidth * SHARE_IMAGE.height) / SHARE_IMAGE.width);
+  return { url: `${url}/m/${cropWidth}x${cropHeight}/smart`, width: cropWidth, height: cropHeight };
+}
+
+function alternatesFor(locale: string, path: string, languages?: string[]) {
+  const available = languages ? storyLocales(languages) : [...routing.locales];
+  const languageLinks: Record<string, string> = Object.fromEntries(
+    available.map((l) => [l, localisedPath(l, path)]),
+  );
+  languageLinks['x-default'] = localisedPath(available[0] ?? routing.defaultLocale, path);
+  // A locale the story isn't published in shows a "not in your language" notice: point search
+  // engines at a version that exists instead of indexing the notice.
+  const isAvailable = available.includes(locale);
   return {
+    canonical: localisedPath(isAvailable ? locale : (available[0] ?? routing.defaultLocale), path),
+    languages: languageLinks,
+    isAvailable,
+  };
+}
+
+// Overrides the title, description, canonical, hreflang and Open Graph tags of the inherited
+// generateMetadataBase. Open Graph is rebuilt whole because Next replaces, not merges, that object.
+export async function generateMetadataBasic({
+  title,
+  titleParent,
+  description,
+  locale,
+  path,
+  languages,
+  image,
+  noIndex,
+}: MetadataBasic): Promise<Metadata> {
+  const metaDescription = trimDescription(toPlainText(description));
+  const metadata: Metadata = {
     title: generateMetadataTitle(title, titleParent),
-    description,
+    description: metaDescription,
+    openGraph: { title, description: metaDescription },
+    ...(noIndex && { robots: NO_INDEX }),
+  };
+  if (!locale) return metadata;
+
+  const t = await getTranslations({ locale, namespace: 'Shared.metadata' });
+  const alternates = path === undefined ? undefined : alternatesFor(locale, path, languages);
+  const shareImage = storyblokShareImage(image);
+
+  return {
+    ...metadata,
+    ...(alternates && {
+      alternates: { canonical: alternates.canonical, languages: alternates.languages },
+      ...(!alternates.isAvailable && { robots: NO_INDEX }),
+    }),
     openGraph: {
-      title: title,
+      title,
+      description: metaDescription,
+      url: alternates?.canonical,
+      siteName: 'Bloom',
+      locale: openGraphLocale(locale),
+      type: 'website',
+      images: [
+        shareImage
+          ? { ...shareImage, alt: title }
+          : { url: '/preview.png', ...SHARE_IMAGE, alt: t('imageAlt') },
+      ],
     },
   };
 }
 
-// Creates the base metadata to be applied to layout and inherited by all pages
+// Creates the base metadata to be applied to layout and inherited by all pages. It sets no
+// canonical or hreflang links: inherited, those would mark every page a copy of the homepage.
 export async function generateMetadataBase(locale: string) {
   const t = await getTranslations({ locale, namespace: 'Shared.metadata' });
-  const localeString =
-    locale === 'en'
-      ? 'en_GB'
-      : locale === 'hi'
-        ? 'hi_IN'
-        : `${locale}_${String(locale).toUpperCase()}`;
-  const baseUrlLocalised = locale === LANGUAGES.en ? BASE_URL : `${BASE_URL}/${locale}`;
 
   return {
-    metadataBase: new URL(BASE_URL || 'https://bloom.chayn.co'),
-    alternates: {
-      canonical: baseUrlLocalised,
-      languages: {
-        'en-GB': '/en',
-        'de-DE': '/de',
-        'es-ES': '/es',
-        'pt-PT': '/pt',
-        'fr-FR': '/fr',
-        'hi-IN': '/hi',
-        ar: '/ar',
-        'tr-TR': '/tr',
-      },
-    },
+    metadataBase: new URL(SITE_URL),
     title: generateMetadataTitle(t('title')),
     description: t('description'),
     applicationName: 'Bloom',
@@ -60,7 +156,7 @@ export async function generateMetadataBase(locale: string) {
     publisher: 'Chayn',
     openGraph: {
       title: t('title'),
-      url: baseUrlLocalised,
+      url: localisedPath(locale, ''),
       siteName: 'Bloom',
       images: [
         {
@@ -70,7 +166,7 @@ export async function generateMetadataBase(locale: string) {
           alt: t('imageAlt'),
         },
       ],
-      locale: localeString,
+      locale: openGraphLocale(locale),
       type: 'website',
     },
     twitter: {

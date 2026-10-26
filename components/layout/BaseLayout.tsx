@@ -15,6 +15,7 @@ import { ENVIRONMENTS } from '@/lib/constants/enums';
 import firebase from '@/lib/firebase';
 import { clientConfig } from '@/lib/rollbar';
 import { getLocaleDirection } from '@/lib/utils/getLocaleDirection';
+import { JsonLd, siteJsonLd } from '@/lib/utils/structuredData';
 import '@/styles/globals.css';
 import '@/styles/hotjarNPS.css';
 import { Box } from '@mui/material';
@@ -123,6 +124,7 @@ export default async function BaseLayout({ children, locale }: BaseLayoutProps) 
                       to bind the event listener in time.
                     */}
                     <script src="/deffer-pwa.js" async></script>
+                    <JsonLd data={siteJsonLd} />
                     <Suspense fallback={null}>
                       <ReferralPartnerTracker />
                     </Suspense>

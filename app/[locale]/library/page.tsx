@@ -23,6 +23,8 @@ export async function generateMetadata({ params }: { params: Params }) {
   return generateMetadataBasic({
     title: content.seo_title || content.title,
     description: content.seo_description,
+    locale,
+    path: '/library',
   });
 }
 

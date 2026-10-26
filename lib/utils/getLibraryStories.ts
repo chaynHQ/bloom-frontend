@@ -5,10 +5,13 @@ import { ISbStoriesParams, ISbStoryData } from '@storyblok/react/rsc';
 import {
   sortByFolderPosition,
   toLibraryStory,
+  toPlainText,
   type LibraryStories,
   type LibraryStory,
   type StoryblokFolderLink,
 } from './libraryData';
+import { buildTranscriptVocabulary, type LibraryTranscripts } from './librarySearch';
+import { storyAvailableInLocale } from './partnerContentAccess';
 
 // Storyblok's page size caps at 100 and defaults to 25.
 const PER_PAGE = 100;
@@ -98,4 +101,37 @@ export async function getLibraryStories(locale: string): Promise<LibraryStories>
     courseSessions,
     resources: [...audio, ...video, ...written, ...activity],
   };
+}
+
+// Where each content type keeps the bulk of its words. Course stories are left out: their intro
+// transcript is mostly presenter small talk, and the course's own fields describe it better.
+const TRANSCRIPT_FIELDS = ['video_transcript', 'audio_transcript', 'body', 'activity', 'bonus'];
+
+function transcriptText(story: ISbStoryData): string {
+  return TRANSCRIPT_FIELDS.map((field) => toPlainText(story.content[field])).join(' ');
+}
+
+// Server-only. Every library story's transcript vocabulary for the locale, for library search.
+export async function getLibraryTranscripts(locale: string): Promise<LibraryTranscripts> {
+  const groups = await Promise.all([
+    fetchAllStoryblokStories(locale, {
+      ...baseProps(locale),
+      starts_with: 'courses/',
+      filter_query: { component: { in: 'Session,session_iba' } },
+    }),
+    ...['audio/', 'video/', 'written/', 'activity/'].map((starts_with) =>
+      fetchAllStoryblokStories(locale, { ...baseProps(locale), starts_with }),
+    ),
+  ]);
+
+  const stories = groups.flat();
+  // Throw rather than serve an empty vocabulary, so a failed revalidation keeps the last good one.
+  if (!stories.length) throw new Error(`No library stories for search in locale ${locale}`);
+
+  const texts = Object.fromEntries(
+    stories
+      .filter((story) => storyAvailableInLocale(story.content.languages, locale))
+      .map((story) => [story.uuid, transcriptText(story)]),
+  );
+  return buildTranscriptVocabulary(texts, locale);
 }

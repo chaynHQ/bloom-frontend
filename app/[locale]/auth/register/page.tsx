@@ -10,7 +10,7 @@ export async function generateMetadata({ params }: { params: Params }) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'Auth.register' });
 
-  return generateMetadataBasic({ title: t('title') });
+  return generateMetadataBasic({ title: t('title'), locale, path: '/auth/register' });
 }
 
 export default function Page() {

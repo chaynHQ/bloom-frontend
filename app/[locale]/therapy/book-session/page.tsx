@@ -17,6 +17,8 @@ export async function generateMetadata({ params }: { params: Params }) {
   return generateMetadataBasic({
     title: story.content.title,
     description: story.content.seo_description,
+    locale,
+    noIndex: true,
   });
 }
 

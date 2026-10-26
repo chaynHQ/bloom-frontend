@@ -231,7 +231,7 @@ export default function RegisterPage() {
         <Box sx={cardContainerStyle}>
           <Card>
             <CardContent>
-              <Typography variant="h2" component="h2">
+              <Typography variant="h2" component="h1">
                 {t('register.title')}
               </Typography>
 

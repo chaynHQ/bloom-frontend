@@ -1,11 +1,9 @@
 # Modular courses: plan
 
-As of 2026-10-26. Status: proposal for review by product and development.
-
 Courses will be built from the library's existing video, audio and written pieces, and one piece can sit in several courses without being copied.
 
 - **Step A** launches the new Turkish and Arabic courses. It includes course progress in the database, reporting, Mailchimp and the support inbox (Front). Existing courses are left untouched.
-- **Step B** later moves the existing courses onto the same model, so every course works one way.
+- **Step B - future as needed** later moves the existing courses onto the same model, so every course works one way.
 
 Nothing built in Step A is thrown away in Step B, apart from one temporary fallback for the old course format.
 

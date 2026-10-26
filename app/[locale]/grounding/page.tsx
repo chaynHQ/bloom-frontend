@@ -47,6 +47,8 @@ export async function generateMetadata({ params }: { params: Params }) {
   return generateMetadataBasic({
     title: pageStory?.content?.title ?? t('title'),
     description: pageStory?.content?.seo_description,
+    locale,
+    path: '/grounding',
   });
 }
 

@@ -3,7 +3,9 @@ import { routing } from '@/i18n/routing';
 import { STORYBLOK_ENVIRONMENT } from '@/lib/constants/common';
 import { getStoryblokStory } from '@/lib/storyblok';
 import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
+import { isPublicContent } from '@/lib/utils/partnerContentAccess';
 import { getCourseStories } from '@/lib/utils/getLibraryStories';
+import { breadcrumbJsonLd, courseJsonLd, JsonLd } from '@/lib/utils/structuredData';
 import { getStoryblokApi, ISbStoriesParams } from '@storyblok/react/rsc';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
@@ -29,7 +31,12 @@ export async function generateMetadata({ params }: { params: Params }) {
   return generateMetadataBasic({
     title: story.content.name,
     titleParent: t('course'),
-    description: story.content.seo_description,
+    description: story.content.seo_description || story.content.description,
+    locale,
+    path: `/courses/${slug}`,
+    languages: story.content.languages,
+    image: story.content.image?.filename,
+    noIndex: story.content.coming_soon || !isPublicContent(story.content.included_for_partners),
   });
 }
 
@@ -82,5 +89,14 @@ export default async function Page({ params }: { params: Params }) {
     notFound();
   }
 
-  return <StoryblokCoursePage story={story} courseStories={courseStories} />;
+  const path = `/courses/${slug}`;
+  const breadcrumbs = await breadcrumbJsonLd(locale, [{ name: story.content.name }]);
+
+  return (
+    <>
+      <JsonLd data={courseJsonLd(story, locale, path)} />
+      <JsonLd data={breadcrumbs} />
+      <StoryblokCoursePage story={story} courseStories={courseStories} />
+    </>
+  );
 }
