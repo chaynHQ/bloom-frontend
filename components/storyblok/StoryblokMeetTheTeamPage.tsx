@@ -1,5 +1,6 @@
 'use client';
 
+import { withSearchParams, type SearchParams } from '@/components/common/withSearchParams';
 import Header from '@/components/layout/Header';
 import { StoryblokTeamMemberCardProps } from '@/components/storyblok/StoryblokTeamMemberCard';
 import { MEET_THE_TEAM_VIEWED } from '@/lib/constants/events';
@@ -10,7 +11,6 @@ import theme from '@/styles/theme';
 import { Box, Container, Typography, useMediaQuery } from '@mui/material';
 import { useStoryblokState } from '@storyblok/react';
 import { ISbStoryData, storyblokEditable } from '@storyblok/react/rsc';
-import { useSearchParams } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 import { render, StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 import NotesFromBloomPromo from '../banner/NotesFromBloomPromo';
@@ -50,7 +50,13 @@ export interface StoryblokMeetTheTeamPageProps {
   page_section_3: StoryblokPageSectionProps[];
 }
 
-const StoryblokMeetTheTeamPage = ({ story: initialStory }: { story: ISbStoryData }) => {
+const StoryblokMeetTheTeamPage = ({
+  story: initialStory,
+  searchParams,
+}: {
+  story: ISbStoryData;
+  searchParams: SearchParams;
+}) => {
   const story = useStoryblokState(initialStory) ?? initialStory;
   const {
     _uid,
@@ -75,7 +81,6 @@ const StoryblokMeetTheTeamPage = ({ story: initialStory }: { story: ISbStoryData
   const userId = useTypedSelector((state) => state.user.id);
   const authStateLoading = useTypedSelector((state) => state.user.authStateLoading);
   const isLoggedIn = !authStateLoading && !!userId;
-  const searchParams = useSearchParams();
   const sectionQueryParam = searchParams.get('section');
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
   const headerOffset = isSmallScreen ? 48 : 136;
@@ -202,4 +207,4 @@ const StoryblokMeetTheTeamPage = ({ story: initialStory }: { story: ISbStoryData
   );
 };
 
-export default StoryblokMeetTheTeamPage;
+export default withSearchParams(StoryblokMeetTheTeamPage);

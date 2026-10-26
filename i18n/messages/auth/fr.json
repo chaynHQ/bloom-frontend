@@ -12,6 +12,7 @@
     },
     "register": {
       "title": "Créer un compte",
+      "description": "Rejoignez Bloom, toujours gratuit. Nos cours allient des connaissances sur les traumatismes et les violences basées sur le genre à des pratiques thérapeutiques.",
       "loginRedirect": "Vous avez déjà un compte ? <loginLink>Connectez-vous</loginLink>",
       "partnershipsTitle": "Nos partenaires",
       "partnershipsDescription": "Si vous avez découvert Bloom par l'un de nos partenaires, cliquez sur son logo ci-dessous."

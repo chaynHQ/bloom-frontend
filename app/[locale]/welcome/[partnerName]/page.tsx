@@ -8,7 +8,6 @@ import { ISbResult, ISbStoriesParams, getStoryblokApi } from '@storyblok/react/r
 import { notFound } from 'next/navigation';
 
 export const revalidate = 14400; // invalidate every 4 hours
-export const dynamic = 'force-dynamic';
 
 type Params = Promise<{ locale: string; partnerName: string }>;
 
@@ -34,7 +33,7 @@ export async function generateMetadata({ params }: { params: Params }) {
 }
 
 export async function generateStaticParams() {
-  let paths: { slug: string; locale: string }[] = [];
+  let paths: { partnerName: string; locale: string }[] = [];
 
   const locales = routing.locales;
 
@@ -52,10 +51,11 @@ export async function generateStaticParams() {
 
     if (story.is_folder || !story.published) return;
 
-    const slug = story.slug;
+    const partnerName = story.slug.split('/')[1];
+    if (!partnerName) return;
 
     for (const locale of locales) {
-      paths.push({ slug, locale });
+      paths.push({ partnerName, locale });
     }
   });
 

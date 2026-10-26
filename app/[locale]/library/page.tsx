@@ -1,9 +1,7 @@
-import LoadingContainer from '@/components/common/LoadingContainer';
 import LibraryPage from '@/components/pages/LibraryPage';
 import { getStoryblokStory } from '@/lib/storyblok';
 import { getLibraryStories } from '@/lib/utils/getLibraryStories';
 import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
-import { Suspense } from 'react';
 
 export const revalidate = 14400; // invalidate every 4 hours, matching the other content pages
 
@@ -32,11 +30,5 @@ export default async function Page({ params }: { params: Params }) {
   const { locale } = await params;
   const [story, stories] = await Promise.all([getLibraryStory(locale), getLibraryStories(locale)]);
 
-  // useSearchParams needs a Suspense boundary; the fallback needs real height, or the App
-  // Router measures an empty segment and skips its scroll-to-top when navigating here.
-  return (
-    <Suspense fallback={<LoadingContainer />}>
-      <LibraryPage story={story} stories={stories} />
-    </Suspense>
-  );
+  return <LibraryPage story={story} stories={stories} />;
 }

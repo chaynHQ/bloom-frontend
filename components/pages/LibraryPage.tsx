@@ -4,6 +4,7 @@ import { EmailRemindersSettingsBanner } from '@/components/banner/EmailReminders
 import { ScrollReveal } from '@/components/common/ScrollReveal';
 import SignUpButton from '@/components/common/SignUpButton';
 import { SignUpSection } from '@/components/common/SignUpSection';
+import { withSearchParams, type SearchParams } from '@/components/common/withSearchParams';
 import { EMAIL_REMINDERS_FREQUENCY } from '@/lib/constants/enums';
 import {
   LIBRARY_FILTERED,
@@ -56,7 +57,6 @@ import {
 import { useStoryblokState } from '@storyblok/react';
 import { ISbStoryData } from '@storyblok/react/rsc';
 import { useLocale, useTranslations } from 'next-intl';
-import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 import { SupportSection } from '../common/SupportSection';
@@ -223,12 +223,14 @@ interface LibraryPageContent {
   featured_content?: string[];
 }
 
-export default function LibraryPage({
+function LibraryPage({
   story: initialStory,
   stories,
+  searchParams,
 }: {
   story: ISbStoryData;
   stories: LibraryStories;
+  searchParams: SearchParams;
 }) {
   const t = useTranslations('Library');
   const locale = useLocale();
@@ -243,8 +245,6 @@ export default function LibraryPage({
   // Filters live in the URL query string, so back navigation and reloads restore them while a
   // fresh visit to /library starts clean. The search box keeps local state for responsiveness
   // and is pushed to the URL on a debounce.
-  const searchParams = useSearchParams();
-
   const {
     kind,
     themes,
@@ -681,3 +681,5 @@ export default function LibraryPage({
     </Box>
   );
 }
+
+export default withSearchParams(LibraryPage);

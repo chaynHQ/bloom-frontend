@@ -1,5 +1,6 @@
 'use client';
 
+import { withSearchParams, type SearchParams } from '@/components/common/withSearchParams';
 import { ACCORDION_OPENED } from '@/lib/constants/events';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import logEvent from '@/lib/utils/logEvent';
@@ -18,7 +19,6 @@ import {
 } from '@mui/material';
 import { storyblokEditable } from '@storyblok/react/rsc';
 import Image from 'next/image';
-import { useSearchParams } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
 
@@ -66,9 +66,8 @@ interface StoryblokAccordionProps {
   accordion_items: Array<StoryblokAccordionItemProps>;
   theme: 'primary' | 'secondary';
 }
-const StoryblokAccordion = (props: StoryblokAccordionProps) => {
-  const { _uid, _editable, accordion_items, theme } = props;
-  const searchParams = useSearchParams();
+const StoryblokAccordion = (props: StoryblokAccordionProps & { searchParams: SearchParams }) => {
+  const { _uid, _editable, accordion_items, theme, searchParams } = props;
   const isSmallScreen = useMediaQuery(muiTheme.breakpoints.down('md'));
   const headerOffset = isSmallScreen ? 48 : 136;
 
@@ -79,7 +78,7 @@ const StoryblokAccordion = (props: StoryblokAccordionProps) => {
       }
     };
   const scrollRef = useRef(null);
-  const accordionInUrl = searchParams?.get('openacc') ?? undefined;
+  const accordionInUrl = searchParams.get('openacc') ?? undefined;
 
   useEffect(() => {
     if (accordionInUrl && scrollRef.current) {
@@ -151,4 +150,4 @@ const StoryblokAccordion = (props: StoryblokAccordionProps) => {
   );
 };
 
-export default StoryblokAccordion;
+export default withSearchParams(StoryblokAccordion);

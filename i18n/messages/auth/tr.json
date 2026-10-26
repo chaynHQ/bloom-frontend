@@ -12,6 +12,7 @@
     },
     "register": {
       "title": "Hesap oluştur",
+      "description": "Bloom'a katıl, her zaman ücretsiz. Kurslarımız, travma ve toplumsal cinsiyete dayalı şiddete dair bilgileri terapötik uygulamalarla birleştirir.",
       "loginRedirect": "Zaten hesabın var mı? <loginLink>Giriş yap</loginLink>",
       "partnershipsTitle": "İş birliklerimiz",
       "partnershipsDescription": "Bloom'a iş ortaklarımızdan biri aracılığıyla geldiysen, aşağıda logosuna tıkla."
