@@ -44,7 +44,7 @@ async function getAllStoryblokStories(
   return (await fetchAllStoryblokStories(locale, params)).map(toLibraryStory);
 }
 
-// On error, reports to Rollbar and returns no links, so courses keep Storyblok's own order.
+// Empty on error, so courses fall back to Storyblok's own order.
 async function getCourseFolderLinks(): Promise<StoryblokFolderLink[]> {
   try {
     const { data } = await getStoryblokApi().get('cdn/links', {

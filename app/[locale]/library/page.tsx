@@ -9,8 +9,7 @@ export const revalidate = 14400; // invalidate every 4 hours, matching the other
 
 type Params = Promise<{ locale: string }>;
 
-// Throws rather than rendering a headerless page: a failed build or revalidation keeps the last
-// good version live, where notFound() would replace it with a 404 until the next revalidation.
+// Throws rather than notFound(), so a failed revalidation keeps the last good page live.
 async function getLibraryStory(locale: string) {
   const story = await getStoryblokStory('library', locale);
   if (!story) throw new Error(`Storyblok story "library" unavailable for locale ${locale}`);

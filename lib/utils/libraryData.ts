@@ -117,16 +117,14 @@ export function toLibraryStory(story: ISbStoryData): LibraryStory {
   };
 }
 
-// The `cdn/links` fields that place a folder among its siblings.
 export interface StoryblokFolderLink {
   id: number;
   is_folder: boolean;
   position: number;
 }
 
-// A course story is its folder's start page, so its own `position` never differs between courses.
-// Ordering by the folder's position lets editors reorder courses by dragging their folders in
-// Storyblok. Stories whose folder isn't listed keep their incoming order, after the rest.
+// A course story is its folder's start page, so its own `position` never varies; editors order
+// courses by dragging the folders. Stories in an unlisted folder sort last.
 export function sortByFolderPosition<T extends { parent_id: number | null }>(
   stories: T[],
   links: StoryblokFolderLink[],
@@ -276,11 +274,9 @@ export function filterLibraryItems(items: LibraryItem[], filters: LibraryFilters
   return matches.sort((a, b) => titleMatchesFirst(a) - titleMatchesFirst(b));
 }
 
-export const MAX_FEATURED_ITEMS = 5;
+const MAX_FEATURED_ITEMS = 5;
 
-// Moves the items picked in the library story's `featured_content` to the front, in the picked
-// order. Picks that aren't in `items` (unavailable in this locale or to this partner) are skipped,
-// and the cap holds even if the Storyblok field is changed to allow more.
+// Picks this viewer can't see are skipped; the cap holds even if Storyblok allows more.
 export function featureItems(
   items: LibraryItem[],
   featuredContent: string[] | undefined,

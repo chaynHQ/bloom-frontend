@@ -214,7 +214,6 @@ const cardGridStyle = {
 
 const reportList = (values: string[]) => (values.length ? values.join(',') : 'none');
 
-// The `library_page` content type in Storyblok.
 interface LibraryPageContent {
   title: string;
   introduction: StoryblokRichtext;
