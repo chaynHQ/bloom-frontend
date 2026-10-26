@@ -1,11 +1,5 @@
 {
   "Library": {
-    "metadata": {
-      "title": "Kütüphane",
-      "description": "Bloom kurslarını ve tekil bölümlerini tek bir yerde keşfet."
-    },
-    "title": "Kütüphaneyi keşfet",
-    "introduction": "Öğrenmene, üzerine düşünmene ve yaşadıklarını güvenli ve güçlendirici bir alanda işlemene yardımcı olmak için Bloom'dan bölümler ve kurslar.",
     "exploreByTheme": "Temaya göre keşfet",
     "filterHeading": "Kütüphaneyi filtrele",
     "filterButtonLabel": "Filtrele",
