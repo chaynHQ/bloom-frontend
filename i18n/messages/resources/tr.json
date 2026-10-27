@@ -1,65 +1,37 @@
 {
   "Resources": {
-    "video": "Video",
-    "audio": "Sesli",
-    "written": "Yazılı",
-    "activity": "Etkinlik",
+    "backToConversations": "Sohbetlere geri dön",
+    "backToShorts": "Kısa videolara geri dön",
+    "backToVideos": "Videolara geri dön",
+    "backToSomatics": "Somatik çalışmalara geri dön",
+    "nextVideoButtonLabel": "Sonraki video",
+    "nextConversationButtonLabel": "Sonraki sohbet",
+    "nextSessionButtonLabel": "Sonraki bölüm",
+    "conversations": "Sohbetler",
+    "shorts": "Kısa videolar",
+    "videos": "Videolar",
+    "completed": "Tamamlandı",
+    "sessionDetail": "Bu klip, {courseName} kursumuzun {sessionName} bölümünden alınmıştır",
     "sessionButtonLabel": "Bölümün tamamını izle",
-    "accessCard": {
-      "title": {
-        "audio": "Bu sese eriş",
-        "video": "Bu videoya eriş",
-        "written": "Bu makaleye eriş",
-        "activity": "Bu etkinliğe eriş",
-        "course": "Bu kursa eriş",
-        "grounding": "Bu egzersize eriş"
-      },
-      "body": "Tüm bölümlerin kilidini açmak ve ilerlemeni kaydetmek için ücretsiz bir hesap oluştur.",
-      "logIn": "Zaten bir hesabım var",
-      "relatedSession": {
-        "title": "Bölümün tamamına eriş"
-      }
-    },
-    "audioPlayer": {
-      "play": "Oynat",
-      "pause": "Duraklat",
-      "back": "{seconds} saniye geri sar",
-      "forward": "{seconds} saniye ileri sar",
-      "scrubber": "Ses içinde gezin"
-    },
-    "moment": {
-      "title": "Bir mola ister misin?",
-      "subtitle": "Bölüm sırasında herhangi bir anda mola vermeye ihtiyaç duyarsan, aşağıdaki köklenme egzersizlerimizi kullan.",
-      "groundingLabel": "Köklenme"
-    },
-    "actions": {
-      "finish": "Bölümü tamamla"
-    },
-    "complete": {
-      "title": "Bölüm tamamlandı",
-      "body": "Bugün kendin için buradaydın. Devam etmeden önce bir an dur.",
-      "cta": "Bölümlere dön",
-      "close": "Kapat"
-    },
+    "videoTranscriptLink": "Videoyu izle ya da <link>metni</link> oku.",
+    "conversationTranscriptLink": "Sohbeti dinle ya da <link>metni</link> oku.",
     "relatedContent": {
-      "title": "Daha fazlasını keşfetmek ister misin?",
-      "subtitle": "İyileşme yolculuğunda sana yardımcı olması için aşağıdaki ilgili bölümlerimize göz at.",
-      "video": "İzle",
-      "audio": "Dinle",
-      "written": "Oku",
-      "activity": "Etkinlik",
+      "title": "İlgili içerik(ler)",
+      "resource_short_video": "İzle",
+      "resource_single_video": "İzle",
+      "resource_conversation": "Dinle",
       "course": "Kurs",
       "session": "Bölüm",
       "session_iba": "Bölüm",
       "grounding": "Köklenme",
+      "activities": "Etkinlik",
       "minuteLabel": "dakika"
     },
     "resourceFeedback": {
-      "title": "Bu bölümü nasıl buldun?",
-      "close": "Kapat",
-      "subtitle": "Bu bölümü nasıl bulduğunu duymak isteriz. Geri bildirimin bölümlerimizi geliştirmemize yardımcı oluyor.",
+      "title": "Bu bölüm nasıldı?",
+      "subtitle": "Bu içeriği nasıl bulduğunu merak ediyoruz. Geri bildirimin kaynaklarımızı geliştirmemize yardımcı oluyor.",
       "feedbackTags": {
-        "relatable": "Bana yakın",
+        "relatable": "Kendime yakın buldum",
         "useful": "Faydalı",
         "inspiring": "İlham verici",
         "too long": "Çok uzun",
@@ -67,34 +39,19 @@
         "not useful": "Faydalı değil"
       },
       "textboxDefaultText": "Yorum ekle...",
-      "sendButtonText": "Değerlendirmeyi gönder",
+      "sendButtonText": "Gönder",
       "submissionText": "Geri bildirimin için teşekkürler",
       "errors": {
         "feedbackTagError": "Göndermeden önce lütfen bir değerlendirme seç."
       }
     },
-    "errors": {
-      "completeResourceError": "Bu, tamamlandı olarak işaretlenirken bir hata oluştu. Biraz sonra tekrar dene."
-    },
     "references": {
       "title": "Kaynaklar",
-      "keyReferences": "Bu bölümdeki önemli kaynaklar (tam liste metin dökümünün sonunda):",
+      "keyReferences": "Bu bölümdeki temel kaynaklar (Tam liste metin dökümünün sonunda):",
       "books": "Kitaplar",
       "articles": "Makaleler",
-      "video_practices": "Video çalışmaları",
-      "audios": "Podcast'ler"
-    },
-    "backToSessions": "Bölümlere dön",
-    "backToLibrary": "Kütüphaneye dön",
-    "grounding": {
-      "close": "Kapat",
-      "exercisesCount": "{count, plural, one {# egzersiz} other {# egzersiz}}",
-      "loadMore": "Daha fazla göster",
-      "duration": "{minutes} dk"
-    },
-    "languageUnavailable": {
-      "title": "Bu kaynak henüz senin dilinde mevcut değil",
-      "introduction": "Bloom kaynaklarını daha fazla dile taşımak için çalışıyoruz. Bu sırada, kendi dilinde neler olduğunu <contactLink>kütüphanede</contactLink> keşfedebilirsin."
+      "video_practices": "Video uygulamaları",
+      "audios": "Podcastler"
     }
   }
 }

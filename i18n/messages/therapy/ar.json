@@ -7,24 +7,24 @@
       "step1": "يمكنك الاختيار من بين معالِجات ومعالِجين اخترناهم بعناية ويتحدّثون عدّة لغات.",
       "step2": "يمكنك اختيار التاريخ والوقت المناسبين لك. جميع الجلسات تُعقد عبر الإنترنت.",
       "step3": "إذا غيّرت رأيك، يمكنك إيقاف الجلسات أو تغيير المعالِجة أو المعالِج في أي وقت.",
-      "step4": "يبقى كل ما تتم مشاركته سرّيًا تمامًا، بينك وبين المعالِجة أو المعالِج."
+      "step4": "يبقى كل ما تتم مشاركته يبقى سرّياً تماماً. بينك وبين المعالِجة أو المعالِج."
     },
-    "closeBookingWidget": "إغلاق أداة الحجز",
+    "closeBookingWidget": "إغلاق نافذة الحجز",
     "modalTitle": "حجز جلسة علاج نفسي",
     "modalDescription": "أداة SimplyBook.me لجدولة جلسة العلاج النفسي الخاصة بك.",
     "error": {
-      "initializingWidget": "حدث خطأ أثناء تهيئة أداة الحجز.",
-      "initializingWidgetRetry": "حدث خطأ أثناء تهيئة أداة الحجز عند إعادة المحاولة.",
+      "initializingWidget": "حدث خطأ أثناء تشغيل أداة الحجز.",
+      "initializingWidgetRetry": "حدث خطأ أثناء إعادة تشغيل أداة الحجز.",
       "containerNotFoundRetry": "تعذّر تحميل أداة الحجز.",
-      "scriptNotLoaded": "لم يكتمل تحميل سكربت أداة الحجز.",
-      "scriptLoadFailed": "فشل تحميل سكربت الحجز."
+      "scriptNotLoaded": "لم يكتمل تحميل أداة الحجز.",
+      "scriptLoadFailed": "فشل تحميل أداة الحجز."
     },
     "therapyBookings": {
       "header": "حجوزاتك للعلاج النفسي",
-      "bookingSummary": "لديك <remainingTotal>{remainingTotal}</remainingTotal> جلسات علاج نفسي متبقّية، و<upcomingTotal>{upcomingTotal}</upcomingTotal> مجدولة.",
+      "bookingSummary": "لديك <remainingTotal>{remainingTotal}</remainingTotal> جلسات علاج نفسي متبقية، و<upcomingTotal>{upcomingTotal}</upcomingTotal> مجدولة.",
       "noBookingSummary": "لقد حجزت جميع جلسات العلاج النفسي المتاحة لك.",
       "noBookings": "ليس لديك أي حجوزات علاج نفسي في الوقت الحالي.",
-      "cancelAlert": "تم طلب إلغاء الحجز رقم: {id}. تنفيذ منطق الإلغاء الفعلي."
+      "cancelAlert": "تم طلب إلغاء الحجز رقم: {id}. يرجى تنفيذ عملية الإلغاء الفعلية."
     },
     "bookingItem": {
       "upcomingSessionTitle": "جلسة علاج نفسي قادمة ",
@@ -34,22 +34,22 @@
       "timeLabel": "الوقت",
       "therapistLabel": "المعالِجة أو المعالِج",
       "videoLinkLabel": "رابط الفيديو",
-      "videoLink": "يمكنك الانضمام إلى المكالمة من دعوة تقويم Google Meet المُرسَلة عبر البريد الإلكتروني",
+      "videoLink": "انضم إلى المكالمة من خلال دعوة Google Meet المرسلة إلى بريدك الإلكتروني.",
       "noVideoLink": "لم يتم توفير رابط",
       "cancelButton": "إلغاء",
-      "cancelError": "حدث خطأ أثناء إلغاء الحجز — يُرجى المحاولة مرة أخرى أو التواصل مع الفريق.",
+      "cancelError": "حدث خطأ أثناء إلغاء الحجز — يُرجى المحاولة مرة أخرى أو التواصل مع فريقنا.",
       "expand": "توسيع",
       "collapse": "طيّ",
       "cancelDialog": {
         "title": "تأكيد الإلغاء",
-        "description": "هل من المؤكّد رغبتك في إلغاء جلسة العلاج النفسي المجدولة في {dateTime}؟ يمكنك حجز موعد جديد في وقت يناسبك.",
-        "keepButton": "الإبقاء على الجلسة",
+        "description": "هل أنت متأكد من رغبتك في إلغاء جلسة العلاج النفسي المقررة في {dateTime}؟ يمكنك حجز موعد جديد في وقت يناسبك.",
+        "keepButton": "إبقاء على الجلسة",
         "confirmButton": "إلغاء الجلسة"
       }
     },
     "accessGuard": {
       "title": "العلاج النفسي غير متاح",
-      "introduction": "لا يتضمّن حسابك في Bloom إمكانية الوصول إلى جلسات العلاج النفسي. إذا بدا هذا غير صحيح، يمكنك <contactLink>مراسلة فريق Bloom</contactLink>."
+      "introduction": "حسابك على Bloom لا يشمل إمكانية الوصول إلى جلسات العلاج النفسي. إذا كنت تعتقد أن هناك خطأ، يمكنك <contactLink>مراسلة فريق Bloom</contactLink>."
     }
   }
 }

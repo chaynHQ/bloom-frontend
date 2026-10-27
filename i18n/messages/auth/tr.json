@@ -3,7 +3,7 @@
     "introduction": "Bloom, travma ve toplumsal cinsiyete dayalı şiddete dair bilgileri travmadan iyileşmeye yardımcı olan terapötik uygulamalarla birleştiren uzaktan kurslar sunarak hayatta kalanları bilgilendirir ve güçlendirir.",
     "getStartedBloom": "Bloom'u kullanmaya başla",
     "getStartedWith": "{partnerName} koduyla başla",
-    "loginLink": "Zaten hesabın var mı? <loginLink>Giriş yap</loginLink>",
+    "loginLink": "Zaten bir hesabın var mı? <loginLink>Giriş yap</loginLink>",
     "terms": "Devam ederek <termsLink>Hizmet Koşullarımızı</termsLink> ve <privacyLink>Gizlilik Politikamızı</privacyLink> kabul etmiş olursun",
     "login": {
       "title": "Tekrar hoş geldin",
@@ -14,26 +14,26 @@
       "title": "Hesap oluştur",
       "loginRedirect": "Zaten hesabın var mı? <loginLink>Giriş yap</loginLink>",
       "partnershipsTitle": "İş birliklerimiz",
-      "partnershipsDescription": "Bloom'a iş ortaklarımızdan biri aracılığıyla geldiysen, aşağıda logosuna tıkla."
+      "partnershipsDescription": "Bloom'a iş ortaklarımızdan biri aracılığıyla ulaştıysan, aşağıda onun logosuna tıkla."
     },
     "resetPassword": {
-      "title": "Şifreni sıfırla"
+      "title": "Şifreni yenile"
     },
     "form": {
       "codeLabel": "erişim kodu",
       "nameLabel": "Ad/takma ad",
       "emailLabel": "E-posta",
       "passwordLabel": "Şifre",
-      "contactPermissionLabel": "Yeni kaynaklar ve geri bildirimini bizimle paylaşma fırsatları hakkında e-posta al",
+      "contactPermissionLabel": "Yeni kaynaklar ve görüşlerinizi bizimle paylaşma fırsatları hakkında e-posta al",
       "registerSubmit": "Hesap oluştur",
       "resetPasswordStep1": "Şifreni sıfırlaman için sana bir e-posta göndereceğiz.",
       "resetPasswordStep2": "Neredeyse tamam! Artık yeni şifreni belirleyebilirsin.",
-      "resetPasswordSubmit": "Şifreyi sıfırla",
+      "resetPasswordSubmit": "Şifreyi yenile",
       "resendPasswordSubmit": "E-postayı tekrar gönder",
-      "resetPasswordSent": "Bloom'dan gelen sıfırlama bağlantısı için e-postanı kontrol et. E-posta almadın mı? Spam klasörünü kontrol et ya da e-postayı tekrar gönder.",
+      "resetPasswordSent": "Bloom'dan gelen yenileme bağlantısı için e-postanı kontrol et. E-posta almadın mı? Spam klasörünü kontrol et ya da e-postayı tekrar gönder.",
       "passwordResetSuccess": "Şifren sıfırlandı! Artık yeni şifrenle giriş yapabilirsin.",
       "loginSubmit": "Giriş yap",
-      "createUserError": "Hesabın kurulurken bir hata oluştu. Daha sonra tekrar dene ve bu hatayı almaya devam edersen <contactLink>Bloom ekibine mesaj gönder</contactLink>.",
+      "createUserError": "Hesabınkurulurken bir hata oluştu. Daha sonra tekrar dene ve bu hatayı almaya devam edersen <contactLink>Bloom ekibine mesaj gönder</contactLink>.",
       "getUserError": "Hesabın alınırken bir hata oluştu. Daha sonra tekrar dene ve bu hatayı almaya devam edersen <contactLink>Bloom ekibine mesaj gönder</contactLink>.",
       "codeErrors": {
         "internal": "Erişim kodun doğrulanırken bir hata oluştu. Daha sonra tekrar dene ve bu hatayı almaya devam edersen <contactLink>Bloom ekibine mesaj gönder</contactLink>.",
@@ -65,8 +65,8 @@
       "emailVerificationSpamCheck": "E-postayı göremiyorsan lütfen spam klasörünü kontrol et.",
       "sendVerificationEmail": "Doğrulama e-postası gönder",
       "resendVerificationEmail": "Doğrulama e-postasını tekrar gönder",
-      "passwordRequired": "Kimliğini yeniden doğrulamak için şifren gerekli.",
-      "reauthenticationError": "Kimlik doğrulama yeniden yapılamadı. Lütfen tekrar dene."
+      "passwordRequired": "Kimliğini yeniden doğrulamak için şifre gerekli.",
+      "reauthenticationError": "Yeniden kimlik doğrulaması yapılamadı. Lütfen tekrar dene."
     },
     "verifyMFA": {
       "title": "İki adımlı doğrulamayı onayla",
@@ -75,7 +75,7 @@
       "phoneNumber": "Kayıtlı telefon numarana bir doğrulama kodu göndereceğiz: {phoneNumber}"
     },
     "setupMFA": {
-      "title": "İki adımlı doğrulamayı kur",
+      "title": "İki adımlı doğrulama kur",
       "sendCode": "Doğrulama kodu gönder",
       "verifyCode": "Kodu doğrula",
       "enterCodeHelperText": "Lütfen telefonuna gönderdiğimiz doğrulama kodunu gir:",
@@ -83,7 +83,7 @@
       "reauthDescription": "Devam etmeden önce lütfen şifreni gir",
       "cancelReauth": "İptal",
       "confirmReauth": "Onayla",
-      "reauthenticating": "Onaylanıyor..."
+      "reauthenticating": "Doğrulanıyor..."
     }
   }
 }
