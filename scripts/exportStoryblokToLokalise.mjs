@@ -4,10 +4,10 @@
  * from the in-scope Storyblok stories into Lokalise-ready JSON + a manifest that lets
  * importStoryblokFromLokalise.mjs put edited translations back precisely.
  *
- * SCOPE (see storyblokLokalise.lib.mjs): grounding pages + grounding exercises, activity
- * exercises, home, welcome/*, meet-the-team, messaging, subscription/whatsapp,
- * therapy/book-session, policies/terms-of-service. EXCLUDES courses / sessions / videos /
- * audios / written (media not localised for these locales).
+ * SCOPE (see storyblokLokalise.lib.mjs): home, library, welcome/*, meet-the-team, messaging,
+ * subscription/whatsapp, therapy/book-session, policies/terms-of-service. EXCLUDES courses /
+ * sessions / videos / audios / written (media not localised) and grounding / activity pages
+ * (human-translated).
  *
  * OUTPUT (default ./storyblok-lokalise/):
  *   en.json               flat  { "<key>": "<English source>" }        ← Lokalise base language

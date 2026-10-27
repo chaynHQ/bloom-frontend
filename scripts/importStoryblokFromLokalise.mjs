@@ -237,6 +237,8 @@ async function main() {
     } else {
       console.log(`\n▸ ${slug}`);
     }
+    // Snapshot before any in-place edits below, so the rollback file holds the pre-import state.
+    const before = JSON.stringify(story, null, 2);
     const content = story.content;
     let changed = false;
 
@@ -385,10 +387,7 @@ async function main() {
     }
 
     const safe = slug.replace(/[^\w.-]+/g, '_');
-    fs.writeFileSync(
-      path.join(args.out, `${safe}.beforeimport.json`),
-      JSON.stringify(story, null, 2),
-    );
+    fs.writeFileSync(path.join(args.out, `${safe}.beforeimport.json`), before);
 
     if (args.write) {
       await mapi('PUT', `/stories/${storyMeta.storyId}`, { story: { content }, publish: 0 });
