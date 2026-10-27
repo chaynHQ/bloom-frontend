@@ -8,7 +8,7 @@ export async function generateMetadata({ params }: { params: Params }) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'Auth.login' });
 
-  return generateMetadataBasic({ title: t('title'), locale, path: '/auth/login', noIndex: true });
+  return generateMetadataBasic({ title: t('title'), locale, noIndex: true });
 }
 
 export default function Page() {

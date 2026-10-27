@@ -29,6 +29,8 @@ interface FilterableStory {
 
 // Whether a signed-out visitor, and so a search engine, can open a story: content pages only open
 // partner-only content to that partner's members. Session pages gate on their course's partners.
+// Mirrors the pages' gate (hasAccessToPage), where an empty list is closed to signed-out visitors,
+// not the library listing's filter, where it means everyone.
 export function isPublicContent(includedForPartners: string[] | undefined): boolean {
   return (includedForPartners ?? []).some((partner) => partner.toLowerCase() === 'public');
 }

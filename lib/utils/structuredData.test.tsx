@@ -67,9 +67,23 @@ describe('courseJsonLd', () => {
 });
 
 describe('videoJsonLd', () => {
+  it('leaves out a members-only video, whose player signed-out visitors never see', () => {
+    const video = { url: 'https://youtu.be/x2qbP4hxpN8' };
+
+    expect(videoJsonLd(story({ name: 'A', video, login_required: true }), 'en', '/video/a')).toBe(
+      null,
+    );
+    // Unset counts as members-only, as it does on the video page.
+    expect(videoJsonLd(story({ name: 'A', video }), 'en', '/video/a')).toBe(null);
+  });
+
   it("uses YouTube's thumbnail and player when the story has no preview image", () => {
     const data = videoJsonLd(
-      story({ name: 'Boundaries', video: { url: 'https://youtu.be/x2qbP4hxpN8?si=tracking' } }),
+      story({
+        name: 'Boundaries',
+        login_required: false,
+        video: { url: 'https://youtu.be/x2qbP4hxpN8?si=tracking' },
+      }),
       'en',
       '/video/what-are-boundaries',
     );
@@ -83,7 +97,11 @@ describe('videoJsonLd', () => {
   it('needs a thumbnail, which Google requires for a video result', () => {
     expect(
       videoJsonLd(
-        story({ name: 'Elsewhere', video: { url: 'https://example.com/video.mp4' } }),
+        story({
+          name: 'Elsewhere',
+          login_required: false,
+          video: { url: 'https://example.com/video.mp4' },
+        }),
         'en',
         '/video/elsewhere',
       ),
@@ -94,6 +112,7 @@ describe('videoJsonLd', () => {
     const data = videoJsonLd(
       story({
         name: 'Qigong',
+        login_required: false,
         duration: '10',
         video: { url: 'https://youtu.be/Yp6aPPQd1GU' },
         preview_image: { filename: 'https://a.storyblok.com/f/1/qigong.png' },

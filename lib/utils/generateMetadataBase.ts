@@ -11,9 +11,9 @@ interface MetadataBasic {
   titleParent?: string;
   // A plain string or a Storyblok rich-text document; trimmed to META_DESCRIPTION_MAX.
   description?: unknown;
+  locale: string;
   // With `path` (locale-free, e.g. "/courses/anxiety"), the page gets its own canonical URL,
   // hreflang links and share URL. Without it, none are set rather than inheriting the homepage's.
-  locale?: string;
   path?: string;
   // A Storyblok story's `languages` field; leave unset for pages that exist in every locale.
   languages?: string[];
@@ -83,11 +83,12 @@ function alternatesFor(locale: string, path: string, languages?: string[]) {
     available.map((l) => [l, localisedPath(l, path)]),
   );
   languageLinks['x-default'] = localisedPath(available[0] ?? routing.defaultLocale, path);
-  // A locale the story isn't published in shows a "not in your language" notice: point search
-  // engines at a version that exists instead of indexing the notice.
+  // A locale the story isn't published in shows a "not in your language" notice, which is kept
+  // out of the index. It gets no canonical: one pointing at another locale alongside noindex is a
+  // conflicting signal, and Google may carry the noindex over to that page.
   const isAvailable = available.includes(locale);
   return {
-    canonical: localisedPath(isAvailable ? locale : (available[0] ?? routing.defaultLocale), path),
+    canonical: isAvailable ? localisedPath(locale, path) : undefined,
     languages: languageLinks,
     isAvailable,
   };
@@ -105,29 +106,22 @@ export async function generateMetadataBasic({
   image,
   noIndex,
 }: MetadataBasic): Promise<Metadata> {
-  const metaDescription = trimDescription(toPlainText(description));
-  const metadata: Metadata = {
-    title: generateMetadataTitle(title, titleParent),
-    description: metaDescription,
-    openGraph: { title, description: metaDescription },
-    ...(noIndex && { robots: NO_INDEX }),
-  };
-  if (!locale) return metadata;
-
   const t = await getTranslations({ locale, namespace: 'Shared.metadata' });
+  const metaDescription = trimDescription(toPlainText(description));
   const alternates = path === undefined ? undefined : alternatesFor(locale, path, languages);
   const shareImage = storyblokShareImage(image);
 
   return {
-    ...metadata,
+    title: generateMetadataTitle(title, titleParent),
+    description: metaDescription,
     ...(alternates && {
       alternates: { canonical: alternates.canonical, languages: alternates.languages },
-      ...(!alternates.isAvailable && { robots: NO_INDEX }),
     }),
+    ...((noIndex || alternates?.isAvailable === false) && { robots: NO_INDEX }),
     openGraph: {
       title,
       description: metaDescription,
-      url: alternates?.canonical,
+      url: path === undefined ? undefined : localisedPath(locale, path),
       siteName: 'Bloom',
       locale: openGraphLocale(locale),
       type: 'website',

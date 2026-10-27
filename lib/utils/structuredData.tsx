@@ -47,11 +47,6 @@ export const siteJsonLd = {
       url: SITE_URL,
       inLanguage: routing.locales,
       publisher: { '@id': ORGANIZATION_ID },
-      potentialAction: {
-        '@type': 'SearchAction',
-        target: `${SITE_URL}/library?q={search_term_string}`,
-        'query-input': 'required name=search_term_string',
-      },
     },
   ],
 };
@@ -75,8 +70,12 @@ export function courseJsonLd(story: ISbStoryData, locale: string, path: string) 
 }
 
 // Google needs a thumbnail and an upload date for a video result. A YouTube video without a
-// preview image uses YouTube's own thumbnail.
+// preview image uses YouTube's own thumbnail. None for a members-only video: signed-out visitors,
+// and so Google, see a sign-up card in place of the player. Like the video page, an unset
+// `login_required` counts as members-only.
 export function videoJsonLd(story: ISbStoryData, locale: string, path: string) {
+  if (story.content.login_required !== false) return null;
+
   const videoUrl: string | undefined = story.content.video?.url || story.content.video?.cached_url;
   const youTubeId = videoUrl ? getYouTubeVideoId(videoUrl) : null;
   const thumbnail =

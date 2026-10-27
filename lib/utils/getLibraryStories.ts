@@ -28,10 +28,10 @@ async function fetchAllStoryblokStories(
   for (let page = 1; page <= MAX_PAGES; page++) {
     const batch = await getStoryblokStories(locale, { ...params, per_page: PER_PAGE, page });
 
-    // getStoryblokStories reports to Rollbar and returns undefined on error. Keep the pages
-    // already fetched rather than failing the render — every surface here degrades to fewer
-    // cards, and no one content group should be able to take the page down.
-    if (!batch) break;
+    // getStoryblokStories reports to Rollbar and returns undefined on error. Every caller is cached,
+    // so throw rather than cache a listing with stories missing: a failed revalidation keeps the
+    // last good page, and a build fails rather than deploying it.
+    if (!batch) throw new Error(`Storyblok stories request failed (${locale}, page ${page})`);
 
     stories.push(...batch);
     if (batch.length < PER_PAGE) break;
@@ -124,12 +124,9 @@ export async function getLibraryTranscripts(locale: string): Promise<LibraryTran
     ),
   ]);
 
-  const stories = groups.flat();
-  // Throw rather than serve an empty vocabulary, so a failed revalidation keeps the last good one.
-  if (!stories.length) throw new Error(`No library stories for search in locale ${locale}`);
-
   const texts = Object.fromEntries(
-    stories
+    groups
+      .flat()
       .filter((story) => storyAvailableInLocale(story.content.languages, locale))
       .map((story) => [story.uuid, transcriptText(story)]),
   );

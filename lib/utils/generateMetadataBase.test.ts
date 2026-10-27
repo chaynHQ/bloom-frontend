@@ -57,8 +57,14 @@ describe('generateMetadataBasic', () => {
       languages: ['default'],
     });
 
-    expect(metadata.alternates?.canonical).toBe('/video/qigong');
+    // No canonical to the English page: alongside noindex, Google may carry the noindex over to it.
+    expect(metadata.alternates?.canonical).toBeUndefined();
+    expect(metadata.alternates?.languages).toEqual({
+      en: '/video/qigong',
+      'x-default': '/video/qigong',
+    });
     expect(metadata.robots).toEqual({ index: false, follow: true });
+    expect(metadata.openGraph?.url).toBe('/de/video/qigong');
   });
 
   it('keeps a private page out of the index', async () => {
@@ -79,7 +85,7 @@ describe('generateMetadataBasic', () => {
 
   it('trims a description to a whole word', async () => {
     const long = `${'Healing takes time and looks different for everyone. '.repeat(5)}`;
-    const metadata = await generateMetadataBasic({ title: 'A', description: long });
+    const metadata = await generateMetadataBasic({ title: 'A', description: long, locale: 'en' });
 
     expect(metadata.description?.length).toBeLessThanOrEqual(160);
     expect(metadata.description).toMatch(/\w…$/);
@@ -93,12 +99,11 @@ describe('generateMetadataBasic', () => {
       content: [{ type: 'paragraph', content: [{ type: 'text', text: 'Draw a timeline.' }] }],
     };
 
-    expect((await generateMetadataBasic({ title: 'A', description: richText })).description).toBe(
-      'Draw a timeline.',
-    );
-    expect((await generateMetadataBasic({ title: 'A', description: '' })).description).toBe(
-      undefined,
-    );
+    const descriptionOf = async (description: unknown) =>
+      (await generateMetadataBasic({ title: 'A', description, locale: 'en' })).description;
+
+    expect(await descriptionOf(richText)).toBe('Draw a timeline.');
+    expect(await descriptionOf('')).toBe(undefined);
   });
 
   it('keeps the share image, URL and locale, and skips SVG images social sites cannot show', async () => {
