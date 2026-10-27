@@ -2,12 +2,12 @@
   "Therapy": {
     "title": "Terapi randevusu al",
     "bookingButton": "Randevu almaya başla",
-    "bookingSectionTitle": "Randevu nasıl alınır",
+    "bookingSectionTitle": "Randevu süreci nasıl işler?",
     "steps": {
       "step1": "Özenle seçtiğimiz çok dilli terapistlerimiz arasından seçim yaparsın.",
-      "step2": "Sana uygun bir tarih ve saat seç. Tüm seanslar çevrimiçi.",
+      "step2": "Sana uygun bir tarih ve saat seç. Tüm seanslar çevrimiçidir.",
       "step3": "Fikrini değiştirirsen, seansları istediğin zaman durdurabilir ya da terapistini değiştirebilirsin.",
-      "step4": "Paylaştığın her şey, yalnızca seninle terapist arasında kesinlikle gizli kalır."
+      "step4": "Paylaştığın her şey, seninle terapist arasında kesinlikle gizli kalır."
     },
     "closeBookingWidget": "Randevu penceresini kapat",
     "modalTitle": "Terapi randevusu al",
@@ -16,8 +16,8 @@
       "initializingWidget": "Randevu aracı başlatılırken hata oluştu.",
       "initializingWidgetRetry": "Yeniden denemede randevu aracı başlatılırken hata oluştu.",
       "containerNotFoundRetry": "Randevu aracı yüklenemedi.",
-      "scriptNotLoaded": "Randevu aracının betiği tam olarak yüklenmedi.",
-      "scriptLoadFailed": "Randevu betiği yüklenemedi."
+      "scriptNotLoaded": "Randevu aracı komut dosyası tam yüklenmedi.",
+      "scriptLoadFailed": "Randevu komut dosyası yüklenemedi."
     },
     "therapyBookings": {
       "header": "Terapi randevuların",
@@ -43,7 +43,7 @@
       "cancelDialog": {
         "title": "İptali onayla",
         "description": "{dateTime} için planlanan terapi seansını iptal etmek istediğine emin misin? Sana uygun bir zamanda yeni bir randevu alabilirsin.",
-        "keepButton": "Seansı koru",
+        "keepButton": "Seansı tut",
         "confirmButton": "Seansı iptal et"
       }
     },

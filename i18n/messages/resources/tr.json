@@ -7,7 +7,7 @@
     "sessionButtonLabel": "Bölümün tamamını izle",
     "accessCard": {
       "title": {
-        "audio": "Bu sese eriş",
+        "audio": "Bu ses kaydına eriş",
         "video": "Bu videoya eriş",
         "written": "Bu makaleye eriş",
         "activity": "Bu etkinliğe eriş",
@@ -57,9 +57,9 @@
     "resourceFeedback": {
       "title": "Bu bölümü nasıl buldun?",
       "close": "Kapat",
-      "subtitle": "Bu bölümü nasıl bulduğunu duymak isteriz. Geri bildirimin bölümlerimizi geliştirmemize yardımcı oluyor.",
+      "subtitle": "Bu bölümü nasıl bulduğunu merak ediyoruz. Geri bildirimin bölümlerimizi geliştirmemize yardımcı oluyor.",
       "feedbackTags": {
-        "relatable": "Bana yakın",
+        "relatable": "Kendime yakın buldum",
         "useful": "Faydalı",
         "inspiring": "İlham verici",
         "too long": "Çok uzun",
@@ -74,15 +74,15 @@
       }
     },
     "errors": {
-      "completeResourceError": "Bu, tamamlandı olarak işaretlenirken bir hata oluştu. Biraz sonra tekrar dene."
+      "completeResourceError": "Bu içerik tamamlandı olarak işaretlenirken bir hata oluştu. Biraz sonra tekrar dene."
     },
     "references": {
       "title": "Kaynaklar",
-      "keyReferences": "Bu bölümdeki önemli kaynaklar (tam liste metin dökümünün sonunda):",
+      "keyReferences": "Bu bölümdeki temel kaynaklar (Tam liste metin dökümünün sonunda):",
       "books": "Kitaplar",
       "articles": "Makaleler",
-      "video_practices": "Video çalışmaları",
-      "audios": "Podcast'ler"
+      "video_practices": "Video uygulamaları",
+      "audios": "Podcastler"
     },
     "backToSessions": "Bölümlere dön",
     "backToLibrary": "Kütüphaneye dön",
