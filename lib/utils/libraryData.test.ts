@@ -15,6 +15,11 @@ import {
   type LibraryItem,
   type LibraryStory,
 } from './libraryData';
+import { createLibrarySearch } from './librarySearch';
+
+// filterLibraryItems with the search the library page would build for these items.
+const filter = (items: LibraryItem[], filters: LibraryFilters) =>
+  filterLibraryItems(items, filters, createLibrarySearch(items, 'en'));
 
 // A Storyblok story, trimmed to the fields the library reads. `content` is loose: the real
 // payloads differ per component.
@@ -162,6 +167,7 @@ describe('toLibraryStory', () => {
     const projected = toLibraryStory({
       uuid: 'uuid-1',
       full_slug: 'courses/managing-anxiety/',
+      published_at: '2025-09-02T10:00:00.000Z',
       id: 12345,
       content: {
         name: 'Managing anxiety',
@@ -176,17 +182,22 @@ describe('toLibraryStory', () => {
         video_transcript: { type: 'doc', content: ['…a very large document…'] },
         bonus: ['…blocks…'],
         activity: ['…blocks…'],
-        seo_description: 'Dropped too.',
+        seo_description: 'Managing anxiety after trauma.',
+        seo_keywords: 'anxiety, panic attacks',
+        seo_title: 'Dropped too.',
       },
     } as unknown as Parameters<typeof toLibraryStory>[0]);
 
     expect(projected).toEqual({
       uuid: 'uuid-1',
       full_slug: 'courses/managing-anxiety/',
+      published_at: '2025-09-02T10:00:00.000Z',
       content: {
         name: 'Managing anxiety',
         component: 'Course',
         description: 'A course.',
+        seo_description: 'Managing anxiety after trauma.',
+        seo_keywords: 'anxiety, panic attacks',
         themes: ['healing-journey'],
         duration: '12',
         languages: ['default'],
@@ -390,7 +401,7 @@ describe('featureItems', () => {
     expect(featureItems(items, undefined).featuredIds.size).toBe(0);
   });
 
-  it('keeps featured items first through filters and search, which preserve order', () => {
+  it('keeps featured items first through filters, and between equally relevant search results', () => {
     const lesson = (id: string, title: string) =>
       ({ id, kind: 'session', themes: ['healing-journey'], title, description: '' }) as LibraryItem;
     const featured = featureItems(
@@ -405,8 +416,8 @@ describe('featureItems', () => {
       lengths: [],
     };
 
-    expect(ids(filterLibraryItems(featured, filters))).toEqual(['y', 'x', 'z']);
-    expect(ids(filterLibraryItems(featured, { ...filters, keyword: 'body' }))).toEqual(['y', 'x']);
+    expect(ids(filter(featured, filters))).toEqual(['y', 'x', 'z']);
+    expect(ids(filter(featured, { ...filters, keyword: 'body' }))).toEqual(['y', 'x']);
   });
 });
 
@@ -453,7 +464,7 @@ describe('filterLibraryItems', () => {
     lengths: [],
   };
   const idsFrom = (filters: Partial<LibraryFilters>) =>
-    filterLibraryItems(items, { ...noFilters, ...filters }).map((i) => i.id);
+    filter(items, { ...noFilters, ...filters }).map((i) => i.id);
 
   it('returns everything when no filter is set', () => {
     expect(idsFrom({})).toEqual(['course', 'audio', 'video', 'lesson']);
@@ -485,10 +496,8 @@ describe('filterLibraryItems', () => {
   it('matches a theme when the item carries it among several', () => {
     const multi = item({ id: 'multi', themes: ['staying-safe', 'healing-journey'] });
 
-    expect(filterLibraryItems([multi], { ...noFilters, themes: ['staying-safe'] })).toHaveLength(1);
-    expect(filterLibraryItems([multi], { ...noFilters, themes: ['why-abuse-happens'] })).toEqual(
-      [],
-    );
+    expect(filter([multi], { ...noFilters, themes: ['staying-safe'] })).toHaveLength(1);
+    expect(filter([multi], { ...noFilters, themes: ['why-abuse-happens'] })).toEqual([]);
   });
 
   it('searches the title and the description, ignoring case and surrounding space', () => {
@@ -496,9 +505,9 @@ describe('filterLibraryItems', () => {
     const boundaries = item({ id: 'boundaries', title: 'Boundaries', description: 'Feeling calm' });
     const both = [anxiety, boundaries];
 
-    expect(filterLibraryItems(both, { ...noFilters, keyword: '  ANXIETY ' })).toEqual([anxiety]);
-    expect(filterLibraryItems(both, { ...noFilters, keyword: 'calm' })).toEqual([boundaries]);
-    expect(filterLibraryItems(both, { ...noFilters, keyword: 'nothing here' })).toEqual([]);
+    expect(filter(both, { ...noFilters, keyword: '  ANXIETY ' })).toEqual([anxiety]);
+    expect(filter(both, { ...noFilters, keyword: 'calm' })).toEqual([boundaries]);
+    expect(filter(both, { ...noFilters, keyword: 'nothing here' })).toEqual([]);
   });
 
   it('puts title matches ahead of description-only ones', () => {
@@ -507,9 +516,7 @@ describe('filterLibraryItems', () => {
     const named = item({ id: 'named', title: 'What are boundaries', description: '' });
 
     expect(
-      filterLibraryItems([mentions, named], { ...noFilters, keyword: 'boundaries' }).map(
-        (i) => i.id,
-      ),
+      filter([mentions, named], { ...noFilters, keyword: 'boundaries' }).map((i) => i.id),
     ).toEqual(['named', 'mentions']);
   });
 
@@ -522,7 +529,7 @@ describe('filterLibraryItems', () => {
     const second = item({ id: 'second', title: 'Boundaries with family' });
 
     expect(
-      filterLibraryItems([first, second], { ...noFilters, keyword: 'boundaries' }).map((i) => i.id),
+      filter([first, second], { ...noFilters, keyword: 'boundaries' }).map((i) => i.id),
     ).toEqual(['first', 'second']);
   });
 });

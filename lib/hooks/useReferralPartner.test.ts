@@ -47,7 +47,7 @@ describe('useReferralPartner - UTM detection', () => {
   it('attributes the referral when a partner name is in utm_source', () => {
     (useSearchParams as jest.Mock).mockReturnValue(makeSearchParams({ utm_source: 'bumble' }));
 
-    renderHook(() => useReferralPartner());
+    renderHook(() => useReferralPartner(useSearchParams()));
 
     expect(setEntryPartnerReferral).toHaveBeenCalledWith('bumble');
     expect(Cookies.set).toHaveBeenCalledWith('referralPartner', 'bumble');
@@ -58,7 +58,7 @@ describe('useReferralPartner - UTM detection', () => {
       makeSearchParams({ utm_campaign: 'badoo-june-2026' }),
     );
 
-    renderHook(() => useReferralPartner());
+    renderHook(() => useReferralPartner(useSearchParams()));
 
     expect(setEntryPartnerReferral).toHaveBeenCalledWith('badoo');
   });
@@ -68,7 +68,7 @@ describe('useReferralPartner - UTM detection', () => {
       makeSearchParams({ utm_source: 'newsletter', utm_campaign: 'spring' }),
     );
 
-    renderHook(() => useReferralPartner());
+    renderHook(() => useReferralPartner(useSearchParams()));
 
     expect(setEntryPartnerReferral).not.toHaveBeenCalled();
     expect(Cookies.set).not.toHaveBeenCalled();
@@ -77,7 +77,7 @@ describe('useReferralPartner - UTM detection', () => {
   it('sets the referral cookie without requiring analytics consent', () => {
     (useSearchParams as jest.Mock).mockReturnValue(makeSearchParams({ utm_source: 'bumble' }));
 
-    renderHook(() => useReferralPartner());
+    renderHook(() => useReferralPartner(useSearchParams()));
 
     // No cookiesAccepted state is provided, yet the functional cookie is still written
     expect(Cookies.set).toHaveBeenCalledWith('referralPartner', 'bumble');
@@ -87,7 +87,7 @@ describe('useReferralPartner - UTM detection', () => {
     (useSearchParams as jest.Mock).mockReturnValue(makeSearchParams({}));
     (Cookies.get as jest.Mock).mockReturnValue('bumble');
 
-    renderHook(() => useReferralPartner());
+    renderHook(() => useReferralPartner(useSearchParams()));
 
     expect(setEntryPartnerReferral).toHaveBeenCalledWith('bumble');
     // It rehydrates state but does not re-write the cookie when nothing new was detected
@@ -98,7 +98,7 @@ describe('useReferralPartner - UTM detection', () => {
     (usePathname as jest.Mock).mockReturnValue('/welcome/bumble');
     (useSearchParams as jest.Mock).mockReturnValue(makeSearchParams({ utm_source: 'badoo' }));
 
-    renderHook(() => useReferralPartner());
+    renderHook(() => useReferralPartner(useSearchParams()));
 
     expect(setEntryPartnerReferral).toHaveBeenCalledWith('bumble');
     expect(setEntryPartnerReferral).not.toHaveBeenCalledWith('badoo');

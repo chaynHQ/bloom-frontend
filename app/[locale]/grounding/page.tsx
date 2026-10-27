@@ -1,4 +1,3 @@
-import LoadingContainer from '@/components/common/LoadingContainer';
 import StoryblokGrounding from '@/components/storyblok/StoryblokGrounding';
 import { STORYBLOK_ENVIRONMENT } from '@/lib/constants/common';
 import { getStoryblokStories, getStoryblokStory } from '@/lib/storyblok';
@@ -6,7 +5,8 @@ import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
 import { ISbStoryData } from '@storyblok/react/rsc';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { Suspense } from 'react';
+
+export const revalidate = 14400; // invalidate every 4 hours
 
 // Storyblok's page size caps at 100; grounding has ~16 items today, so one page is enough, but
 // this loops defensively rather than silently truncating a future-larger set.
@@ -47,6 +47,8 @@ export async function generateMetadata({ params }: { params: Params }) {
   return generateMetadataBasic({
     title: pageStory?.content?.title ?? t('title'),
     description: pageStory?.content?.seo_description,
+    locale,
+    path: '/grounding',
   });
 }
 
@@ -60,11 +62,5 @@ export default async function Page({ params }: { params: Params }) {
 
   if (!pageStory) notFound();
 
-  // See the library page: useSearchParams needs a Suspense boundary, and the fallback needs
-  // real height or the App Router skips its scroll-to-top when navigating here.
-  return (
-    <Suspense fallback={<LoadingContainer />}>
-      <StoryblokGrounding story={pageStory} stories={stories} />
-    </Suspense>
-  );
+  return <StoryblokGrounding story={pageStory} stories={stories} />;
 }

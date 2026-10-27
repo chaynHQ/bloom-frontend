@@ -1,17 +1,16 @@
+import type { SearchParams } from '@/components/common/withSearchParams';
 import { usePathname } from '@/i18n/routing';
 import { partnerKeys } from '@/lib/constants/partners';
 import { setEntryPartnerAccessCode, setEntryPartnerReferral } from '@/lib/store/userSlice';
 import Cookies from 'js-cookie';
-import { useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { useAppDispatch } from './store';
 
 // Check if entry path is from a partner referral and if so, store referring partner and code in state and local storage
 // This enables us to redirect a user to the correct sign up page later (e.g. in SignUpSection)
 // Referrals are detected from welcome/register paths and from a partner name in UTM link data.
-export default function useReferralPartner() {
+export default function useReferralPartner(searchParams: SearchParams) {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const dispatch = useAppDispatch();
 
   useEffect(() => {

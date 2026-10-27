@@ -3,6 +3,7 @@
 import { useCreateEventLogMutation } from '@/lib/api';
 import { EVENT_LOG_NAME } from '@/lib/constants/enums';
 import logEvent from '@/lib/utils/logEvent';
+import { getYouTubeVideoId } from '@/lib/utils/youtube';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import { Box, SxProps, Theme, debounce } from '@mui/material';
 import dynamic from 'next/dynamic';
@@ -56,32 +57,6 @@ interface VideoProps {
   setVideoFinished?: Dispatch<SetStateAction<boolean>>;
   title?: string;
 }
-
-// Extract video ID from various YouTube URL formats
-const getYouTubeVideoId = (url: string): string | null => {
-  try {
-    const parsed = new URL(url);
-    const allowedYouTubeHostnames = [
-      'youtu.be',
-      'youtube.com',
-      'www.youtube.com',
-      'm.youtube.com',
-      'youtube-nocookie.com',
-      'www.youtube-nocookie.com',
-    ];
-
-    if (parsed.hostname === 'youtu.be') {
-      return parsed.pathname.slice(1);
-    }
-
-    if (allowedYouTubeHostnames.includes(parsed.hostname)) {
-      return parsed.searchParams.get('v');
-    }
-  } catch {
-    // Invalid URL
-  }
-  return null;
-};
 
 // Convert YouTube URLs to privacy-enhanced youtube-nocookie.com domain
 const getPrivacyEnhancedUrl = (url: string): string => {

@@ -1,5 +1,6 @@
 'use client';
 
+import { withSearchParams, type SearchParams } from '@/components/common/withSearchParams';
 import RegisterForm, { PartnerRegisterForm } from '@/components/forms/RegisterForm';
 import PartnerHeader from '@/components/layout/PartnerHeader';
 import { Link as i18nLink, useRouter } from '@/i18n/routing';
@@ -26,7 +27,6 @@ import {
 } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { useSearchParams } from 'next/navigation';
 import { useEffect, useMemo, useRef } from 'react';
 
 const containerStyle = {
@@ -71,16 +71,15 @@ const logosContainerStyle = {
   justifyContent: 'flex-start',
 } as const;
 
-export default function RegisterPage() {
+function RegisterPage({ searchParams }: { searchParams: SearchParams }) {
   const t = useTranslations('Auth');
   const tS = useTranslations('Shared');
   const router = useRouter();
-  const searchParams = useSearchParams();
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
   const entryPartnerAccessCode = useTypedSelector((state) => state.user.entryPartnerAccessCode);
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
-  useReferralPartner();
+  useReferralPartner(searchParams);
 
   const code = searchParams.get('code');
   const partner = searchParams.get('partner');
@@ -231,7 +230,7 @@ export default function RegisterPage() {
         <Box sx={cardContainerStyle}>
           <Card>
             <CardContent>
-              <Typography variant="h2" component="h2">
+              <Typography variant="h2" component="h1">
                 {t('register.title')}
               </Typography>
 
@@ -286,3 +285,5 @@ export default function RegisterPage() {
     </Box>
   );
 }
+
+export default withSearchParams(RegisterPage);

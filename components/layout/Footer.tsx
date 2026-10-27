@@ -1,5 +1,6 @@
 'use client';
 
+import { withSearchParams, type SearchParams } from '@/components/common/withSearchParams';
 import { PARTNER_SOCIAL_LINK_CLICKED, SOCIAL_LINK_CLICKED } from '@/lib/constants/events';
 import { PartnerContent, getPartnerContent } from '@/lib/constants/partners';
 import { useTypedSelector } from '@/lib/hooks/store';
@@ -17,7 +18,6 @@ import YoutubeIcon from '@mui/icons-material/YouTube';
 import { Box, Container, IconButton, Link, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { useSearchParams } from 'next/navigation';
 import { useMemo } from 'react';
 
 import { getImageSizes } from '@/lib/utils/imageSizes';
@@ -92,9 +92,8 @@ const fundingLogosContainerStyle = {
   gap: 4,
 } as const;
 
-const Footer = () => {
+const Footer = ({ searchParams }: { searchParams: SearchParams }) => {
   const tS = useTranslations('Shared');
-  const searchParams = useSearchParams();
   const isRtl = useIsRtl();
 
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
@@ -119,7 +118,7 @@ const Footer = () => {
       addUniquePartner(partnersList, partnerAccess.partner.name);
     });
 
-    const partner = searchParams?.get('partner');
+    const partner = searchParams.get('partner');
 
     if (partner) {
       addUniquePartner(partnersList, partner + '');
@@ -337,4 +336,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default withSearchParams(Footer);

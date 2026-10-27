@@ -1,5 +1,6 @@
 'use client';
 
+import { withSearchParams, type SearchParams } from '@/components/common/withSearchParams';
 import AboutYouDemographicForm from '@/components/forms/AboutYouDemographicForm';
 import AboutYouSetAForm from '@/components/forms/AboutYouSetAForm';
 import PartnerHeader from '@/components/layout/PartnerHeader';
@@ -12,7 +13,6 @@ import illustrationBloomHeadYellow from '@/public/illustration_bloom_head_yellow
 import { rowStyle } from '@/styles/common';
 import { Box, Button, Card, CardContent, Container, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import { useSearchParams } from 'next/navigation';
 import { ReactNode, useEffect, useMemo } from 'react';
 
 const containerStyle = {
@@ -40,8 +40,7 @@ const getForm = (formLabel: string) => {
   return formMap[formLabel];
 };
 
-export default function AboutYouPage() {
-  const searchParams = useSearchParams();
+function AboutYouPage({ searchParams }: { searchParams: SearchParams }) {
   const qParam = searchParams.get('q');
   const return_url = searchParams.get('return_url');
   const t = useTranslations('Account.aboutYou');
@@ -112,3 +111,5 @@ export default function AboutYouPage() {
     </Box>
   );
 }
+
+export default withSearchParams(AboutYouPage);

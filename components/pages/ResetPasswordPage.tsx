@@ -1,5 +1,6 @@
 'use client';
 
+import { withSearchParams, type SearchParams } from '@/components/common/withSearchParams';
 import { EmailForm, PasswordForm } from '@/components/forms/ResetPasswordForm';
 import PartnerHeader from '@/components/layout/PartnerHeader';
 import { RESET_PASSWORD_VIEWED } from '@/lib/constants/events';
@@ -9,7 +10,6 @@ import illustrationBloomHeadYellow from '@/public/illustration_bloom_head_yellow
 import { rowStyle } from '@/styles/common';
 import { Box, Card, CardContent, Container, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import { useSearchParams } from 'next/navigation';
 
 const containerStyle = {
   ...rowStyle,
@@ -25,9 +25,8 @@ const formCardStyle = {
   width: { xs: '100%', sm: '70%', md: '45%' },
 } as const;
 
-export default function ResetPasswordPage() {
+function ResetPasswordPage({ searchParams }: { searchParams: SearchParams }) {
   const t = useTranslations('Auth');
-  const searchParams = useSearchParams();
   const oobCodeParam = searchParams.get('oobCode');
   useLogEventOnce(RESET_PASSWORD_VIEWED, {
     reset_password_stage: oobCodeParam ? 'set' : 'request',
@@ -74,3 +73,5 @@ export default function ResetPasswordPage() {
     </Box>
   );
 }
+
+export default withSearchParams(ResetPasswordPage);

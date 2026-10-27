@@ -1,6 +1,7 @@
 'use client';
 
 import SanitizedTextField from '@/components/common/SanitizedTextField';
+import { withSearchParams, type SearchParams } from '@/components/common/withSearchParams';
 import { useRouter } from '@/i18n/routing';
 import { useCreateEventLogMutation } from '@/lib/api';
 import { login } from '@/lib/auth';
@@ -26,18 +27,16 @@ import { Box, Link, Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import { getMultiFactorResolver, MultiFactorError, MultiFactorResolver } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
-import { useSearchParams } from 'next/navigation';
 import * as React from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import SetupMFA from '../guards/SetupMFA';
 import VerifyMFA from '../guards/VerifyMFA';
 
-const LoginForm = () => {
+const LoginForm = ({ searchParams }: { searchParams: SearchParams }) => {
   const t = useTranslations('Auth');
   const dispatch = useAppDispatch();
   const rollbar = useRollbar();
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   const userId = useTypedSelector((state) => state.user.id);
   const userLoading = useTypedSelector((state) => state.user.loading);
@@ -84,7 +83,7 @@ const LoginForm = () => {
     logEvent(GET_LOGIN_USER_SUCCESS);
 
     // Redirect if the user login process is complete and userId loaded
-    const returnUrl = searchParams?.get('return_url');
+    const returnUrl = searchParams.get('return_url');
 
     if (userIsSuperAdmin) {
       router.push('/admin/dashboard');
@@ -254,4 +253,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default withSearchParams(LoginForm);

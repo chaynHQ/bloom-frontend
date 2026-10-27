@@ -3,6 +3,8 @@ import { routing } from '@/i18n/routing';
 import { STORYBLOK_ENVIRONMENT } from '@/lib/constants/common';
 import { getStoryblokStory } from '@/lib/storyblok';
 import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
+import { isPublicContent } from '@/lib/utils/partnerContentAccess';
+import { breadcrumbJsonLd, JsonLd } from '@/lib/utils/structuredData';
 import { getStoryblokApi, ISbStoriesParams } from '@storyblok/react/rsc';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
@@ -28,10 +30,20 @@ export async function generateMetadata({ params }: { params: Params }) {
     return;
   }
 
+  // The resolved course relation; its name tells apart sessions that share a title.
+  const course = story.content.course?.content;
+
   return generateMetadataBasic({
     title: story.content.name,
-    titleParent: t('session'),
-    description: story.content.seo_description,
+    titleParent: course?.name ?? t('session'),
+    description: story.content.seo_description || story.content.description,
+    locale,
+    path: `/${fullSlug}`,
+    languages: story.content.languages,
+    noIndex:
+      story.content.coming_soon ||
+      course?.coming_soon ||
+      (course && !isPublicContent(course.included_for_partners)),
   });
 }
 
@@ -78,5 +90,15 @@ export default async function Page({ params }: { params: Params }) {
     notFound();
   }
 
-  return <StoryblokSessionPage story={story} courseStory={courseStory} />;
+  const breadcrumbs = await breadcrumbJsonLd(locale, [
+    ...(courseStory ? [{ name: courseStory.content.name, path: `/courses/${slug}` }] : []),
+    { name: story.content.name },
+  ]);
+
+  return (
+    <>
+      <JsonLd data={breadcrumbs} />
+      <StoryblokSessionPage story={story} courseStory={courseStory} />
+    </>
+  );
 }

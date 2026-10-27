@@ -4,6 +4,7 @@ import NoDataAvailable from '@/components/common/NoDataAvailable';
 import PageSection from '@/components/common/PageSection';
 import { SignUpSection } from '@/components/common/SignUpSection';
 import { SupportSection } from '@/components/common/SupportSection';
+import { withSearchParams, type SearchParams } from '@/components/common/withSearchParams';
 import PartnerHeader from '@/components/layout/PartnerHeader';
 import { LibraryCardsSection } from '@/components/library/LibraryCardsSection';
 import DynamicComponent from '@/components/storyblok/DynamicComponent';
@@ -35,7 +36,6 @@ import { Box, Button, Typography } from '@mui/material';
 import { useStoryblokState } from '@storyblok/react';
 import { ISbStoryData, SbBlokData } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
-import { useSearchParams } from 'next/navigation';
 import { useEffect, useMemo, useRef } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
 
@@ -48,7 +48,12 @@ interface Props {
 
 const introTitleStyle = { mb: 2, maxWidth: 800 } as const;
 
-export default function WelcomePage({ story: initialStory, libraryStories, partnerName }: Props) {
+function WelcomePage({
+  story: initialStory,
+  libraryStories,
+  partnerName,
+  searchParams,
+}: Props & { searchParams: SearchParams }) {
   const story = useStoryblokState(initialStory) ?? initialStory;
   const t = useTranslations('Shared.librarySections');
   const tS = useTranslations('Shared');
@@ -56,8 +61,7 @@ export default function WelcomePage({ story: initialStory, libraryStories, partn
 
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-  useReferralPartner();
+  useReferralPartner(searchParams);
 
   const userId = useTypedSelector((state) => state.user.id);
   const authStateLoading = useTypedSelector((state) => state.user.authStateLoading);
@@ -207,3 +211,5 @@ export default function WelcomePage({ story: initialStory, libraryStories, partn
     </Box>
   );
 }
+
+export default withSearchParams(WelcomePage);

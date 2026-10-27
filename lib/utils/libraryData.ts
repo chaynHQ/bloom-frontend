@@ -1,5 +1,6 @@
 import { PROGRESS_STATUS } from '@/lib/constants/enums';
 import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
+import type { LibrarySearch } from '@/lib/utils/librarySearch';
 import { ISbStoryData } from '@storyblok/react/rsc';
 
 const COURSE_COMPONENT = 'Course';
@@ -54,6 +55,8 @@ export interface LibraryItem {
   themes: ThemeKey[];
   title: string;
   description: string;
+  seoDescription?: string;
+  keywords?: string; // comma-separated search terms and synonyms, never shown
   href: string; // resolved, locale-aware app path
   format?: Format;
   minutes?: number; // absent on course lessons
@@ -68,10 +71,13 @@ export interface LibraryItem {
 export interface LibraryStory {
   uuid: string;
   full_slug: string;
+  published_at?: string | null;
   content: {
     name: string;
     component?: string;
     description?: unknown; // plain string on a course, rich-text document on a resource
+    seo_description?: string;
+    seo_keywords?: string;
     themes?: string[];
     duration?: unknown; // free-text minutes
     languages?: string[];
@@ -88,6 +94,8 @@ export function toLibraryStory(story: ISbStoryData): LibraryStory {
     name,
     component,
     description,
+    seo_description,
+    seo_keywords,
     themes,
     duration,
     languages,
@@ -101,10 +109,13 @@ export function toLibraryStory(story: ISbStoryData): LibraryStory {
   return {
     uuid: story.uuid,
     full_slug: story.full_slug,
+    published_at: story.published_at,
     content: {
       name,
       component,
       description,
+      seo_description,
+      seo_keywords,
       themes,
       duration,
       languages,
@@ -202,6 +213,8 @@ export function storyToLibraryItem(
     themes: themesForStory(story),
     title: content.name,
     description: toPlainText(content.description),
+    seoDescription: content.seo_description || undefined,
+    keywords: content.seo_keywords || undefined,
     href,
     // Resources carry `login_required` on the story; course lessons fall back to `pathRequiresAccount`.
     requiresAccount:
@@ -250,15 +263,20 @@ export interface LibraryFilters {
   lengths: LengthBucket[];
 }
 
-// AND across groups, OR within a group. A keyword puts title matches first.
-export function filterLibraryItems(items: LibraryItem[], filters: LibraryFilters): LibraryItem[] {
+// AND across groups, OR within a group. A keyword ranks matches by relevance, keeping the incoming
+// order between equal scores.
+export function filterLibraryItems(
+  items: LibraryItem[],
+  filters: LibraryFilters,
+  search: LibrarySearch,
+): LibraryItem[] {
   const { keyword, kind, themes, formats, lengths } = filters;
-  const search = keyword.trim().toLowerCase();
+  const scores = keyword.trim() ? search(keyword) : null;
 
   const matches = items.filter((item) => {
     if (kind !== 'all' && item.kind !== kind) return false;
     if (themes.length && !item.themes.some((theme) => themes.includes(theme))) return false;
-    if (search && !`${item.title} ${item.description}`.toLowerCase().includes(search)) return false;
+    if (scores && !scores.has(item.id)) return false;
 
     if (formats.length && (item.format == null || !formats.includes(item.format))) return false;
     if (lengths.length && (item.minutes == null || !lengths.includes(bucketOf(item.minutes))))
@@ -267,11 +285,9 @@ export function filterLibraryItems(items: LibraryItem[], filters: LibraryFilters
     return true;
   });
 
-  if (!search) return matches;
+  if (!scores) return matches;
 
-  const titleMatchesFirst = (item: LibraryItem) =>
-    item.title.toLowerCase().includes(search) ? 0 : 1;
-  return matches.sort((a, b) => titleMatchesFirst(a) - titleMatchesFirst(b));
+  return matches.sort((a, b) => (scores.get(b.id) ?? 0) - (scores.get(a.id) ?? 0));
 }
 
 const MAX_FEATURED_ITEMS = 5;

@@ -8,7 +8,7 @@ export async function generateMetadata({ params }: { params: Params }) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'PartnerAdmin.createAccessCode' });
 
-  return generateMetadataBasic({ title: t('title') });
+  return generateMetadataBasic({ title: t('title'), locale, noIndex: true });
 }
 
 export default function Page() {

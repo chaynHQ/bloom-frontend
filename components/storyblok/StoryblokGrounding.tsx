@@ -4,6 +4,7 @@ import { ScrollReveal } from '@/components/common/ScrollReveal';
 import SignUpButton from '@/components/common/SignUpButton';
 import { SignUpSection } from '@/components/common/SignUpSection';
 import { SupportSection } from '@/components/common/SupportSection';
+import { withSearchParams, type SearchParams } from '@/components/common/withSearchParams';
 import Header from '@/components/layout/Header';
 import { GroundingExerciseDialog } from '@/components/resources/GroundingExerciseDialog';
 import { Link as i18nLink, useRouter } from '@/i18n/routing';
@@ -26,7 +27,6 @@ import { Box, Button, Card, CardActionArea, Container, Divider, Typography } fro
 import { useStoryblokState } from '@storyblok/react';
 import { ISbStoryData, storyblokEditable } from '@storyblok/react/rsc';
 import { useLocale, useTranslations } from 'next-intl';
-import { useSearchParams } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 
@@ -102,12 +102,15 @@ interface StoryblokGroundingProps {
   stories: ISbStoryData[];
 }
 
-const StoryblokGrounding = ({ story: initialStory, stories = [] }: StoryblokGroundingProps) => {
+const StoryblokGrounding = ({
+  story: initialStory,
+  stories = [],
+  searchParams,
+}: StoryblokGroundingProps & { searchParams: SearchParams }) => {
   const story = useStoryblokState(initialStory) ?? initialStory;
   const t = useTranslations('Resources');
   const locale = useLocale();
   const router = useRouter();
-  const searchParams = useSearchParams();
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
@@ -130,7 +133,7 @@ const StoryblokGrounding = ({ story: initialStory, stories = [] }: StoryblokGrou
     [stories, locale, userContentPartners],
   );
 
-  const openId = searchParams?.get('id') ?? searchParams?.get('openacc') ?? undefined;
+  const openId = searchParams.get('id') ?? searchParams.get('openacc') ?? undefined;
   const openStory = openId ? visibleStories.find((story) => story.slug === openId) : undefined;
 
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
@@ -253,4 +256,4 @@ const StoryblokGrounding = ({ story: initialStory, stories = [] }: StoryblokGrou
   );
 };
 
-export default StoryblokGrounding;
+export default withSearchParams(StoryblokGrounding);
