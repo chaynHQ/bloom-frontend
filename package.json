@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": ">=22.x"
+    "node": "24.x"
+  },
+  "resolutions": {
+    "happy-dom": "^21.0.4"
   },
   "scripts": {
     "dev": "next dev --turbopack",
@@ -88,7 +91,7 @@
     "@types/jest": "^30.0.0",
     "@types/js-cookie": "^3.0.6",
     "@types/newrelic": "^9.14.8",
-    "@types/node": "^26.6.6",
+    "@types/node": "^24.19.2",
     "@types/react": "19.3.0",
     "babel-plugin-istanbul": "^8.0.0",
     "cypress": "^16.2.1",
