@@ -2,8 +2,7 @@
 
 import { useDeleteCypressUsersMutation, useLazyGetCypressUsersCountQuery } from '@/lib/api';
 import { getErrorMessage } from '@/lib/utils/errorMessage';
-import LoadingButton from '@mui/lab/LoadingButton';
-import { Box, Checkbox, FormControlLabel, Typography } from '@mui/material';
+import { Box, Button, Checkbox, FormControlLabel, Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
@@ -78,7 +77,7 @@ const DeleteCypressUsersForm = () => {
       {formError && <Typography sx={{ color: 'error.main', mb: 1 }}>{formError}</Typography>}
 
       <Box>
-        <LoadingButton
+        <Button
           variant="contained"
           color="secondary"
           type="submit"
@@ -87,7 +86,7 @@ const DeleteCypressUsersForm = () => {
           sx={{ mt: 1 }}
         >
           {t('submit')}
-        </LoadingButton>
+        </Button>
       </Box>
     </form>
   );

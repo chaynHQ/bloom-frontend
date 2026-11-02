@@ -110,7 +110,6 @@ export interface StoryblokTeamMemberCardProps {
 
 const StoryblokTeamMemberCard = (props: StoryblokTeamMemberCardProps) => {
   const {
-    _uid,
     _editable,
     image,
     name,
@@ -141,23 +140,7 @@ const StoryblokTeamMemberCard = (props: StoryblokTeamMemberCardProps) => {
   }, [website, website_title]);
 
   return (
-    <Card
-      data-testid="team-member-card"
-      sx={cardStyle}
-      {...storyblokEditable({
-        _uid,
-        _editable,
-        name,
-        role,
-        languages,
-        bio,
-        short_bio,
-        show_short_bio,
-        hide_languages,
-        image,
-        cardExpandable,
-      })}
-    >
+    <Card data-testid="team-member-card" sx={cardStyle} {...storyblokEditable({ _editable })}>
       <CardActionArea
         onClick={handleExpandClick}
         aria-label={`${t.rich('expandTeamMember', { name: name })}`}

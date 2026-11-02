@@ -12,7 +12,7 @@ interface StoryblokStatementProps {
 }
 
 const StoryblokStatement = (props: StoryblokStatementProps) => {
-  const { _uid, _editable, text, text_size } = props;
+  const { _editable, text, text_size } = props;
 
   if (!text) return <></>;
 
@@ -43,7 +43,7 @@ const StoryblokStatement = (props: StoryblokStatementProps) => {
   } as const;
 
   return (
-    <Box sx={containerStyle} {...storyblokEditable({ _uid, _editable, text, text_size })}>
+    <Box sx={containerStyle} {...storyblokEditable({ _editable })}>
       <Typography>{text}</Typography>
     </Box>
   );

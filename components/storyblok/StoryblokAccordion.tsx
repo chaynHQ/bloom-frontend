@@ -67,7 +67,7 @@ interface StoryblokAccordionProps {
   theme: 'primary' | 'secondary';
 }
 const StoryblokAccordion = (props: StoryblokAccordionProps) => {
-  const { _uid, _editable, accordion_items, theme } = props;
+  const { _editable, accordion_items, theme } = props;
   const searchParams = useHydratedSearchParams();
   const isSmallScreen = useMediaQuery(muiTheme.breakpoints.down('md'));
   const headerOffset = isSmallScreen ? 48 : 136;
@@ -92,7 +92,7 @@ const StoryblokAccordion = (props: StoryblokAccordionProps) => {
   }, [headerOffset, accordionInUrl]);
 
   return (
-    <Box sx={containerStyle} {...storyblokEditable({ _uid, _editable, accordion_items, theme })}>
+    <Box sx={containerStyle} {...storyblokEditable({ _editable })}>
       {accordion_items.map((ai, i) => (
         <Accordion
           data-testid="accordion-item"

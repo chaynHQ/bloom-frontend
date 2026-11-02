@@ -5,16 +5,17 @@
 
 describe.skip('Pre-test cleanup', () => {
   it('should delete all stale cypress test users', () => {
-    const superAdminEmail = Cypress.env('CYPRESS_SUPER_ADMIN_EMAIL');
-    const superAdminPassword = Cypress.env('CYPRESS_SUPER_ADMIN_PASSWORD');
+    cy.env(['CYPRESS_SUPER_ADMIN_PASSWORD'], { log: false }).then(
+      ({ CYPRESS_SUPER_ADMIN_PASSWORD }) => {
+        if (!Cypress.expose('CYPRESS_SUPER_ADMIN_EMAIL') || !CYPRESS_SUPER_ADMIN_PASSWORD) {
+          cy.log('Skipping cleanup - super admin credentials not configured');
+          return;
+        }
 
-    if (!superAdminEmail || !superAdminPassword) {
-      cy.log('Skipping cleanup - super admin credentials not configured');
-      return;
-    }
-
-    cy.logInWithEmailAndPassword(superAdminEmail, superAdminPassword);
-    cy.deleteAllCypressUsers();
-    cy.log('Pre-test cleanup completed - stale cypress users deleted');
+        cy.logInAsTestAccount('SUPER_ADMIN');
+        cy.deleteAllCypressUsers();
+        cy.log('Pre-test cleanup completed - stale cypress users deleted');
+      },
+    );
   });
 });

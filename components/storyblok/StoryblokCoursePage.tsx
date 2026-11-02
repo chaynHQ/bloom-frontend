@@ -76,15 +76,12 @@ const StoryblokCoursePage = ({
 }) => {
   const story = useStoryblokState(initialStory) ?? initialStory;
   const {
-    _uid,
     _editable,
     name,
     description,
-    image,
     image_with_background,
     video,
     video_transcript,
-    weeks,
     included_for_partners,
     themes,
   } = story.content as StoryblokCoursePageProps;
@@ -201,20 +198,7 @@ const StoryblokCoursePage = ({
   }
 
   return (
-    <Box
-      {...storyblokEditable({
-        _uid,
-        _editable,
-        name,
-        description,
-        image,
-        image_with_background,
-        video,
-        video_transcript,
-        weeks,
-        included_for_partners,
-      })}
-    >
+    <Box {...storyblokEditable({ _editable })}>
       <CourseHero
         name={name}
         courseUuid={storyUuid}

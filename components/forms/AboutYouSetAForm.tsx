@@ -19,8 +19,7 @@ import { hashString } from '@/lib/utils/hashString';
 import { ScaleFieldItem } from '@/lib/utils/interfaces';
 import logEvent from '@/lib/utils/logEvent';
 import { rowStyle, scaleTitleStyle, staticFieldLabelStyle } from '@/styles/common';
-import LoadingButton from '@mui/lab/LoadingButton';
-import { Box, FormControl, Slider, Typography } from '@mui/material';
+import { Box, Button, FormControl, Slider, Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import axios from 'axios';
 import { useTranslations } from 'next-intl';
@@ -222,9 +221,9 @@ const AboutYouSetAForm = () => {
           </Typography>
         )}
         <Box sx={actionsStyle}>
-          <LoadingButton variant="contained" color="secondary" type="submit" loading={loading}>
+          <Button variant="contained" color="secondary" type="submit" loading={loading}>
             {tBase('submitLabel')}
-          </LoadingButton>
+          </Button>
         </Box>
       </form>
     </Box>

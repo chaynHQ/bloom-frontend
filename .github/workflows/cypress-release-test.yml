@@ -92,7 +92,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v7
         with:
-          node-version: '22.x'
+          node-version: '24.x'
           cache: 'yarn'
 
       # Cache Cypress binary to speed up installation (~500MB, saves 1-2 min per job)
@@ -178,6 +178,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24.x'
 
       - name: Check for ungrouped test files
         id: check

@@ -5,11 +5,17 @@ const customCommands = require('./commands.js');
 // Bypass Vercel Firewall Attack Challenge Mode for CI.
 // The firewall blocks automated requests with 429 challenges; an allow rule
 // matching this cookie/header short-circuits the challenge for CI traffic only.
-const firewallBypass = Cypress.env('CI_FIREWALL_BYPASS');
-if (firewallBypass) {
+if (Cypress.expose('CI_FIREWALL_BYPASS_ENABLED')) {
+  // The token is a secret, so it's read with cy.env() when needed instead of being exposed.
+  const withBypassToken = (fn) =>
+    cy
+      .env(['CYPRESS_CI_FIREWALL_BYPASS'], { log: false })
+      .then(({ CYPRESS_CI_FIREWALL_BYPASS }) => fn(CYPRESS_CI_FIREWALL_BYPASS));
+  const setBypassCookie = (token) => cy.setCookie('ci-firewall-bypass', token, { log: false });
+
   // Cookie covers navigation and asset requests (cookies are auto-sent by the browser).
   Cypress.Commands.overwrite('visit', (originalFn, ...args) =>
-    cy.setCookie('ci-firewall-bypass', firewallBypass).then(() => originalFn(...args)),
+    withBypassToken((token) => setBypassCookie(token).then(() => originalFn(...args))),
   );
 
   // Header covers cy.request (cookies from cy.setCookie aren't always sent with it).
@@ -22,14 +28,15 @@ if (firewallBypass) {
     } else {
       options = { url: args[0], body: args[1] };
     }
-    options.headers = { ...options.headers, 'x-ci-firewall-bypass': firewallBypass };
-    return originalFn(options);
+    return withBypassToken((token) =>
+      originalFn({ ...options, headers: { ...options.headers, 'x-ci-firewall-bypass': token } }),
+    );
   });
 
   // Re-set the cookie before each test — cleanUpTestState calls cy.clearAllCookies
   // in its before() hook, which removes the cookie set by the first cy.visit.
   beforeEach(() => {
-    cy.setCookie('ci-firewall-bypass', firewallBypass);
+    withBypassToken(setBypassCookie);
   });
 }
 

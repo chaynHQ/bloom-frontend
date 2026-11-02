@@ -1,4 +1,4 @@
-import { Email, MailSlurp } from 'mailslurp-client';
+import { Email } from 'mailslurp-client';
 
 const email = Cypress.uniqueEmail();
 
@@ -35,9 +35,6 @@ describe.skip('Reset password', () => {
   it('should receive email when known email submitted for password reset', () => {
     cy.intercept('POST', '/api/auth/reset-password').as('resetPassword');
 
-    const mailslurp = new MailSlurp({ apiKey: Cypress.env('CYPRESS_MAIL_SLURP_API_KEY') });
-
-    const inboxId = Cypress.env('CYPRESS_INBOX_ID');
     cy.visit(resetPasswordPath);
     // Reset password
     cy.get('[qa-id=passwordResetEmailInput]').focus().type(email);
@@ -46,14 +43,7 @@ describe.skip('Reset password', () => {
       // check that front-end confirms an email has been sent
       .should('contain', 'Check your emails for a reset link from Bloom.');
     cy.get('button[type="submit"]').contains('Resend email');
-    cy.wrap(
-      mailslurp.getInbox(inboxId).then((inbox) => {
-        // wait for email
-        return mailslurp.waitForLatestEmail(inbox.id, 8000).then((latestEmail) => {
-          return latestEmail;
-        });
-      }),
-    ).then((latestEmail: Email) => {
+    cy.task<Email>('waitForLatestEmail').then((latestEmail) => {
       expect(latestEmail).to.haveOwnProperty('subject');
       expect(latestEmail?.subject).to.equal('Greetings!'); // note used to be 'Reset' - unclear why this changed
     });

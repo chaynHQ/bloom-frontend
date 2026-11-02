@@ -53,7 +53,6 @@ export interface StoryblokMeetTheTeamPageProps {
 const StoryblokMeetTheTeamPage = ({ story: initialStory }: { story: ISbStoryData }) => {
   const story = useStoryblokState(initialStory) ?? initialStory;
   const {
-    _uid,
     _editable,
     title,
     description,
@@ -107,27 +106,7 @@ const StoryblokMeetTheTeamPage = ({ story: initialStory }: { story: ISbStoryData
   });
 
   return (
-    <Box
-      {...storyblokEditable({
-        _uid,
-        _editable,
-        title,
-        description,
-        header_image,
-        core_team_title,
-        core_team_description,
-        core_team_members,
-        somatics_team_title,
-        somatics_team_description,
-        somatics_team_members,
-        supporting_team_title,
-        supporting_team_description,
-        supporting_team_members,
-        page_section_1,
-        page_section_2,
-        page_section_3,
-      })}
-    >
+    <Box {...storyblokEditable({ _editable })}>
       <Header
         title={title}
         introduction={description}

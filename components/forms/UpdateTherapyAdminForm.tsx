@@ -10,7 +10,6 @@ import { useAppDispatch } from '@/lib/hooks/store';
 import { GetUserDto } from '@/lib/store/userSlice';
 import { getErrorMessage } from '@/lib/utils/errorMessage';
 import logEvent from '@/lib/utils/logEvent';
-import LoadingButton from '@mui/lab/LoadingButton';
 import { Autocomplete, Box, Button, debounce, Grid, IconButton, Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
@@ -191,9 +190,9 @@ const UpdateTherapyAdminForm = () => {
           {formError}
         </Typography>
       )}
-      <LoadingButton variant="contained" color="secondary" type="submit" loading={loading}>
+      <Button variant="contained" color="secondary" type="submit" loading={loading}>
         {t('title')}
-      </LoadingButton>
+      </Button>
     </form>
   );
 };

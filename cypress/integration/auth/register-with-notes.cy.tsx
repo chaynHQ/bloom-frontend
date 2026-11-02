@@ -57,7 +57,7 @@ describe('Register with Notes from Bloom', () => {
 
   it('should handle registration errors', () => {
     // Use an existing admin email that won't be cleaned up
-    const existingEmail = Cypress.env('CYPRESS_SUPER_ADMIN_EMAIL');
+    const existingEmail = Cypress.expose('CYPRESS_SUPER_ADMIN_EMAIL');
 
     // Try to register with an already existing email
     cy.get('input#name').type(TEST_NAME);

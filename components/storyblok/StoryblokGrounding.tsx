@@ -118,7 +118,7 @@ const StoryblokGrounding = ({ story: initialStory, stories = [] }: StoryblokGrou
   const userSettled = userAuthStatus !== 'resolving';
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
-  const { _uid, _editable, title, description, seo_description, header_image } = (story?.content ??
+  const { _editable, title, description, header_image } = (story?.content ??
     {}) as GroundingPageContent;
 
   const visibleStories = useMemo(
@@ -171,9 +171,7 @@ const StoryblokGrounding = ({ story: initialStory, stories = [] }: StoryblokGrou
   };
 
   return (
-    <Box
-      {...storyblokEditable({ _uid, _editable, title, description, seo_description, header_image })}
-    >
+    <Box {...storyblokEditable({ _editable })}>
       {title && (
         <Header
           title={title}

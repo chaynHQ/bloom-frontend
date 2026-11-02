@@ -22,8 +22,7 @@ import { useAppDispatch, useTypedSelector } from '@/lib/hooks/store';
 import { useHydratedSearchParams } from '@/lib/hooks/useHydratedSearchParams';
 import { setAuthStateLoading, setLoadError } from '@/lib/store/userSlice';
 import logEvent from '@/lib/utils/logEvent';
-import LoadingButton from '@mui/lab/LoadingButton';
-import { Box, Link, Typography } from '@mui/material';
+import { Box, Button, Link, Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import { getMultiFactorResolver, MultiFactorError, MultiFactorResolver } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
@@ -198,7 +197,7 @@ const LoginForm = () => {
               </Typography>
             )}
 
-            <LoadingButton
+            <Button
               id="login-submit"
               sx={{ mt: 2, marginInlineEnd: 1.5, mb: 2, minWidth: 150 }}
               variant="contained"
@@ -207,7 +206,7 @@ const LoginForm = () => {
               loading={userAuthLoading || userLoading}
             >
               {t('form.loginSubmit')}
-            </LoadingButton>
+            </Button>
             <Typography
               variant="body2"
               sx={{

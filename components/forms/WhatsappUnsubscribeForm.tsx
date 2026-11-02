@@ -12,8 +12,7 @@ import { getErrorMessage } from '@/lib/utils/errorMessage';
 import logEvent from '@/lib/utils/logEvent';
 import { findWhatsappSubscription } from '@/lib/utils/whatsappUtils';
 import { rowStyle } from '@/styles/common';
-import LoadingButton from '@mui/lab/LoadingButton';
-import { Box, Link, Typography } from '@mui/material';
+import { Box, Button, Link, Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
 import * as React from 'react';
@@ -98,7 +97,7 @@ const WhatsappUnsubscribeForm = () => {
             </Typography>
           </Box>
 
-          <LoadingButton
+          <Button
             sx={{ height: 40, mt: 'auto' }}
             variant="contained"
             color="secondary"
@@ -106,7 +105,7 @@ const WhatsappUnsubscribeForm = () => {
             loading={loading}
           >
             {t('unsubscribe')}
-          </LoadingButton>
+          </Button>
         </Box>
       </form>
       {formError && (

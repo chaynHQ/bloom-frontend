@@ -1,10 +1,7 @@
 describe('Create access code page should display', () => {
-  const badooEmail = Cypress.env('CYPRESS_BADOO_PARTNER_ADMIN_EMAIL') as string;
-  const badooPassword = Cypress.env('CYPRESS_BADOO_PARTNER_ADMIN_PASSWORD');
-
   before(() => {
     cy.cleanUpTestState();
-    cy.logInWithEmailAndPassword(badooEmail, badooPassword);
+    cy.logInAsTestAccount('BADOO_PARTNER_ADMIN');
   });
 
   beforeEach(() => {

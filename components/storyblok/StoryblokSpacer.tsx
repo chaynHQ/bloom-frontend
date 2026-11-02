@@ -9,7 +9,7 @@ interface StoryblokSpacerProps {
 }
 
 const StoryblokSpacer = (props: StoryblokSpacerProps) => {
-  const { _uid, _editable, size = 'small' } = props;
+  const { _editable, size = 'small' } = props;
 
   const theme = useTheme();
   const style = {
@@ -19,7 +19,7 @@ const StoryblokSpacer = (props: StoryblokSpacerProps) => {
         ? { height: theme.spacing(2) }
         : { height: theme.spacing(3) }),
   };
-  return <Box sx={style} {...storyblokEditable({ _uid, _editable, size })} />;
+  return <Box sx={style} {...storyblokEditable({ _editable })} />;
 };
 
 export default StoryblokSpacer;
