@@ -3,12 +3,12 @@ import { type Course } from '@/lib/store/coursesSlice';
 import { type Resource } from '@/lib/store/resourcesSlice';
 import { ISbStoryData } from '@storyblok/react/rsc';
 import {
-  courseItemHref,
+  courseResourceHref,
   getCourseProgress,
   getCourseSessions,
   isFirstCourseSession,
   isModularCourse,
-  itemProgressByUuid,
+  sessionAndResourceProgressByUuid,
   type CourseSession,
 } from './courseSessions';
 
@@ -22,14 +22,14 @@ const session = (uuid: string, position: number): CourseSession => ({
   kind: 'session',
 });
 
-const piece = (uuid: string, component: string, fullSlug: string, content = {}) =>
+const mockResource = (uuid: string, component: string, fullSlug: string, content = {}) =>
   ({
     uuid,
     name: uuid,
     full_slug: fullSlug,
     content: {
       component,
-      name: `Piece ${uuid}`,
+      name: `Resource ${uuid}`,
       description: { type: 'doc', content: [{ type: 'paragraph', content: [{ text: 'Desc' }] }] },
       duration: '7',
       ...content,
@@ -69,12 +69,12 @@ describe('isModularCourse', () => {
   });
 });
 
-describe('courseItemHref', () => {
-  it('nests the piece folder and slug under the course, without the locale prefix', () => {
-    expect(courseItemHref('courses/healing/', 'video/what-are-boundaries', 'en')).toBe(
+describe('courseResourceHref', () => {
+  it('nests the resource folder and slug under the course, without the locale prefix', () => {
+    expect(courseResourceHref('courses/healing/', 'video/what-are-boundaries', 'en')).toBe(
       '/courses/healing/video/what-are-boundaries',
     );
-    expect(courseItemHref('tr/courses/healing/', 'tr/audio/what-are-boundaries', 'tr')).toBe(
+    expect(courseResourceHref('tr/courses/healing/', 'tr/audio/what-are-boundaries', 'tr')).toBe(
       '/courses/healing/audio/what-are-boundaries',
     );
   });
@@ -84,13 +84,13 @@ describe('getCourseSessions', () => {
   it('reads a modular course from its sessions, keeping the folder and login defaults', () => {
     const course = story('courses/healing/', {
       sessions: [
-        piece('v', 'resource_video', 'video/v'),
+        mockResource('v', 'resource_video', 'video/v'),
         'unresolved-uuid',
-        piece('w', 'resource_written', 'written/w'),
-        piece('a', 'resource_audio', 'audio/a', { login_required: false }),
-        piece('x', 'resource_activity', 'activity/x'),
+        mockResource('w', 'resource_written', 'written/w'),
+        mockResource('a', 'resource_audio', 'audio/a', { login_required: false }),
+        mockResource('x', 'resource_activity', 'activity/x'),
       ],
-      weeks: [{ sessions: [piece('old', 'Session', 'courses/healing/old')] }],
+      weeks: [{ sessions: [mockResource('old', 'Session', 'courses/healing/old')] }],
     });
 
     expect(getCourseSessions(course, 'en')).toEqual([
@@ -113,8 +113,8 @@ describe('getCourseSessions', () => {
     const course = story('courses/old/', {
       sessions: [],
       weeks: [
-        { sessions: [piece('s1', 'Session', 'courses/old/s1', { video: { url: 'x' } })] },
-        { sessions: [piece('s2', 'Session', 'courses/old/s2')] },
+        { sessions: [mockResource('s1', 'Session', 'courses/old/s1', { video: { url: 'x' } })] },
+        { sessions: [mockResource('s2', 'Session', 'courses/old/s2')] },
       ],
     });
 
@@ -135,9 +135,9 @@ const course = (storyblokUuid: string, completed: boolean, sessions: [string, bo
 const resource = (storyblokUuid: string, completed: boolean) =>
   ({ storyblokUuid, completed }) as unknown as Resource;
 
-describe('itemProgressByUuid', () => {
+describe('sessionAndResourceProgressByUuid', () => {
   it('merges course sessions and resources, a completion anywhere winning', () => {
-    const progress = itemProgressByUuid(
+    const progress = sessionAndResourceProgressByUuid(
       [
         course('c1', false, [
           ['s1', true],
@@ -152,20 +152,20 @@ describe('itemProgressByUuid', () => {
 });
 
 describe('getCourseProgress', () => {
-  it('follows the course record when the course has no modular items', () => {
+  it('follows the course record when the course has no modular resources', () => {
     expect(getCourseProgress([course('c1', false)], 'c1', undefined, {})).toBe(
       PROGRESS_STATUS.STARTED,
     );
     expect(getCourseProgress([], 'c1', undefined, {})).toBe(PROGRESS_STATUS.NOT_STARTED);
   });
 
-  it('shows a modular course completed when every piece is done, even if never started', () => {
+  it('shows a modular course completed when every resource is done, even if never started', () => {
     expect(getCourseProgress([], 'c1', ['a', 'b'], { a: 'completed', b: 'completed' })).toBe(
       PROGRESS_STATUS.COMPLETED,
     );
   });
 
-  it('keeps a modular course not started while pieces done elsewhere are incomplete', () => {
+  it('keeps a modular course not started while resources done elsewhere are incomplete', () => {
     expect(getCourseProgress([], 'c1', ['a', 'b'], { a: 'completed' })).toBe(
       PROGRESS_STATUS.NOT_STARTED,
     );

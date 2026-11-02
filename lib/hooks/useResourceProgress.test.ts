@@ -20,7 +20,7 @@ const completeResource = jest.fn();
 const render = (args: Partial<Parameters<typeof useResourceProgress>[0]> = {}) =>
   renderHook(() =>
     useResourceProgress({
-      storyUuid: 'piece',
+      storyUuid: 'resource',
       eventPrefix: 'RESOURCE_VIDEO',
       resourceProgress: PROGRESS_STATUS.NOT_STARTED,
       eventData: {},
@@ -35,26 +35,26 @@ beforeEach(() => {
   );
   (useStartResourceMutation as jest.Mock).mockReturnValue([startResource]);
   (useCompleteResourceMutation as jest.Mock).mockReturnValue([completeResource]);
-  startResource.mockResolvedValue({ data: { storyblokUuid: 'piece' } });
-  completeResource.mockResolvedValue({ data: { storyblokUuid: 'piece' } });
+  startResource.mockResolvedValue({ data: { storyblokUuid: 'resource' } });
+  completeResource.mockResolvedValue({ data: { storyblokUuid: 'resource' } });
 });
 
 describe('useResourceProgress', () => {
-  it('starts a new piece without a course outside a course', async () => {
+  it('starts a new resource without a course outside a course', async () => {
     const { start } = render();
     await act(() => start());
 
-    expect(startResource).toHaveBeenCalledWith({ storyblokUuid: 'piece' });
+    expect(startResource).toHaveBeenCalledWith({ storyblokUuid: 'resource' });
   });
 
-  it('does not restart a piece already started outside a course', async () => {
+  it('does not restart a resource already started outside a course', async () => {
     const { start } = render({ resourceProgress: PROGRESS_STATUS.COMPLETED });
     await act(() => start());
 
     expect(startResource).not.toHaveBeenCalled();
   });
 
-  it('starts the course for a piece done elsewhere, without logging a resource start', async () => {
+  it('starts the course for a resource done elsewhere, without logging a resource start', async () => {
     const { start } = render({
       resourceProgress: PROGRESS_STATUS.COMPLETED,
       courseStoryblokUuid: 'course',
@@ -64,7 +64,7 @@ describe('useResourceProgress', () => {
 
     expect(startResource).toHaveBeenCalledTimes(1);
     expect(startResource).toHaveBeenCalledWith({
-      storyblokUuid: 'piece',
+      storyblokUuid: 'resource',
       courseStoryblokUuid: 'course',
     });
     expect(logEvent).not.toHaveBeenCalledWith('RESOURCE_VIDEO_STARTED_REQUEST', expect.anything());
@@ -84,7 +84,7 @@ describe('useResourceProgress', () => {
   it('logs the course events the backend reports', async () => {
     startResource.mockResolvedValue({
       data: {
-        storyblokUuid: 'piece',
+        storyblokUuid: 'resource',
         courseProgress: [
           { storyblokUuid: 'course', name: 'Course', started: true, completed: false },
         ],
@@ -92,7 +92,7 @@ describe('useResourceProgress', () => {
     });
     completeResource.mockResolvedValue({
       data: {
-        storyblokUuid: 'piece',
+        storyblokUuid: 'resource',
         courseProgress: [
           { storyblokUuid: 'course', name: 'Course', started: false, completed: true },
         ],
@@ -107,14 +107,14 @@ describe('useResourceProgress', () => {
 
     expect(logEvent).toHaveBeenCalledWith(
       COURSE_STARTED,
-      expect.objectContaining({ course_trigger: 'course_item', course_name: 'Course' }),
+      expect.objectContaining({ course_trigger: 'course_resource', course_name: 'Course' }),
     );
     expect(logEvent).toHaveBeenCalledWith(
       COURSE_COMPLETED,
-      expect.objectContaining({ course_trigger: 'course_item' }),
+      expect.objectContaining({ course_trigger: 'course_resource' }),
     );
     expect(completeResource).toHaveBeenCalledWith({
-      storyblokUuid: 'piece',
+      storyblokUuid: 'resource',
       courseStoryblokUuid: 'course',
     });
   });
@@ -122,7 +122,7 @@ describe('useResourceProgress', () => {
   it('tags a completion outside a course as standalone', async () => {
     completeResource.mockResolvedValue({
       data: {
-        storyblokUuid: 'piece',
+        storyblokUuid: 'resource',
         courseProgress: [
           { storyblokUuid: 'course', name: 'Course', started: false, completed: true },
         ],
@@ -134,7 +134,7 @@ describe('useResourceProgress', () => {
       await complete();
     });
 
-    expect(completeResource).toHaveBeenCalledWith({ storyblokUuid: 'piece' });
+    expect(completeResource).toHaveBeenCalledWith({ storyblokUuid: 'resource' });
     expect(logEvent).toHaveBeenCalledWith(
       COURSE_COMPLETED,
       expect.objectContaining({ course_trigger: 'standalone' }),

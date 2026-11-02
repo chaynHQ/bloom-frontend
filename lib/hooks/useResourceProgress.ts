@@ -21,7 +21,7 @@ interface UseResourceProgressArgs {
   eventPrefix: ResourceEventPrefix;
   resourceProgress: PROGRESS_STATUS;
   eventData: Record<string, unknown>;
-  // The modular course the piece is open in, if any.
+  // The modular course the resource is open in, if any.
   courseStoryblokUuid?: string;
   courseStarted?: boolean;
 }
@@ -42,12 +42,12 @@ export function useResourceProgress({
   const [completeResource] = useCompleteResourceMutation();
   // The course's progress refetches after the start, so this stops a second start in the meantime.
   const courseStartSent = useRef(false);
-  const trigger = courseStoryblokUuid ? 'course_item' : 'standalone';
+  const trigger = courseStoryblokUuid ? 'course_resource' : 'standalone';
 
   const start = useCallback(async () => {
     if (!isLoggedIn) return;
     const resourceStarted = resourceProgress !== PROGRESS_STATUS.NOT_STARTED;
-    // A piece already done elsewhere still starts the course the first time it's opened there.
+    // A resource already done elsewhere still starts the course the first time it's opened there.
     const startsCourse = Boolean(courseStoryblokUuid) && !courseStarted && !courseStartSent.current;
     if (resourceStarted && !startsCourse) return;
     if (startsCourse) courseStartSent.current = true;

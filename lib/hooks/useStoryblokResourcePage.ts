@@ -11,7 +11,7 @@ import { useUserContentPartners } from '@/lib/hooks/useUserContentPartners';
 import { Resource } from '@/lib/store/resourcesSlice';
 import { determineCourseProgress } from '@/lib/utils/courseProgress';
 import {
-  itemProgressByUuid,
+  sessionAndResourceProgressByUuid,
   type CourseSession,
   type SessionProgress,
 } from '@/lib/utils/courseSessions';
@@ -43,7 +43,7 @@ export interface ResourceStoryContent {
   related_grounding?: ISbStoryData[];
   // The session this resource excerpts. May resolve as a single inlined story or a list of them.
   related_session?: ISbStoryData | ISbStoryData[];
-  // Shown wherever the piece appears, on its own page and inside a course.
+  // Shown wherever the resource appears, on its own page and inside a course.
   activity?: StoryblokRichtext;
   bonus?: BonusContent[];
 }
@@ -51,23 +51,23 @@ export interface ResourceStoryContent {
 // What a resource route passes a page on top of the story.
 export interface ResourcePageContextProps {
   courseContext?: CourseContext;
-  // Course stories that list this piece, before locale and partner filtering.
+  // Course stories that list this resource, before locale and partner filtering.
   partOfCourseStories?: LibraryStory[];
 }
 
-// The modular course a piece is open in, when reached through `/courses/<course>/<folder>/<slug>`.
+// The modular course a resource is open in, when reached through `/courses/<course>/<folder>/<slug>`.
 export interface CourseContext {
   courseName: string;
   courseHref: string;
   courseUuid: string;
   courseIncludedForPartners: string[];
-  items: CourseSession[];
+  resources: CourseSession[];
 }
 
-// What the page layout needs to show the course around the piece.
+// What the page layout needs to show the course around the resource.
 export interface CourseNav extends CourseContext {
   progressByUuid: Record<string, SessionProgress>;
-  nextItem?: CourseSession;
+  nextResource?: CourseSession;
 }
 
 interface UseStoryblokResourcePageArgs {
@@ -126,7 +126,7 @@ export function useStoryblokResourcePage<T extends ResourceStoryContent>({
   // change that, so pages show "not available in your language" before any auth/partner gating.
   const availableInLocale = storyAvailableInLocale(languages, locale);
 
-  // Inside a course, the course's partner access applies first, then the piece's own.
+  // Inside a course, the course's partner access applies first, then the resource's own.
   const hasPageAccess = useMemo(() => {
     const isOpenTo = (partners: string[]) =>
       partners.some((p) => p.toLowerCase() === 'public') ||
@@ -160,11 +160,13 @@ export function useStoryblokResourcePage<T extends ResourceStoryContent>({
 
   const courseNav = useMemo<CourseNav | undefined>(() => {
     if (!courseContext) return undefined;
-    const currentIndex = courseContext.items.findIndex((item) => item.uuid === storyUuid);
+    const currentIndex = courseContext.resources.findIndex(
+      (resource) => resource.uuid === storyUuid,
+    );
     return {
       ...courseContext,
-      progressByUuid: itemProgressByUuid(courses, resources),
-      nextItem: currentIndex === -1 ? undefined : courseContext.items[currentIndex + 1],
+      progressByUuid: sessionAndResourceProgressByUuid(courses, resources),
+      nextResource: currentIndex === -1 ? undefined : courseContext.resources[currentIndex + 1],
     };
   }, [courseContext, courses, resources, storyUuid]);
 
@@ -178,8 +180,8 @@ export function useStoryblokResourcePage<T extends ResourceStoryContent>({
       ...(courseContext && {
         course_name: courseContext.courseName,
         course_storyblok_uuid: courseContext.courseUuid,
-        course_item_position:
-          courseContext.items.find((item) => item.uuid === storyUuid)?.position ?? null,
+        course_resource_position:
+          courseContext.resources.find((resource) => resource.uuid === storyUuid)?.position ?? null,
       }),
     }),
     [category, name, storyUuid, resourceProgress, themes, courseContext],
@@ -191,7 +193,7 @@ export function useStoryblokResourcePage<T extends ResourceStoryContent>({
   });
 
   // Written pages start on view, before any gating. Inside a course, progress waits until the
-  // member can see the piece, so one start carries the course.
+  // member can see the resource, so one start carries the course.
   const awaitingCourseAccess = !!courseContext && contentAccessStatus !== 'accessGranted';
   const courseStoryblokUuid = courseContext?.courseUuid;
   const courseStarted =

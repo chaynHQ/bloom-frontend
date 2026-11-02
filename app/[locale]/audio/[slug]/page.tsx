@@ -1,7 +1,7 @@
 import StoryblokResourceAudioPage from '@/components/storyblok/StoryblokResourceAudioPage';
 import { getStoryblokStory, resourceFolderStaticParams } from '@/lib/storyblok';
 import { getCachedCourseStories } from '@/lib/utils/getLibraryStories';
-import { courseItemUuids } from '@/lib/utils/libraryData';
+import { courseResourceUuids } from '@/lib/utils/libraryData';
 import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
 import { isPublicContent } from '@/lib/utils/partnerContentAccess';
 import { breadcrumbJsonLd, JsonLd, resourceJsonLd } from '@/lib/utils/structuredData';
@@ -59,7 +59,7 @@ export default async function Page({ params }: { params: Params }) {
   }
 
   const partOfCourseStories = courseStories.filter((course) =>
-    courseItemUuids(course).includes(story.uuid),
+    courseResourceUuids(course).includes(story.uuid),
   );
   const breadcrumbs = await breadcrumbJsonLd(locale, [{ name: story.content.name }]);
 

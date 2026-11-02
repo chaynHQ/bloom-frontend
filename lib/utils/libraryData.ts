@@ -61,7 +61,7 @@ export interface LibraryItem {
   format?: Format;
   minutes?: number; // absent on course lessons
   courseTitle?: string;
-  // A piece listed by more than one visible course: labelled with a count, searchable by each title.
+  // A resource listed by more than one visible course: labelled with a count, searchable by each title.
   courseTitles?: string[];
   sessionCount?: number; // courses only
   progress?: 'started' | 'completed';
@@ -86,7 +86,7 @@ export interface LibraryStory {
     included_for_partners?: string[];
     coming_soon?: boolean;
     weeks?: { sessions?: unknown[] }[];
-    sessions?: unknown[]; // a modular course's piece uuids
+    sessions?: unknown[]; // a modular course's resource uuids
     image_with_background?: { filename?: string };
     login_required?: boolean; // only on video/audio/written/activity blocks
   };
@@ -133,9 +133,9 @@ export function toLibraryStory(story: ISbStoryData): LibraryStory {
   };
 }
 
-// The piece uuids a modular course lists. Library fetches leave the relation unresolved, so these
+// The resource uuids a modular course lists. Library fetches leave the relation unresolved, so these
 // are bare uuids; empty for a course built from weeks.
-export function courseItemUuids(story: LibraryStory): string[] {
+export function courseResourceUuids(story: LibraryStory): string[] {
   return (story.content.sessions ?? []).filter((uuid): uuid is string => typeof uuid === 'string');
 }
 
@@ -235,12 +235,12 @@ export function storyToLibraryItem(
 
   if (content.component === COURSE_COMPONENT) {
     const weeks = (content.weeks ?? []) as { sessions?: unknown[] }[];
-    const itemCount = courseItemUuids(story).length;
+    const resourceCount = courseResourceUuids(story).length;
     return {
       ...base,
       kind: 'course',
       sessionCount:
-        itemCount || weeks.reduce((total, week) => total + (week.sessions?.length ?? 0), 0),
+        resourceCount || weeks.reduce((total, week) => total + (week.sessions?.length ?? 0), 0),
       imageSrc: content.image_with_background?.filename,
     };
   }

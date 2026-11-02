@@ -5,9 +5,9 @@ import { PROGRESS_STATUS } from '@/lib/constants/enums';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { useUserAuthStatus } from '@/lib/hooks/useUserAuthStatus';
 import { useUserContentPartners } from '@/lib/hooks/useUserContentPartners';
-import { getCourseProgress, itemProgressByUuid } from '@/lib/utils/courseSessions';
+import { getCourseProgress, sessionAndResourceProgressByUuid } from '@/lib/utils/courseSessions';
 import {
-  courseItemUuids,
+  courseResourceUuids,
   normaliseSlug,
   parentCourseSlug,
   storyToLibraryItem,
@@ -46,14 +46,17 @@ export function useLibraryItems(stories: LibraryStories): LibraryItem[] {
 
     const courseStories = accessible(stories.courses).filter((story) => !story.content.coming_soon);
 
-    const itemProgress = itemProgressByUuid(coursesProgress, resourcesProgress);
+    const sessionAndResourceProgress = sessionAndResourceProgressByUuid(
+      coursesProgress,
+      resourcesProgress,
+    );
     const courseItems = courseStories.map((story) => {
       const item = storyToLibraryItem(story, locale);
       const progress = getCourseProgress(
         coursesProgress,
         story.uuid,
-        courseItemUuids(story),
-        itemProgress,
+        courseResourceUuids(story),
+        sessionAndResourceProgress,
       );
       if (progress === PROGRESS_STATUS.NOT_STARTED) return item;
       return {
@@ -62,11 +65,14 @@ export function useLibraryItems(stories: LibraryStories): LibraryItem[] {
       } satisfies LibraryItem;
     });
 
-    // Each piece's visible modular courses, for its "Part of" label.
-    const courseTitlesByItem = new Map<string, string[]>();
+    // Each resource's visible modular courses, for its "Part of" label.
+    const courseTitlesByResource = new Map<string, string[]>();
     courseStories.forEach((story) =>
-      courseItemUuids(story).forEach((uuid) =>
-        courseTitlesByItem.set(uuid, [...(courseTitlesByItem.get(uuid) ?? []), story.content.name]),
+      courseResourceUuids(story).forEach((uuid) =>
+        courseTitlesByResource.set(uuid, [
+          ...(courseTitlesByResource.get(uuid) ?? []),
+          story.content.name,
+        ]),
       ),
     );
 
@@ -99,7 +105,7 @@ export function useLibraryItems(stories: LibraryStories): LibraryItem[] {
 
     const sessionItems = accessible(stories.resources).map((story) => {
       const item = withProgress(storyToLibraryItem(story, locale), resourcesProgress);
-      const courseTitles = courseTitlesByItem.get(story.uuid) ?? [];
+      const courseTitles = courseTitlesByResource.get(story.uuid) ?? [];
       if (courseTitles.length === 1) return { ...item, courseTitle: courseTitles[0] };
       if (courseTitles.length > 1) return { ...item, courseTitles };
       return item;

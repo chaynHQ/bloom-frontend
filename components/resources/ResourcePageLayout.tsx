@@ -46,7 +46,7 @@ import { render, type StoryblokRichtext } from 'storyblok-rich-text-react-render
 
 const mediaSlotLoadingStyle = { display: 'flex', justifyContent: 'center', py: 6 } as const;
 
-// Inside a course the piece sits in the session pages' two-column shell; the column keeps the
+// Inside a course the resource sits in the session pages' two-column shell; the column keeps the
 // resource pages' own spacing and width.
 const courseMainStyle = { ...sessionMainStyle, gap: 4, maxWidth: { lg: 680 } } as const;
 
@@ -94,9 +94,9 @@ export interface ResourcePageLayoutProps {
   userContentPartners: string[];
   activity?: StoryblokRichtext;
   bonus?: BonusContent[];
-  // The visible courses that list this piece, linked under the content card.
+  // The visible courses that list this resource, linked under the content card.
   partOfCourses?: { name: string; href: string }[];
-  // Set when the piece is opened inside a modular course: course playlist, back link and "Next".
+  // Set when the resource is opened inside a modular course: course playlist, back link and "Next".
   courseNav?: CourseNav;
 }
 
@@ -229,24 +229,24 @@ export const ResourcePageLayout = ({
     </>
   );
 
-  const courseNavigation = courseNav && courseNav.items.length > 0 && (
+  const courseNavigation = courseNav && courseNav.resources.length > 0 && (
     <SessionCourseNav
       courseName={courseNav.courseName}
       courseHref={courseNav.courseHref}
-      sessions={courseNav.items}
+      sessions={courseNav.resources}
       currentSessionUuid={storyUuid}
       progressByUuid={courseNav.progressByUuid}
       accountNeeded={!isSignedIn}
-      isLocked={(item) => !isSignedIn && Boolean(item.loginRequired)}
+      isLocked={(resource) => !isSignedIn && Boolean(resource.loginRequired)}
       backHref={courseNav.courseHref}
       backLabel={tC('backToCourse')}
-      onSessionSelect={(item) =>
+      onSessionSelect={(resource) =>
         logEvent(SESSION_CARD_CLICKED, {
           ...eventData,
           card_surface: 'playlist',
-          card_item_name: item.name,
-          selected_session_storyblok_uuid: item.uuid,
-          selected_session_position: item.position,
+          card_item_name: resource.name,
+          selected_session_storyblok_uuid: resource.uuid,
+          selected_session_position: resource.position,
         })
       }
       onPlaylistOpen={() => logEvent(SESSION_PLAYLIST_OPENED, eventData)}
@@ -267,19 +267,19 @@ export const ResourcePageLayout = ({
       <Container sx={resourceContainerStyle}>{children}</Container>
     );
 
-  const nextItem = courseNav?.nextItem;
-  const nextButton = nextItem && (
+  const nextResource = courseNav?.nextResource;
+  const nextButton = nextResource && (
     <Button
       qa-id="resource-next-button"
       variant="contained"
       color="error"
       component={i18nLink}
-      href={nextItem.href}
+      href={nextResource.href}
       onClick={() =>
         logEvent(SESSION_NEXT_CLICKED, {
           ...eventData,
-          card_item_name: nextItem.name,
-          next_session_storyblok_uuid: nextItem.uuid,
+          card_item_name: nextResource.name,
+          next_session_storyblok_uuid: nextResource.uuid,
         })
       }
       sx={{ alignSelf: 'center' }}

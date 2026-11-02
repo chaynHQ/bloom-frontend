@@ -68,7 +68,7 @@ interface CourseSessionListProps {
   accountNeeded: boolean;
   // The first session opens without an account on a public course, so it keeps no lock badge.
   firstSessionFree?: boolean;
-  // Overrides the lock rule above; a modular course's pieces lock by their own login setting.
+  // Overrides the lock rule above; a modular course's resources lock by their own login setting.
   isLocked?: (session: CourseSession, index: number) => boolean;
   onSessionSelect: (session: CourseSession) => void;
 }

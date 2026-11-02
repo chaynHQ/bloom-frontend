@@ -32,7 +32,7 @@ interface StoryblokUuidActionPayload {
 }
 
 interface ResourceProgressPayload extends StoryblokUuidActionPayload {
-  // The modular course the piece was opened in, if any.
+  // The modular course the resource was opened in, if any.
   courseStoryblokUuid?: string;
 }
 
@@ -204,11 +204,11 @@ export const api = createApi({
           body,
         };
       },
-      // Starting a piece inside a course can start that course.
+      // Starting a resource inside a course can start that course.
       invalidatesTags: (_result, _error, { courseStoryblokUuid }) =>
         courseStoryblokUuid ? [{ type: 'UserCourses' }] : [],
     }),
-    // Completing a piece anywhere can complete a course it belongs to.
+    // Completing a resource anywhere can complete a course it belongs to.
     completeResource: builder.mutation<ResourceProgressResponse, ResourceProgressPayload>({
       query(body) {
         return {

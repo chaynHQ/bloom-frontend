@@ -100,7 +100,7 @@ interface SessionPlaylistProps {
   accountNeeded: boolean;
   // The one session a logged-out visitor may open (a public course's first session) — no lock.
   previewSessionUuid?: string;
-  // Overrides the lock rule above; a modular course's pieces lock by their own login setting.
+  // Overrides the lock rule above; a modular course's resources lock by their own login setting.
   isLocked?: (session: CourseSession) => boolean;
   backHref: string;
   backLabel: string;

@@ -11,15 +11,15 @@ describe('logCourseProgressEvents', () => {
   it('logs one event per change, with the backend course name and the trigger', () => {
     logCourseProgressEvents(
       [{ storyblokUuid: 'c1', name: 'Healing basics', started: true, completed: true }],
-      'course_item',
-      { course_name: 'İyileşmenin temelleri', resource_name: 'Piece' },
+      'course_resource',
+      { course_name: 'İyileşmenin temelleri', resource_name: 'Resource' },
     );
 
     const expected = {
       course_name: 'Healing basics',
       course_storyblok_uuid: 'c1',
-      course_trigger: 'course_item',
-      resource_name: 'Piece',
+      course_trigger: 'course_resource',
+      resource_name: 'Resource',
     };
     expect(logEvent).toHaveBeenCalledWith(COURSE_STARTED, expected);
     expect(logEvent).toHaveBeenCalledWith(COURSE_COMPLETED, expected);

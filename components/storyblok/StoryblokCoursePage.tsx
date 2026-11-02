@@ -26,7 +26,7 @@ import {
   getCourseSessions,
   getCourseTotalMinutes,
   isModularCourse,
-  itemProgressByUuid,
+  sessionAndResourceProgressByUuid,
   sessionProgressByUuid,
   type CourseSession,
 } from '@/lib/utils/courseSessions';
@@ -64,7 +64,7 @@ export interface StoryblokCoursePageProps {
   video: { url: string };
   video_transcript: StoryblokRichtext;
   weeks: { name: string; sessions: any }[]; // TODO: replace type with StoryblokSessionPageProps
-  // A modular course's pieces (video, audio, written), in order; replaces `weeks`.
+  // A modular course's resources (video, audio, written), in order; replaces `weeks`.
   sessions?: ISbStoryData[];
   included_for_partners: string[];
   languages: string[];
@@ -131,12 +131,12 @@ const StoryblokCoursePage = ({
   const sessions = useMemo(() => getCourseSessions(story, locale), [story, locale]);
   const courseMinutes = useMemo(() => getCourseTotalMinutes(sessions), [sessions]);
 
-  // A modular course's pieces are ticked wherever they were done; an older course's sessions only
+  // A modular course's resources are ticked wherever they were done; an older course's sessions only
   // count inside it.
   const progressByUuid = useMemo(
     () =>
       isModular
-        ? itemProgressByUuid(courses ?? [], resources ?? [])
+        ? sessionAndResourceProgressByUuid(courses ?? [], resources ?? [])
         : sessionProgressByUuid(courses ?? [], storyUuid),
     [isModular, courses, resources, storyUuid],
   );
@@ -151,8 +151,8 @@ const StoryblokCoursePage = ({
       ),
     [courses, storyUuid, isModular, sessions, progressByUuid],
   );
-  // Pieces done elsewhere don't start the course, but the member is picking up where they were.
-  const hasItemProgress = isModular && sessions.some((session) => progressByUuid[session.uuid]);
+  // Resources done elsewhere don't start the course, but the member is picking up where they were.
+  const hasResourceProgress = isModular && sessions.some((session) => progressByUuid[session.uuid]);
 
   // The next unfinished session, so a returning user picks up where they left off.
   const nextSession = useMemo(
@@ -236,7 +236,7 @@ const StoryblokCoursePage = ({
         userAuthStatus={userAuthStatus}
         ctaHref={isSignedIn ? nextSession?.href : undefined}
         ctaLabel={
-          courseProgress === PROGRESS_STATUS.NOT_STARTED && !hasItemProgress
+          courseProgress === PROGRESS_STATUS.NOT_STARTED && !hasResourceProgress
             ? t('courseDetail.beginCourse')
             : t('courseDetail.continueCourse')
         }
