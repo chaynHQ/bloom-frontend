@@ -4,7 +4,6 @@ import NoDataAvailable from '@/components/common/NoDataAvailable';
 import PageSection from '@/components/common/PageSection';
 import { SignUpSection } from '@/components/common/SignUpSection';
 import { SupportSection } from '@/components/common/SupportSection';
-import { withSearchParams, type SearchParams } from '@/components/common/withSearchParams';
 import PartnerHeader from '@/components/layout/PartnerHeader';
 import { LibraryCardsSection } from '@/components/library/LibraryCardsSection';
 import DynamicComponent from '@/components/storyblok/DynamicComponent';
@@ -22,6 +21,7 @@ import { getPartnerContent } from '@/lib/constants/partners';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { useFeaturedLibraryItems } from '@/lib/hooks/useFeaturedLibraryItems';
 import { useLibrarySectionEvents } from '@/lib/hooks/useLibrarySectionEvents';
+import { useHydratedSearchParams } from '@/lib/hooks/useHydratedSearchParams';
 import { useLogEventOnce } from '@/lib/hooks/useLogEventOnce';
 import useReferralPartner from '@/lib/hooks/useReferralPartner';
 import { useUserAuthStatus } from '@/lib/hooks/useUserAuthStatus';
@@ -48,12 +48,7 @@ interface Props {
 
 const introTitleStyle = { mb: 2, maxWidth: 800 } as const;
 
-function WelcomePage({
-  story: initialStory,
-  libraryStories,
-  partnerName,
-  searchParams,
-}: Props & { searchParams: SearchParams }) {
+export default function WelcomePage({ story: initialStory, libraryStories, partnerName }: Props) {
   const story = useStoryblokState(initialStory) ?? initialStory;
   const t = useTranslations('Shared.librarySections');
   const tS = useTranslations('Shared');
@@ -61,7 +56,8 @@ function WelcomePage({
 
   const router = useRouter();
   const pathname = usePathname();
-  useReferralPartner(searchParams);
+  const searchParams = useHydratedSearchParams();
+  useReferralPartner();
 
   const userId = useTypedSelector((state) => state.user.id);
   const authStateLoading = useTypedSelector((state) => state.user.authStateLoading);
@@ -76,8 +72,8 @@ function WelcomePage({
   const partnerSlug = partnerName.toLowerCase();
   const content = story.content;
 
-  const code = searchParams.get('code');
-  const partner = searchParams.get('partner');
+  const code = searchParams?.get('code');
+  const partner = searchParams?.get('partner');
   const entryCode = entryPartnerReferral === partnerSlug ? entryPartnerAccessCode : '';
   const accessCode = code || entryCode;
 
@@ -92,10 +88,10 @@ function WelcomePage({
   // Entry code in state, add to url query in case of refresh
   const urlUpdated = useRef(false);
   useEffect(() => {
-    if (code || !entryCode || urlUpdated.current) return;
+    if (!searchParams || code || !entryCode || urlUpdated.current) return;
     urlUpdated.current = true;
     router.push({ pathname, query: { code: entryCode, partner } });
-  }, [router, pathname, partner, code, entryCode]);
+  }, [router, pathname, searchParams, partner, code, entryCode]);
 
   const registerPath = `/auth/register?partner=${partnerSlug}${accessCode ? `&code=${accessCode}` : ''}`;
 
@@ -211,5 +207,3 @@ function WelcomePage({
     </Box>
   );
 }
-
-export default withSearchParams(WelcomePage);

@@ -1,10 +1,10 @@
 'use client';
 
-import { withSearchParams, type SearchParams } from '@/components/common/withSearchParams';
 import Header from '@/components/layout/Header';
 import { StoryblokTeamMemberCardProps } from '@/components/storyblok/StoryblokTeamMemberCard';
 import { MEET_THE_TEAM_VIEWED } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
+import { useHydratedSearchParams } from '@/lib/hooks/useHydratedSearchParams';
 import logEvent from '@/lib/utils/logEvent';
 import { RichTextOptions } from '@/lib/utils/richText';
 import theme from '@/styles/theme';
@@ -50,13 +50,7 @@ export interface StoryblokMeetTheTeamPageProps {
   page_section_3: StoryblokPageSectionProps[];
 }
 
-const StoryblokMeetTheTeamPage = ({
-  story: initialStory,
-  searchParams,
-}: {
-  story: ISbStoryData;
-  searchParams: SearchParams;
-}) => {
+const StoryblokMeetTheTeamPage = ({ story: initialStory }: { story: ISbStoryData }) => {
   const story = useStoryblokState(initialStory) ?? initialStory;
   const {
     _uid,
@@ -81,7 +75,8 @@ const StoryblokMeetTheTeamPage = ({
   const userId = useTypedSelector((state) => state.user.id);
   const authStateLoading = useTypedSelector((state) => state.user.authStateLoading);
   const isLoggedIn = !authStateLoading && !!userId;
-  const sectionQueryParam = searchParams.get('section');
+  const searchParams = useHydratedSearchParams();
+  const sectionQueryParam = searchParams?.get('section');
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
   const headerOffset = isSmallScreen ? 48 : 136;
 
@@ -207,4 +202,4 @@ const StoryblokMeetTheTeamPage = ({
   );
 };
 
-export default withSearchParams(StoryblokMeetTheTeamPage);
+export default StoryblokMeetTheTeamPage;

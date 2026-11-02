@@ -1,7 +1,6 @@
 'use client';
 
 import SanitizedTextField from '@/components/common/SanitizedTextField';
-import { withSearchParams, type SearchParams } from '@/components/common/withSearchParams';
 import { useRouter } from '@/i18n/routing';
 import { useCreateEventLogMutation } from '@/lib/api';
 import { login } from '@/lib/auth';
@@ -20,6 +19,7 @@ import {
 } from '@/lib/constants/events';
 import { auth } from '@/lib/firebase';
 import { useAppDispatch, useTypedSelector } from '@/lib/hooks/store';
+import { useHydratedSearchParams } from '@/lib/hooks/useHydratedSearchParams';
 import { setAuthStateLoading, setLoadError } from '@/lib/store/userSlice';
 import logEvent from '@/lib/utils/logEvent';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -32,11 +32,12 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import SetupMFA from '../guards/SetupMFA';
 import VerifyMFA from '../guards/VerifyMFA';
 
-const LoginForm = ({ searchParams }: { searchParams: SearchParams }) => {
+const LoginForm = () => {
   const t = useTranslations('Auth');
   const dispatch = useAppDispatch();
   const rollbar = useRollbar();
   const router = useRouter();
+  const searchParams = useHydratedSearchParams();
 
   const userId = useTypedSelector((state) => state.user.id);
   const userLoading = useTypedSelector((state) => state.user.loading);
@@ -73,8 +74,8 @@ const LoginForm = ({ searchParams }: { searchParams: SearchParams }) => {
       return;
     }
 
-    // Don't redirect if showing MFA setup
-    if (showSetupMFA) return;
+    // Don't redirect if showing MFA setup, or before return_url can be read
+    if (showSetupMFA || !searchParams) return;
 
     // Prevent duplicate handling
     if (hasHandledLoginRef.current) return;
@@ -253,4 +254,4 @@ const LoginForm = ({ searchParams }: { searchParams: SearchParams }) => {
   );
 };
 
-export default withSearchParams(LoginForm);
+export default LoginForm;

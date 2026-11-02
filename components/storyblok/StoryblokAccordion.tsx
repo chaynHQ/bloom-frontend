@@ -1,7 +1,7 @@
 'use client';
 
-import { withSearchParams, type SearchParams } from '@/components/common/withSearchParams';
 import { ACCORDION_OPENED } from '@/lib/constants/events';
+import { useHydratedSearchParams } from '@/lib/hooks/useHydratedSearchParams';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import logEvent from '@/lib/utils/logEvent';
 import { RichTextOptions } from '@/lib/utils/richText';
@@ -66,8 +66,9 @@ interface StoryblokAccordionProps {
   accordion_items: Array<StoryblokAccordionItemProps>;
   theme: 'primary' | 'secondary';
 }
-const StoryblokAccordion = (props: StoryblokAccordionProps & { searchParams: SearchParams }) => {
-  const { _uid, _editable, accordion_items, theme, searchParams } = props;
+const StoryblokAccordion = (props: StoryblokAccordionProps) => {
+  const { _uid, _editable, accordion_items, theme } = props;
+  const searchParams = useHydratedSearchParams();
   const isSmallScreen = useMediaQuery(muiTheme.breakpoints.down('md'));
   const headerOffset = isSmallScreen ? 48 : 136;
 
@@ -78,7 +79,7 @@ const StoryblokAccordion = (props: StoryblokAccordionProps & { searchParams: Sea
       }
     };
   const scrollRef = useRef(null);
-  const accordionInUrl = searchParams.get('openacc') ?? undefined;
+  const accordionInUrl = searchParams?.get('openacc') ?? undefined;
 
   useEffect(() => {
     if (accordionInUrl && scrollRef.current) {
@@ -97,7 +98,10 @@ const StoryblokAccordion = (props: StoryblokAccordionProps & { searchParams: Sea
           data-testid="accordion-item"
           id={ai.accordion_id ?? undefined}
           ref={ai.accordion_id === accordionInUrl ? scrollRef : undefined}
-          key={`panel${i}`}
+          // defaultExpanded is read on mount only, and ?openacc= is known after hydration.
+          key={
+            accordionInUrl && ai.accordion_id === accordionInUrl ? `panel${i}-open` : `panel${i}`
+          }
           defaultExpanded={accordionInUrl === ai.accordion_id}
           onChange={handleChange(ai.title)}
           sx={themes[theme]}
@@ -150,4 +154,4 @@ const StoryblokAccordion = (props: StoryblokAccordionProps & { searchParams: Sea
   );
 };
 
-export default withSearchParams(StoryblokAccordion);
+export default StoryblokAccordion;

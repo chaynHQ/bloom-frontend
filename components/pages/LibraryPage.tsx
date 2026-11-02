@@ -4,7 +4,6 @@ import { EmailRemindersSettingsBanner } from '@/components/banner/EmailReminders
 import { ScrollReveal } from '@/components/common/ScrollReveal';
 import SignUpButton from '@/components/common/SignUpButton';
 import { SignUpSection } from '@/components/common/SignUpSection';
-import { withSearchParams, type SearchParams } from '@/components/common/withSearchParams';
 import { EMAIL_REMINDERS_FREQUENCY } from '@/lib/constants/enums';
 import {
   LIBRARY_FILTERED,
@@ -15,6 +14,7 @@ import {
   LIBRARY_SUPPORT_CARD_CLICKED,
   LIBRARY_VIEWED,
 } from '@/lib/constants/events';
+import { useHydratedSearchParams } from '@/lib/hooks/useHydratedSearchParams';
 import { useLogEventOnce } from '@/lib/hooks/useLogEventOnce';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { useLibraryItems } from '@/lib/hooks/useLibraryItems';
@@ -223,14 +223,12 @@ interface LibraryPageContent {
   featured_content?: string[];
 }
 
-function LibraryPage({
+export default function LibraryPage({
   story: initialStory,
   stories,
-  searchParams,
 }: {
   story: ISbStoryData;
   stories: LibraryStories;
-  searchParams: SearchParams;
 }) {
   const t = useTranslations('Library');
   const locale = useLocale();
@@ -245,6 +243,8 @@ function LibraryPage({
   // Filters live in the URL query string, so back navigation and reloads restore them while a
   // fresh visit to /library starts clean. The search box keeps local state for responsiveness
   // and is pushed to the URL on a debounce.
+  const searchParams = useHydratedSearchParams();
+
   const {
     kind,
     themes,
@@ -252,7 +252,7 @@ function LibraryPage({
     lengths,
     keyword: urlKeyword,
   } = useMemo(
-    () => parseLibraryFilters(new URLSearchParams(searchParams.toString())),
+    () => parseLibraryFilters(new URLSearchParams(searchParams?.toString())),
     [searchParams],
   );
 
@@ -445,7 +445,7 @@ function LibraryPage({
       library_results_count: resultsCount,
       ...eventUserData,
     },
-    userSettled,
+    userSettled && searchParams !== null,
   );
 
   // The search term is never sent to analytics — only its length and the result count.
@@ -681,5 +681,3 @@ function LibraryPage({
     </Box>
   );
 }
-
-export default withSearchParams(LibraryPage);

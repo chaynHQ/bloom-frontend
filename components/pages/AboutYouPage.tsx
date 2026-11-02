@@ -1,12 +1,12 @@
 'use client';
 
-import { withSearchParams, type SearchParams } from '@/components/common/withSearchParams';
 import AboutYouDemographicForm from '@/components/forms/AboutYouDemographicForm';
 import AboutYouSetAForm from '@/components/forms/AboutYouSetAForm';
 import PartnerHeader from '@/components/layout/PartnerHeader';
 import { Link as i18nLink } from '@/i18n/routing';
 import { SURVEY_FORMS } from '@/lib/constants/enums';
 import { ABOUT_YOU_VIEWED, SIGNUP_SURVEY_SKIPPED } from '@/lib/constants/events';
+import { useHydratedSearchParams } from '@/lib/hooks/useHydratedSearchParams';
 import logEvent from '@/lib/utils/logEvent';
 import bloomLogo from '@/public/bloom_logo.svg';
 import illustrationBloomHeadYellow from '@/public/illustration_bloom_head_yellow.svg';
@@ -40,9 +40,10 @@ const getForm = (formLabel: string) => {
   return formMap[formLabel];
 };
 
-function AboutYouPage({ searchParams }: { searchParams: SearchParams }) {
-  const qParam = searchParams.get('q');
-  const return_url = searchParams.get('return_url');
+export default function AboutYouPage() {
+  const searchParams = useHydratedSearchParams();
+  const qParam = searchParams?.get('q');
+  const return_url = searchParams?.get('return_url');
   const t = useTranslations('Account.aboutYou');
 
   const questionSetParam = useMemo(() => (qParam ? qParam : SURVEY_FORMS.default), [qParam]);
@@ -111,5 +112,3 @@ function AboutYouPage({ searchParams }: { searchParams: SearchParams }) {
     </Box>
   );
 }
-
-export default withSearchParams(AboutYouPage);

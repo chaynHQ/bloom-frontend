@@ -1,19 +1,25 @@
-import type { SearchParams } from '@/components/common/withSearchParams';
 import { usePathname } from '@/i18n/routing';
 import { partnerKeys } from '@/lib/constants/partners';
 import { setEntryPartnerAccessCode, setEntryPartnerReferral } from '@/lib/store/userSlice';
 import Cookies from 'js-cookie';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useAppDispatch } from './store';
+import { useHydratedSearchParams } from './useHydratedSearchParams';
 
 // Check if entry path is from a partner referral and if so, store referring partner and code in state and local storage
 // This enables us to redirect a user to the correct sign up page later (e.g. in SignUpSection)
 // Referrals are detected from welcome/register paths and from a partner name in UTM link data.
-export default function useReferralPartner(searchParams: SearchParams) {
+export default function useReferralPartner() {
   const pathname = usePathname();
+  const searchParams = useHydratedSearchParams();
   const dispatch = useAppDispatch();
+  const detected = useRef(false);
 
+  // Once per page entry, as soon as the URL's params are known.
   useEffect(() => {
+    if (!searchParams || detected.current) return;
+    detected.current = true;
+
     function setReferralPartner(referralPartner: string) {
       // Essential/functional cookie (not analytics): remembers the referring partner for the
       // current visit so the partner experience is shown and the partner is linked at sign up.
@@ -54,7 +60,7 @@ export default function useReferralPartner(searchParams: SearchParams) {
     }
     // Partners include their name in UTM link data (e.g. ?utm_source=bumble or
     // ?utm_campaign=bumble-june-2026)
-    if (!referralPartner && searchParams) {
+    if (!referralPartner) {
       const utmData = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']
         .map((key) => searchParams.get(key))
         .filter(Boolean)
@@ -76,5 +82,5 @@ export default function useReferralPartner(searchParams: SearchParams) {
     }
     if (referralCode) setReferralCode(referralCode);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [searchParams]);
 }

@@ -4,7 +4,6 @@ import { ScrollReveal } from '@/components/common/ScrollReveal';
 import SignUpButton from '@/components/common/SignUpButton';
 import { SignUpSection } from '@/components/common/SignUpSection';
 import { SupportSection } from '@/components/common/SupportSection';
-import { withSearchParams, type SearchParams } from '@/components/common/withSearchParams';
 import Header from '@/components/layout/Header';
 import { GroundingExerciseDialog } from '@/components/resources/GroundingExerciseDialog';
 import { Link as i18nLink, useRouter } from '@/i18n/routing';
@@ -14,6 +13,7 @@ import {
   GROUNDING_SUPPORT_CARD_CLICKED,
   GROUNDING_VIEWED,
 } from '@/lib/constants/events';
+import { useHydratedSearchParams } from '@/lib/hooks/useHydratedSearchParams';
 import { useLogEventOnce } from '@/lib/hooks/useLogEventOnce';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { useUserAuthStatus } from '@/lib/hooks/useUserAuthStatus';
@@ -102,11 +102,7 @@ interface StoryblokGroundingProps {
   stories: ISbStoryData[];
 }
 
-const StoryblokGrounding = ({
-  story: initialStory,
-  stories = [],
-  searchParams,
-}: StoryblokGroundingProps & { searchParams: SearchParams }) => {
+const StoryblokGrounding = ({ story: initialStory, stories = [] }: StoryblokGroundingProps) => {
   const story = useStoryblokState(initialStory) ?? initialStory;
   const t = useTranslations('Resources');
   const locale = useLocale();
@@ -133,7 +129,8 @@ const StoryblokGrounding = ({
     [stories, locale, userContentPartners],
   );
 
-  const openId = searchParams.get('id') ?? searchParams.get('openacc') ?? undefined;
+  const searchParams = useHydratedSearchParams();
+  const openId = searchParams?.get('id') ?? searchParams?.get('openacc') ?? undefined;
   const openStory = openId ? visibleStories.find((story) => story.slug === openId) : undefined;
 
   const eventUserData = getEventUserData(userCreatedAt, partnerAccesses, partnerAdmin);
@@ -256,4 +253,4 @@ const StoryblokGrounding = ({
   );
 };
 
-export default withSearchParams(StoryblokGrounding);
+export default StoryblokGrounding;

@@ -1,9 +1,9 @@
 'use client';
 
-import { withSearchParams, type SearchParams } from '@/components/common/withSearchParams';
 import { EmailForm, PasswordForm } from '@/components/forms/ResetPasswordForm';
 import PartnerHeader from '@/components/layout/PartnerHeader';
 import { RESET_PASSWORD_VIEWED } from '@/lib/constants/events';
+import { useHydratedSearchParams } from '@/lib/hooks/useHydratedSearchParams';
 import { useLogEventOnce } from '@/lib/hooks/useLogEventOnce';
 import bloomLogo from '@/public/bloom_logo.svg';
 import illustrationBloomHeadYellow from '@/public/illustration_bloom_head_yellow.svg';
@@ -25,12 +25,15 @@ const formCardStyle = {
   width: { xs: '100%', sm: '70%', md: '45%' },
 } as const;
 
-function ResetPasswordPage({ searchParams }: { searchParams: SearchParams }) {
+export default function ResetPasswordPage() {
   const t = useTranslations('Auth');
-  const oobCodeParam = searchParams.get('oobCode');
-  useLogEventOnce(RESET_PASSWORD_VIEWED, {
-    reset_password_stage: oobCodeParam ? 'set' : 'request',
-  });
+  const searchParams = useHydratedSearchParams();
+  const oobCodeParam = searchParams?.get('oobCode');
+  useLogEventOnce(
+    RESET_PASSWORD_VIEWED,
+    { reset_password_stage: oobCodeParam ? 'set' : 'request' },
+    searchParams !== null,
+  );
 
   const headerProps = {
     partnerLogoSrc: bloomLogo,
@@ -73,5 +76,3 @@ function ResetPasswordPage({ searchParams }: { searchParams: SearchParams }) {
     </Box>
   );
 }
-
-export default withSearchParams(ResetPasswordPage);

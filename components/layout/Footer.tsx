@@ -1,10 +1,10 @@
 'use client';
 
-import { withSearchParams, type SearchParams } from '@/components/common/withSearchParams';
 import { PARTNER_SOCIAL_LINK_CLICKED, SOCIAL_LINK_CLICKED } from '@/lib/constants/events';
 import { PartnerContent, getPartnerContent } from '@/lib/constants/partners';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { useCookieReferralPartner } from '@/lib/hooks/useCookieReferralPartner';
+import { useHydratedSearchParams } from '@/lib/hooks/useHydratedSearchParams';
 import { useIsRtl } from '@/lib/hooks/useIsRtl';
 import bloomLogo from '@/public/bloom_logo.svg';
 import comicReliefLogo from '@/public/comic_relief_logo.png';
@@ -92,8 +92,9 @@ const fundingLogosContainerStyle = {
   gap: 4,
 } as const;
 
-const Footer = ({ searchParams }: { searchParams: SearchParams }) => {
+const Footer = () => {
   const tS = useTranslations('Shared');
+  const searchParams = useHydratedSearchParams();
   const isRtl = useIsRtl();
 
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
@@ -118,7 +119,7 @@ const Footer = ({ searchParams }: { searchParams: SearchParams }) => {
       addUniquePartner(partnersList, partnerAccess.partner.name);
     });
 
-    const partner = searchParams.get('partner');
+    const partner = searchParams?.get('partner');
 
     if (partner) {
       addUniquePartner(partnersList, partner + '');
@@ -336,4 +337,4 @@ const Footer = ({ searchParams }: { searchParams: SearchParams }) => {
   );
 };
 
-export default withSearchParams(Footer);
+export default Footer;

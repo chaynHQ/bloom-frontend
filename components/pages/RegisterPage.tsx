@@ -1,10 +1,10 @@
 'use client';
 
-import { withSearchParams, type SearchParams } from '@/components/common/withSearchParams';
 import RegisterForm, { PartnerRegisterForm } from '@/components/forms/RegisterForm';
 import PartnerHeader from '@/components/layout/PartnerHeader';
 import { Link as i18nLink, useRouter } from '@/i18n/routing';
 import { generatePartnershipPromoLogoClick, REGISTER_VIEWED } from '@/lib/constants/events';
+import { useHydratedSearchParams } from '@/lib/hooks/useHydratedSearchParams';
 import { useLogEventOnce } from '@/lib/hooks/useLogEventOnce';
 import { getAllPartnersContent, getPartnerContent } from '@/lib/constants/partners';
 import { useTypedSelector } from '@/lib/hooks/store';
@@ -71,7 +71,7 @@ const logosContainerStyle = {
   justifyContent: 'flex-start',
 } as const;
 
-function RegisterPage({ searchParams }: { searchParams: SearchParams }) {
+export default function RegisterPage() {
   const t = useTranslations('Auth');
   const tS = useTranslations('Shared');
   const router = useRouter();
@@ -79,12 +79,17 @@ function RegisterPage({ searchParams }: { searchParams: SearchParams }) {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
   const entryPartnerAccessCode = useTypedSelector((state) => state.user.entryPartnerAccessCode);
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
-  useReferralPartner(searchParams);
+  const searchParams = useHydratedSearchParams();
+  useReferralPartner();
 
-  const code = searchParams.get('code');
-  const partner = searchParams.get('partner');
+  const code = searchParams?.get('code');
+  const partner = searchParams?.get('partner');
 
-  useLogEventOnce(REGISTER_VIEWED, { register_partner: partner || entryPartnerReferral || null });
+  useLogEventOnce(
+    REGISTER_VIEWED,
+    { register_partner: partner || entryPartnerReferral || null },
+    searchParams !== null,
+  );
 
   // Derive partner content and code param from URL and state.
   // Prefer an explicit ?partner query, else fall back to a referral captured on entry
@@ -285,5 +290,3 @@ function RegisterPage({ searchParams }: { searchParams: SearchParams }) {
     </Box>
   );
 }
-
-export default withSearchParams(RegisterPage);
