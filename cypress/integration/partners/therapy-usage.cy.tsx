@@ -144,7 +144,9 @@ describe('Therapy Usage', () => {
       .contains('Therapist: Test Therapist')
       .should('be.visible');
     cy.get('[data-testid="therapy-booking-item"] > div[aria-expanded="true"]').click();
-    cy.get('[data-testid="therapy-booking-item"]').contains('Date:').should('not.be.visible');
+    // The details unmount on collapse (unmountOnExit), so check they're gone rather than hidden.
+    cy.get('[data-testid="therapy-booking-item"] > div[aria-expanded="false"]').should('exist');
+    cy.get('[data-testid="therapy-booking-item"]').should('not.contain', 'Date:');
   });
 
   it('Should open and close the cancel confirmation dialog for an Upcoming therapy session', () => {
