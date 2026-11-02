@@ -5,6 +5,7 @@ import { ISbStoryData } from '@storyblok/react/rsc';
 import {
   filterStoriesForLocaleAndPartnerAccess,
   getUserContentPartners,
+  localeOpenToPartners,
   storyAvailableInLocale,
 } from './partnerContentAccess';
 
@@ -134,5 +135,19 @@ describe('storyAvailableInLocale', () => {
   it('treats a story with no languages as English-only', () => {
     expect(storyAvailableInLocale([], 'en')).toBe(true);
     expect(storyAvailableInLocale(undefined, 'de')).toBe(false);
+  });
+});
+
+describe('localeOpenToPartners', () => {
+  it('closes Arabic and Turkish to partner audiences', () => {
+    expect(localeOpenToPartners('ar', ['bumble'])).toBe(false);
+    expect(localeOpenToPartners('tr', ['bumble', 'public'])).toBe(false);
+  });
+  it('keeps Arabic and Turkish open to public viewers', () => {
+    expect(localeOpenToPartners('ar', ['public'])).toBe(true);
+    expect(localeOpenToPartners('tr', [])).toBe(true);
+  });
+  it('keeps other locales open to partners', () => {
+    expect(localeOpenToPartners('de', ['bumble'])).toBe(true);
   });
 });

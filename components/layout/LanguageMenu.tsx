@@ -3,7 +3,9 @@
 import { routing, usePathname, useRouter } from '@/i18n/routing';
 import { HEADER_LANGUAGE_MENU_CLICKED, generateLanguageMenuEvent } from '@/lib/constants/events';
 import { useIsRtl } from '@/lib/hooks/useIsRtl';
+import { useUserContentPartners } from '@/lib/hooks/useUserContentPartners';
 import logEvent from '@/lib/utils/logEvent';
+import { localeOpenToPartners } from '@/lib/utils/partnerContentAccess';
 import {
   navBarControlStyle,
   navDropdownOrigin,
@@ -59,6 +61,7 @@ export default function LanguageMenu() {
   const locale = useLocale();
   const t = useTranslations('Navigation');
   const isRtl = useIsRtl();
+  const userPartners = useUserContentPartners();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -119,7 +122,9 @@ export default function LanguageMenu() {
         }}
       >
         {routing.locales
-          ?.filter((language) => language !== locale)
+          ?.filter(
+            (language) => language !== locale && localeOpenToPartners(language, userPartners),
+          )
           .map((language) => {
             const languageLabel = languageMap[language];
             return (

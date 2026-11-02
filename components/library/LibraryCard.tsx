@@ -8,7 +8,6 @@ import { interactiveCardStyle } from '@/styles/common';
 import AccessTimeRounded from '@mui/icons-material/AccessTimeRounded';
 import ArrowForwardRounded from '@mui/icons-material/ArrowForwardRounded';
 import PlaylistPlayRounded from '@mui/icons-material/PlaylistPlayRounded';
-import RouteRounded from '@mui/icons-material/RouteRounded';
 import { Box, Card, CardActionArea, Divider, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
@@ -59,6 +58,17 @@ const themeStyle = {
   whiteSpace: 'nowrap',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
+} as const;
+
+const courseStyle = {
+  color: 'grey.800',
+  mb: 0.5,
+  fontFamily: 'headingFontFamily',
+  fontWeight: 500,
+  display: '-webkit-box',
+  WebkitLineClamp: 2,
+  WebkitBoxOrient: 'vertical',
+  overflow: 'hidden',
 } as const;
 
 const descriptionStyle = {
@@ -114,7 +124,11 @@ export function LibraryCard({
       <CardActionArea
         component={i18nLink}
         href={item.href}
-        aria-label={item.title}
+        aria-label={
+          item.courseTitle
+            ? `${item.title}, ${t('partOfCourse', { course: item.courseTitle })}`
+            : item.title
+        }
         onClick={onSelect}
         sx={actionAreaStyle}
       >
@@ -137,11 +151,20 @@ export function LibraryCard({
         )}
 
         <Box sx={contentStyle(isIllustrated ? 'illustrated' : 'compact')}>
-          {!isIllustrated && item.themes.length > 0 && (
-            <Typography variant="body2" sx={themeStyle}>
-              {item.themes.map((theme) => t(`themes.${theme}.label`)).join(' · ')}
-            </Typography>
-          )}
+          {/* A course session names its course where other cards list themes, so same-named
+              sessions from different courses can be told apart. */}
+          {!isIllustrated &&
+            (item.courseTitle ? (
+              <Typography variant="body2" sx={courseStyle}>
+                {item.courseTitle}
+              </Typography>
+            ) : (
+              item.themes.length > 0 && (
+                <Typography variant="body2" sx={themeStyle}>
+                  {item.themes.map((theme) => t(`themes.${theme}.label`)).join(' · ')}
+                </Typography>
+              )
+            ))}
           <Typography variant="h4" sx={{ mb: 1 }}>
             {item.title}
           </Typography>
@@ -158,16 +181,11 @@ export function LibraryCard({
                 icon={<PlaylistPlayRounded sx={{ fontSize: 16 }} />}
                 text={t('sessionCount', { count: item.sessionCount ?? 0 })}
               />
-            ) : item.minutes != null ? (
-              <Meta
-                icon={<AccessTimeRounded sx={{ fontSize: 16 }} />}
-                text={t('duration', { minutes: item.minutes })}
-              />
             ) : (
-              item.courseTitle && (
+              item.minutes != null && (
                 <Meta
-                  icon={<RouteRounded sx={{ fontSize: 16 }} />}
-                  text={t('partOfCourse', { course: item.courseTitle })}
+                  icon={<AccessTimeRounded sx={{ fontSize: 16 }} />}
+                  text={t('duration', { minutes: item.minutes })}
                 />
               )
             )}

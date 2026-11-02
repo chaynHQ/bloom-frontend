@@ -42,6 +42,17 @@ export function storyAvailableInLocale(languages: string[] | undefined, locale: 
   return languages?.length ? languages.includes(contentLanguage) : contentLanguage === 'default';
 }
 
+// Arabic and Turkish aren't offered to partner audiences yet: AuthGuard blocks those locales for
+// partner viewers and the language menu hides them.
+const PARTNER_RESTRICTED_LOCALES = ['ar', 'tr'];
+
+export function localeOpenToPartners(locale: string, userPartners: string[]): boolean {
+  return (
+    !PARTNER_RESTRICTED_LOCALES.includes(locale) ||
+    userPartners.every((partner) => partner.toLowerCase() === 'public')
+  );
+}
+
 // Whether a story is visible to a viewer in the given locale (see `storyAvailableInLocale`) and its
 // `included_for_partners` intersects the viewer's partners (an empty list means everyone).
 function storyMatchesLocaleAndPartnerAccess(
