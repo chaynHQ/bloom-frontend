@@ -5,7 +5,7 @@
   "resolutions": {
     "cross-spawn": "^7.0.5",
     "brace-expansion": "^2.0.2",
-    "systeminformation": "^5.31.11",
+    "systeminformation": "^5.33.19",
     "postcss": "^8.5.10"
   },
   "engines": {
