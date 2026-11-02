@@ -23,6 +23,9 @@ import StoryblokStatement from '@/components/storyblok/StoryblokStatement';
 import StoryblokTeamMemberCard from '@/components/storyblok/StoryblokTeamMemberCard';
 import StoryblokTeamMembersCards from '@/components/storyblok/StoryblokTeamMembersCards';
 import StoryblokVideo from '@/components/storyblok/StoryblokVideo';
+import { PHASE_PRODUCTION_BUILD } from 'next/constants';
+
+import { routing } from '@/i18n/routing';
 import {
   apiPlugin,
   ISbStoriesParams,
@@ -30,13 +33,23 @@ import {
   StoryblokClient,
   storyblokInit,
 } from '@storyblok/react/rsc';
-import { routing } from '@/i18n/routing';
 import { STORYBLOK_ENVIRONMENT } from './constants/common';
 import { serverInstance as rollbar } from './rollbar';
+
+// The client throttles per process, by page size (50/s for single stories down to 6/s for 100-story
+// listings), but `next build` prerenders in parallel workers that together exceed Storyblok's limit.
+// During the build each worker stays under the lowest tier; a set rateLimit replaces every tier, so
+// a higher one would speed listings up. The default retries (10 × 300ms) give up before 429s clear.
+const isBuild = process.env.NEXT_PHASE === PHASE_PRODUCTION_BUILD;
 
 export const getStoryblokApi = storyblokInit({
   accessToken: process.env.NEXT_PUBLIC_STORYBLOK_TOKEN,
   use: [apiPlugin],
+  apiOptions: {
+    ...(isBuild && { rateLimit: 5 }),
+    maxRetries: 20,
+    retriesDelay: 1000,
+  },
   components: {
     image: StoryblokImage,
     video: StoryblokVideo,
