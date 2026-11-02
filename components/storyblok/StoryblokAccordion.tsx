@@ -67,7 +67,7 @@ interface StoryblokAccordionProps {
   theme: 'primary' | 'secondary';
 }
 const StoryblokAccordion = (props: StoryblokAccordionProps) => {
-  const { _uid, _editable, accordion_items, theme } = props;
+  const { _editable, accordion_items, theme } = props;
   const searchParams = useHydratedSearchParams();
   const isSmallScreen = useMediaQuery(muiTheme.breakpoints.down('md'));
   const headerOffset = isSmallScreen ? 48 : 136;
