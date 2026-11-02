@@ -408,6 +408,8 @@ _4. Per new course, before publishing it_
 
 _5. Publish_
 
+_Prepared on 2026-11-02:_ the Turkish and Arabic versions of "Image-based abuse and rebuilding ourselves" (IARO) and "Recovering from toxic and abusive relationships" (RTAR) are saved as drafts on the existing courses (content guide step 9), tagged `tr-ar-draft-hold`. Their resources are all published, and both courses are also added to the Turkish and Arabic homepage featured courses (draft). At launch, check Mailchimp automations on `C_IARO` and `C_RTAR`, remove the tag and publish both courses and the home story; their Mailchimp and Front fields already exist, so steps 7, 8 and 10 don't apply to them. Until then, don't publish either course, and run any Lokalise import that touches them without `--publish`.
+
 9. **Publish the resources, then the course.** Publishing the course creates its `course` row, links it to every resource listed in any language (`course_resource`), and creates the Mailchimp merge fields `C_<initials>` and `C_<initials>_S`. A resource published after the course is only linked once the course is published again.
 10. **Mailchimp:** Audience → Settings → Audience fields. Check that `C_<initials>` ("Course <initials> Status") and `C_<initials>_S` ("Course <initials> Sessions") exist. If not, add both as text fields with exactly those tags.
 11. **Check the backend rows** (every listed resource should appear, published):
@@ -422,7 +424,7 @@ _5. Publish_
 
 _6. After launch_
 
-14. **Translations:** `Library.partOfCourses` and `Resources.partOf` are English placeholders in the 7 other locales. Send them to translators (Turkish and Arabic first).
+14. **Translations:** `Library.partOfCourses` and `Resources.partOf` are English placeholders in the 7 other locales. `Resources.alsoPartOfCourses`, and the Turkish and Arabic course names, descriptions and SEO text, were written without a translator. Send all of these for review (Turkish and Arabic first).
 15. Delete `courses/qa-modular-course` from Storyblok.
 
 **Rollback:** revert the frontend PR. The `course_resource` table and any new `course_user` rows are harmless if left.
