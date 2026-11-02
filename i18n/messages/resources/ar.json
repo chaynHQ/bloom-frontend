@@ -87,6 +87,7 @@
     "backToSessions": "العودة إلى الجلسات",
     "backToLibrary": "العودة إلى المكتبة",
     "partOf": "Part of:",
+    "alsoPartOfCourses": "هذه الجلسة جزء أيضاً من {count, plural, zero {الدورات التدريبية} one {الدورة التدريبية} two {الدورتين التدريبيتين} few {الدورات التدريبية} many {الدورات التدريبية} other {الدورات التدريبية}}:",
     "grounding": {
       "close": "إغلاق",
       "exercisesCount": "{count, plural, zero {لا تمارين} one {تمرين واحد} two {تمرينان} few {# تمارين} many {# تمريناً} other {# تمرين}}",

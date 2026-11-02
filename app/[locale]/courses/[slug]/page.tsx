@@ -1,7 +1,7 @@
 import StoryblokCoursePage from '@/components/storyblok/StoryblokCoursePage';
 import { routing } from '@/i18n/routing';
 import { STORYBLOK_ENVIRONMENT } from '@/lib/constants/common';
-import { getStoryblokStory } from '@/lib/storyblok';
+import { getStoryblokStory, resolveCourseResources } from '@/lib/storyblok';
 import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
 import { isPublicContent } from '@/lib/utils/partnerContentAccess';
 import { getCourseStories } from '@/lib/utils/getLibraryStories';
@@ -16,9 +16,10 @@ export const revalidate = 14400; // invalidate every 4 hours
 type Params = Promise<{ locale: string; slug: string }>;
 
 async function getStory(locale: string, slug: string) {
-  return await getStoryblokStory(`courses/${slug}`, locale, {
+  const story = await getStoryblokStory(`courses/${slug}`, locale, {
     resolve_relations: ['week.sessions', 'Course.sessions'],
   });
+  return await resolveCourseResources(story, locale);
 }
 
 export async function generateMetadata({ params }: { params: Params }) {

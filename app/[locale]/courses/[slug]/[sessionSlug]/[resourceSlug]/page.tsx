@@ -4,7 +4,7 @@ import StoryblokResourceWrittenPage from '@/components/storyblok/StoryblokResour
 import { routing } from '@/i18n/routing';
 import { STORYBLOK_ENVIRONMENT } from '@/lib/constants/common';
 import { type CourseContext } from '@/lib/hooks/useStoryblokResourcePage';
-import { getStoryblokStory } from '@/lib/storyblok';
+import { getStoryblokStory, resolveCourseResources } from '@/lib/storyblok';
 import { getCourseSessions, isModularCourse } from '@/lib/utils/courseSessions';
 import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
 import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
@@ -35,9 +35,10 @@ type Folder = keyof typeof RESOURCE_PAGES;
 const isFolder = (folder: string): folder is Folder => folder in RESOURCE_PAGES;
 
 async function getCourse(locale: string, slug: string) {
-  return await getStoryblokStory(`courses/${slug}`, locale, {
+  const course = await getStoryblokStory(`courses/${slug}`, locale, {
     resolve_relations: 'Course.sessions',
   });
+  return await resolveCourseResources(course, locale);
 }
 
 // Fetched with the same relations as the resource's own route.

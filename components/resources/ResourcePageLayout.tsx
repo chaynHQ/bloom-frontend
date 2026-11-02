@@ -290,7 +290,7 @@ export const ResourcePageLayout = ({
 
   const partOfLinks = partOfCourses.length > 0 && (
     <Typography qa-id="resource-part-of" variant="body2" sx={partOfStyle}>
-      {t('partOf')}{' '}
+      {courseNav ? t('alsoPartOfCourses', { count: partOfCourses.length }) : t('partOf')}{' '}
       {partOfCourses.map((course, index) => (
         <span key={course.href}>
           {index > 0 && ' · '}
