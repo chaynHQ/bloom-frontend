@@ -181,13 +181,11 @@ describe('Library page', () => {
       cards()
         .first()
         .should('have.attr', 'data-kind', 'session')
-        .find('a[href*="/courses/"]')
+        .find('a[href*="/courses/recovering-from-toxic-and-abusive-relationships/"]')
         .should('exist');
 
-      // Course lessons have no duration, so they name their course where a session reports length.
-      cards()
-        .first()
-        .should('contain', 'Part of course: Recovering from toxic and abusive relationships');
+      // The lesson has a duration, so its card shows that rather than its course name.
+      cards().first().should('contain', '21 min').and('not.contain', 'Part of course');
     });
   });
 
