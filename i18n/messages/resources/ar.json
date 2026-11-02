@@ -86,6 +86,7 @@
     },
     "backToSessions": "العودة إلى الجلسات",
     "backToLibrary": "العودة إلى المكتبة",
+    "partOf": "Part of:",
     "grounding": {
       "close": "إغلاق",
       "exercisesCount": "{count, plural, zero {لا تمارين} one {تمرين واحد} two {تمرينان} few {# تمارين} many {# تمريناً} other {# تمرين}}",

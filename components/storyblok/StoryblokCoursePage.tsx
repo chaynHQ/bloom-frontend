@@ -21,16 +21,19 @@ import { useLibraryItems } from '@/lib/hooks/useLibraryItems';
 import { useLibraryReturnHref } from '@/lib/hooks/useLibraryReturnHref';
 import { useLogEventOnce } from '@/lib/hooks/useLogEventOnce';
 import { useUserAuthStatus } from '@/lib/hooks/useUserAuthStatus';
-import { determineCourseProgress } from '@/lib/utils/courseProgress';
 import {
+  getCourseProgress,
   getCourseSessions,
   getCourseTotalMinutes,
+  isModularCourse,
+  itemProgressByUuid,
   sessionProgressByUuid,
   type CourseSession,
 } from '@/lib/utils/courseSessions';
 import hasAccessToPage from '@/lib/utils/hasAccessToPage';
 import { type LibraryItem, type LibraryStory } from '@/lib/utils/libraryData';
 import logEvent from '@/lib/utils/logEvent';
+import { storyAvailableInLocale } from '@/lib/utils/partnerContentAccess';
 import { Box, Container } from '@mui/material';
 import { useStoryblokState } from '@storyblok/react';
 import { ISbStoryData, storyblokEditable } from '@storyblok/react/rsc';
@@ -61,8 +64,10 @@ export interface StoryblokCoursePageProps {
   video: { url: string };
   video_transcript: StoryblokRichtext;
   weeks: { name: string; sessions: any }[]; // TODO: replace type with StoryblokSessionPageProps
+  // A modular course's pieces (video, audio, written), in order; replaces `weeks`.
+  sessions?: ISbStoryData[];
   included_for_partners: string[];
-  languages: string[]; // TODO: implement this field - currently uses FF_DISABLED_COURSES env var
+  languages: string[];
   themes?: string[];
   component: 'Course';
 }
@@ -84,7 +89,9 @@ const StoryblokCoursePage = ({
     video_transcript,
     included_for_partners,
     themes,
+    languages,
   } = story.content as StoryblokCoursePageProps;
+  const isModular = isModularCourse(story.content);
   const storyUuid = story.uuid;
 
   const t = useTranslations('Courses');
@@ -100,6 +107,7 @@ const StoryblokCoursePage = ({
   const userAuthStatus = useUserAuthStatus();
   const isSignedIn = userAuthStatus === 'signedIn';
   const courses = useTypedSelector((state) => state.courses);
+  const resources = useTypedSelector((state) => state.resources);
 
   useGetUserCoursesQuery(undefined, {
     skip: !isSignedIn,
@@ -120,19 +128,31 @@ const StoryblokCoursePage = ({
     [partnerAccesses, partnerAdmin, included_for_partners, referralPartner, isSignedIn],
   );
 
-  // Derive course progress from courses state
-  const courseProgress = useMemo(
-    () => determineCourseProgress(courses || [], storyUuid),
-    [courses, storyUuid],
-  );
-
   const sessions = useMemo(() => getCourseSessions(story, locale), [story, locale]);
   const courseMinutes = useMemo(() => getCourseTotalMinutes(sessions), [sessions]);
 
+  // A modular course's pieces are ticked wherever they were done; an older course's sessions only
+  // count inside it.
   const progressByUuid = useMemo(
-    () => sessionProgressByUuid(courses ?? [], storyUuid),
-    [courses, storyUuid],
+    () =>
+      isModular
+        ? itemProgressByUuid(courses ?? [], resources ?? [])
+        : sessionProgressByUuid(courses ?? [], storyUuid),
+    [isModular, courses, resources, storyUuid],
   );
+
+  const courseProgress = useMemo(
+    () =>
+      getCourseProgress(
+        courses ?? [],
+        storyUuid,
+        isModular ? sessions.map((session) => session.uuid) : undefined,
+        progressByUuid,
+      ),
+    [courses, storyUuid, isModular, sessions, progressByUuid],
+  );
+  // Pieces done elsewhere don't start the course, but the member is picking up where they were.
+  const hasItemProgress = isModular && sessions.some((session) => progressByUuid[session.uuid]);
 
   // The next unfinished session, so a returning user picks up where they left off.
   const nextSession = useMemo(
@@ -188,6 +208,11 @@ const StoryblokCoursePage = ({
     });
   };
 
+  // Only modular courses are gated by language for now.
+  if (isModular && !storyAvailableInLocale(languages, locale)) {
+    return <ContentUnavailable reason="language" />;
+  }
+
   if (!userAccess) {
     // The signed-in user's partner accesses may not have loaded yet; wait rather than wrongly
     // showing "no access" before we can make the access decision (e.g. on a partner deep-link).
@@ -211,7 +236,7 @@ const StoryblokCoursePage = ({
         userAuthStatus={userAuthStatus}
         ctaHref={isSignedIn ? nextSession?.href : undefined}
         ctaLabel={
-          courseProgress === PROGRESS_STATUS.NOT_STARTED
+          courseProgress === PROGRESS_STATUS.NOT_STARTED && !hasItemProgress
             ? t('courseDetail.beginCourse')
             : t('courseDetail.continueCourse')
         }
@@ -234,6 +259,11 @@ const StoryblokCoursePage = ({
         progressByUuid={progressByUuid}
         accountNeeded={userAuthStatus === 'signedOut'}
         firstSessionFree={userAuthStatus === 'signedOut' && isPublicCourse}
+        isLocked={
+          isModular
+            ? (session) => userAuthStatus === 'signedOut' && Boolean(session.loginRequired)
+            : undefined
+        }
         onSessionSelect={handleSessionSelect}
       />
       <OtherCourses courses={otherCourses} onCourseSelect={handleOtherCourseSelect} />

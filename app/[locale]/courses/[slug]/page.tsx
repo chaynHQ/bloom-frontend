@@ -17,7 +17,7 @@ type Params = Promise<{ locale: string; slug: string }>;
 
 async function getStory(locale: string, slug: string) {
   return await getStoryblokStory(`courses/${slug}`, locale, {
-    resolve_relations: 'week.sessions',
+    resolve_relations: ['week.sessions', 'Course.sessions'],
   });
 }
 
@@ -57,11 +57,13 @@ export async function generateStaticParams() {
   };
 
   let { data } = await storyblokApi.get('cdn/links', sbParams);
+  // Staging reads drafts, so a new course can be checked there before it's published.
+  const includeDrafts = STORYBLOK_ENVIRONMENT === 'draft';
 
   Object.keys(data.links).forEach((linkKey) => {
     const course = data.links[linkKey];
 
-    if (!course.slug || !course.published) return;
+    if (!course.slug || (!course.published && !includeDrafts)) return;
 
     if (!course.is_startpage) {
       return;

@@ -90,9 +90,9 @@ export function CourseSessionCard({
           <Typography variant="h4" component="h3" sx={{ mb: 1 }}>
             {session.name}
           </Typography>
-          {session.hasVideo && <FormatBadge type="video" />}
+          {session.format && <FormatBadge type={session.format} />}
           {session.description && (
-            <Typography variant="body2" sx={{ ...descriptionStyle, mt: session.hasVideo ? 0 : 1 }}>
+            <Typography variant="body2" sx={{ ...descriptionStyle, mt: session.format ? 0 : 1 }}>
               {session.description}
             </Typography>
           )}

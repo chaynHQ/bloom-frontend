@@ -1,5 +1,6 @@
 'use client';
 
+import SessionContentCard from '@/components/cards/SessionContentCard';
 import { type Avatar } from '@/components/common/AvatarGroup';
 import { BackLink } from '@/components/common/BackLink';
 import { SignUpCard } from '@/components/course/SignUpCard';
@@ -12,6 +13,9 @@ import {
   resourceCardColumnStyle,
   resourceContainerStyle,
 } from '@/components/resources/resourcePageStyles';
+import MultipleBonusContent, { type BonusContent } from '@/components/session/MultipleBonusContent';
+import { SessionCourseNav } from '@/components/session/SessionCourseNav';
+import { sessionContainerStyle, sessionMainStyle } from '@/components/session/sessionPageLayout';
 import DynamicComponent from '@/components/storyblok/DynamicComponent';
 import {
   StoryblokRelatedContent,
@@ -22,18 +26,31 @@ import StoryblokTeamMembersSection, {
 } from '@/components/storyblok/StoryblokTeamMembersSection';
 import { Link as i18nLink } from '@/i18n/routing';
 import { PROGRESS_STATUS, RESOURCE_CATEGORIES } from '@/lib/constants/enums';
-import { GROUNDING_EXERCISE_CLICKED } from '@/lib/constants/events';
+import {
+  GROUNDING_EXERCISE_CLICKED,
+  SESSION_CARD_CLICKED,
+  SESSION_NEXT_CLICKED,
+  SESSION_PLAYLIST_OPENED,
+} from '@/lib/constants/events';
 import { useLibraryReturnHref } from '@/lib/hooks/useLibraryReturnHref';
 import { type CompleteResource, type ResourceEventPrefix } from '@/lib/hooks/useResourceProgress';
+import { type CourseNav } from '@/lib/hooks/useStoryblokResourcePage';
 import { type ContentType } from '@/lib/utils/libraryData';
 import logEvent from '@/lib/utils/logEvent';
-import { Box, Button, CircularProgress, Container, Divider } from '@mui/material';
+import { RichTextOptions } from '@/lib/utils/richText';
+import { Box, Button, CircularProgress, Container, Divider, Link, Typography } from '@mui/material';
 import { type ISbStoryData, type SbBlokData } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
 import { type ReactNode } from 'react';
-import { type StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
+import { render, type StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 
 const mediaSlotLoadingStyle = { display: 'flex', justifyContent: 'center', py: 6 } as const;
+
+// Inside a course the piece sits in the session pages' two-column shell; the column keeps the
+// resource pages' own spacing and width.
+const courseMainStyle = { ...sessionMainStyle, gap: 4, maxWidth: { lg: 680 } } as const;
+
+const partOfStyle = { color: 'grey.800' } as const;
 
 export interface ResourcePageLayoutProps {
   format: ContentType;
@@ -75,7 +92,17 @@ export interface ResourcePageLayoutProps {
   relatedGrounding: ISbStoryData[];
   relatedContent: StoryblokRelatedContentStory[];
   userContentPartners: string[];
+  activity?: StoryblokRichtext;
+  bonus?: BonusContent[];
+  // The visible courses that list this piece, linked under the content card.
+  partOfCourses?: { name: string; href: string }[];
+  // Set when the piece is opened inside a modular course: course playlist, back link and "Next".
+  courseNav?: CourseNav;
 }
+
+// An empty Storyblok rich-text field is a single empty paragraph.
+const hasRichText = (value?: StoryblokRichtext) =>
+  Boolean(value?.content && (value.content.length > 1 || value.content[0]?.content));
 
 export const ResourcePageLayout = ({
   format,
@@ -104,8 +131,13 @@ export const ResourcePageLayout = ({
   relatedGrounding,
   relatedContent,
   userContentPartners,
+  activity,
+  bonus,
+  partOfCourses = [],
+  courseNav,
 }: ResourcePageLayoutProps) => {
   const t = useTranslations('Resources');
+  const tC = useTranslations('Courses');
   const libraryHref = useLibraryReturnHref();
   const isCompleted = resourceProgress === PROGRESS_STATUS.COMPLETED;
   const signInRequired = contentAccessStatus === 'signInRequired';
@@ -170,12 +202,22 @@ export const ResourcePageLayout = ({
     signUpCard()
   );
 
+  // Inside a course the playlist carries the back link from `lg`; below that it sits inline here.
   const header = (
     <>
-      <Box>
-        <BackLink qaId="resource-back-link" href={libraryHref} label={t('backToLibrary')} />
-        <Divider sx={{ borderColor: 'sectionBorder', mt: 2 }} />
-      </Box>
+      {courseNav ? (
+        <BackLink
+          qaId="resource-back-link"
+          href={courseNav.courseHref}
+          label={tC('backToCourse')}
+          sx={{ display: { lg: 'none' } }}
+        />
+      ) : (
+        <Box>
+          <BackLink qaId="resource-back-link" href={libraryHref} label={t('backToLibrary')} />
+          <Divider sx={{ borderColor: 'sectionBorder', mt: 2 }} />
+        </Box>
+      )}
 
       <ResourceHero
         title={name}
@@ -187,30 +229,106 @@ export const ResourcePageLayout = ({
     </>
   );
 
+  const courseNavigation = courseNav && courseNav.items.length > 0 && (
+    <SessionCourseNav
+      courseName={courseNav.courseName}
+      courseHref={courseNav.courseHref}
+      sessions={courseNav.items}
+      currentSessionUuid={storyUuid}
+      progressByUuid={courseNav.progressByUuid}
+      accountNeeded={!isSignedIn}
+      isLocked={(item) => !isSignedIn && Boolean(item.loginRequired)}
+      backHref={courseNav.courseHref}
+      backLabel={tC('backToCourse')}
+      onSessionSelect={(item) =>
+        logEvent(SESSION_CARD_CLICKED, {
+          ...eventData,
+          card_surface: 'playlist',
+          card_item_name: item.name,
+          selected_session_storyblok_uuid: item.uuid,
+          selected_session_position: item.position,
+        })
+      }
+      onPlaylistOpen={() => logEvent(SESSION_PLAYLIST_OPENED, eventData)}
+    />
+  );
+
+  // The page's main column: the resource container on its own, the session shell in a course.
+  const shell = (children: ReactNode) =>
+    courseNav ? (
+      <Container sx={sessionContainerStyle}>
+        <Box component="main" sx={courseMainStyle}>
+          {children}
+        </Box>
+        {/* After main in the DOM so the mobile bar closes the page; ordered first on desktop. */}
+        {courseNavigation}
+      </Container>
+    ) : (
+      <Container sx={resourceContainerStyle}>{children}</Container>
+    );
+
+  const nextItem = courseNav?.nextItem;
+  const nextButton = nextItem && (
+    <Button
+      qa-id="resource-next-button"
+      variant="contained"
+      color="error"
+      component={i18nLink}
+      href={nextItem.href}
+      onClick={() =>
+        logEvent(SESSION_NEXT_CLICKED, {
+          ...eventData,
+          card_item_name: nextItem.name,
+          next_session_storyblok_uuid: nextItem.uuid,
+        })
+      }
+      sx={{ alignSelf: 'center' }}
+    >
+      {tC('sessionDetail.nextSession')}
+    </Button>
+  );
+
+  const partOfLinks = partOfCourses.length > 0 && (
+    <Typography qa-id="resource-part-of" variant="body2" sx={partOfStyle}>
+      {t('partOf')}{' '}
+      {partOfCourses.map((course, index) => (
+        <span key={course.href}>
+          {index > 0 && ' · '}
+          <Link component={i18nLink} href={course.href}>
+            {course.name}
+          </Link>
+        </span>
+      ))}
+    </Typography>
+  );
+
   if (contentAccessStatus !== 'accessGranted') {
     return (
       <>
-        <Container sx={resourceContainerStyle}>
-          {header}
-          <Box sx={resourceCardColumnStyle}>
-            <ResourceMediaCard
-              format={format}
-              name={name}
-              description={description}
-              contributors={contributors}
-              accountNeeded={signInRequired}
-              media={
-                signInRequired ? (
-                  signUpCard(true)
-                ) : (
-                  <Box sx={mediaSlotLoadingStyle}>
-                    <CircularProgress color="error" />
-                  </Box>
-                )
-              }
-            />
-          </Box>
-        </Container>
+        {shell(
+          <>
+            {header}
+            <Box sx={resourceCardColumnStyle}>
+              <ResourceMediaCard
+                format={format}
+                name={name}
+                description={description}
+                contributors={contributors}
+                accountNeeded={signInRequired}
+                media={
+                  signInRequired ? (
+                    signUpCard(true)
+                  ) : (
+                    <Box sx={mediaSlotLoadingStyle}>
+                      <CircularProgress color="error" />
+                    </Box>
+                  )
+                }
+              />
+              {partOfLinks}
+            </Box>
+          </>,
+        )}
 
         {signInRequired && (
           <StoryblokRelatedContent
@@ -224,48 +342,67 @@ export const ResourcePageLayout = ({
 
   return (
     <>
-      <Container sx={resourceContainerStyle}>
-        {header}
+      {shell(
+        <>
+          {header}
 
-        <Box sx={resourceCardColumnStyle}>
-          <ResourceMediaCard
-            format={format}
-            name={name}
-            description={description}
-            contributors={contributors}
-            transcript={transcript}
-            onTranscriptToggle={(open) => {
-              if (transcriptEvents) {
-                logEvent(open ? transcriptEvents.opened : transcriptEvents.closed, eventData);
-              }
-              if (open) onTranscriptStart?.();
-            }}
-            media={media}
+          <Box sx={resourceCardColumnStyle}>
+            <ResourceMediaCard
+              format={format}
+              name={name}
+              description={description}
+              contributors={contributors}
+              transcript={transcript}
+              onTranscriptToggle={(open) => {
+                if (transcriptEvents) {
+                  logEvent(open ? transcriptEvents.opened : transcriptEvents.closed, eventData);
+                }
+                if (open) onTranscriptStart?.();
+              }}
+              media={media}
+            />
+            {partOfLinks}
+            {relatedSessionSlot}
+            {beforeSections}
+            {hasRichText(activity) && (
+              <SessionContentCard
+                qaId="resource-activity"
+                format="activity"
+                eventPrefix="SESSION_ACTIVITY"
+                eventData={eventData}
+              >
+                <>{render(activity, RichTextOptions)}</>
+              </SessionContentCard>
+            )}
+            {bonus && bonus.length > 0 && (
+              <MultipleBonusContent bonus={bonus} eventData={eventData} />
+            )}
+          </Box>
+
+          <ResourceGroundingSection
+            groundingStories={relatedGrounding}
+            onExerciseSelect={(story, index) =>
+              logEvent(GROUNDING_EXERCISE_CLICKED, {
+                ...eventData,
+                grounding_context: 'resource_moment',
+                grounding_exercise_name: story.content.name,
+                grounding_exercise_storyblok_uuid: story.uuid,
+                grounding_exercise_position: index + 1,
+              })
+            }
           />
-          {relatedSessionSlot}
-          {beforeSections}
-        </Box>
 
-        <ResourceGroundingSection
-          groundingStories={relatedGrounding}
-          onExerciseSelect={(story, index) =>
-            logEvent(GROUNDING_EXERCISE_CLICKED, {
-              ...eventData,
-              grounding_context: 'resource_moment',
-              grounding_exercise_name: story.content.name,
-              grounding_exercise_storyblok_uuid: story.uuid,
-              grounding_exercise_position: index + 1,
-            })
-          }
-        />
-
-        {bottomAction && (
-          <>
-            <Divider sx={{ borderColor: 'sectionBorder' }} />
-            <Box sx={resourceCardColumnStyle}>{bottomAction}</Box>
-          </>
-        )}
-      </Container>
+          {(bottomAction || nextButton) && (
+            <>
+              <Divider sx={{ borderColor: 'sectionBorder' }} />
+              <Box sx={resourceCardColumnStyle}>
+                {bottomAction}
+                {nextButton}
+              </Box>
+            </>
+          )}
+        </>,
+      )}
 
       {/* Full-bleed CMS sections keep their own layout, so they sit outside the page container. */}
       {teamMembersSection && <StoryblokTeamMembersSection {...teamMembersSection} />}

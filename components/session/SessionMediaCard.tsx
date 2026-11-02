@@ -12,6 +12,10 @@ import {
   SESSION_VIDEO_TRANSCRIPT_CLOSED,
   SESSION_VIDEO_TRANSCRIPT_OPENED,
 } from '@/lib/constants/events';
+import {
+  logCourseProgressEvents,
+  sessionCourseProgressChanges,
+} from '@/lib/utils/logCourseProgressEvents';
 import logEvent from '@/lib/utils/logEvent';
 import { RichTextOptions } from '@/lib/utils/richText';
 import { Typography } from '@mui/material';
@@ -59,6 +63,11 @@ export const SessionMediaCard = ({
 
     if (startSessionResponse.data) {
       logEvent(SESSION_STARTED_SUCCESS, eventData);
+      logCourseProgressEvents(
+        sessionCourseProgressChanges(startSessionResponse.data),
+        'session',
+        eventData,
+      );
     }
 
     if (startSessionResponse.error) {

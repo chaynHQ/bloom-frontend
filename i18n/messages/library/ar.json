@@ -34,6 +34,7 @@
     "courseDuration": "حوالي {hours} ساعة و{minutes} دقيقة",
     "courseDurationHoursOnly": "حوالي {hours} ساعة",
     "partOfCourse": "جزء من دورة تدريبية: {course}",
+    "partOfCourses": "Part of {count} courses",
     "accountNeeded": "تحتاجون إلى حساب",
     "loadMore": "عرض المزيد",
     "noResults": {

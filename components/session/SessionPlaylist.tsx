@@ -100,6 +100,8 @@ interface SessionPlaylistProps {
   accountNeeded: boolean;
   // The one session a logged-out visitor may open (a public course's first session) — no lock.
   previewSessionUuid?: string;
+  // Overrides the lock rule above; a modular course's pieces lock by their own login setting.
+  isLocked?: (session: CourseSession) => boolean;
   backHref: string;
   backLabel: string;
   // The bottom-drawer variant drops the back link — the drawer's Close button is the way out.
@@ -117,6 +119,7 @@ export function SessionPlaylist({
   progressByUuid,
   accountNeeded,
   previewSessionUuid,
+  isLocked = (session) => accountNeeded && session.uuid !== previewSessionUuid,
   backHref,
   backLabel,
   hideBackLink = false,
@@ -200,7 +203,7 @@ export function SessionPlaylist({
                   <Box aria-hidden sx={completedBadgeStyle}>
                     <CheckRounded sx={{ fontSize: 16 }} />
                   </Box>
-                ) : accountNeeded && session.uuid !== previewSessionUuid ? (
+                ) : isLocked(session) ? (
                   <LockOutlined sx={{ flexShrink: 0, fontSize: 16, color: 'grey.700', mt: 0.5 }} />
                 ) : null}
               </Link>

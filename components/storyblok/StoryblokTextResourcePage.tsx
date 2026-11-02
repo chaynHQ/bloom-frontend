@@ -6,6 +6,7 @@ import { RESOURCE_CATEGORIES } from '@/lib/constants/enums';
 import { type ResourceEventPrefix } from '@/lib/hooks/useResourceProgress';
 import {
   useStoryblokResourcePage,
+  type ResourcePageContextProps,
   type ResourceStoryContent,
 } from '@/lib/hooks/useStoryblokResourcePage';
 import { type ContentType } from '@/lib/utils/libraryData';
@@ -34,7 +35,7 @@ export interface TextResourceContent extends ResourceStoryContent {
   related_grounding: ISbStoryData[];
 }
 
-interface StoryblokTextResourcePageProps {
+interface StoryblokTextResourcePageProps extends ResourcePageContextProps {
   initialStory: ISbStoryData;
   format: ContentType;
   category: RESOURCE_CATEGORIES;
@@ -48,6 +49,8 @@ export const StoryblokTextResourcePage = ({
   category,
   eventPrefix,
   viewedEvent,
+  courseContext,
+  partOfCourseStories,
 }: StoryblokTextResourcePageProps) => {
   const {
     content,
@@ -63,6 +66,8 @@ export const StoryblokTextResourcePage = ({
     relatedSessionHref,
     relatedSessionName,
     userContentPartners,
+    courseNav,
+    partOfCourses,
     start,
     complete,
   } = useStoryblokResourcePage<TextResourceContent>({
@@ -70,6 +75,8 @@ export const StoryblokTextResourcePage = ({
     category,
     eventPrefix,
     viewedEvent,
+    courseContext,
+    partOfCourseStories,
   });
 
   const {
@@ -81,6 +88,8 @@ export const StoryblokTextResourcePage = ({
     team_members_section,
     page_sections,
     related_content,
+    activity,
+    bonus,
   } = content;
 
   // Reading the page is the only engagement signal, so progress starts as soon as it's viewed.
@@ -120,6 +129,10 @@ export const StoryblokTextResourcePage = ({
         userContentPartners={userContentPartners}
         relatedSessionHref={relatedSessionHref}
         relatedSessionName={relatedSessionName}
+        activity={activity}
+        bonus={bonus}
+        partOfCourses={partOfCourses}
+        courseNav={courseNav}
         media={<Box>{render(body, RichTextOptions)}</Box>}
       />
     </Box>

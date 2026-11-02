@@ -1,7 +1,8 @@
-import { STORYBLOK_ENVIRONMENT } from '@/lib/constants/common';
+import { COURSE_STORIES_CACHE_TAG, STORYBLOK_ENVIRONMENT } from '@/lib/constants/common';
 import { getStoryblokApi, getStoryblokStories } from '@/lib/storyblok';
 import { serverInstance as rollbar } from '@/lib/rollbar';
 import { ISbStoriesParams, ISbStoryData } from '@storyblok/react/rsc';
+import { unstable_cache } from 'next/cache';
 import {
   sortByFolderPosition,
   toLibraryStory,
@@ -80,6 +81,14 @@ export async function getCourseStories(locale: string): Promise<LibraryStory[]> 
 
   return sortByFolderPosition(stories, folderLinks).map(toLibraryStory);
 }
+
+// Read by every video, audio and written page for its "Part of" links; cached per locale to stay
+// under Storyblok's rate limit during builds.
+export const getCachedCourseStories = unstable_cache(
+  getCourseStories,
+  ['course-stories', STORYBLOK_ENVIRONMENT],
+  { revalidate: 14400, tags: [COURSE_STORIES_CACHE_TAG] },
+);
 
 // Server-only. Locale and partner-access filtering happens client-side in useLibraryItems.
 export async function getLibraryStories(locale: string): Promise<LibraryStories> {

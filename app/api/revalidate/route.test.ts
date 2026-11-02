@@ -2,10 +2,10 @@
  * @jest-environment node
  */
 import { createHmac } from 'crypto';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import { POST } from './route';
 
-jest.mock('next/cache', () => ({ revalidatePath: jest.fn() }));
+jest.mock('next/cache', () => ({ revalidatePath: jest.fn(), revalidateTag: jest.fn() }));
 
 const SECRET = 'test-secret';
 const body = JSON.stringify({ action: 'published', full_slug: 'courses/managing-anxiety' });
@@ -30,6 +30,7 @@ describe('POST /api/revalidate', () => {
 
     expect(response.status).toBe(200);
     expect(revalidatePath).toHaveBeenCalledWith('/', 'layout');
+    expect(revalidateTag).toHaveBeenCalledWith('course-stories', { expire: 0 });
   });
 
   it('rejects a missing or wrong signature', async () => {

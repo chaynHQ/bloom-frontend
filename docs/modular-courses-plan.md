@@ -54,19 +54,25 @@ Example: a member listened to 3 of a course's 5 pieces from the library. When th
 4. **Give the course an English working name** in the default (English) slot, even when the course isn't offered in English. Our Mailchimp field names are built from the name's initials.
    - The initials must not match an existing course. Already taken: **CB, MA, IARO, RTAR, RRYTS, SPST, HST, DBR.**
    - Matching initials would overwrite another course's Mailchimp field. Arabic or Turkish text here would likely break the field name.
+   - Use plain words and spaces only, no punctuation, and keep the initials to **6 letters or fewer** (Mailchimp field tags are capped at 10 characters, and the longest is `C_<initials>_S`). Lower-case "in, and, the, from, as, or, to" are skipped; capitalised ones count.
+   - **Never rename it after publishing.** The initials would change, and the member's fields would be written to names that don't exist.
 5. **Set the course's Languages** (for example `tr`, `ar`). Each piece's Languages must include the same ones.
-6. **Keep access settings consistent.** A piece's own "login required" and partner settings also apply inside a course.
-7. **Publish the pieces before the course,** and don't add pieces to a course after launch unless intended. Members who finished it would lose the completed badge on the site until they finish the new piece. Their recorded completion stays.
+6. **Keep access settings consistent.** A piece's own "login required" and partner settings also apply inside a course. Turkish and Arabic courses must be **Public**: partner members can't use the `tr` and `ar` sites.
+7. **Publish the pieces before the course,** and don't add pieces to a course after launch unless intended. Members who already finished it keep their completed badge and recorded completion; new members need the extra piece too.
+8. **A new course, or a piece newly added to one, only gets a page after the next production deploy.** Ask a developer to redeploy once it's published.
 
 ### Reporting and emails
 
-|                                           | Step A                                                                       | Step B                      |
-| ----------------------------------------- | ---------------------------------------------------------------------------- | --------------------------- |
-| Session and resource counts               | Unchanged. Pieces in new courses count as resources.                         | Unchanged                   |
-| Courses started and completed (reporting) | New courses included, following the rules above. Existing courses unchanged. | Same rules for every course |
-| Mailchimp and Front course status field   | Set for new courses a member has started                                     | Every course                |
-| Mailchimp and Front course sessions field | Empty for new courses                                                        | Filled for every course     |
-| Google Analytics                          | Course events tagged with the course                                         | Same                        |
+|                                           | Step A                                                                                                                                                            | Step B                        |
+| ----------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
+| Session and resource counts               | Unchanged. Pieces in new courses count as resources.                                                                                                              | Unchanged                     |
+| Courses started and completed (reporting) | New courses included, following the rules above. Existing courses unchanged.                                                                                      | Same rules for every course   |
+| Mailchimp and Front course status field   | Set for new courses a member has started                                                                                                                          | Every course                  |
+| Mailchimp and Front course sessions field | Empty for new courses                                                                                                                                             | Filled for every course       |
+| Google Analytics                          | New `COURSE_STARTED` and `COURSE_COMPLETED` events for **every** course, old and new, matching the database counts. Piece events inside a course carry the course | Same                          |
+| Per-course breakdown (Slack digest)       | Old courses list their sessions, as today. New courses list their pieces                                                                                          | Every course lists its pieces |
+
+Course started and completed mean the same thing everywhere: a `course_user` row is created, or turns completed. The database counts it, Mailchimp and Front get it, and GA gets one event for it. The database stays the headline number, because GA only sees visitors who accept cookies.
 
 A course whose pieces were all done elsewhere, without the member ever starting it inside the course, shows "completed" on the site. It isn't counted as started or completed in reporting or Mailchimp, because the member never took the course itself.
 
@@ -74,12 +80,11 @@ A course whose pieces were all done elsewhere, without the member ever starting 
 
 1. **Confirm the rule above** for courses whose pieces were all done elsewhere (recommended as written).
 2. **Before Step A launches:** do any Mailchimp emails or automations need to react to the new courses?
-3. **Before Step B:** does anyone run reports straight from the database, outside our usual reporting?
-4. **Now, separate from this plan:** the Hindi version of _Dating, boundaries and relationships_ lists a first session that isn't published. Hindi members see 7 of 8 sessions and can't complete the course. That session needs publishing or replacing.
+3. **Now, separate from this plan:** the Hindi version of _Dating, boundaries and relationships_ lists a first session that isn't published. Hindi members see 7 of 8 sessions and can't complete the course. That session needs publishing or replacing.
 
 ### Estimated effort
 
-- **Step A:** about 1.5 weeks of frontend and 3 days of backend, in parallel, plus QA. Roughly 2 weeks in total.
+- **Step A:** about 2 weeks of frontend and 4 days of backend, in parallel, plus QA. Roughly 2 to 2.5 weeks in total. Course analytics (A9) adds about a day to each.
 - **Step B:** about 1.5 to 2 weeks, plus its data safety checks.
 
 ---
@@ -118,12 +123,13 @@ Verified on 2026-10-26 against Storyblok, and against bloom-backend `develop` an
 - **Mailchimp and Front course fields** (`serializeCourseData`) come from `course_user.completed` and `sessionUser`. They're sent by `updateServiceUserProfilesCourse`. Front's custom-field PATCH sends the full set and throws on failure.
 - The global `ValidationPipe` uses `whitelist: true` without `forbidNonWhitelisted`, so unknown body fields are silently dropped, not rejected.
 - No "course started" or "course completed" analytics events exist on the frontend or backend.
+- The Slack digest (`src/reporting/`) takes course started and completed from the database (`coursesStarted`, `coursesCompleted`, and a per-course breakdown of sessions, grouped by course name). It also takes GA4 events listed in `reporting.events.ts`, where the "Sessions" group reads `SESSION_*` events and the "Resource events" group reads `RESOURCE_*` events.
 
 **Frontend**
 
 - **Course route** `app/[locale]/courses/[slug]/page.tsx`:
   - Fetches the course with `resolve_relations: 'week.sessions'`. Static params come from `cdn/links`, with `dynamicParams = false`.
-  - `StoryblokCoursePage` takes course progress from the `courses` slice, which is filled by `getUser` and `getUserCourses`. It has no language gate.
+  - `StoryblokCoursePage` takes course progress from the `courses` slice. Only `getUserCourses` fills it: `user/me` returns no `courses`, so the `getUser` matcher leaves it unchanged. Only the course, session and library pages subscribe to `getUserCourses`. It has no language gate.
 - **Session route** `app/[locale]/courses/[slug]/[sessionSlug]/page.tsx` fetches by physical path `courses/<slug>/<sessionSlug>`.
 - **Resource pages** (`components/storyblok/StoryblokResource*Page.tsx`) render through `ResourcePageLayout`, via `useStoryblokResourcePage`:
   - Gating order: language, then partner, then login.
@@ -150,41 +156,43 @@ Covers the new-format courses only: courses that use the new `sessions` field. C
 
 - The field is named `sessions` because Step B widens it to `Session` and `session_iba` too.
 - Every change is a new optional field, so existing stories are unaffected.
+- Also: `bonus_block.title` and `bonus_block.content` are translatable, so the pieces' bonus content can be entered per language.
 
 #### A2. Backend: course item lists
 
-1. **Migration:** add a nullable `items` jsonb column to `course`, shaped `{ [language]: storyblokUuid[] }`. Its down-migration drops the column. No existing rows change.
+1. **Migration:** add a `course_resource` join table (`courseId`, `resourceId`, both foreign keys with `ON DELETE CASCADE`, composite primary key). On the entity it's a standard many-to-many, `course.resources` ⇄ `resource.courses`. No existing rows change.
 2. **Webhook, course branch:**
-   - Only when `content.sessions` is an array, fetch the published course once per language: `default` plus each entry in `content.languages`. Store the raw uuid list for each.
-   - If any fetch fails, fail the sync, so no partial lists are saved.
-   - Courses without `sessions` keep `items = null`.
-3. **`items IS NOT NULL` is the only test for "new-format course"** anywhere in the backend.
+   - Read `content.sessions` from the published course once per language (`default` plus each entry in `content.languages`), and link the course to the `resource` rows of every piece listed in any language, replacing its previous links. This matches old courses, which are linked to every session they list in any language. If a language fetch fails, the sync fails and nothing changes.
+   - A listed piece with no `resource` row yet (published before the resource webhook existed) gets one now, fetched with `cdn/stories?by_uuids=`, just as publishing it would. A piece that isn't published can't be linked; the webhook logs a warning. Publish it, then the course again.
+   - A course built from `weeks` has no links. Emptying a modular course's field clears them.
+3. **"Has `course_resource` rows" is the only test for "new-format course"** anywhere in the backend. The frontend's test (`sessions` is a non-empty array, A4) must match it. Use one helper, `isModularCourse(content)`, everywhere on the frontend.
 
 #### A3. Backend: course context and completion
 
 1. **DTO:** add an optional `courseStoryblokUuid` to `ResourceUserDto` (`@SecureInput('text', { maxLength: 100 })`, optional). It applies to `POST /resource-user`, `/complete` and `/incomplete`.
 2. **Fix the completion bug:** `setResourceUserCompleted` sets `completedAt` when it has to create the row.
 3. **Start with a course** (`POST /resource-user` + `courseStoryblokUuid`):
-   - Check the course row exists, has `items`, and some language list contains this resource uuid.
-   - If so, find or create `course_user` (`completed: false`), then run the completion check for that course.
+   - Check the course row exists and is linked to this resource.
+   - If so, find or create `course_user` (`completed: false`), then run the completion check for that course. Create with `INSERT … ON CONFLICT ("userId", "courseId") DO NOTHING RETURNING`, because a start and a complete can arrive together; only the request that inserted the row reports the start.
    - Otherwise do nothing extra.
    - The resource start itself is unchanged: it's idempotent, and returns any existing row untouched.
 4. **Completion check, after any resource completion** (with or without a course):
-   - For each `course_user` of this member that isn't completed, whose course has `items` containing this resource:
-     - For each language list, take its items. A uuid whose `resource` row is unpublished is ignored, matching the frontend, which hides unpublished items.
-     - A uuid with **no `resource` row at all fails closed**: that list can't complete, and the check logs a warning.
-     - The course is complete when some list has at least one item, and every counted item has **any** `resource_user` row for this member with `completedAt` set. Look for "any" row because `resource_user` can have duplicates.
-   - **One-way:** set `completed = true` and `completedAt = now()` only on a false-to-true change. Never clear either.
+   - For each `course_user` of this member that isn't completed, whose course is linked to this resource:
+     - Take the course's linked pieces that are published, as `checkCourseIsComplete` counts published sessions.
+     - The course is complete when it has at least one published piece, and every one has **any** `resource_user` row for this member with `completedAt` set. Look for "any" row because `resource_user` can have duplicates.
+   - **One-way:** set `completed = true` and `completedAt = now()` only on a false-to-true change, as a conditional `UPDATE … WHERE completed = false`. Only the request whose update changed a row goes on to step 5, so two completions at once don't both sync. Never clear either.
    - `/incomplete` never un-completes a course.
 5. **Updates:** after creating a `course_user`, or completing one, call the existing `updateServiceUserProfilesCourse`. This sets Mailchimp and Front `C_<initials>`. `C_<initials>_S` stays empty because these courses have no `sessionUser` rows.
-6. **Non-blocking:** wrap all course logic in try/catch and log failures. A resource progress response must never fail because of course logic.
-7. **Untouched:** session endpoints, `checkCourseIsComplete`, the courses response format, and reporting queries. New `course_user` rows come back through the existing `/courses-user` with `sessions: []`.
+   - Pass a `course_user` loaded with `getCourseUser`. `serializeCourseData` reads `courseUser.course.name`, which the entity returned by `createCourseUser` or a plain update doesn't have.
+6. **Non-blocking:** wrap all course logic in try/catch and log failures. A resource progress response must never fail because of course logic. Await the profile update inside the try, or attach a `.catch`: the session code fires it without awaiting, and a try/catch around an un-awaited call catches nothing.
+7. **Report what changed (A9):** the resource responses gain `courseProgress`, a list of `{ storyblokUuid, name, started, completed }` for each course this request started or completed. `started` means this request created the `course_user`, and `completed` means it won the update in step 4. It's omitted when nothing changed, or when the course logic failed.
+8. **Untouched:** session progress logic, `checkCourseIsComplete`, the `/courses-user` format, and the existing reporting queries. New `course_user` rows come back through `/courses-user` with `sessions: []`.
 
 #### A4. Frontend: course item model
 
 **`lib/utils/courseSessions.ts`:**
 
-- `getCourseSessions` reads `content.sessions` when it's a non-empty array, and otherwise falls back to the flattened `weeks`. The fallback is removed in B3.
+- `getCourseSessions` reads `content.sessions` when `isModularCourse(content)`, and otherwise falls back to the flattened `weeks`. The fallback is removed in B3.
 - Extend `CourseSession`:
   - `format: 'video' | 'audio' | 'written'` (replaces `hasVideo`);
   - `kind: 'session' | 'resource'`;
@@ -193,6 +201,7 @@ Covers the new-format courses only: courses that use the new `sessions` field. C
   - `description` = `toPlainText(content.description)`. Resource descriptions are rich text, and rendering them as a string would crash the card.
   - `minutes` = `parseMinutes(content.duration)`.
   - `href` = `/courses/<course>/<folder>/<slug>`, locale-aware.
+  - `loginRequired` = `content.login_required`, or when unset the page's own default: `true` for video and audio, `false` for written (`loginRequiredByDefault`). Otherwise the playlist lock and the page disagree.
 - Unresolved relations are dropped, as today.
 
 **Elsewhere:**
@@ -212,7 +221,8 @@ Covers the new-format courses only: courses that use the new `sessions` field. C
 - **`useResourceProgress`:**
   - Takes an optional `courseStoryblokUuid`.
   - Inside a course, `start` also runs when the item is already started or completed but the course isn't started. That's how a member who did every piece elsewhere still starts the course.
-  - Both calls include `courseStoryblokUuid`.
+  - Both calls include `courseStoryblokUuid`, but only when `contentAccessStatus` is granted. Written pages call `start` on view, before any gating, so without this check a member shown "no access" would still start the course. The backend doesn't check partner access.
+- **The course item page subscribes to `useGetUserCoursesQuery`**, as the session page does. RTK Query only refetches an invalidated query that has a subscriber, so without it the course status in the playlist, and the "course isn't started" check above, stay stale on that page.
 - **`lib/api.ts`:**
   - `startResource` invalidates `UserCourses` when `courseStoryblokUuid` is set.
   - `completeResource` always invalidates it, because completing from the library can complete a course that's already started.
@@ -285,19 +295,52 @@ Include drafts when `STORYBLOK_ENVIRONMENT === 'draft'`, as `resourceFolderStati
 - **Language gate:** `ContentUnavailable reason="language"` on new-format course pages when `storyAvailableInLocale(course.languages, locale)` is false. Old courses keep today's behaviour; three of them are English-only, so gating them is a separate decision.
 - **Translations:** add every new key to all 8 locales, then run `node scripts/checkTranslation.js`.
 
-#### A9. Tests, QA and rollout
+#### A9. Course analytics (every course)
+
+Course started and completed are one funnel for old and new courses. The backend decides both, so GA is told by the backend, never worked out on the page.
+
+**Backend:**
+
+- **Session responses:** `POST /session-user` and `/session-user/complete` gain `courseStarted` (this request created the `course_user`, in either method's create branch) and `courseCompleted` (`checkCourseIsComplete` changed it from false to true). These are additive fields; session progress logic doesn't change.
+- **Resource responses:** `courseProgress`, as in A3.7.
+- **Digest, GA lines** (`reporting.events.ts`, "Courses" group): add "Course progress" with `COURSE_STARTED` (started) and `COURSE_COMPLETED` (completed), broken down by `customEvent:course_name`.
+- **Digest, per-course breakdown** (`db-metrics.service.ts`): for courses with linked pieces (`course_resource`), list their pieces in place of sessions. For each piece, count `resource_user` rows started or completed in the range, by members who have a `course_user` for that course.
+  - This is slightly broader than sessions: it includes a course member doing the piece from the library. Note that in the digest.
+  - Old courses keep their session breakdown.
+  - The headline `coursesStarted` and `coursesCompleted` counts already include new courses without changes.
+
+**Frontend:**
+
+- Add `COURSE_STARTED` and `COURSE_COMPLETED` to `lib/constants/events.ts`.
+- One helper, `logCourseProgressEvents(changes, trigger)`, logs one event per started or completed course:
+  - `course_name`: the backend `name`, which is the English working name. It's the same value the database breakdown and Mailchimp use, in every locale. Page events today use the localised story name, so don't join on it.
+  - `course_storyblok_uuid`: use this for any join with page events.
+  - `course_trigger`: `session` (old session page), `course_item` (piece inside a course) or `standalone` (piece from the library or its own page, which can complete a course already started).
+- Call it after a successful response in:
+  - `useResourceProgress` `start` and `complete`;
+  - `SessionMediaCard` (session start);
+  - `SessionActions` (session complete).
+- Never log it for the display-only "completed" in A5 (pieces all done elsewhere). That would break the match with the database.
+- Piece events inside a course carry `course_name` (the localised name, as session events do today), `course_storyblok_uuid` and `course_item_position` (A7).
+
+**GA setup:** register `course_name`, `course_storyblok_uuid`, `course_trigger` and `course_item_position` as event-scoped custom dimensions before launch, if they aren't already. The digest breakdown fails without `course_name`.
+
+**Continuity:** the database lines are continuous across the launch. The GA course lines start at launch, with no history, so the digest's comparison with earlier periods is empty for their first period.
+
+#### A10. Tests, QA and rollout
 
 **Backend unit tests:**
 
-- The webhook stores `items` per language, and leaves `null` for `weeks` courses.
+- The webhook links a course to its listed pieces, creates missing `resource` rows, and clears them when `sessions` is emptied.
+- Concurrent start and complete create one `course_user` and sync Mailchimp once.
+- `courseProgress` and `courseStarted`/`courseCompleted` are true only on creation and on a false-to-true change, and `courseProgress` is omitted when course logic fails. New courses never un-complete, so they fire once. An old course can un-complete and complete again (`checkCourseIsComplete` is two-way); it fires again then, matching the database, which counts the new `completedAt`.
+- The digest's per-course breakdown lists pieces for courses with linked pieces, and sessions for the rest.
 - Start with a course: creates `course_user` only when the item is listed, and is idempotent.
 - Completion:
-  - completes across languages;
   - ignores unpublished items;
-  - fails closed on missing resource rows;
   - handles duplicate `resource_user` rows;
   - is one-way;
-  - is never triggered for courses without `items`.
+  - is never triggered for courses not linked to the piece.
 - `/incomplete` leaves the course completed.
 - The completion bug fix.
 - Course logic errors don't fail the resource response.
@@ -312,11 +355,14 @@ Include drafts when `STORYBLOK_ENVIRONMENT === 'draft'`, as `resourceFolderStati
 - Static params, including the collision.
 - Playlist locks.
 - `useResourceProgress` in course context.
+- `logCourseProgressEvents`: one event per change, with the right `course_trigger`; nothing for display-only completion.
 
 **QA:**
 
-- Staging reads draft content, but the backend only knows published courses. So QA needs a **published test course limited to a test partner**.
-- Before publishing it, confirm which backends the Storyblok webhook calls, because a production webhook would create real Mailchimp fields. Give the test course initials that don't collide, and remove its fields afterwards.
+- Staging reads draft content, but the backend only knows published courses.
+- A test course limited to a test partner can't be checked in `tr` or `ar`: partner members are blocked from those locales (`localeOpenToPartners`). Use it for `en`, partner and access checks only.
+- For `tr` and `ar`, QA the real courses as unpublished drafts on staging. Load their `course_resource` links into the staging database with a one-off call to the course sync that reads the `draft` version. Or make the staging backend's webhook read `draft`, as the staging frontend does.
+- Before publishing anything, confirm which backends the Storyblok webhook calls, because a production webhook would create real Mailchimp fields. Give the test course initials that don't collide, and remove its fields afterwards.
 - Run through:
   - signed out, signed in, and partner user;
   - `en`, `tr` and `ar` (right to left);
@@ -325,35 +371,72 @@ Include drafts when `STORYBLOK_ENVIRONMENT === 'draft'`, as `resourceFolderStati
   - "in progress" only after activity inside the course;
   - completion from the library after starting inside the course;
   - all pieces done elsewhere, then opening the course;
-  - every existing course renders exactly as on production.
+  - every existing course renders exactly as on production;
+  - in GA DebugView: `COURSE_STARTED` and `COURSE_COMPLETED` fire once each for an old course (through sessions) and a new course (inside the course, and completed from the library).
 
-**Rollout order:**
+**Deployment runbook** (in order)
 
-1. A1 schema changes.
-2. Backend PR, through staging to production. The backend ignores the new field until the frontend sends it.
-3. Frontend PR, through `develop` (staging) to `main`, with the flag on.
-4. The content team publishes the pieces, then the courses, after step 2. A course published earlier has `items = null` and must be republished.
-5. Check that every piece in a new course has a `resource` row:
-   ```sql
-   SELECT "storyblokUuid", status FROM resource WHERE "storyblokUuid" IN (...);
-   ```
+_Done on 2026-11-02:_ the A1 schema changes are live in Storyblok (`Course.sessions` is translatable, as `week.sessions` is), plus `bonus_block.title` and `bonus_block.content` made translatable (Turkish and Arabic pieces keep their text in the language slots, so untranslatable bonus fields couldn't hold it). A draft-only test course, `courses/qa-modular-course` (tag `qa-do-not-publish`), exists for staging QA. **Never publish it**; delete it after launch.
+
+**Env vars:** the backend needs none. The frontend needs one, `NEXT_PUBLIC_FF_COURSE_PROGRESS`. Existing Storyblok, revalidate and GA settings are unchanged.
+
+_1. Backend_
+
+1. Merge the backend PR into `develop`. Render deploys staging and runs the migration (`course_resource`).
+2. Merge `develop` into `main`. Render deploys production and runs the migration. Nothing changes for members yet: no course has pieces linked, and the frontend doesn't send a course. The session responses' `courseStarted`/`courseCompleted` flags and the digest's per-course piece breakdown start straight away. An older frontend's extra `courseStoryblokUuid` would be stripped, not rejected (`whitelist: true`), so the order is safe either way, but course progress needs this first.
+
+_2. GA4 and Vercel, before the frontend ships_
+
+3. **GA4** (Admin → Custom definitions → event-scoped custom dimensions): `course_name`, `course_storyblok_uuid`, `course_trigger`, `course_item_position`. Skip any that already exist. The digest's "Course progress" breakdown needs `course_name`.
+4. **Vercel:** add `NEXT_PUBLIC_FF_COURSE_PROGRESS=true` for Preview and Production. It's read at build time, so set it before the deploy it should apply to.
+
+_3. Frontend_
+
+5. Merge the frontend PR into `develop`. Vercel deploys staging.
+6. **Staging QA** with the draft test course in `tr` and `ar`: signed out, signed in, partner user, mobile, right to left; every existing course renders as on production; COURSE_STARTED and COURSE_COMPLETED fire once each in GA DebugView for an old course. Staging lists draft courses, but the backends only sync published ones, so modular course progress can't be checked until a real course is published. See QA above.
+7. Merge `develop` into `main`. Vercel deploys production. With no modular course published, members see no difference apart from GA's new course events.
+
+_4. Per new course, before publishing it_
+
+8. **Name and initials:** choose the English working name (content guide rule 4). Its initials are the first letter of each word, skipping lower-case "in, and, the, from, as, or, to": 6 letters or fewer, letters only, not already taken.
+9. **Front:** Settings → Contacts → Custom fields. Add two **text** fields, named in lower case: `course_<initials>` and `course_<initials>_sessions` (for example `course_hst` and `course_hst_sessions`). Do this **before** publishing: Front receives every contact field in one update, so one missing field would block every Front update for a member who starts the course.
+
+_5. Publish_
+
+10. **Publish the pieces, then the course.** Publishing the course creates its `course` row, links it to every piece listed in any language (`course_resource`), and creates the Mailchimp merge fields `C_<initials>` and `C_<initials>_S`. A piece published after the course is only linked once the course is published again.
+11. **Mailchimp:** Audience → Settings → Audience fields. Check that `C_<initials>` ("Course <initials> Status") and `C_<initials>_S` ("Course <initials> Sessions") exist. If not, add both as text fields with exactly those tags.
+12. **Check the backend rows** (every listed piece should appear, published):
+    ```sql
+    SELECT c.name, r.name, r.status FROM course c
+    JOIN course_resource cr ON cr."courseId" = c."courseId"
+    JOIN resource r ON r."resourceId" = cr."resourceId"
+    ORDER BY c.name;
+    ```
+13. **Redeploy production.** The course and item routes use `dynamicParams = false`, so a page that didn't exist at build time 404s, and the revalidate webhook can't add it. Open every new course and item URL in `tr` and `ar`. If the build still misses them, purge Vercel's Data Cache and redeploy.
+14. **Smoke test** with a test account: open a piece inside the course, check the course shows "in progress", that the `course_user` row exists, and that Mailchimp and Front show `C_<initials>` as started.
+
+_6. After launch_
+
+15. **Translations:** `Library.partOfCourses` and `Resources.partOf` are English placeholders in the 7 other locales. Send them to translators (Turkish and Arabic first).
+16. Delete `courses/qa-modular-course` from Storyblok.
 
 **Rollback:**
 
 - Turn the flag off: progress goes back to pieces only, and the course layout still works.
-- Or revert the frontend. The `items` column and any new `course_user` rows are harmless if left.
+- Or revert the frontend. The `course_resource` table and any new `course_user` rows are harmless if left.
 
 #### Step A risks
 
-| Risk                                               | Mitigation                                                                                                                                       |
-| -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Existing courses regress                           | Every new backend path requires `items`. Frontend `weeks` fallback, tests on current fixtures, and a staging comparison of every existing course |
-| Wrong or early course completion                   | Verified on the server from `resource_user`. Fails closed on unknown pieces. One-way                                                             |
-| Mailchimp field overwrite or failure               | Content rule 4 (unique Latin initials). Failures are logged only                                                                                 |
-| Front rejects a new course field                   | Front's PATCH sends the full set and throws, so check with one test contact before launch                                                        |
-| Test content reaching production                   | Test course limited to a test partner. Check webhook targets first                                                                               |
-| Same content at several URLs                       | Canonical points to the resource's own URL                                                                                                       |
-| New analytics parameters not visible in GA reports | Register them as custom definitions if needed                                                                                                    |
+| Risk                                               | Mitigation                                                                                                                                                                                                                                             |
+| -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Existing courses regress                           | Every new backend path requires `course_resource` links. Frontend `weeks` fallback, tests on current fixtures, and a staging comparison of every existing course                                                                                       |
+| Wrong or early course completion                   | Verified on the server from `resource_user`. Unpublished listed pieces are logged by the webhook. One-way                                                                                                                                              |
+| Mailchimp field overwrite or failure               | Content rule 4 (unique Latin initials). Failures are logged only                                                                                                                                                                                       |
+| Front rejects a new course field                   | Front's PATCH sends the full set and throws, so one rejected field would block **every** Front field update for that member. Create the new courses' Front fields if existing ones were created by hand, and check with one test contact before launch |
+| Test content reaching production                   | Test course limited to a test partner. Check webhook targets first                                                                                                                                                                                     |
+| Same content at several URLs                       | Canonical points to the resource's own URL                                                                                                                                                                                                             |
+| New analytics parameters not visible in GA reports | Register them as custom dimensions before launch (A9)                                                                                                                                                                                                  |
+| GA and database course counts differ               | Expected: GA only sees visitors who accept cookies. The database is the headline number; GA is for breakdowns and funnels                                                                                                                              |
 
 ---
 
@@ -361,21 +444,24 @@ Include drafts when `STORYBLOK_ENVIRONMENT === 'draft'`, as `resourceFolderStati
 
 #### B1. Backend
 
-1. **Item lists for old courses:** the webhook also stores `items` from flattened `weeks`, until B3.
+1. **Session links:** a `course_session` join table, the counterpart of `course_resource`. `session.courseId` stays the session's home course; the join table lets a session appear in other courses. Until B3, the webhook fills it from the flattened `weeks`.
 2. **Session context:** an optional `courseStoryblokUuid` on the session-user DTOs, with the same rules as A3. Without it, sessions fall back to their home course, as today.
 3. **One `session_user` per member and session:** before creating, look for an existing row for this member and session across their `course_user` rows. If several exist, use the oldest. Otherwise create it under the context course.
-4. **One completion check** for sessions and resources, replacing `checkCourseIsComplete`. It's one-way. Courses still without `items` keep the old logic.
-5. **Response:** `formatCourseUserObject` and `serializeCourseData` build `sessions` and `C_<initials>_S` from `items` plus progress.
+4. **One completion check** for sessions and resources, replacing `checkCourseIsComplete`. It's one-way. Courses with neither kind of link keep the old logic.
+5. **Response:** `formatCourseUserObject` and `serializeCourseData` build `sessions` and `C_<initials>_S` from the course's linked sessions and pieces plus progress.
+   - The digest's per-course breakdown also moves to the join tables for every course, counting each piece from `session_user` or `resource_user` as it is.
+   - `courseStarted`, `courseCompleted` and `courseProgress` (A9) keep their meaning; for a reused session they refer to the context course.
 6. **`resource_user` unique index** on (`userId`, `resourceId`), after a duplicate check and cleanup plan on production data.
 
 #### B2. Frontend
 
 - Send `courseStoryblokUuid` from old session pages too.
+- Session events carry the context course's `course_storyblok_uuid`, not the session's home course.
 - Remove the new-format special cases, so one path serves every course.
 
 #### B3. Content migration
 
-1. A script using the Management API tooling in `scripts/` copies each course's flattened `weeks` into `sessions`, including per-language values (`sessions__i18n__hi`). It **skips any story with `unpublished_changes`**: today that's `creating-boundaries`.
+1. A script using the Management API tooling in `scripts/` copies each course's flattened `weeks` into `sessions`. including per-language values (`sessions__i18n__hi`). It **skips any story with `unpublished_changes`**: today that's `creating-boundaries`.
 2. Widen the `Course.sessions` picker to `Session` and `session_iba`.
 3. Check every course and locale through the CDN: the new list equals the flattened old list.
 4. Deploy, and let it run in production for a while.

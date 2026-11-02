@@ -3,9 +3,10 @@
 import { useCompleteResourceMutation, useStartResourceMutation } from '@/lib/api';
 import { PROGRESS_STATUS } from '@/lib/constants/enums';
 import { useTypedSelector } from '@/lib/hooks/store';
+import { logCourseProgressEvents } from '@/lib/utils/logCourseProgressEvents';
 import logEvent from '@/lib/utils/logEvent';
 import { useRollbar } from '@rollbar/react';
-import { useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 
 // Every resource type shares one event-name shape: `<prefix>_STARTED_REQUEST`,
 // `<prefix>_COMPLETE_SUCCESS`, etc. Passing the prefix keeps this hook type-agnostic.
@@ -20,6 +21,9 @@ interface UseResourceProgressArgs {
   eventPrefix: ResourceEventPrefix;
   resourceProgress: PROGRESS_STATUS;
   eventData: Record<string, unknown>;
+  // The modular course the piece is open in, when course progress is on.
+  courseStoryblokUuid?: string;
+  courseStarted?: boolean;
 }
 
 // Records "started" the first time a signed-in user engages with a resource (plays the media or
@@ -29,24 +33,53 @@ export function useResourceProgress({
   eventPrefix,
   resourceProgress,
   eventData,
+  courseStoryblokUuid,
+  courseStarted = false,
 }: UseResourceProgressArgs) {
   const isLoggedIn = useTypedSelector((state) => Boolean(state.user.id));
   const rollbar = useRollbar();
   const [startResource] = useStartResourceMutation();
   const [completeResource] = useCompleteResourceMutation();
+  // The course's progress refetches after the start, so this stops a second start in the meantime.
+  const courseStartSent = useRef(false);
+  const trigger = courseStoryblokUuid ? 'course_item' : 'standalone';
 
   const start = useCallback(async () => {
-    if (!isLoggedIn || resourceProgress !== PROGRESS_STATUS.NOT_STARTED) return;
+    if (!isLoggedIn) return;
+    const resourceStarted = resourceProgress !== PROGRESS_STATUS.NOT_STARTED;
+    // A piece already done elsewhere still starts the course the first time it's opened there.
+    const startsCourse = Boolean(courseStoryblokUuid) && !courseStarted && !courseStartSent.current;
+    if (resourceStarted && !startsCourse) return;
+    if (startsCourse) courseStartSent.current = true;
 
-    logEvent(`${eventPrefix}_STARTED_REQUEST`, eventData);
-    const response = await startResource({ storyblokUuid: storyUuid });
+    // Resource start events only count real resource starts, not a course-only start.
+    if (!resourceStarted) logEvent(`${eventPrefix}_STARTED_REQUEST`, eventData);
+    const response = await startResource({
+      storyblokUuid: storyUuid,
+      ...(courseStoryblokUuid && { courseStoryblokUuid }),
+    });
 
-    if (response.data) logEvent(`${eventPrefix}_STARTED_SUCCESS`, eventData);
+    if (response.data) {
+      if (!resourceStarted) logEvent(`${eventPrefix}_STARTED_SUCCESS`, eventData);
+      logCourseProgressEvents(response.data.courseProgress, trigger, eventData);
+    }
     if (response.error) {
+      courseStartSent.current = false;
       logEvent(`${eventPrefix}_STARTED_ERROR`, eventData);
       rollbar.error('Resource started error', response.error);
     }
-  }, [isLoggedIn, resourceProgress, eventPrefix, eventData, startResource, storyUuid, rollbar]);
+  }, [
+    isLoggedIn,
+    resourceProgress,
+    courseStoryblokUuid,
+    courseStarted,
+    eventPrefix,
+    eventData,
+    startResource,
+    storyUuid,
+    trigger,
+    rollbar,
+  ]);
 
   const complete = useCallback(
     async (method: 'media_complete' | 'manual' = 'media_complete') => {
@@ -54,17 +87,31 @@ export function useResourceProgress({
 
       const completeEventData = { ...eventData, resource_completion_method: method };
       logEvent(`${eventPrefix}_COMPLETE_REQUEST`, completeEventData);
-      const response = await completeResource({ storyblokUuid: storyUuid });
+      const response = await completeResource({
+        storyblokUuid: storyUuid,
+        ...(courseStoryblokUuid && { courseStoryblokUuid }),
+      });
 
       if (response.data) {
         logEvent(`${eventPrefix}_COMPLETE_SUCCESS`, completeEventData);
+        logCourseProgressEvents(response.data.courseProgress, trigger, eventData);
         return { ok: true };
       }
       logEvent(`${eventPrefix}_COMPLETE_ERROR`, completeEventData);
       rollbar.error('Resource complete error', response.error);
       return { ok: false };
     },
-    [isLoggedIn, resourceProgress, eventPrefix, eventData, completeResource, storyUuid, rollbar],
+    [
+      isLoggedIn,
+      resourceProgress,
+      eventPrefix,
+      eventData,
+      completeResource,
+      storyUuid,
+      courseStoryblokUuid,
+      trigger,
+      rollbar,
+    ],
   );
 
   return { start, complete };

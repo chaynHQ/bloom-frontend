@@ -1,5 +1,7 @@
 import StoryblokResourceAudioPage from '@/components/storyblok/StoryblokResourceAudioPage';
 import { getStoryblokStory, resourceFolderStaticParams } from '@/lib/storyblok';
+import { getCachedCourseStories } from '@/lib/utils/getLibraryStories';
+import { courseItemUuids } from '@/lib/utils/libraryData';
 import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
 import { isPublicContent } from '@/lib/utils/partnerContentAccess';
 import { breadcrumbJsonLd, JsonLd, resourceJsonLd } from '@/lib/utils/structuredData';
@@ -47,19 +49,25 @@ export function generateStaticParams() {
 export default async function Page({ params }: { params: Params }) {
   const { locale, slug } = await params;
 
-  const story = await getStory(locale, slug);
+  const [story, courseStories] = await Promise.all([
+    getStory(locale, slug),
+    getCachedCourseStories(locale),
+  ]);
 
   if (!story) {
     notFound();
   }
 
+  const partOfCourseStories = courseStories.filter((course) =>
+    courseItemUuids(course).includes(story.uuid),
+  );
   const breadcrumbs = await breadcrumbJsonLd(locale, [{ name: story.content.name }]);
 
   return (
     <>
       <JsonLd data={resourceJsonLd('AudioObject', story, locale, `/audio/${slug}`)} />
       <JsonLd data={breadcrumbs} />
-      <StoryblokResourceAudioPage story={story} />
+      <StoryblokResourceAudioPage story={story} partOfCourseStories={partOfCourseStories} />
     </>
   );
 }

@@ -86,6 +86,7 @@
     },
     "backToSessions": "Bölümlere dön",
     "backToLibrary": "Kütüphaneye dön",
+    "partOf": "Part of:",
     "grounding": {
       "close": "Kapat",
       "exercisesCount": "{count, plural, one {# egzersiz} other {# egzersiz}}",

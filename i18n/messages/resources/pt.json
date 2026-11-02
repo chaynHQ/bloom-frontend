@@ -86,6 +86,7 @@
     },
     "backToSessions": "Voltar para as sessões",
     "backToLibrary": "Voltar para a biblioteca",
+    "partOf": "Part of:",
     "grounding": {
       "close": "Fechar",
       "exercisesCount": "{count, plural, one {# exercício} other {# exercícios}}",

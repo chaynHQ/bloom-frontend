@@ -86,6 +86,7 @@
     },
     "backToSessions": "Sessions par vapas jayein",
     "backToLibrary": "Library par vapas jayein",
+    "partOf": "Part of:",
     "grounding": {
       "close": "Band karein",
       "exercisesCount": "{count, plural, one {# exercise} other {# exercises}}",
