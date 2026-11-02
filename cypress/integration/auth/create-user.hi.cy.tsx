@@ -12,7 +12,7 @@ describe('Create User', () => {
 
     cy.get('a[href="/hi/auth/register"]', { timeout: 5000 }).first().click({ force: true });
     cy.wait(2000);
-    cy.get('h2', { timeout: 8000 }).should('contain', 'Account banaiye');
+    cy.get('h1', { timeout: 8000 }).should('contain', 'Account banaiye');
     cy.get('#name', { timeout: 8000 }).type('Cypress test');
     cy.get('#email', { timeout: 8000 }).type(username);
     cy.get('#password', { timeout: 8000 }).type('testpassword');

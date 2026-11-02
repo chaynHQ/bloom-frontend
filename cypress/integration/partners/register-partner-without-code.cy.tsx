@@ -11,7 +11,7 @@ describe('Register without access code', () => {
     cy.visit('/welcome/bumble');
     cy.get('a', { timeout: 8000 }).contains('Get started').click();
     cy.wait(2000); // waiting for dom to rerender
-    cy.get('h2', { timeout: 8000 }).should('contain', 'Create account');
+    cy.get('h1', { timeout: 8000 }).should('contain', 'Create account');
     cy.get('#name').type('Cypress test');
     cy.get('#email').type(username);
     cy.get('#password').type('testpassword');
@@ -33,7 +33,7 @@ describe('Register without access code', () => {
     // referral, so registering shows the Bumble form (no access code) and attaches the partner.
     cy.visit('/auth/register?utm_source=bumble');
     cy.wait(2000); // waiting for referral detection + dom to rerender
-    cy.get('h2', { timeout: 8000 }).should('contain', 'Create account');
+    cy.get('h1', { timeout: 8000 }).should('contain', 'Create account');
     cy.get('#partnerAccessCode').should('not.exist');
     cy.get('#name').type('Cypress test');
     cy.get('#email').type(utmUsername);
