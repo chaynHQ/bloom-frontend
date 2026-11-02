@@ -12,6 +12,7 @@
     },
     "register": {
       "title": "Crea una cuenta",
+      "description": "Únete a Bloom, siempre gratis. Nuestros cursos combinan reflexiones sobre el trauma y la violencia de género con prácticas terapéuticas para ayudarnos a sanar.",
       "loginRedirect": "¿Ya tienes una cuenta? <loginLink>Inicia sesión</loginLink>",
       "partnershipsTitle": "Nuestros socios",
       "partnershipsDescription": "Si fuiste referido a Bloom por parte de uno de nuestros socios, haz click en su logo a continuación."

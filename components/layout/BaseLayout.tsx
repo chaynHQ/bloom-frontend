@@ -15,6 +15,7 @@ import { ENVIRONMENTS } from '@/lib/constants/enums';
 import firebase from '@/lib/firebase';
 import { clientConfig } from '@/lib/rollbar';
 import { getLocaleDirection } from '@/lib/utils/getLocaleDirection';
+import { JsonLd, siteJsonLd } from '@/lib/utils/structuredData';
 import '@/styles/globals.css';
 import '@/styles/hotjarNPS.css';
 import { Box } from '@mui/material';
@@ -55,6 +56,8 @@ const notoSansArabic = Noto_Sans_Arabic({
   display: 'swap',
 });
 
+const NEW_RELIC_CONNECT_TIMEOUT_MS = 5000;
+
 export interface BaseLayoutProps {
   children: ReactNode;
   locale: string;
@@ -63,7 +66,7 @@ export interface BaseLayoutProps {
 firebase;
 
 export default async function BaseLayout({ children, locale }: BaseLayoutProps) {
-  const messages = await getMessages();
+  const messages = await getMessages({ locale });
   const direction = getLocaleDirection(locale);
 
   let browserTimingHeader = undefined;
@@ -75,10 +78,15 @@ export default async function BaseLayout({ children, locale }: BaseLayoutProps) 
   ) {
     // @ts-ignore
     if (newrelic.agent?.collector.isConnected() === false) {
-      await new Promise((resolve) => {
-        // @ts-ignore
-        newrelic.agent.on('connected', resolve);
-      });
+      // Pages render at build time and on revalidation, so an unreachable collector must not
+      // stall them; without a connection the page just goes out without browser monitoring.
+      await Promise.race([
+        new Promise((resolve) => {
+          // @ts-ignore
+          newrelic.agent.once('connected', resolve);
+        }),
+        new Promise((resolve) => setTimeout(resolve, NEW_RELIC_CONNECT_TIMEOUT_MS).unref()),
+      ]);
     }
     // @ts-ignore
     browserTimingHeader = newrelic.getBrowserTimingHeader({
@@ -97,7 +105,7 @@ export default async function BaseLayout({ children, locale }: BaseLayoutProps) 
         {browserTimingHeader && (
           <Script id="nr-browser-agent" dangerouslySetInnerHTML={{ __html: browserTimingHeader }} />
         )}
-        <NextIntlClientProvider messages={messages} timeZone="Europe/London">
+        <NextIntlClientProvider locale={locale} messages={messages} timeZone="Europe/London">
           <ReduxProvider>
             <AppRouterCacheProvider>
               <AppThemeProvider direction={direction}>
@@ -123,6 +131,7 @@ export default async function BaseLayout({ children, locale }: BaseLayoutProps) 
                       to bind the event listener in time.
                     */}
                     <script src="/deffer-pwa.js" async></script>
+                    <JsonLd data={siteJsonLd} />
                     <Suspense fallback={null}>
                       <ReferralPartnerTracker />
                     </Suspense>

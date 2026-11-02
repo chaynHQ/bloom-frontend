@@ -3,13 +3,13 @@
 import { EmailForm, PasswordForm } from '@/components/forms/ResetPasswordForm';
 import PartnerHeader from '@/components/layout/PartnerHeader';
 import { RESET_PASSWORD_VIEWED } from '@/lib/constants/events';
+import { useHydratedSearchParams } from '@/lib/hooks/useHydratedSearchParams';
 import { useLogEventOnce } from '@/lib/hooks/useLogEventOnce';
 import bloomLogo from '@/public/bloom_logo.svg';
 import illustrationBloomHeadYellow from '@/public/illustration_bloom_head_yellow.svg';
 import { rowStyle } from '@/styles/common';
 import { Box, Card, CardContent, Container, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import { useSearchParams } from 'next/navigation';
 
 const containerStyle = {
   ...rowStyle,
@@ -27,11 +27,13 @@ const formCardStyle = {
 
 export default function ResetPasswordPage() {
   const t = useTranslations('Auth');
-  const searchParams = useSearchParams();
-  const oobCodeParam = searchParams.get('oobCode');
-  useLogEventOnce(RESET_PASSWORD_VIEWED, {
-    reset_password_stage: oobCodeParam ? 'set' : 'request',
-  });
+  const searchParams = useHydratedSearchParams();
+  const oobCodeParam = searchParams?.get('oobCode');
+  useLogEventOnce(
+    RESET_PASSWORD_VIEWED,
+    { reset_password_stage: oobCodeParam ? 'set' : 'request' },
+    searchParams !== null,
+  );
 
   const headerProps = {
     partnerLogoSrc: bloomLogo,

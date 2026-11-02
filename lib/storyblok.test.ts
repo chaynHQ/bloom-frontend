@@ -69,18 +69,24 @@ describe('storyblok utilities', () => {
   });
 
   describe('getStoryblokStory', () => {
-    it('should log an error to Rollbar if fetching the story fails', async () => {
-      const testError = new Error('Fetch failed');
+    it('should log and rethrow a failed fetch, so a cached page is not replaced by a 404', async () => {
+      const testError = { message: 'Too Many Requests', status: 429 };
       mockGet.mockRejectedValueOnce(testError as never);
 
-      const result = await getStoryblokStory('test-slug', 'en');
-
-      expect(result).toBeUndefined();
+      await expect(getStoryblokStory('test-slug', 'en')).rejects.toThrow(
+        'Storyblok request for "test-slug" failed',
+      );
       expect(rollbar.error).toHaveBeenCalledWith(
         'Error getting storyblok data for page',
         testError,
         expect.objectContaining({ slug: 'test-slug' }),
       );
+    });
+
+    it('should return undefined for a story that does not exist', async () => {
+      mockGet.mockRejectedValueOnce({ message: 'Not Found', status: 404 } as never);
+
+      expect(await getStoryblokStory('test-slug', 'en')).toBeUndefined();
     });
 
     it('should return the story data if fetching succeeds', async () => {

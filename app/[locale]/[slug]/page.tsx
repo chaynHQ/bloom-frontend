@@ -5,7 +5,11 @@ import { routing } from '@/i18n/routing';
 import { STORYBLOK_ENVIRONMENT } from '@/lib/constants/common';
 import { getStoryblokStory } from '@/lib/storyblok';
 import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
-import { isInvalidSlugPageRequest } from '@/lib/utils/validateSlugPageRequest';
+import {
+  isInvalidSlugPageRequest,
+  isSlugPageLink,
+  type StoryblokLink,
+} from '@/lib/utils/validateSlugPageRequest';
 import { notFound } from 'next/navigation';
 
 export const dynamicParams = false;
@@ -28,6 +32,8 @@ export async function generateMetadata({ params }: { params: Params }) {
   return generateMetadataBasic({
     title: story.content.title,
     description: story.content.seo_description,
+    locale,
+    path: `/${slug}`,
   });
 }
 
@@ -43,31 +49,11 @@ export async function generateStaticParams() {
 
   const { data } = await storyblokApi.get('cdn/links/', sbParams);
 
-  const excludePaths: string[] = [
-    'home',
-    'welcome',
-    'meet-the-team',
-    'courses',
-    'about-our-courses',
-    'messaging',
-    'video',
-    'audio',
-    'written',
-    'activity',
-    'grounding',
-    'policies',
-    'library',
-  ];
-
-  Object.keys(data.links).forEach((linkKey) => {
-    const story = data.links[linkKey];
-    const slug = story.slug;
-    const basePath = slug.split('/')[0];
-
-    if (story.is_folder || !story.published || excludePaths.includes(basePath)) return;
+  Object.values(data.links as Record<string, StoryblokLink>).forEach((link) => {
+    if (!isSlugPageLink(link)) return;
 
     for (const locale of locales) {
-      paths.push({ slug, locale });
+      paths.push({ slug: link.slug, locale });
     }
   });
   return paths;

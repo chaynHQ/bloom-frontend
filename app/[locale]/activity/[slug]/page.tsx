@@ -1,6 +1,8 @@
 import StoryblokResourceActivityPage from '@/components/storyblok/StoryblokResourceActivityPage';
 import { getStoryblokStory, resourceFolderStaticParams } from '@/lib/storyblok';
 import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
+import { isPublicContent } from '@/lib/utils/partnerContentAccess';
+import { breadcrumbJsonLd, JsonLd, resourceJsonLd } from '@/lib/utils/structuredData';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 
@@ -29,7 +31,12 @@ export async function generateMetadata({ params }: { params: Params }) {
   return generateMetadataBasic({
     title: story.content.name,
     titleParent: t('activity'),
-    description: story.content.seo_description,
+    description: story.content.seo_description || story.content.description,
+    locale,
+    path: `/activity/${slug}`,
+    languages: story.content.languages,
+    noIndex: !isPublicContent(story.content.included_for_partners),
+    image: story.content.header_image?.filename,
   });
 }
 
@@ -46,5 +53,13 @@ export default async function Page({ params }: { params: Params }) {
     notFound();
   }
 
-  return <StoryblokResourceActivityPage story={story} />;
+  const breadcrumbs = await breadcrumbJsonLd(locale, [{ name: story.content.name }]);
+
+  return (
+    <>
+      <JsonLd data={resourceJsonLd('LearningResource', story, locale, `/activity/${slug}`)} />
+      <JsonLd data={breadcrumbs} />
+      <StoryblokResourceActivityPage story={story} />
+    </>
+  );
 }

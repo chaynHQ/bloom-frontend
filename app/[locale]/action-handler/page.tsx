@@ -11,8 +11,6 @@ import { useLocale } from 'next-intl';
 import { notFound, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-export const dynamic = 'force-dynamic';
-
 // Page to handle redirects from external tools. E.g. firebase auth emails redirect to /action-handler?mode=resetPassword&oobCode....
 export default function Page() {
   const searchParams = useSearchParams();

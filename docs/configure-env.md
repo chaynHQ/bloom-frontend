@@ -78,6 +78,9 @@ NEXT_PUBLIC_SIMPLYBOOK_WIDGET_URL= # Booking session forms
 NEXT_PUBLIC_ZAPIER_WEBHOOK_DEMO_FORM= # User data form webhooks
 NEXT_PUBLIC_ZAPIER_WEBHOOK_SETA_FORM= # User data form webhooks
 NEXT_PUBLIC_ROLLBAR_TOKEN= # Rollbar logging
+
+# CONTENT REVALIDATION
+STORYBLOK_WEBHOOK_SECRET= # Shared secret for the Storyblok revalidation webhook
 ```
 
 ### Configure Firebase Variables:
@@ -97,6 +100,16 @@ If creating new environment variables, please tag Chayn staff developers in PR /
 - `NEXT_PUBLIC_FF_USER_RESEARCH_BANNER`: This feature flag enables a banner which displays a banner message aimed at gathering users for Bloom feedback. It is intended to be turned on temporarily, for say 1-2 weeks at a time. It links to an external form which users can fill out if they would like to take part in research.
 
 - `NEXT_PUBLIC_FF_REDESIGN_NEWS_BANNER`: Enables a dismissible top banner announcing the redesign and the move of all content into the Library. English only, intended to run temporarily.
+
+#### Storyblok Content Revalidation:
+
+Pages are cached and refresh from Storyblok every 4 hours. To show changes sooner, a Storyblok webhook calls `POST /api/revalidate`, which marks every page stale so it re-renders on its next visit. A redeploy alone doesn't refresh content, because Vercel's Data Cache persists across deployments.
+
+To set it up for an environment:
+
+1. Generate a random secret and add it to Vercel as `STORYBLOK_WEBHOOK_SECRET` for that environment. Without it, the route rejects every request.
+2. In Storyblok, go to Settings → Webhooks and add a webhook pointing at `https://<environment domain>/api/revalidate`, with the same secret. For production, trigger it on stories being published, unpublished, deleted and moved. For staging, which shows draft content, also trigger it on stories being saved.
+3. If the Vercel Firewall challenges requests (e.g. the Security Checkpoint), add a rule that lets `/api/revalidate` through, or Storyblok's calls will be blocked.
 
 #### Front Chat (1:1 Messaging):
 

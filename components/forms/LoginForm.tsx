@@ -19,6 +19,7 @@ import {
 } from '@/lib/constants/events';
 import { auth } from '@/lib/firebase';
 import { useAppDispatch, useTypedSelector } from '@/lib/hooks/store';
+import { useHydratedSearchParams } from '@/lib/hooks/useHydratedSearchParams';
 import { setAuthStateLoading, setLoadError } from '@/lib/store/userSlice';
 import logEvent from '@/lib/utils/logEvent';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -26,7 +27,6 @@ import { Box, Link, Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import { getMultiFactorResolver, MultiFactorError, MultiFactorResolver } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
-import { useSearchParams } from 'next/navigation';
 import * as React from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import SetupMFA from '../guards/SetupMFA';
@@ -37,7 +37,7 @@ const LoginForm = () => {
   const dispatch = useAppDispatch();
   const rollbar = useRollbar();
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const searchParams = useHydratedSearchParams();
 
   const userId = useTypedSelector((state) => state.user.id);
   const userLoading = useTypedSelector((state) => state.user.loading);
@@ -74,8 +74,8 @@ const LoginForm = () => {
       return;
     }
 
-    // Don't redirect if showing MFA setup
-    if (showSetupMFA) return;
+    // Don't redirect if showing MFA setup, or before return_url can be read
+    if (showSetupMFA || !searchParams) return;
 
     // Prevent duplicate handling
     if (hasHandledLoginRef.current) return;
@@ -84,7 +84,7 @@ const LoginForm = () => {
     logEvent(GET_LOGIN_USER_SUCCESS);
 
     // Redirect if the user login process is complete and userId loaded
-    const returnUrl = searchParams?.get('return_url');
+    const returnUrl = searchParams.get('return_url');
 
     if (userIsSuperAdmin) {
       router.push('/admin/dashboard');

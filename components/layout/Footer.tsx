@@ -4,6 +4,7 @@ import { PARTNER_SOCIAL_LINK_CLICKED, SOCIAL_LINK_CLICKED } from '@/lib/constant
 import { PartnerContent, getPartnerContent } from '@/lib/constants/partners';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { useCookieReferralPartner } from '@/lib/hooks/useCookieReferralPartner';
+import { useHydratedSearchParams } from '@/lib/hooks/useHydratedSearchParams';
 import { useIsRtl } from '@/lib/hooks/useIsRtl';
 import bloomLogo from '@/public/bloom_logo.svg';
 import comicReliefLogo from '@/public/comic_relief_logo.png';
@@ -17,7 +18,6 @@ import YoutubeIcon from '@mui/icons-material/YouTube';
 import { Box, Container, IconButton, Link, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { useSearchParams } from 'next/navigation';
 import { useMemo } from 'react';
 
 import { getImageSizes } from '@/lib/utils/imageSizes';
@@ -94,7 +94,7 @@ const fundingLogosContainerStyle = {
 
 const Footer = () => {
   const tS = useTranslations('Shared');
-  const searchParams = useSearchParams();
+  const searchParams = useHydratedSearchParams();
   const isRtl = useIsRtl();
 
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
