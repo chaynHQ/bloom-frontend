@@ -8,7 +8,7 @@ import {
   getCourseSessions,
   isFirstCourseSession,
   isModularCourse,
-  sessionAndResourceProgressByUuid,
+  resourceProgressByUuid,
   type CourseSession,
 } from './courseSessions';
 
@@ -135,19 +135,12 @@ const course = (storyblokUuid: string, completed: boolean, sessions: [string, bo
 const resource = (storyblokUuid: string, completed: boolean) =>
   ({ storyblokUuid, completed }) as unknown as Resource;
 
-describe('sessionAndResourceProgressByUuid', () => {
-  it('merges course sessions and resources, a completion anywhere winning', () => {
-    const progress = sessionAndResourceProgressByUuid(
-      [
-        course('c1', false, [
-          ['s1', true],
-          ['shared', false],
-        ]),
-      ],
-      [resource('r1', false), resource('shared', true)],
-    );
-
-    expect(progress).toEqual({ s1: 'completed', shared: 'completed', r1: 'started' });
+describe('resourceProgressByUuid', () => {
+  it('maps each resource to started or completed', () => {
+    expect(resourceProgressByUuid([resource('r1', false), resource('r2', true)])).toEqual({
+      r1: 'started',
+      r2: 'completed',
+    });
   });
 });
 

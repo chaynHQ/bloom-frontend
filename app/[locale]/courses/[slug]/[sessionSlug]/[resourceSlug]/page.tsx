@@ -16,8 +16,9 @@ import { getStoryblokApi } from '@storyblok/react/rsc';
 import { notFound } from 'next/navigation';
 
 // A modular course's resource, shown inside the course: `/courses/<course>/<folder>/<slug>`.
-// `sessionSlug` holds the resource's folder, which keeps the path apart from the old two-segment
-// session URLs and from resources that share a slug across folders.
+// The folder is needed because a slug can exist in more than one folder (`what-are-boundaries` is
+// both a video and an audio). Next.js requires this segment to share the session route's
+// `sessionSlug` name.
 export const dynamicParams = false;
 export const revalidate = 14400; // invalidate every 4 hours
 

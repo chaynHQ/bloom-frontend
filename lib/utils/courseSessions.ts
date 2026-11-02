@@ -56,8 +56,7 @@ export function isModularCourse(content: unknown): boolean {
   return Array.isArray(sessions) && sessions.length > 0;
 }
 
-// The resource's page inside the course: `/courses/<course>/<folder>/<slug>`. The folder stays in the
-// path because the same slug can exist in more than one folder.
+// The resource's page inside the course: `/courses/<course>/<folder>/<slug>`.
 export function courseResourceHref(
   courseFullSlug: string,
   resourceFullSlug: string,
@@ -142,21 +141,15 @@ export function sessionProgressByUuid(
   }, {});
 }
 
-// Progress for every resource the member has touched, keyed by Storyblok uuid: library resources from
-// `resources`, course-only sessions from each course. A resource done anywhere is ticked everywhere.
-export function sessionAndResourceProgressByUuid(
-  courses: Course[],
-  resources: Resource[],
-): Record<string, SessionProgress> {
-  const progress: Record<string, SessionProgress> = {};
-  const record = (uuid: string, completed: boolean) => {
-    if (progress[uuid] !== 'completed') progress[uuid] = completed ? 'completed' : 'started';
-  };
-  courses.forEach((course) =>
-    (course.sessions ?? []).forEach((session) => record(session.storyblokUuid, session.completed)),
+// Each resource the member has touched, keyed by Storyblok uuid, so a resource done anywhere is
+// ticked in every course that lists it.
+export function resourceProgressByUuid(resources: Resource[]): Record<string, SessionProgress> {
+  return Object.fromEntries(
+    resources.map((resource) => [
+      resource.storyblokUuid,
+      resource.completed ? 'completed' : 'started',
+    ]),
   );
-  resources.forEach((resource) => record(resource.storyblokUuid, resource.completed));
-  return progress;
 }
 
 // A course is in progress once the member has started it inside the course (the backend's
@@ -166,11 +159,11 @@ export function getCourseProgress(
   courses: Course[],
   courseUuid: string,
   modularResourceUuids: string[] | undefined,
-  sessionAndResourceProgress: Record<string, SessionProgress>,
+  resourceProgress: Record<string, SessionProgress>,
 ): PROGRESS_STATUS {
   const progress = determineCourseProgress(courses, courseUuid);
   const allResourcesCompleted =
     !!modularResourceUuids?.length &&
-    modularResourceUuids.every((uuid) => sessionAndResourceProgress[uuid] === 'completed');
+    modularResourceUuids.every((uuid) => resourceProgress[uuid] === 'completed');
   return allResourcesCompleted ? PROGRESS_STATUS.COMPLETED : progress;
 }

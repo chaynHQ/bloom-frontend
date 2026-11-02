@@ -5,7 +5,7 @@ import { PROGRESS_STATUS } from '@/lib/constants/enums';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { useUserAuthStatus } from '@/lib/hooks/useUserAuthStatus';
 import { useUserContentPartners } from '@/lib/hooks/useUserContentPartners';
-import { getCourseProgress, sessionAndResourceProgressByUuid } from '@/lib/utils/courseSessions';
+import { getCourseProgress, resourceProgressByUuid } from '@/lib/utils/courseSessions';
 import {
   courseResourceUuids,
   normaliseSlug,
@@ -46,17 +46,14 @@ export function useLibraryItems(stories: LibraryStories): LibraryItem[] {
 
     const courseStories = accessible(stories.courses).filter((story) => !story.content.coming_soon);
 
-    const sessionAndResourceProgress = sessionAndResourceProgressByUuid(
-      coursesProgress,
-      resourcesProgress,
-    );
+    const resourceProgress = resourceProgressByUuid(resourcesProgress);
     const courseItems = courseStories.map((story) => {
       const item = storyToLibraryItem(story, locale);
       const progress = getCourseProgress(
         coursesProgress,
         story.uuid,
         courseResourceUuids(story),
-        sessionAndResourceProgress,
+        resourceProgress,
       );
       if (progress === PROGRESS_STATUS.NOT_STARTED) return item;
       return {

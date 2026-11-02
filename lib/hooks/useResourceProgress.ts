@@ -54,10 +54,7 @@ export function useResourceProgress({
 
     // Resource start events only count real resource starts, not a course-only start.
     if (!resourceStarted) logEvent(`${eventPrefix}_STARTED_REQUEST`, eventData);
-    const response = await startResource({
-      storyblokUuid: storyUuid,
-      ...(courseStoryblokUuid && { courseStoryblokUuid }),
-    });
+    const response = await startResource({ storyblokUuid: storyUuid, courseStoryblokUuid });
 
     if (response.data) {
       if (!resourceStarted) logEvent(`${eventPrefix}_STARTED_SUCCESS`, eventData);
@@ -87,10 +84,7 @@ export function useResourceProgress({
 
       const completeEventData = { ...eventData, resource_completion_method: method };
       logEvent(`${eventPrefix}_COMPLETE_REQUEST`, completeEventData);
-      const response = await completeResource({
-        storyblokUuid: storyUuid,
-        ...(courseStoryblokUuid && { courseStoryblokUuid }),
-      });
+      const response = await completeResource({ storyblokUuid: storyUuid, courseStoryblokUuid });
 
       if (response.data) {
         logEvent(`${eventPrefix}_COMPLETE_SUCCESS`, completeEventData);

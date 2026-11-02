@@ -11,7 +11,7 @@ import { useUserContentPartners } from '@/lib/hooks/useUserContentPartners';
 import { Resource } from '@/lib/store/resourcesSlice';
 import { determineCourseProgress } from '@/lib/utils/courseProgress';
 import {
-  sessionAndResourceProgressByUuid,
+  resourceProgressByUuid,
   type CourseSession,
   type SessionProgress,
 } from '@/lib/utils/courseSessions';
@@ -165,10 +165,10 @@ export function useStoryblokResourcePage<T extends ResourceStoryContent>({
     );
     return {
       ...courseContext,
-      progressByUuid: sessionAndResourceProgressByUuid(courses, resources),
+      progressByUuid: resourceProgressByUuid(resources),
       nextResource: currentIndex === -1 ? undefined : courseContext.resources[currentIndex + 1],
     };
-  }, [courseContext, courses, resources, storyUuid]);
+  }, [courseContext, resources, storyUuid]);
 
   const eventData = useMemo(
     () => ({
@@ -195,7 +195,6 @@ export function useStoryblokResourcePage<T extends ResourceStoryContent>({
   // Written pages start on view, before any gating. Inside a course, progress waits until the
   // member can see the resource, so one start carries the course.
   const awaitingCourseAccess = !!courseContext && contentAccessStatus !== 'accessGranted';
-  const courseStoryblokUuid = courseContext?.courseUuid;
   const courseStarted =
     !!courseContext &&
     determineCourseProgress(courses, courseContext.courseUuid) !== PROGRESS_STATUS.NOT_STARTED;
@@ -208,7 +207,7 @@ export function useStoryblokResourcePage<T extends ResourceStoryContent>({
     eventPrefix,
     resourceProgress,
     eventData,
-    courseStoryblokUuid,
+    courseStoryblokUuid: courseContext?.courseUuid,
     courseStarted,
   });
   const start = useCallback(async () => {

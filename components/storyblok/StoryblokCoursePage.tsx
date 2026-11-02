@@ -26,7 +26,7 @@ import {
   getCourseSessions,
   getCourseTotalMinutes,
   isModularCourse,
-  sessionAndResourceProgressByUuid,
+  resourceProgressByUuid,
   sessionProgressByUuid,
   type CourseSession,
 } from '@/lib/utils/courseSessions';
@@ -136,7 +136,7 @@ const StoryblokCoursePage = ({
   const progressByUuid = useMemo(
     () =>
       isModular
-        ? sessionAndResourceProgressByUuid(courses ?? [], resources ?? [])
+        ? resourceProgressByUuid(resources ?? [])
         : sessionProgressByUuid(courses ?? [], storyUuid),
     [isModular, courses, resources, storyUuid],
   );

@@ -212,7 +212,7 @@ Covers the new-format courses only: courses that use the new `sessions` field. C
 
 #### A5. Frontend: progress and course status
 
-- **`sessionAndResourceProgressByUuid`:** a `Record<storyblokUuid, 'started' | 'completed'>` merged from the `resources` slice and every course's `sessions` in the `courses` slice. Used for ticks everywhere.
+- **`resourceProgressByUuid`:** a `Record<storyblokUuid, 'started' | 'completed'>` from the `resources` slice, so a resource done anywhere is ticked in every course that lists it. Step B adds sessions.
 - **Course status:**
   - In progress: from that course's own entry in the `courses` slice (`determineCourseProgress`), for every course type.
   - Completed for a new-format course: the backend says completed, **or** the course has at least one resolved resource and every resolved resource is completed in `sessionAndResourceProgressByUuid`. This is display only, and covers resources all done elsewhere.
@@ -348,7 +348,7 @@ Course started and completed are one funnel for old and new courses. The backend
 **Frontend unit tests:**
 
 - `getCourseSessions` for both shapes.
-- `sessionAndResourceProgressByUuid`.
+- `resourceProgressByUuid`.
 - Course status and CTA.
 - Library labels for 0, 1 and 2 courses.
 - Static params, including the collision.
