@@ -21,7 +21,7 @@ interface UseResourceProgressArgs {
   eventPrefix: ResourceEventPrefix;
   resourceProgress: PROGRESS_STATUS;
   eventData: Record<string, unknown>;
-  // The modular course the piece is open in, when course progress is on.
+  // The modular course the piece is open in, if any.
   courseStoryblokUuid?: string;
   courseStarted?: boolean;
 }

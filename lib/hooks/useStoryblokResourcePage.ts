@@ -2,7 +2,6 @@
 
 import { useGetUserCoursesQuery } from '@/lib/api';
 import { PROGRESS_STATUS, RESOURCE_CATEGORIES } from '@/lib/constants/enums';
-import { FeatureFlag } from '@/lib/featureFlag';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { useContentAccessStatus } from '@/lib/hooks/useContentAccessStatus';
 import { useLogEventOnce } from '@/lib/hooks/useLogEventOnce';
@@ -194,8 +193,7 @@ export function useStoryblokResourcePage<T extends ResourceStoryContent>({
   // Written pages start on view, before any gating. Inside a course, progress waits until the
   // member can see the piece, so one start carries the course.
   const awaitingCourseAccess = !!courseContext && contentAccessStatus !== 'accessGranted';
-  const courseStoryblokUuid =
-    courseContext && FeatureFlag.isCourseProgressEnabled() ? courseContext.courseUuid : undefined;
+  const courseStoryblokUuid = courseContext?.courseUuid;
   const courseStarted =
     !!courseContext &&
     determineCourseProgress(courses, courseContext.courseUuid) !== PROGRESS_STATUS.NOT_STARTED;

@@ -226,7 +226,6 @@ Covers the new-format courses only: courses that use the new `sessions` field. C
 - **`lib/api.ts`:**
   - `startResource` invalidates `UserCourses` when `courseStoryblokUuid` is set.
   - `completeResource` always invalidates it, because completing from the library can complete a course that's already started.
-- **Feature flag:** `NEXT_PUBLIC_FF_COURSE_PROGRESS` (`FeatureFlag.isCourseProgressEnabled`) controls sending `courseStoryblokUuid`. It's a build-time env var, so turning it off needs a frontend redeploy but no code revert or backend change. Progress then goes back to pieces only.
 
 #### A6. Frontend: course item route
 
@@ -378,52 +377,48 @@ Course started and completed are one funnel for old and new courses. The backend
 
 _Done on 2026-11-02:_ the A1 schema changes are live in Storyblok (`Course.sessions` is translatable, as `week.sessions` is), plus `bonus_block.title` and `bonus_block.content` made translatable (Turkish and Arabic pieces keep their text in the language slots, so untranslatable bonus fields couldn't hold it). A draft-only test course, `courses/qa-modular-course` (tag `qa-do-not-publish`), exists for staging QA. **Never publish it**; delete it after launch.
 
-**Env vars:** the backend needs none. The frontend needs one, `NEXT_PUBLIC_FF_COURSE_PROGRESS`. Existing Storyblok, revalidate and GA settings are unchanged.
+**Env vars:** none, in either repo. Existing Storyblok, revalidate and GA settings are unchanged.
 
 _1. Backend_
 
 1. Merge the backend PR into `develop`. Render deploys staging and runs the migration (`course_resource`).
 2. Merge `develop` into `main`. Render deploys production and runs the migration. Nothing changes for members yet: no course has pieces linked, and the frontend doesn't send a course. The session responses' `courseStarted`/`courseCompleted` flags and the digest's per-course piece breakdown start straight away. An older frontend's extra `courseStoryblokUuid` would be stripped, not rejected (`whitelist: true`), so the order is safe either way, but course progress needs this first.
 
-_2. GA4 and Vercel, before the frontend ships_
+_2. GA4, before the frontend ships_
 
 3. **GA4** (Admin → Custom definitions → event-scoped custom dimensions): `course_name`, `course_storyblok_uuid`, `course_trigger`, `course_item_position`. Skip any that already exist. The digest's "Course progress" breakdown needs `course_name`.
-4. **Vercel:** add `NEXT_PUBLIC_FF_COURSE_PROGRESS=true` for Preview and Production. It's read at build time, so set it before the deploy it should apply to.
 
 _3. Frontend_
 
-5. Merge the frontend PR into `develop`. Vercel deploys staging.
-6. **Staging QA** with the draft test course in `tr` and `ar`: signed out, signed in, partner user, mobile, right to left; every existing course renders as on production; COURSE_STARTED and COURSE_COMPLETED fire once each in GA DebugView for an old course. Staging lists draft courses, but the backends only sync published ones, so modular course progress can't be checked until a real course is published. See QA above.
-7. Merge `develop` into `main`. Vercel deploys production. With no modular course published, members see no difference apart from GA's new course events.
+4. Merge the frontend PR into `develop`. Vercel deploys staging.
+5. **Staging QA** with the draft test course in `tr` and `ar`: signed out, signed in, partner user, mobile, right to left; every existing course renders as on production; COURSE_STARTED and COURSE_COMPLETED fire once each in GA DebugView for an old course. Staging lists draft courses, but the backends only sync published ones, so modular course progress can't be checked until a real course is published. See QA above.
+6. Merge `develop` into `main`. Vercel deploys production. With no modular course published, members see no difference apart from GA's new course events.
 
 _4. Per new course, before publishing it_
 
-8. **Name and initials:** choose the English working name (content guide rule 4). Its initials are the first letter of each word, skipping lower-case "in, and, the, from, as, or, to": 6 letters or fewer, letters only, not already taken.
-9. **Front:** Settings → Contacts → Custom fields. Add two **text** fields, named in lower case: `course_<initials>` and `course_<initials>_sessions` (for example `course_hst` and `course_hst_sessions`). Do this **before** publishing: Front receives every contact field in one update, so one missing field would block every Front update for a member who starts the course.
+7. **Name and initials:** choose the English working name (content guide rule 4). Its initials are the first letter of each word, skipping lower-case "in, and, the, from, as, or, to": 6 letters or fewer, letters only, not already taken.
+8. **Front:** Settings → Contacts → Custom fields. Add two **text** fields, named in lower case: `course_<initials>` and `course_<initials>_sessions` (for example `course_hst` and `course_hst_sessions`). Do this **before** publishing: Front receives every contact field in one update, so one missing field would block every Front update for a member who starts the course.
 
 _5. Publish_
 
-10. **Publish the pieces, then the course.** Publishing the course creates its `course` row, links it to every piece listed in any language (`course_resource`), and creates the Mailchimp merge fields `C_<initials>` and `C_<initials>_S`. A piece published after the course is only linked once the course is published again.
-11. **Mailchimp:** Audience → Settings → Audience fields. Check that `C_<initials>` ("Course <initials> Status") and `C_<initials>_S` ("Course <initials> Sessions") exist. If not, add both as text fields with exactly those tags.
-12. **Check the backend rows** (every listed piece should appear, published):
+9. **Publish the pieces, then the course.** Publishing the course creates its `course` row, links it to every piece listed in any language (`course_resource`), and creates the Mailchimp merge fields `C_<initials>` and `C_<initials>_S`. A piece published after the course is only linked once the course is published again.
+10. **Mailchimp:** Audience → Settings → Audience fields. Check that `C_<initials>` ("Course <initials> Status") and `C_<initials>_S` ("Course <initials> Sessions") exist. If not, add both as text fields with exactly those tags.
+11. **Check the backend rows** (every listed piece should appear, published):
     ```sql
     SELECT c.name, r.name, r.status FROM course c
     JOIN course_resource cr ON cr."courseId" = c."courseId"
     JOIN resource r ON r."resourceId" = cr."resourceId"
     ORDER BY c.name;
     ```
-13. **Redeploy production.** The course and item routes use `dynamicParams = false`, so a page that didn't exist at build time 404s, and the revalidate webhook can't add it. Open every new course and item URL in `tr` and `ar`. If the build still misses them, purge Vercel's Data Cache and redeploy.
-14. **Smoke test** with a test account: open a piece inside the course, check the course shows "in progress", that the `course_user` row exists, and that Mailchimp and Front show `C_<initials>` as started.
+12. **Redeploy production.** The course and item routes use `dynamicParams = false`, so a page that didn't exist at build time 404s, and the revalidate webhook can't add it. Open every new course and item URL in `tr` and `ar`. If the build still misses them, purge Vercel's Data Cache and redeploy.
+13. **Smoke test** with a test account: open a piece inside the course, check the course shows "in progress", that the `course_user` row exists, and that Mailchimp and Front show `C_<initials>` as started.
 
 _6. After launch_
 
-15. **Translations:** `Library.partOfCourses` and `Resources.partOf` are English placeholders in the 7 other locales. Send them to translators (Turkish and Arabic first).
-16. Delete `courses/qa-modular-course` from Storyblok.
+14. **Translations:** `Library.partOfCourses` and `Resources.partOf` are English placeholders in the 7 other locales. Send them to translators (Turkish and Arabic first).
+15. Delete `courses/qa-modular-course` from Storyblok.
 
-**Rollback:**
-
-- Turn the flag off: progress goes back to pieces only, and the course layout still works.
-- Or revert the frontend. The `course_resource` table and any new `course_user` rows are harmless if left.
+**Rollback:** revert the frontend PR. The `course_resource` table and any new `course_user` rows are harmless if left.
 
 #### Step A risks
 
