@@ -7,7 +7,6 @@ import { useAppDispatch } from '@/lib/hooks/store';
 import { GetUserDto } from '@/lib/store/userSlice';
 import { getErrorMessage } from '@/lib/utils/errorMessage';
 import logEvent from '@/lib/utils/logEvent';
-import LoadingButton from '@mui/lab/LoadingButton';
 import {
   Autocomplete,
   Box,
@@ -193,9 +192,9 @@ const UpdatePartnerAdminForm = () => {
         </Typography>
       )}
 
-      <LoadingButton variant="contained" color="secondary" type="submit" loading={loading}>
+      <Button variant="contained" color="secondary" type="submit" loading={loading}>
         {t('title')}
-      </LoadingButton>
+      </Button>
     </form>
   ) : (
     <Box>

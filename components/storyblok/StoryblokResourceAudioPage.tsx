@@ -64,19 +64,15 @@ const StoryblokResourceAudioPage = ({ story: initialStory }: { story: ISbStoryDa
   });
 
   const {
-    _uid,
     _editable,
     name,
     description,
     header_image,
     audio,
     audio_transcript,
-    login_required,
     team_members_section,
     page_sections,
     related_content,
-    related_grounding,
-    related_session,
   } = content;
 
   if (!availableInLocale) {
@@ -88,22 +84,7 @@ const StoryblokResourceAudioPage = ({ story: initialStory }: { story: ISbStoryDa
   }
 
   return (
-    <Box
-      {...storyblokEditable({
-        _uid,
-        _editable,
-        name,
-        description,
-        audio,
-        audio_transcript,
-        login_required,
-        team_members_section,
-        page_sections,
-        related_content,
-        related_grounding,
-        related_session,
-      })}
-    >
+    <Box {...storyblokEditable({ _editable })}>
       <ResourcePageLayout
         format="audio"
         name={name}

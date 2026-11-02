@@ -70,7 +70,6 @@ const StoryblokResourceVideoPage = ({ story: initialStory }: { story: ISbStoryDa
   });
 
   const {
-    _uid,
     _editable,
     name,
     subtitle,
@@ -78,11 +77,9 @@ const StoryblokResourceVideoPage = ({ story: initialStory }: { story: ISbStoryDa
     video,
     video_transcript,
     references,
-    login_required,
     team_members_section,
     page_sections,
     related_content,
-    related_session,
   } = content;
 
   const keyReferences = useMemo(
@@ -99,23 +96,7 @@ const StoryblokResourceVideoPage = ({ story: initialStory }: { story: ISbStoryDa
   }
 
   return (
-    <Box
-      {...storyblokEditable({
-        _uid,
-        _editable,
-        name,
-        subtitle,
-        description,
-        video,
-        video_transcript,
-        references,
-        login_required,
-        team_members_section,
-        page_sections,
-        related_content,
-        related_session,
-      })}
-    >
+    <Box {...storyblokEditable({ _editable })}>
       <ResourcePageLayout
         format="video"
         name={name}

@@ -24,7 +24,6 @@ export interface StoryblokPageSectionProps {
 const StoryblokPageSection = (props: StoryblokPageSectionProps) => {
   const {
     isLoggedIn,
-    _uid,
     _editable,
     content,
     color,
@@ -40,7 +39,7 @@ const StoryblokPageSection = (props: StoryblokPageSectionProps) => {
     return <></>;
 
   return (
-    <Box {...storyblokEditable({ _uid, _editable, content, color, alignment })}>
+    <Box {...storyblokEditable({ _editable })}>
       <PageSection
         color={color}
         alignment={alignment}

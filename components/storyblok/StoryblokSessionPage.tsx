@@ -87,20 +87,8 @@ const StoryblokSessionPage = ({
   courseStory?: ISbStoryData;
 }) => {
   const story = useStoryblokState(initialStory) ?? initialStory;
-  const {
-    _uid,
-    _editable,
-    course,
-    name,
-    subtitle,
-    description,
-    video,
-    video_transcript,
-    video_outro,
-    activity,
-    bonus,
-    themes,
-  } = story.content as StoryblokSessionPageProps;
+  const { _editable, course, name, description, video, video_transcript, activity, bonus, themes } =
+    story.content as StoryblokSessionPageProps;
   const storyUuid = story.uuid;
 
   const t = useTranslations('Courses');
@@ -223,21 +211,7 @@ const StoryblokSessionPage = ({
   }
 
   return (
-    <Box
-      {...storyblokEditable({
-        _uid,
-        _editable,
-        course,
-        name,
-        subtitle,
-        description,
-        video,
-        video_transcript,
-        video_outro,
-        activity,
-        bonus,
-      })}
-    >
+    <Box {...storyblokEditable({ _editable })}>
       <Container sx={sessionContainerStyle}>
         <Box component="main" sx={sessionMainStyle}>
           {/* The playlist sidebar carries the back link from `lg`; below that it sits inline here. */}

@@ -4,8 +4,7 @@ import { useUpdateUserMutation } from '@/lib/api';
 import { ErrorDisplay, FEEDBACK_FORM_URL } from '@/lib/constants/common';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { CheckCircleOutlined } from '@mui/icons-material';
-import { LoadingButton } from '@mui/lab';
-import { Checkbox, FormControl, FormControlLabel, Link, Typography } from '@mui/material';
+import { Button, Checkbox, FormControl, FormControlLabel, Link, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useCallback, useState } from 'react';
 
@@ -96,7 +95,7 @@ const EmailSettingsForm = () => {
           </Typography>
         )}
       </FormControl>
-      <LoadingButton
+      <Button
         sx={{ mt: 1 }}
         variant="contained"
         fullWidth
@@ -107,7 +106,7 @@ const EmailSettingsForm = () => {
         disabled={isSuccess}
       >
         {t('submitLabel')}
-      </LoadingButton>
+      </Button>
     </form>
   );
 };

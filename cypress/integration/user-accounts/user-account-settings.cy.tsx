@@ -1,10 +1,10 @@
 describe('User account settings page', () => {
-  const publicEmail = Cypress.env('CYPRESS_PUBLIC_EMAIL') as string;
-  const publicName = Cypress.env('CYPRESS_PUBLIC_NAME') as string;
+  const publicEmail = Cypress.expose('CYPRESS_PUBLIC_EMAIL') as string;
+  const publicName = Cypress.expose('CYPRESS_PUBLIC_NAME') as string;
 
   before(() => {
     cy.cleanUpTestState();
-    cy.logInWithEmailAndPassword(publicEmail, Cypress.env('CYPRESS_PUBLIC_PASSWORD'));
+    cy.logInAsTestAccount('PUBLIC');
   });
 
   beforeEach(() => {

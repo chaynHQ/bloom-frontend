@@ -11,7 +11,6 @@ import {
 } from '@/lib/constants/events';
 import { auth } from '@/lib/firebase';
 import logEvent from '@/lib/utils/logEvent';
-import LoadingButton from '@mui/lab/LoadingButton';
 import { Box, Button, Link, Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import { useLocale, useTranslations } from 'next-intl';
@@ -236,7 +235,7 @@ export const PasswordForm = (props: PasswordFormProps) => {
             {formError}
           </Typography>
         )}
-        <LoadingButton
+        <Button
           sx={{ mt: 2, marginInlineEnd: 1.5 }}
           variant="contained"
           fullWidth
@@ -245,7 +244,7 @@ export const PasswordForm = (props: PasswordFormProps) => {
           loading={loading}
         >
           {t('resetPasswordSubmit')}
-        </LoadingButton>
+        </Button>
       </form>
     </Box>
   );

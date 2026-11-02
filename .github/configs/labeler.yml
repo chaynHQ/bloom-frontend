@@ -8,7 +8,7 @@ needs-review:
           - 'lib/firebase.ts'
           - 'lib/auth.ts'
           - 'lib/api.ts'
-          - 'middleware.ts'
+          - 'proxy.ts'
           - 'components/guards/AuthGuard.tsx'
           - 'components/guards/**'
           - 'next.config.js'

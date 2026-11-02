@@ -18,8 +18,7 @@ import { getErrorMessage } from '@/lib/utils/errorMessage';
 import hasAutomaticAccessFeature from '@/lib/utils/hasAutomaticAccessCodeFeature';
 import logEvent from '@/lib/utils/logEvent';
 import theme from '@/styles/theme';
-import { LoadingButton } from '@mui/lab';
-import { Box, Checkbox, FormControl, FormControlLabel, Link } from '@mui/material';
+import { Box, Button, Checkbox, FormControl, FormControlLabel, Link } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
 import { useMemo, useState } from 'react';
@@ -179,7 +178,7 @@ const RegisterForm = (props: RegisterFormProps) => {
           />
         </FormControl>
 
-        <LoadingButton
+        <Button
           sx={{ mt: 1, marginInlineEnd: 1.5 }}
           variant="contained"
           fullWidth
@@ -188,7 +187,7 @@ const RegisterForm = (props: RegisterFormProps) => {
           loading={loading || userLoading}
         >
           {t('registerSubmit')}
-        </LoadingButton>
+        </Button>
       </Box>
     </BaseRegisterForm>
   );

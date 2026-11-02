@@ -4,10 +4,7 @@ describe('Therapy Usage', () => {
 
   before(() => {
     // create a partner access code with therapy
-    cy.logInWithEmailAndPassword(
-      Cypress.env('CYPRESS_BUMBLE_PARTNER_ADMIN_EMAIL'),
-      Cypress.env('CYPRESS_BUMBLE_PARTNER_ADMIN_PASSWORD'),
-    );
+    cy.logInAsTestAccount('BUMBLE_PARTNER_ADMIN');
     cy.visit('/partner-admin/create-access-code');
     cy.waitForAuthenticatedApp();
     cy.get('input[type="radio"]').should('exist').check('therapy'); //select radio button on form

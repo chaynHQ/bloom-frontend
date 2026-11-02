@@ -40,15 +40,12 @@ interface StoryblokQuoteProps {
 }
 
 const StoryblokQuote = (props: StoryblokQuoteProps) => {
-  const { _uid, _editable, text, text_size, icon_color = 'primary.dark', image } = props;
+  const { _editable, text, text_size, icon_color = 'primary.dark', image } = props;
 
   if (!text) return <></>;
 
   return (
-    <Box
-      {...storyblokEditable({ _uid, _editable, text, text_size, icon_color, image })}
-      sx={containerStyle}
-    >
+    <Box {...storyblokEditable({ _editable })} sx={containerStyle}>
       {image && (
         <Box sx={imageContainerStyle}>
           <Image

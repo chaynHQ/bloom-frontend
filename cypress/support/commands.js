@@ -69,7 +69,7 @@ Cypress.Commands.add('uiLogin', (email, password) => {
   cy.visit('/auth/login');
   cy.wait(4000);
   cy.get('input[type="email"]', { timeout: 10000 }).click().type(email);
-  cy.get('#password').type(password);
+  cy.get('#password').type(password, { log: false });
   cy.get('button[type="submit"]').contains('Login').click();
   cy.get('#password', { timeout: 10000 }).should('not.exist');
 });
@@ -85,7 +85,7 @@ Cypress.Commands.add('uiLogout', () => {
 Cypress.Commands.add('createAccessCode', (accessCode) => {
   cy.getAccessToken().then((token) => {
     return cy.request({
-      url: `${Cypress.env('NEXT_PUBLIC_API_URL')}/partner-access`,
+      url: `${Cypress.expose('NEXT_PUBLIC_API_URL')}/partner-access`,
       method: 'POST',
       headers: {
         authorization: `Bearer ${token}`,
@@ -100,7 +100,7 @@ Cypress.Commands.add('deleteUser', () => {
     if (email && email.indexOf('cypress') >= 0) {
       cy.getAccessToken().then((token) => {
         cy.request({
-          url: `${Cypress.env('NEXT_PUBLIC_API_URL')}/user`,
+          url: `${Cypress.expose('NEXT_PUBLIC_API_URL')}/user`,
           method: 'DELETE',
           headers: {
             authorization: `Bearer ${token}`,
@@ -113,7 +113,7 @@ Cypress.Commands.add('deleteUser', () => {
 
 Cypress.Commands.add('createUser', ({ codeInput, emailInput, passwordInput, partnerId }) => {
   cy.request({
-    url: `${Cypress.env('NEXT_PUBLIC_API_URL')}/user`,
+    url: `${Cypress.expose('NEXT_PUBLIC_API_URL')}/user`,
     method: 'POST',
     body: {
       partnerAccessCode: codeInput,
@@ -130,7 +130,7 @@ Cypress.Commands.add('createUser', ({ codeInput, emailInput, passwordInput, part
 Cypress.Commands.add('deleteAllCypressUsers', () => {
   cy.getAccessToken().then((token) => {
     cy.request({
-      url: `${Cypress.env('NEXT_PUBLIC_API_URL')}/user/cypress`,
+      url: `${Cypress.expose('NEXT_PUBLIC_API_URL')}/user/cypress`,
       method: 'DELETE',
       headers: {
         authorization: `Bearer ${token}`,
@@ -143,7 +143,7 @@ Cypress.Commands.add('deleteAllCypressUsers', () => {
 Cypress.Commands.add('deleteCypressAccessCodes', () => {
   cy.getAccessToken().then((token) => {
     cy.request({
-      url: `${Cypress.env('NEXT_PUBLIC_API_URL')}/partner-access/cypress`,
+      url: `${Cypress.expose('NEXT_PUBLIC_API_URL')}/partner-access/cypress`,
       method: 'DELETE',
       headers: {
         authorization: `Bearer ${token}`,
@@ -254,13 +254,13 @@ Cypress.Commands.add('checkPageUrl', (url, locale = 'en') => {
 
 // CUSTOM COMMANDS THAT NEED FIREBASE ACCESS
 const fbConfig = {
-  apiKey: Cypress.env('NEXT_PUBLIC_FIREBASE_API_KEY'),
-  authDomain: Cypress.env('NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN'),
-  projectId: Cypress.env('NEXT_PUBLIC_FIREBASE_PROJECT_ID'),
-  storageBucket: Cypress.env('NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET'),
-  messagingSenderId: Cypress.env('NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID'),
-  appId: Cypress.env('NEXT_PUBLIC_FIREBASE_APP_ID'),
-  measurementId: Cypress.env('NEXT_PUBLIC_GOOGLE_ANALYTICS_ID'),
+  apiKey: Cypress.expose('NEXT_PUBLIC_FIREBASE_API_KEY'),
+  authDomain: Cypress.expose('NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN'),
+  projectId: Cypress.expose('NEXT_PUBLIC_FIREBASE_PROJECT_ID'),
+  storageBucket: Cypress.expose('NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET'),
+  messagingSenderId: Cypress.expose('NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID'),
+  appId: Cypress.expose('NEXT_PUBLIC_FIREBASE_APP_ID'),
+  measurementId: Cypress.expose('NEXT_PUBLIC_GOOGLE_ANALYTICS_ID'),
 };
 
 const app = initializeApp(fbConfig);
@@ -293,6 +293,16 @@ const attachCustomCommands = (Cypress, auth) => {
       });
       return user;
     });
+  });
+  // Logs in as a seeded test account, e.g. 'PUBLIC'. The password is a secret, so it's read
+  // with cy.env() rather than exposed to the browser up front.
+  Cypress.Commands.add('logInAsTestAccount', (account) => {
+    const passwordKey = `CYPRESS_${account}_PASSWORD`;
+    return cy
+      .env([passwordKey], { log: false })
+      .then((env) =>
+        cy.logInWithEmailAndPassword(Cypress.expose(`CYPRESS_${account}_EMAIL`), env[passwordKey]),
+      );
   });
   Cypress.Commands.add('logout', () => {
     return signOut(auth);

@@ -15,10 +15,10 @@ import { hashString } from '@/lib/utils/hashString';
 import logEvent, { getEventUserData } from '@/lib/utils/logEvent';
 import { rowStyle, staticFieldLabelStyle } from '@/styles/common';
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
-import LoadingButton from '@mui/lab/LoadingButton';
 import {
   Autocomplete,
   Box,
+  Button,
   Checkbox,
   Chip,
   FormControl,
@@ -426,9 +426,9 @@ const AboutYouDemographicForm = () => {
           </Typography>
         )}
         <Box sx={actionsStyle}>
-          <LoadingButton variant="contained" color="secondary" type="submit" loading={loading}>
+          <Button variant="contained" color="secondary" type="submit" loading={loading}>
             {t('submitLabel')}
-          </LoadingButton>
+          </Button>
         </Box>
       </form>
     </Box>

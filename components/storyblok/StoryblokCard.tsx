@@ -49,7 +49,6 @@ const cardStyle = {
 const StoryblokCard = (props: StoryblokCardProps) => {
   const [expanded, setExpanded] = useState<boolean>(false);
   const {
-    _uid,
     _editable,
     image,
     content,
@@ -133,10 +132,7 @@ const StoryblokCard = (props: StoryblokCardProps) => {
   );
 
   return (
-    <Card
-      {...storyblokEditable({ _uid, _editable, image, content, alignment, background, style })}
-      sx={cardStyle}
-    >
+    <Card {...storyblokEditable({ _editable })} sx={cardStyle}>
       <Box sx={{ position: 'relative' }}>
         {card_link?.cached_url ? (
           <CardActionArea

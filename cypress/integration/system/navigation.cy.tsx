@@ -50,10 +50,7 @@ describe('Navigation', () => {
       const password = 'testpassword';
       cy.cleanUpTestState();
 
-      cy.logInWithEmailAndPassword(
-        Cypress.env('CYPRESS_BUMBLE_PARTNER_ADMIN_EMAIL'),
-        Cypress.env('CYPRESS_BUMBLE_PARTNER_ADMIN_PASSWORD'),
-      );
+      cy.logInAsTestAccount('BUMBLE_PARTNER_ADMIN');
       cy.wait(2000);
 
       cy.createAccessCode({
@@ -96,10 +93,7 @@ describe('Navigation', () => {
       const password = 'testpassword';
       cy.cleanUpTestState();
 
-      cy.logInWithEmailAndPassword(
-        Cypress.env('CYPRESS_BADOO_PARTNER_ADMIN_EMAIL'),
-        Cypress.env('CYPRESS_BADOO_PARTNER_ADMIN_PASSWORD'),
-      );
+      cy.logInAsTestAccount('BADOO_PARTNER_ADMIN');
       cy.wait(2000);
 
       cy.createAccessCode({
@@ -140,10 +134,7 @@ describe('Navigation', () => {
     before(() => {
       cy.cleanUpTestState();
 
-      cy.logInWithEmailAndPassword(
-        Cypress.env('CYPRESS_BUMBLE_PARTNER_ADMIN_EMAIL'),
-        Cypress.env('CYPRESS_BUMBLE_PARTNER_ADMIN_PASSWORD'),
-      );
+      cy.logInAsTestAccount('BUMBLE_PARTNER_ADMIN');
     });
     it('on the home page, the nav bar should have the correct links ', () => {
       cy.visit('/');

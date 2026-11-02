@@ -11,8 +11,7 @@ import {
 import { getErrorMessage } from '@/lib/utils/errorMessage';
 import logEvent from '@/lib/utils/logEvent';
 import { rowStyle } from '@/styles/common';
-import LoadingButton from '@mui/lab/LoadingButton';
-import { Box, Link, Typography } from '@mui/material';
+import { Box, Button, Link, Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
 import { phone } from 'phone';
@@ -101,7 +100,7 @@ const WhatsappSubscribeForm = () => {
             <PhoneInput value={phoneNumber} onChange={handlePhoneNumberChange} required />
           </Box>
 
-          <LoadingButton
+          <Button
             sx={{ height: 40, mt: 2 }}
             variant="contained"
             color="secondary"
@@ -109,7 +108,7 @@ const WhatsappSubscribeForm = () => {
             loading={loading}
           >
             {t('subscribe')}
-          </LoadingButton>
+          </Button>
         </Box>
       </form>
       {formError && (

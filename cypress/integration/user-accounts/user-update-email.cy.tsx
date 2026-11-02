@@ -21,7 +21,7 @@ describe('User account settings page', () => {
     cy.waitForAuthenticatedApp();
     cy.get('#email')
       .clear()
-      .type(Cypress.env('CYPRESS_PUBLIC_EMAIL') as string);
+      .type(Cypress.expose('CYPRESS_PUBLIC_EMAIL') as string);
     cy.get('#profile-settings-submit').click();
     cy.get('#confirm-dialog-submit').click();
     cy.get('p')

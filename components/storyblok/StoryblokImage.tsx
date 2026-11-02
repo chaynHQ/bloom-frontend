@@ -15,7 +15,7 @@ interface StoryblokImageProps {
 }
 
 const StoryblokImage = (props: StoryblokImageProps) => {
-  const { _uid, _editable, image, size = 'extra-large', alignment = 'left' } = props;
+  const { _editable, image, size = 'extra-large', alignment = 'left' } = props;
 
   if (!image || !image.filename) return <></>;
 
@@ -60,10 +60,7 @@ const StoryblokImage = (props: StoryblokImageProps) => {
   } as const;
 
   return (
-    <Box
-      {...storyblokEditable({ _uid, _editable, image, size, alignment })}
-      sx={imageContainerStyle}
-    >
+    <Box {...storyblokEditable({ _editable })} sx={imageContainerStyle}>
       <Image
         src={image.filename}
         alt={image.alt}

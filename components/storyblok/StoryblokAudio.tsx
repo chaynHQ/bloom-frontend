@@ -19,7 +19,7 @@ interface StoryblokAudioProps {
 }
 
 const StoryblokAudio = (props: StoryblokAudioProps) => {
-  const { _uid, _editable, audio_file, alignment = 'left', title } = props;
+  const { _editable, audio_file, alignment = 'left', title } = props;
   const [createEventLog] = useCreateEventLogMutation();
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
@@ -47,7 +47,7 @@ const StoryblokAudio = (props: StoryblokAudioProps) => {
   };
 
   return (
-    <Box sx={containerStyle} {...storyblokEditable({ _uid, _editable, audio_file, alignment })}>
+    <Box sx={containerStyle} {...storyblokEditable({ _editable })}>
       <ResourceAudioPlayer
         url={audio_file.filename}
         eventPrefix="STORYBLOK_AUDIO"

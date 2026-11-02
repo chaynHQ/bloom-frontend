@@ -34,7 +34,6 @@ interface StoryblokRowColumnBlockProps {
 
 const StoryblokRowColumnBlock = (props: StoryblokRowColumnBlockProps) => {
   const {
-    _uid,
     _editable,
     columns,
     horizontal_alignment,
@@ -50,15 +49,7 @@ const StoryblokRowColumnBlock = (props: StoryblokRowColumnBlockProps) => {
 
   return (
     <Box
-      {...storyblokEditable({
-        _uid,
-        _editable,
-        columns,
-        horizontal_alignment,
-        vertical_alignment,
-        gap,
-        column_sizing,
-      })}
+      {...storyblokEditable({ _editable })}
       sx={{
         width: '100%',
       }}

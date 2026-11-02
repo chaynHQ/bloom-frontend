@@ -4,9 +4,12 @@ describe('A partner admin should be directed to admin ', () => {
   });
 
   it('Once logged in should be redirected to the admin page`', () => {
-    cy.uiLogin(
-      Cypress.env('CYPRESS_BUMBLE_PARTNER_ADMIN_EMAIL'),
-      Cypress.env('CYPRESS_BUMBLE_PARTNER_ADMIN_PASSWORD'),
+    cy.env(['CYPRESS_BUMBLE_PARTNER_ADMIN_PASSWORD'], { log: false }).then(
+      ({ CYPRESS_BUMBLE_PARTNER_ADMIN_PASSWORD }) =>
+        cy.uiLogin(
+          Cypress.expose('CYPRESS_BUMBLE_PARTNER_ADMIN_EMAIL'),
+          CYPRESS_BUMBLE_PARTNER_ADMIN_PASSWORD,
+        ),
     );
     cy.get('[qa-id=partner-admin-menu-button]', { timeout: 10000 }).should('exist');
 

@@ -1,9 +1,7 @@
 describe('User about you page should display', () => {
-  const publicEmail = Cypress.env('CYPRESS_PUBLIC_EMAIL') as string;
-
   before(() => {
     cy.cleanUpTestState();
-    cy.logInWithEmailAndPassword(publicEmail, Cypress.env('CYPRESS_PUBLIC_PASSWORD'));
+    cy.logInAsTestAccount('PUBLIC');
   });
 
   beforeEach(() => {

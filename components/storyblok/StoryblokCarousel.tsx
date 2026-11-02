@@ -24,9 +24,9 @@ interface StoryblokCarouselProps {
 }
 
 const StoryblokCarousel = (props: StoryblokCarouselProps) => {
-  const { _uid, _editable, items, number_mobile_slides, number_desktop_slides } = props;
+  const { _editable, items, number_mobile_slides, number_desktop_slides } = props;
   return (
-    <Box {...storyblokEditable({ _uid, _editable, items })}>
+    <Box {...storyblokEditable({ _editable })}>
       <CardCarousel
         controls
         eventName={STORYBLOK_CAROUSEL_PAGED}
