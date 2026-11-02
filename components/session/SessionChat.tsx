@@ -1,7 +1,6 @@
 'use client';
 
 import SessionContentCard from '@/components/cards/SessionContentCard';
-import Video from '@/components/video/Video';
 import { Link as i18nLink } from '@/i18n/routing';
 import { SESSION_CHAT_BUTTON_CLICKED } from '@/lib/constants/events';
 import logEvent from '@/lib/utils/logEvent';
@@ -41,13 +40,6 @@ export const SessionChat = (props: SessionChatProps) => {
       eventData={eventData}
     >
       <Typography sx={{ mb: 2 }}>{t('sessionDetail.chat.description')}</Typography>
-      <Typography sx={{ mb: 2 }}>{t('sessionDetail.chat.videoIntro')}</Typography>
-      <Video
-        eventPrefix="SESSION_CHAT_VIDEO"
-        eventData={eventData}
-        url={t('sessionDetail.chat.videoLink')}
-        containerStyles={{ mx: 'auto', my: 2 }}
-      />
       <List sx={{ listStyleType: 'disc', paddingInlineStart: 2 }}>
         {chatList.map((text, index) => (
           <ListItem key={`chat_copy_${index}`} sx={listItemStyle}>

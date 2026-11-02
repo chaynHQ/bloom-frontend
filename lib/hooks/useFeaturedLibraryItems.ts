@@ -17,11 +17,17 @@ export function useFeaturedLibraryItems(stories: LibraryStories, content?: Featu
 
   return useMemo(() => {
     const byUuid = new Map(items.map((item) => [item.id, item]));
+    // Picks this viewer can't see (other language, partner-only) are skipped, and the section is
+    // topped up from the fallback so it stays full.
     const pick = (uuids: string[] | undefined, fallback: LibraryItem[]) => {
-      const chosen = (uuids ?? [])
+      const chosen = [...new Set(uuids ?? [])]
         .map((uuid) => byUuid.get(uuid))
         .filter((item): item is LibraryItem => Boolean(item));
-      return (chosen.length ? chosen : fallback).slice(0, SECTION_SIZE);
+      const chosenIds = new Set(chosen.map((item) => item.id));
+      return [...chosen, ...fallback.filter((item) => !chosenIds.has(item.id))].slice(
+        0,
+        SECTION_SIZE,
+      );
     };
 
     return {

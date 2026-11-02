@@ -46,8 +46,13 @@ describe('Library page', () => {
         'aria-pressed',
         'true',
       );
-      // Every visible card carries the selected theme in its eyebrow.
-      cards().each(($card) => expect($card.text()).to.contain('Setting boundaries'));
+      // Course sessions name their course in the eyebrow; every other card carries the theme.
+      cards().filter(':contains("Setting boundaries")').should('have.length.greaterThan', 0);
+      cards().each(($card) => {
+        const isCourseSession =
+          $card.attr('data-kind') === 'session' && $card.find('a[href*="/courses/"]').length > 0;
+        if (!isCourseSession) expect($card.text()).to.contain('Setting boundaries');
+      });
     });
 
     it('opens on the Courses tab from a ?type=course deep link', () => {
