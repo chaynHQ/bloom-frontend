@@ -95,6 +95,15 @@ export function getCourseSessions(
       });
   }
 
+  return getCourseWeekSessions(course, locale);
+}
+
+// A course's sessions from its `weeks`. A course can list resources in some languages and keep its
+// weeks in others, so session pages always use these.
+export function getCourseWeekSessions(
+  course: ISbStoryData | undefined,
+  locale: string,
+): CourseSession[] {
   const weeks = (course?.content?.weeks ?? []) as CourseWeek[];
 
   return weeks

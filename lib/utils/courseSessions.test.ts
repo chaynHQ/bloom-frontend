@@ -6,6 +6,7 @@ import {
   courseResourceHref,
   getCourseProgress,
   getCourseSessions,
+  getCourseWeekSessions,
   isFirstCourseSession,
   isModularCourse,
   resourceProgressByUuid,
@@ -121,6 +122,19 @@ describe('getCourseSessions', () => {
     expect(getCourseSessions(course, 'en')).toEqual([
       expect.objectContaining({ uuid: 's1', position: 1, format: 'video', kind: 'session' }),
       expect.objectContaining({ uuid: 's2', position: 2, format: undefined, kind: 'session' }),
+    ]);
+  });
+});
+
+describe('getCourseWeekSessions', () => {
+  it('reads the weeks of a course that lists resources in this language', () => {
+    const course = story('courses/mixed/', {
+      sessions: [mockResource('v', 'resource_video', 'video/v')],
+      weeks: [{ sessions: [mockResource('s1', 'Session', 'courses/mixed/s1')] }],
+    });
+
+    expect(getCourseWeekSessions(course, 'tr')).toEqual([
+      expect.objectContaining({ uuid: 's1', kind: 'session' }),
     ]);
   });
 });

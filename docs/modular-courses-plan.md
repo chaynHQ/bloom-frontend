@@ -39,7 +39,7 @@ Example: a member listened to 3 of a course's 5 resources from the library. When
 - **A course experience.** A resource opened from a course shows inside the course layout: the playlist alongside, "Back to course", and "Next: {resource}".
 - **Ticks everywhere,** plus the "in progress" and "completed" badges on courses, following the rules above.
 - **A tidy library:** one card per resource, with a "Part of …" label. Each resource's own page links to the courses it belongs to.
-- **Existing courses are unchanged.**
+- **Existing courses are unchanged** in their current languages. An existing course can also list resources in a language it didn't offer before (see the content guide, step 9).
 
 ### Step B: what it adds
 
@@ -60,6 +60,13 @@ Example: a member listened to 3 of a course's 5 resources from the library. When
 6. **Keep access settings consistent.** A resource's own "login required" and partner settings also apply inside a course. Turkish and Arabic courses must be **Public**: partner members can't use the `tr` and `ar` sites.
 7. **Publish the resources before the course,** and don't add resources to a course after launch unless intended. Members who already finished it keep their completed badge and recorded completion; new members need the extra resource too.
 8. **A new course, or a resource newly added to one, only gets a page after the next production deploy.** Ask a developer to redeploy once it's published.
+9. **Offering an existing course in a new language** (for example Turkish and Arabic versions of an English course built from weeks): don't create a new course. On the existing course, pick that language's resources into its **Sessions** field in the language's slot, translate the name, description and SEO fields, and add the language to **Languages**. The default slot keeps its weeks.
+   - In that language the course page lists the resources; in every other language it keeps its weeks. Session pages always use the weeks. The intro video is hidden in languages that list resources, because it would fall back to the English one.
+   - The course keeps one record, so its Mailchimp and Front fields (`C_<initials>`, `course_<initials>`) already exist, and reporting counts every language together.
+   - Every language that lists resources must list the same ones: a member completes the course by finishing every resource linked in any language.
+   - Before publishing, check that no Mailchimp email or automation triggered by the course's `C_<initials>` field would be wrong for members in the new language.
+   - Make these edits only once both PRs are in production. Until then, publishing the course for any reason (even an English fix) would release the new language early.
+   - Known gap: a member who completes it through resources and later completes an English session can have it marked incomplete again, because the old session check works both ways. Step B's one-way check removes this.
 
 ### Reporting and emails
 

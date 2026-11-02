@@ -244,7 +244,9 @@ const StoryblokCoursePage = ({
         backHref={libraryHref}
         backLabel={t('backToLibrary')}
       />
-      {video && (
+      {/* The intro video belongs to the weeks version; a language listing resources would fall
+          back to it. */}
+      {video && !isModular && (
         <Container sx={introSectionStyle}>
           <CourseIntroduction
             video={video}
