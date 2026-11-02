@@ -3,7 +3,7 @@
     "session": "Bölüm",
     "course": "Kurs",
     "expand": "Genişlet",
-    "expandSummary": "Şunun özetini genişlet:",
+    "expandSummary": "Özeti genişlet",
     "navigateToSession": "Bölüme git -",
     "navigateToCourse": "Kursa git -",
     "courseDetail": {
@@ -26,20 +26,20 @@
       "bonusTitle": "Bonus içerik",
       "chat": {
         "title": "Birlikte düşünelim",
-        "description": "Bu bölüme dair düşüncelerini paylaşmak istersen, Bloom ekibi senden haber almaktan çok mutlu olur! ",
+        "description": "Bu bölüme dair düşüncelerini paylaşmak istersen, Bloom ekibi fikirlerini duymaktan çok mutlu olur! ",
         "videoIntro": "Mesajlaşmanın nasıl işlediği hakkında daha fazla bilgi al:",
         "videoLink": "https://youtu.be/p7i39Z0XQ54",
         "detailIntro": "Unutma:",
-        "detailPrivacy": "Mesajların özel ve güvenlidir, yalnızca Bloom ekibi tarafından görülür ve kimliğin gizli kalır.",
-        "detailTimezone": "Pek çok farklı saat diliminde çalışıyoruz, bu yüzden bizden 6 saat içinde yanıt almalısın ve bu süre 24 saati geçmez.",
-        "detailLanguage": "Her zaman İngilizce, Fransızca, Hintçe, Portekizce veya İspanyolca olarak hizmet veriyoruz, ancak ekibimizin bazı üyeleri Arapça ve Bengalce de konuşuyor; seni onlarla görüştürmekten memnuniyet duyarız.",
-        "detailLegal": "Devam eden bir dava sürecindeysen, bizimle paylaştıklarına dikkat et, çünkü bu bazen davanı etkileyebilir.",
-        "detailImmediateHelp": "Yakın bir tehdit veya zarar altındaysan, lütfen seni destekleyecek doğru hizmeti bulmak için menüdeki 'Acil yardım' bölümüne git.",
+        "detailPrivacy": "Mesajların mahrem ve güvendedir, yalnızca Bloom ekibi tarafından görülür ve kimliğin gizli kalır.",
+        "detailTimezone": "Çalışmalarımızı farklı zaman dilimlerinden yürütüyoruz. Bu sebeple, bizden yanıt alman 6 saati bulabilir ancak 24 saati geçmez.",
+        "detailLanguage": "Her zaman İngilizce, Fransızca, Hintçe, Portekizce veya İspanyolca dillerinde hizmet veriyoruz. Ancak ekibimizin bazı üyeleri Arapça ve Bengalce de konuşuyor; seni onlarla görüştürmekten memnuniyet duyarız.",
+        "detailLegal": "Devam eden bir hukuki süreç içerisindeysen, bizimle neyi paylaştığın konusunda dikkatli davran. Çünkü paylaştıkların bazı durumlarda hukuki sürecini etkileyebilir.",
+        "detailImmediateHelp": "Olası bir tehdit veya tehlike altındaysan, lütfen sana yardım edecek doğru hizmeti bulmak için menüdeki 'Acil destek' sekmesine git.",
         "startButton": "Bize mesaj gönder"
       },
       "sessionComplete": "Bölüm tamamlandı",
-      "currentCourse": "Mevcut kurs",
-      "current": "Mevcut",
+      "currentCourse": "Şu anki kurs",
+      "current": "Şu anki",
       "nextSession": "Sonraki bölüm",
       "closeSessions": "Kapat"
     },
@@ -47,7 +47,7 @@
       "title": "Bu bölüm nasıldı?",
       "subtitle": "Bu bölümü nasıl bulduğunu duymak isteriz. Geri bildirimin kurslarımızı geliştirmemize yardımcı oluyor.",
       "feedbackTags": {
-        "relatable": "Bana yakın",
+        "relatable": "Kendime yakın buldum",
         "useful": "Faydalı",
         "inspiring": "İlham verici",
         "too long": "Çok uzun",
@@ -56,14 +56,14 @@
       },
       "textboxDefaultText": "Bir yorum ekle...",
       "sendButtonText": "Gönder",
-      "submissionText": "Geri bildirimini gönderdiğin için teşekkürler",
+      "submissionText": "Geri bildirimin için teşekkürler",
       "errors": {
         "feedbackTagError": "Lütfen göndermeden önce bir değerlendirme seç."
       }
     },
     "accessGuard": {
       "title": "Kurs içeriği mevcut değil",
-      "introduction": "Bloom hesabın, istenen kurs içeriğine erişim içermiyor. <contactLink>Kütüphaneye</contactLink> geri dön."
+      "introduction": "Bloom hesabın, istenen kurs içeriğine erişimi kapsamıyor. <contactLink>Kütüphaneye</contactLink> geri dön."
     },
     "errors": {
       "completeSessionError": "Bu bölüm tamamlandı olarak işaretlenirken bir hata oluştu. Biraz sonra tekrar dene."

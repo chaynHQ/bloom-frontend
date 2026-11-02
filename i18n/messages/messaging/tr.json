@@ -4,7 +4,7 @@
     "frontChat": {
       "ariaChat": "Bloom mesajlaşma",
       "welcomeAuthor": "Bloom Ekibi",
-      "welcomeMessage": "Merhaba, burada Bloom ekibimizden, birbirine destek olma konusunda deneyimli hayatta kalanlar ve destekçilerle sohbet edebilirsin. Kurslarımızda ilerlerken sorularını, duygularını ve düşüncelerini paylaşman için buradayız.\n\nAcil bir zarar görme riski altındaysan, yapabiliyorsan ve senin için güvenliyse lütfen acil yardım hizmetlerine ulaş. Kriz desteği sunmuyoruz, ancak ihtiyacın olan destek hizmetine ulaşman için sana yardımcı olabiliriz. Bölgendeki destek hizmetlerini küresel rehberimizden bulabilirsin: c.chayn.co/directory.\n\nBizimle İngilizce, Fransızca, Almanca, Hintçe, Portekizce, İspanyolca, Türkçe ve Arapça sohbet edebilirsin.\n\nMesajına her zaman 1-2 gün içinde yanıt vermeyi hedefliyoruz.",
+      "welcomeMessage": "Merhaba, burada Bloom ekibimizden, birbirine destek olma konusunda deneyimli hayatta kalanlar ve destekçilerle sohbet edebilirsin. Kurslarımızda ilerlerken sorularını, duygularını ve düşüncelerini paylaşman için buradayız.\n\nAcil bir zarar görme riski altındaysan, yapabiliyorsan ve senin için güvenliyse lütfen acil destek hizmetlerine ulaş. Kriz desteği sunmuyoruz, ancak ihtiyacın olan destek hizmetine ulaşman için sana yardımcı olabiliriz. Bölgendeki destek hizmetlerini küresel rehberimizden bulabilirsin: c.chayn.co/directory.\n\nBizimle İngilizce, Fransızca, Almanca, Hintçe, Portekizce, İspanyolca, Türkçe ve Arapça sohbet edebilirsin.\n\nMesajına her zaman 1-2 gün içinde yanıt vermeyi hedefliyoruz.",
       "empty": "Aşağıdan ilk mesajını gönder, ekibimiz en kısa sürede sana geri dönecek.",
       "placeholder": "Mesaj yaz…",
       "send": "Mesaj gönder",
@@ -24,10 +24,10 @@
         "error": "Bağlantı kurulamadı. Lütfen daha sonra tekrar dene."
       },
       "errors": {
-        "unsupportedImage": "Yalnızca JPG, PNG, GIF veya WebP görselleri desteklenir.",
-        "fileTooLarge": "Dosyalar 25 MB'tan küçük olmalı.",
+        "unsupportedImage": "Yalnızca JPG, PNG, GIF veya WebP görselleri eklenebilir.",
+        "fileTooLarge": "Dosyalar 25 MB'ı aşmamalı.",
         "uploadFailed": "Yükleme başarısız oldu. Lütfen tekrar dene.",
-        "imageBlocked": "Bu görsel, güvenlik standartlarımızı karşılamadığı için engellendi. Eğer bu bir hata olduğunu düşünüyorsan, lütfen bize nedenini açıklamak için bir mesaj gönder.",
+        "imageBlocked": "Bu görsel, güvenlik standartlarımızı karşılamadığı için engellendi. Bir hata olduğunu düşünüyorsan lütfen bize nedenini açıklayan bir mesaj gönder.",
         "micPermission": "Mikrofon erişimi reddedildi. Sesli not kaydetmek için tarayıcı ayarlarından mikrofon erişimine izin ver ve tekrar dene.",
         "micUnavailable": "Mikrofonuna erişilemedi. Lütfen bağlı olduğundan emin ol ve tekrar dene."
       }

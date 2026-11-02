@@ -14,9 +14,11 @@ import {
   LIBRARY_SUPPORT_CARD_CLICKED,
   LIBRARY_VIEWED,
 } from '@/lib/constants/events';
+import { useHydratedSearchParams } from '@/lib/hooks/useHydratedSearchParams';
 import { useLogEventOnce } from '@/lib/hooks/useLogEventOnce';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { useLibraryItems } from '@/lib/hooks/useLibraryItems';
+import { useLibraryTranscripts } from '@/lib/hooks/useLibraryTranscripts';
 import { rememberLibraryPath } from '@/lib/hooks/useLibraryReturnHref';
 import { useUserAuthStatus } from '@/lib/hooks/useUserAuthStatus';
 import {
@@ -36,6 +38,7 @@ import {
   type LibraryStories,
   type ThemeKey,
 } from '@/lib/utils/libraryData';
+import { createLibrarySearch } from '@/lib/utils/librarySearch';
 import logEvent, { getEventUserData } from '@/lib/utils/logEvent';
 import CloseRounded from '@mui/icons-material/CloseRounded';
 import SearchRounded from '@mui/icons-material/SearchRounded';
@@ -53,8 +56,7 @@ import {
 } from '@mui/material';
 import { useStoryblokState } from '@storyblok/react';
 import { ISbStoryData } from '@storyblok/react/rsc';
-import { useTranslations } from 'next-intl';
-import { useSearchParams } from 'next/navigation';
+import { useLocale, useTranslations } from 'next-intl';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 import { SupportSection } from '../common/SupportSection';
@@ -229,6 +231,7 @@ export default function LibraryPage({
   stories: LibraryStories;
 }) {
   const t = useTranslations('Library');
+  const locale = useLocale();
   const story = useStoryblokState(initialStory) ?? initialStory;
   const content = story.content as LibraryPageContent;
   const libraryItems = useLibraryItems(stories);
@@ -240,7 +243,7 @@ export default function LibraryPage({
   // Filters live in the URL query string, so back navigation and reloads restore them while a
   // fresh visit to /library starts clean. The search box keeps local state for responsiveness
   // and is pushed to the URL on a debounce.
-  const searchParams = useSearchParams();
+  const searchParams = useHydratedSearchParams();
 
   const {
     kind,
@@ -249,7 +252,7 @@ export default function LibraryPage({
     lengths,
     keyword: urlKeyword,
   } = useMemo(
-    () => parseLibraryFilters(new URLSearchParams(searchParams.toString())),
+    () => parseLibraryFilters(new URLSearchParams(searchParams?.toString())),
     [searchParams],
   );
 
@@ -262,6 +265,21 @@ export default function LibraryPage({
 
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+
+  // Transcripts load once someone reaches for the search box, not for every visit.
+  const [searchFocused, setSearchFocused] = useState(false);
+  const transcripts = useLibraryTranscripts(locale, searchFocused || Boolean(keyword.trim()));
+  const search = useMemo(
+    () =>
+      createLibrarySearch(items, locale, {
+        labelsFor: (item) => ({
+          themes: item.themes.map((theme) => t(`themes.${theme}.label`)),
+          format: t(`contentTypes.${item.format ?? item.kind}`),
+        }),
+        transcripts,
+      }),
+    [items, locale, t, transcripts],
+  );
 
   const currentFilters = useMemo<LibraryFilters>(
     () => ({ keyword, kind, themes, formats, lengths }),
@@ -328,7 +346,7 @@ export default function LibraryPage({
       library_filter_group: group,
       library_filter_value: value,
       library_filter_action: action,
-      library_results_count: filterLibraryItems(items, next).length,
+      library_results_count: filterLibraryItems(items, next, search).length,
       ...eventUserData,
     });
 
@@ -375,7 +393,10 @@ export default function LibraryPage({
     [items],
   );
 
-  const results = useMemo(() => filterLibraryItems(items, currentFilters), [items, currentFilters]);
+  const results = useMemo(
+    () => filterLibraryItems(items, currentFilters, search),
+    [items, currentFilters, search],
+  );
 
   const resultsCount = results.length;
 
@@ -424,7 +445,7 @@ export default function LibraryPage({
       library_results_count: resultsCount,
       ...eventUserData,
     },
-    userSettled,
+    userSettled && searchParams !== null,
   );
 
   // The search term is never sent to analytics — only its length and the result count.
@@ -524,6 +545,7 @@ export default function LibraryPage({
                 placeholder={t('searchPlaceholder')}
                 value={keyword}
                 onChange={(e) => setKeyword(e.target.value)}
+                onFocus={() => setSearchFocused(true)}
                 sx={searchFieldStyle}
                 slotProps={{
                   input: {

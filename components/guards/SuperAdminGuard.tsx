@@ -3,13 +3,11 @@
 import { useRouter } from '@/i18n/routing';
 import { FEEDBACK_FORM_URL } from '@/lib/constants/common';
 import { useTypedSelector } from '@/lib/hooks/store';
-import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import illustrationPerson4Peach from '@/public/illustration_person4_peach.svg';
 import { fullScreenContainerStyle } from '@/styles/common';
 import { Box, Container, Link, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
 import { ReactNode } from 'react';
 
@@ -19,15 +17,6 @@ const imageContainerStyle = {
   height: { xs: 150, md: 210 },
   marginBottom: 4,
 } as const;
-
-type Params = Promise<{ locale: string }>;
-
-export async function generateMetadata({ params }: { params: Params }) {
-  const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: 'Admin.accessGuard' });
-
-  return generateMetadataBasic({ title: t('title') });
-}
 
 export function SuperAdminGuard({ children }: { children: ReactNode }) {
   const userIsSuperAdmin = useTypedSelector((state) => state.user.isSuperAdmin);

@@ -12,6 +12,7 @@
     },
     "register": {
       "title": "Account banaiye",
+      "description": "Bloom join kariye, hamesha free. Hamare courses mein trauma, gender-based hinsa aur therapeutic takneekein shaamil hai taki hum trauma se heal ho payein.",
       "loginRedirect": "Aapke paas pehle se he account hai? <loginLink>Log in</loginLink>",
       "partnershipsTitle": "Hamari partnerships",
       "partnershipsDescription": "Agar aap Bloom par hamare kisi partner se aa rahe hain, toh unke logo kar click kariye. "

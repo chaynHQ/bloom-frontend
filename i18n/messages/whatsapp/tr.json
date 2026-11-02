@@ -8,16 +8,16 @@
       "unsubscribe": "Aboneliği iptal et",
       "subscribeErrors": {
         "invalidNumber": "Telefon numaran geçersiz görünüyor. Lütfen hataları düzelt ve tekrar dene.",
-        "internal": "WhatsApp'a abone olurken bir hata oluştu. Daha sonra tekrar dene ve bu hatayı almaya devam edersen <contactLink>Bloom ekibine mesaj gönder</contactLink>.",
-        "alreadyExists": "Numaran için zaten bir WhatsApp aboneliği var. Bunun bir hata olduğunu düşünüyorsan lütfen <contactLink>Bloom ekibine mesaj gönder</contactLink>."
+        "internal": "WhatsApp'a abone olurken bir hata oluştu. Daha sonra tekrar dene. Bu hatayı almaya devam edersen <contactLink>Bloom ekibine mesaj gönder</contactLink>.",
+        "alreadyExists": "Numaran için bir WhatsApp aboneliği zaten mevcut. Bunun bir hata olduğunu düşünüyorsan, lütfen <contactLink>Bloom ekibine mesaj gönder</contactLink>."
       },
       "unsubscribeErrors": {
-        "internal": "WhatsApp aboneliğini iptal ederken bir hata oluştu. Daha sonra tekrar dene ve bu hatayı almaya devam edersen <contactLink>Bloom ekibine mesaj gönder</contactLink>."
+        "internal": "WhatsApp aboneliğini iptal ederken bir hata oluştu. Daha sonra tekrar dene. Bu hatayı almaya devam edersen <contactLink>Bloom ekibine mesaj gönder</contactLink>."
       }
     },
     "notes": {
       "title": "Bloom'dan Notlar'a abone ol",
-      "description": "İyileşmeye giden yol yalnız ve bazen dikenli olabilir. Bloom'dan Notlar; iyileşme yolculuğuna devam etmene yardımcı olmak için doğrudan telefonuna gönderilen, haftada iki kez paylaşılan hatırlatmalar, cesaretlendirmeler, olumlamalar ve kurslarımızdan etkinliklerdir.",
+      "description": "İyileşmeye giden yol yalnız ve bazen dikenli olabilir. Bloom'dan Notlar; iyileşme yolculuğunu sürdürmene yardımcı olmak için haftada iki kez doğrudan telefonuna gönderilen hatırlatmalar, cesaretlendirmeler, olumlamalar ve kurslarımızdan etkinliklerdir.",
       "createAccount": "Bir hesap oluştur",
       "createAccountDescription": "Bloom'dan Notlar'a kaydol ve kaynak platformumuza eriş.",
       "haveAccount": "Hesabın var mı?",
@@ -29,8 +29,8 @@
       "step3": "Olumlamalar, etkinlikler ve düşünceler paylaşıyoruz",
       "step4": "Fikrini değiştirirsen istediğin zaman aboneliğini iptal et",
       "usNoticeTitle": "ABD'deki aboneler için WhatsApp mesaj iletim sorunları",
-      "usNoticeDescription": "Meta'nın yaptığı bazı değişiklikler, ABD'deki abonelerimize Notlar göndermemizi etkiliyor. Bu sorunu çözmek için elimizden geleni yapıyoruz; ancak şu anda mesajlarımız sana ulaşmayabilir. Yine de abone olmaktan çekinme — herkes için yeniden çalışmaya başladığında seni bilgilendireceğiz.",
-      "subscribeDescription": "WhatsApp mesajları almaya başlamak için Bloom'dan Notlar'a abone ol. İstediğin zaman buradan aboneliğini iptal edebilirsin.",
+      "usNoticeDescription": "Meta, ABD’deki abonelerimize Notlar gönderme imkanımızı etkileyen bazı değişiklikler yaptı. Bu sorunu gidermek için yoğun şekilde çalışıyoruz ancak şu anda mesajlar sana ulaşmayabilir. Yine de abone ol—hizmet herkes için yeniden çalışır hale geldiğinde seni bilgilendireceğiz.",
+      "subscribeDescription": "WhatsApp mesajları almaya başlamak için Bloom'dan Notlar abonesi ol. Aboneliğini dilediğin zaman buradan iptal edebilirsin.",
       "unsubscribeDescription": "WhatsApp mesajları almayı durdurmak ya da numaranı güncellemek için Bloom'dan Notlar aboneliğini iptal et. İstediğin zaman tekrar abone olabilirsin."
     }
   }

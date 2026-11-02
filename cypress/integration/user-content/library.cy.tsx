@@ -152,8 +152,12 @@ describe('Library page', () => {
         expectCount((count) => expect(count).to.be.lessThan(all));
         cy.get('a[aria-label="What is somatics?"]').should('exist');
 
-        // Somatics content is all single sessions.
+        // The kind filter narrows the search results rather than replacing them.
         cy.get('[qa-id=library-kind-course]').click();
+        cy.get('a[aria-label="What is somatics?"]').should('not.exist');
+        cy.get('[qa-id=library-card][data-kind=session]').should('not.exist');
+
+        cy.get('[qa-id=library-search-input]').clear().type('zzzznotarealtopic');
         cy.contains('No matches for those filters').should('be.visible');
         cards().should('have.length', 0);
 

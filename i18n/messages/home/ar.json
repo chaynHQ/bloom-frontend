@@ -1,9 +1,9 @@
 {
   "Home": {
     "hero": {
-      "joinCta": "الانضمام إلى Bloom، مجاني دائمًا",
+      "joinCta": "الانضمام إلى Bloom، مجاني دائماً",
       "exploreSessionsCta": "استكشاف كل الجلسات",
-      "goToCoursesCta": "الانتقال إلى الدورات"
+      "goToCoursesCta": "الانتقال إلى الدورات التدريبية"
     }
   }
 }

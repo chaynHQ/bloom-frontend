@@ -17,7 +17,7 @@
     "contentTypeHeading": "İçerik türü",
     "contentTypes": {
       "course": "Kurs",
-      "audio": "Ses",
+      "audio": "Sesli",
       "written": "Yazılı",
       "video": "Video",
       "activity": "Etkinlik",
@@ -43,14 +43,14 @@
     },
     "themes": {
       "recognising-abuse": {
-        "label": "İstismarı fark etmek",
-        "blurb": "İlişkilerde ve gündelik hayatta istismarı adlandırmak",
-        "description": "İstismar her zaman açıkça görünmez. İlişkilerde ve gündelik hayatta nasıl görünebileceğini keşfet, adlandırması zor olan deneyimler için kelimeler bul."
+        "label": "Şiddet ve istismarı fark etmek",
+        "blurb": "İlişkilerde ve gündelik hayatta şiddet ve istismarı adlandırmak",
+        "description": "Şiddet ve istismar her zaman açıkça görünmez. İlişkilerde ve gündelik hayatta nasıl görünebileceğini keşfet; adlandırması zor olan deneyimler için kelimeler bul."
       },
       "why-abuse-happens": {
-        "label": "İstismar neden olur",
-        "blurb": "İstismarın ardındaki toplumsal ve sistemsel güçleri öğren",
-        "description": "İstismar tek bir kişinin seçimlerinden ibaret değildir. İstismarın gerçekleşmesine izin veren toplumsal, kültürel ve sistemsel güçleri — ve bunların hiçbirinin neden senin suçun olmadığını — anla."
+        "label": "Şiddet ve istismar neden yaşanır",
+        "blurb": "Şiddet ve istismarın ardındaki toplumsal ve sistemsel güçleri öğren",
+        "description": "Şiddet ve istismar, tek bir kişinin seçimlerinden ibaret değildir. Şiddet ve istismarın yaşanmasına zemin hazırlayan toplumsal, kültürel ve sistemsel güçleri anla. Bunların hiçbiri senin suçun değil."
       },
       "body-after-trauma": {
         "label": "Travma sonrası bedenin",
@@ -65,12 +65,12 @@
       "healing-journey": {
         "label": "İyileşme yolculuğun",
         "blurb": "Yas, büyüme ve iyileşme içinde kendi yolunu bulmak",
-        "description": "İyileşme doğrusal değildir. Yas, büyüme ve iyileşmenin içinden geçmek için eşlik ve araçlar bul — sana doğru gelen hızda."
+        "description": "İyileşme doğrusal değildir. Yas, büyüme ve iyileşme süreçlerinde sana eşlik edecek kaynakları ve araçları, sana uygun gelen hızda keşfet."
       },
       "staying-safe": {
         "label": "Şimdi güvende kalmak",
-        "blurb": "Güvenlik planlaması ve süregelen istismarla baş etmek",
-        "description": "Hâlâ zararın içindeysen ya da ona yakınsan, önce güvenlik gelir. Güvenlik planı yapmak ve işlerin şu an güvensiz hissettirdiği anlarla baş etmek için pratik destek bul."
+        "blurb": "Güvenlik planlaması ve süregelen şiddet ve istismarla baş etmek",
+        "description": "Hâlâ tehlike altındaysan ya da tehlikeye yakınsan, önce güvenliğin gelir. Güvenlik planı yapmak ve şu an kendini güvende hissetmediğin anlarla baş etmek için pratik destek bul."
       }
     }
   }

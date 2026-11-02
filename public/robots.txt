@@ -1,5 +1,0 @@
-Sitemap: https://bloom.chayn.co/sitemap.xml
-User-agent: *
-Disallow: /admin/dashboard
-Disallow: /partner-admin/create-access-code
-Disallow: /account/apply-a-code
