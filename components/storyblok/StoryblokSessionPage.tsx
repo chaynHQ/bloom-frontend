@@ -23,7 +23,7 @@ import { useTypedSelector } from '@/lib/hooks/store';
 import { useLogEventOnce } from '@/lib/hooks/useLogEventOnce';
 import { useUserAuthStatus } from '@/lib/hooks/useUserAuthStatus';
 import {
-  getCourseSessions,
+  getCourseWeekSessions,
   isFirstCourseSession,
   sessionProgressByUuid,
   type CourseSession,
@@ -125,7 +125,7 @@ const StoryblokSessionPage = ({
   );
 
   // The playlist needs the course's sessions resolved, which only the route-level fetch provides.
-  const sessions = useMemo(() => getCourseSessions(courseStory, locale), [courseStory, locale]);
+  const sessions = useMemo(() => getCourseWeekSessions(courseStory, locale), [courseStory, locale]);
   const courseHref = getDefaultFullSlug(course.full_slug, locale);
 
   // A public course opens its first session to signed-out visitors as a full preview; later

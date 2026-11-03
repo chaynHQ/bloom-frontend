@@ -14,5 +14,8 @@ export const API_URL = process.env.NEXT_PUBLIC_API_URL || '';
 export const FEEDBACK_FORM_URL = process.env.NEXT_PUBLIC_FEEDBACK_FORM_URL || '#';
 export const STORYBLOK_ENVIRONMENT = ENVIRONMENT === 'production' ? 'published' : 'draft';
 
+// Cache tag for the per-locale course list, cleared by the Storyblok revalidate webhook.
+export const COURSE_STORIES_CACHE_TAG = 'course-stories';
+
 export type ErrorDisplay =
   string | ReactElement<any, string | JSXElementConstructor<any>> | ReactNode[] | ReactNode | null;
