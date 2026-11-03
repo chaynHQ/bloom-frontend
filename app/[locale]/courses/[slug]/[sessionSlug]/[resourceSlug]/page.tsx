@@ -1,4 +1,5 @@
 import StoryblokResourceAudioPage from '@/components/storyblok/StoryblokResourceAudioPage';
+import StoryblokResourceGroundingPage from '@/components/storyblok/StoryblokResourceGroundingPage';
 import StoryblokResourceVideoPage from '@/components/storyblok/StoryblokResourceVideoPage';
 import StoryblokResourceWrittenPage from '@/components/storyblok/StoryblokResourceWrittenPage';
 import { routing } from '@/i18n/routing';
@@ -28,6 +29,7 @@ const RESOURCE_PAGES = {
   video: StoryblokResourceVideoPage,
   audio: StoryblokResourceAudioPage,
   written: StoryblokResourceWrittenPage,
+  grounding: StoryblokResourceGroundingPage,
 } as const;
 
 type Folder = keyof typeof RESOURCE_PAGES;

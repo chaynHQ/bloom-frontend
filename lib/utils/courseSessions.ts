@@ -8,7 +8,7 @@ import { ISbStoryData } from '@storyblok/react/rsc';
 
 export type SessionProgress = 'started' | 'completed';
 
-export type CourseResourceFormat = 'video' | 'audio' | 'written';
+export type CourseResourceFormat = 'video' | 'audio' | 'written' | 'grounding';
 
 // A course's sessions as both the course overview and the session playlist present them:
 // flattened across the course's weeks (or read from a modular course's `sessions`) and numbered
@@ -38,6 +38,7 @@ const RESOURCE_FORMATS: Record<string, CourseResourceFormat> = {
   resource_video: 'video',
   resource_audio: 'audio',
   resource_written: 'written',
+  resource_grounding: 'grounding',
 };
 
 // Matches each resource page's own fallback for a story with no `login_required` value.
@@ -45,6 +46,7 @@ const LOGIN_REQUIRED_BY_DEFAULT: Record<CourseResourceFormat, boolean> = {
   video: true,
   audio: true,
   written: false,
+  grounding: false,
 };
 
 const isResolvedStory = (value: unknown): value is ISbStoryData =>

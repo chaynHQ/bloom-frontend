@@ -15,7 +15,8 @@ The Arabic rules are in [translation-style-guide-ar.md](translation-style-guide-
 | Storyblok pages (home, welcome, messaging, WhatsApp, therapy, meet the team, terms) | AI, reviewed by translators                                                 | Follow this guide                                                                          |
 | Grounding exercise and activity **text and titles**                                 | Human translations of Chayn's source documents, matching the narrated audio | **Never retranslate or "fix" to this guide.** Only correct clear typos, with a translator. |
 | Grounding exercise and activity **card descriptions**                               | AI, reviewed by translators                                                 | Follow this guide, but use formal `siz` to match the exercise text (see Register)          |
-| Courses, sessions, videos, audio, written resources                                 | English only by design                                                      | Don't translate                                                                            |
+| Course titles, descriptions and search text                                         | AI, sent to translators for review in November 2026                         | Follow this guide                                                                          |
+| Session, video, audio and written resource content                                  | Translated from Chayn's source content                                      | Only change with a translator                                                              |
 
 ## General rules
 

@@ -20,7 +20,8 @@ import { StoryblokTeamMembersSectionProps } from './StoryblokTeamMembersSection'
 
 // The `resource_written` and `resource_activity` blocks are identical in shape: a rich-text `body`
 // rendered as the media, no transcript, and progress that starts on view (there's no play event
-// to hook it to). They differ only in the category/events they report under.
+// to hook it to). They differ only in the category/events they report under. A
+// `resource_grounding` exercise is a subset of that shape, shown this way inside a course.
 export interface TextResourceContent extends ResourceStoryContent {
   _uid: string;
   _editable: string;

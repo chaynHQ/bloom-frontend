@@ -11,7 +11,11 @@ import { useCallback, useRef } from 'react';
 // Every resource type shares one event-name shape: `<prefix>_STARTED_REQUEST`,
 // `<prefix>_COMPLETE_SUCCESS`, etc. Passing the prefix keeps this hook type-agnostic.
 export type ResourceEventPrefix =
-  'RESOURCE_VIDEO' | 'RESOURCE_AUDIO' | 'RESOURCE_WRITTEN' | 'RESOURCE_ACTIVITY';
+  | 'RESOURCE_VIDEO'
+  | 'RESOURCE_AUDIO'
+  | 'RESOURCE_WRITTEN'
+  | 'RESOURCE_ACTIVITY'
+  | 'RESOURCE_GROUNDING';
 
 // The `complete` callback returned below: resolves `{ ok }` so callers can surface a retry.
 export type CompleteResource = (method?: 'media_complete' | 'manual') => Promise<{ ok: boolean }>;

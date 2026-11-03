@@ -208,8 +208,9 @@ const StoryblokCoursePage = ({
     });
   };
 
-  // Only modular courses are gated by language for now.
-  if (isModular && !storyAvailableInLocale(languages, locale)) {
+  // Older weeks-based courses keep rendering in locales they don't list, so only gate courses
+  // that list resources, or have nothing to show here (a course offered only in other languages).
+  if ((isModular || sessions.length === 0) && !storyAvailableInLocale(languages, locale)) {
     return <ContentUnavailable reason="language" />;
   }
 

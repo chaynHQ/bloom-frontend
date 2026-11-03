@@ -1,6 +1,6 @@
 # Modular courses: plan
 
-Courses will be built from the library's existing video, audio and written resources, and one resource can sit in several courses without being copied.
+Courses will be built from the library's existing video, audio and written resources and grounding exercises, and one resource can sit in several courses without being copied.
 
 - **Step A** launches the new Turkish and Arabic courses. It includes course progress in the database, reporting, Mailchimp and the support inbox (Front). Existing courses are left untouched.
 - **Step B - future as needed** later moves the existing courses onto the same model, so every course works one way.
@@ -35,7 +35,7 @@ Example: a member listened to 3 of a course's 5 resources from the library. When
 
 ### Step A: what members get
 
-- **New Turkish and Arabic courses** made of video, audio and written resources, each with an optional activity and bonus content.
+- **New Turkish and Arabic courses** made of video, audio and written resources, each with an optional activity and bonus content, and grounding exercises.
 - **A course experience.** A resource opened from a course shows inside the course layout: the playlist alongside, "Back to course", and "Next: {resource}".
 - **Ticks everywhere,** plus the "in progress" and "completed" badges on courses, following the rules above.
 - **A tidy library:** one card per resource, with a "Part of …" label. Each resource's own page links to the courses it belongs to.
@@ -48,9 +48,9 @@ Example: a member listened to 3 of a course's 5 resources from the library. When
 
 ### Content team guide
 
-1. **Create each resource once,** in the `video/`, `audio/` or `written/` folder. Add its activity and bonus content there; it then shows wherever the resource appears.
+1. **Create each resource once,** in the `video/`, `audio/`, `written/` or `grounding/` folder. Add its activity and bonus content there; it then shows wherever the resource appears.
 2. **Create the course in its own folder** under `courses/`. Put **no other stories in that folder.**
-3. **Pick the resources, in order,** into the course's new **Sessions** field. Until Step B, only video, audio and written resources can be picked.
+3. **Pick the resources, in order,** into the course's new **Sessions** field. Video, audio and written resources and grounding exercises can be picked. Inside a course, a grounding exercise is a step like any other: it shows where the resource content usually is, and the member marks it done as they would a written resource. Doing it on the `/grounding` page doesn't tick it off, because that page doesn't track progress.
 4. **Give the course an English working name** in the default (English) slot, even when the course isn't offered in English. Our Mailchimp field names are built from the name's initials.
    - The initials must not match an existing course. Already taken: **CB, MA, IARO, RTAR, RRYTS, SPST, HST, DBR.**
    - Matching initials would overwrite another course's Mailchimp field. Arabic or Turkish text here would likely break the field name.
@@ -201,14 +201,14 @@ Covers the new-format courses only: courses that use the new `sessions` field. C
 
 - `getCourseSessions` reads `content.sessions` when `isModularCourse(content)`, and otherwise falls back to the flattened `weeks`. The fallback is removed in B3.
 - Extend `CourseSession`:
-  - `format: 'video' | 'audio' | 'written'` (replaces `hasVideo`);
+  - `format: 'video' | 'audio' | 'written' | 'grounding'` (replaces `hasVideo`);
   - `kind: 'session' | 'resource'`;
   - `loginRequired?: boolean`.
 - Resources:
   - `description` = `toPlainText(content.description)`. Resource descriptions are rich text, and rendering them as a string would crash the card.
   - `minutes` = `parseMinutes(content.duration)`.
   - `href` = `/courses/<course>/<folder>/<slug>`, locale-aware.
-  - `loginRequired` = `content.login_required`, or when unset the page's own default: `true` for video and audio, `false` for written (`loginRequiredByDefault`). Otherwise the playlist lock and the page disagree.
+  - `loginRequired` = `content.login_required`, or when unset the page's own default: `true` for video and audio, `false` for written and grounding (`loginRequiredByDefault`). Otherwise the playlist lock and the page disagree.
 - Unresolved relations are dropped, as today.
 
 **Elsewhere:**
@@ -236,7 +236,7 @@ Covers the new-format courses only: courses that use the new `sessions` field. C
 
 #### A6. Frontend: course resource route
 
-New route `app/[locale]/courses/[slug]/[sessionSlug]/[resourceSlug]/page.tsx`. Here `sessionSlug` holds the resource folder (`video`, `audio` or `written`), so the URL is `/courses/<course>/<folder>/<slug>`.
+New route `app/[locale]/courses/[slug]/[sessionSlug]/[resourceSlug]/page.tsx`. Here `sessionSlug` holds the resource folder (`video`, `audio`, `written` or `grounding`), so the URL is `/courses/<course>/<folder>/<slug>`.
 
 - It doesn't overlap old session URLs, which have two segments.
 - It avoids the existing slug collision.
@@ -245,7 +245,7 @@ New route `app/[locale]/courses/[slug]/[sessionSlug]/[resourceSlug]/page.tsx`. H
 
 1. For each locale, fetch new-format courses with `getCourseStories(locale)`.
 2. Collect the `sessions` uuids.
-3. Map uuid to `full_slug` using `cdn/links` for the three folders.
+3. Map uuid to `full_slug` using `cdn/links` for the four folders.
 4. Emit `{ locale, slug, sessionSlug: folder, resourceSlug }`.
 
 Include drafts when `STORYBLOK_ENVIRONMENT === 'draft'`, as `resourceFolderStaticParams` does.
@@ -254,7 +254,7 @@ Include drafts when `STORYBLOK_ENVIRONMENT === 'draft'`, as `resourceFolderStati
 
 - Fetch the course with `resolve_relations: 'Course.sessions'`, and the resource by path `<folder>/<resourceSlug>` with the relations its own route resolves.
 - `notFound()` if the resource isn't in that locale's list.
-- Render the resource page component with `courseContext` (A7).
+- Render the resource page component with `courseContext` (A7). A grounding exercise uses the written and activity page (`StoryblokTextResourcePage`), reporting under `RESOURCE_GROUNDING_*` events and the `grounding` category.
 
 **Metadata:** title from the resource, and `alternates.canonical` = the resource's own URL.
 
@@ -410,6 +410,13 @@ _5. Publish_
 
 _Prepared on 2026-11-02:_ the Turkish and Arabic versions of "Image-based abuse and rebuilding ourselves" (IARO) and "Recovering from toxic and abusive relationships" (RTAR) are saved as drafts on the existing courses (content guide step 9). Their resources are all published, and both courses are also added to the Turkish and Arabic homepage featured courses (draft). At launch, check Mailchimp automations on `C_IARO` and `C_RTAR`, then publish both courses and the home story; their Mailchimp and Front fields already exist, so steps 7, 8 and 10 don't apply to them. Until then, don't publish either course, and run any Lokalise import that touches them without `--publish`.
 
+_Prepared on 2026-11-03:_ three more Turkish and Arabic courses are saved as drafts, built the same way.
+
+- **"Healing from sexual trauma"** (HST, 9 resources) and **"Society, patriarchy, and sexual trauma"** (SPST, 6 resources) are existing courses offered in new languages (content guide step 9). SPST's Turkish and Arabic title is the shorter "Society, patriarchy, and trauma"; every other language keeps its title. Their Mailchimp and Front fields already exist, so steps 7, 8 and 10 don't apply to them. Check Mailchimp automations on `C_HST` and `C_SPST` before publishing.
+- **"Body-based healing"** (`courses/body-based-healing`, 5 resources including a grounding exercise) is a new course offered only in Turkish and Arabic, tagged `no-english-version`. Its initials are `BH`, so steps 7 to 10 apply: create Front's `course_bh` and `course_bh_sessions` before publishing. Its illustration is a placeholder (the unpublished "Managing anxiety" artwork) until design provides one.
+
+These need this frontend PR live first: the grounding exercise and the English "not available in your language" page for Body-based healing both depend on it. Then publish the three courses and redeploy production (step 12). None is on the Turkish or Arabic homepage yet.
+
 9. **Publish the resources, then the course.** Publishing the course creates its `course` row, links it to every resource listed in any language (`course_resource`), and creates the Mailchimp merge fields `C_<initials>` and `C_<initials>_S`. A resource published after the course is only linked once the course is published again.
 10. **Mailchimp:** Audience → Settings → Audience fields. Check that `C_<initials>` ("Course <initials> Status") and `C_<initials>_S` ("Course <initials> Sessions") exist. If not, add both as text fields with exactly those tags.
 11. **Check the backend rows** (every listed resource should appear, published):
@@ -424,7 +431,7 @@ _Prepared on 2026-11-02:_ the Turkish and Arabic versions of "Image-based abuse 
 
 _6. After launch_
 
-14. **Translations:** `Library.partOfCourses` and `Resources.partOf` are English placeholders in the 7 other locales. `Resources.alsoPartOfCourses`, and the Turkish and Arabic course names, descriptions and SEO text, were written without a translator. Send all of these for review (Turkish and Arabic first).
+14. **Translations:** `Library.partOfCourses` and `Resources.partOf` are English placeholders in the 7 other locales. `Resources.alsoPartOfCourses`, and the Turkish and Arabic course names, descriptions and SEO text for all five courses (plus Body-based healing's English working copy), were written without a translator. Send all of these for review (Turkish and Arabic first).
 15. Delete `courses/qa-modular-course` from Storyblok.
 
 **Rollback:** revert the frontend PR. The `course_resource` table and any new `course_user` rows are harmless if left.

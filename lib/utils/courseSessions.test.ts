@@ -90,6 +90,7 @@ describe('getCourseSessions', () => {
         mockResource('w', 'resource_written', 'written/w'),
         mockResource('a', 'resource_audio', 'audio/a', { login_required: false }),
         mockResource('x', 'resource_activity', 'activity/x'),
+        mockResource('g', 'resource_grounding', 'grounding/g'),
       ],
       weeks: [{ sessions: [mockResource('old', 'Session', 'courses/healing/old')] }],
     });
@@ -107,6 +108,13 @@ describe('getCourseSessions', () => {
       }),
       expect.objectContaining({ uuid: 'w', position: 2, format: 'written', loginRequired: false }),
       expect.objectContaining({ uuid: 'a', position: 3, format: 'audio', loginRequired: false }),
+      expect.objectContaining({
+        uuid: 'g',
+        href: '/courses/healing/grounding/g',
+        position: 4,
+        format: 'grounding',
+        loginRequired: false,
+      }),
     ]);
   });
 
