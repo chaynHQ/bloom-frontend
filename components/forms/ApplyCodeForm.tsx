@@ -11,8 +11,7 @@ import {
   ASSIGN_NEW_PARTNER_ACCESS_SUCCESS,
 } from '@/lib/constants/events';
 import { PartnerAccess } from '@/lib/store/partnerAccessSlice';
-import LoadingButton from '@mui/lab/LoadingButton';
-import { Box, Link, List, ListItem, Typography } from '@mui/material';
+import { Box, Button, Link, List, ListItem, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
@@ -164,7 +163,7 @@ const ApplyCodeForm = () => {
             {formError}
           </Typography>
         )}
-        <LoadingButton
+        <Button
           sx={{ mt: 2 }}
           variant="contained"
           fullWidth
@@ -173,7 +172,7 @@ const ApplyCodeForm = () => {
           loading={loading}
         >
           {t('form.submitLabel')}
-        </LoadingButton>
+        </Button>
       </form>
     </Box>
   );

@@ -4,8 +4,8 @@
     "references": "Kaynaklar",
     "metadata": {
       "title": "İyileşme yolculuğunda bize katıl",
-      "description": "Bloom; öğrenmen, iyileşmen ve özgüvenli bir geleceğe doğru büyümen için burada. Bloom'u sana Chayn sunuyor: dünyanın dört bir yanından hayatta kalanlar ve destekçiler tarafından yürütülen, kâr amacı gütmeyen küresel bir kuruluş.",
-      "imageAlt": "Yüzü ve omuzları görünen bir kişi illüstrasyonu; üzerinde büyük yapraklar ve çiçekler açıyor. Bloom yazı logosu da yer alıyor."
+      "description": "Bloom; öğrenmen, iyileşmen ve özgüvenli bir geleceğe doğru büyümen için senin yanında. Bloom, kâr amacı gütmeyen küresel bir kuruluş olan ve dünyanın dört bir yanında şiddetten hayatta kalanlar ile destekçiler tarafından yürütülmekte olan Chayn tarafından hizmetinize sunuluyor.",
+      "imageAlt": "Yüzü ve omuzları görünen bir insan illüstrasyonu; üzerinde büyük yapraklar ve çiçekler açıyor. Bloom yazı logosu da yer alıyor."
     },
     "leaveSite": {
       "button": "Bu siteden ayrıl",
@@ -21,10 +21,10 @@
       "goToPage": "{name}: {pages} içinden {page}. sayfaya git"
     },
     "footer": {
-      "fundedByTitle": "Finanse eden",
-      "chaynDescription": "Bloom'u sana <link>Chayn</link> sunuyor: dünyanın dört bir yanından hayatta kalanlar ve destekçiler tarafından yürütülen, kâr amacı gütmeyen küresel bir kuruluş. Chayn, toplumsal cinsiyete dayalı şiddetten hayatta kalanların iyileşmesini desteklemek için kaynaklar oluşturuyor.",
+      "fundedByTitle": "Destekleyenler",
+      "chaynDescription": "Bloom, <link>Chayn</link> tarafından hizmetinize sunuluyor. Chayn, toplumsal cinsiyete dayalı şiddete maruz kalanların iyileşme sürecini desteklemek için kaynaklar geliştiren; dünyanın her yerinden hayatta kalanlar ve dayanışma içindekiler tarafından yürütülen kâr amacı gütmeyen, küresel bir kuruluştur.",
       "chaynLine1": "<bold>CHAYN</bold> CIO tarafından oluşturuldu.",
-      "chaynLine2": "Birleşik Krallık Hayır Kurumu Numarası: 1196098",
+      "chaynLine2": "Birleşik Krallık Hayır Kuruluşu Numarası: 1196098",
       "bumbleLine1": "İş birliğiyle",
       "bumbleLine2": "BUMBLE HOLDING LTD",
       "badooLine1": "İş birliğiyle",
@@ -35,13 +35,13 @@
       "trustCenter": "Güven Merkezi"
     },
     "maintenanceBanner": {
-      "title": "Bloom bakım için kapalı",
-      "description": "Bazı önemli planlı bakım çalışmalarını tamamlarken lütfen sabırlı ol. Bloom'un {hours} saat içinde her zamanki gibi kullanılabilir olması bekleniyor."
+      "title": "Bloom bakım çalışmaları nedeniyle hizmet dışı",
+      "description": "Bazı önemli planlı bakım çalışmalarını gerçekleştirirken gösterdiğin sabır için teşekkür ederiz. Bloom {hours} saat içinde her zamanki gibi kullanılabilir olacaktır."
     },
     "fruitzRetirementBanner": {
       "title": "Kurslarında değişiklik",
-      "description": "Fruitz x Bloom iş birliği sona eriyor, ancak Bloom desteğin devam ediyor. 19 Ağustos'tan itibaren 'Flört, sınırlar ve ilişkiler' kursu artık kullanılamayacak, ancak birebir mesajlaşma da dahil olmak üzere diğer tüm hizmetler aynı kalacak.",
-      "dismiss": "Kapat"
+      "description": "Fruitz x Bloom iş birliği sona eriyor, ancak Bloom desteğin devam ediyor. 19 Ağustos'tan itibaren \"Flört, sınırlar ve ilişkiler\" kursuna artık erişilemeyecek ancak birebir mesajlaşma da dahil olmak üzere diğer tüm hizmetler aynen sürecek.",
+      "dismiss": "Reddet"
     },
     "videoTranscript": {
       "title": "Video metni",
@@ -51,14 +51,14 @@
     "audioTranscript": {
       "title": "Ses metni"
     },
-    "currentSession": "Mevcut bölüm",
+    "currentSession": "Şu anki bölüm",
     "progressStatus": {
       "started": "Devam ediyor",
       "completed": "Tamamlandı",
       "notStarted": "Başlanmadı"
     },
     "meetTheTeam": {
-      "fullBioButton": "{name} biyografisinin tamamını oku",
+      "fullBioButton": "{name}—Biyografisinin tamamını oku",
       "expandTeamMember": "{name} için biyografiyi genişlet"
     },
     "noDataAvailable": {
@@ -66,13 +66,13 @@
     },
     "error": {
       "title": "Bir şeyler ters gitti",
-      "description": "Son istekte bir sorun oluştu, lütfen tekrar dene. Sorun devam ederse Bloom ekibiyle iletişime geç.",
+      "description": "Son taleple ilgili bir sorun oluştu, lütfen tekrar dene. Sorun devam ederse Bloom ekibiyle iletişime geç.",
       "buttonLabel": "Tekrar dene"
     },
     "notFound": {
       "title": "404 - Sayfa bulunamadı",
       "authenticatedDescription": "Bu sayfa bulunamadı. URL'yi kontrol et ya da kütüphane sayfasına geri dön.",
-      "unauthenticatedDescription": "Bu sayfa bulunamadı. URL'yi kontrol et ya da karşılama sayfasına geri dön.",
+      "unauthenticatedDescription": "Bu sayfa bulunamadı. URL'yi kontrol et ya da karşılama sayfasına dön.",
       "authenticatedRedirectButton": "Kütüphane sayfasına dön",
       "unauthenticatedRedirectButton": "Karşılama sayfasına dön"
     },
@@ -88,23 +88,23 @@
       "welcomeToBloom": "Bloom'a hoş geldin",
       "tiktokLogo": "Tiktok logosu",
       "githubLogo": "Github logosu",
-      "bloomHead": "Yüzü ve omuzları görünen bir kişi illüstrasyonu; üzerinde büyük yapraklar ve çiçekler açıyor",
+      "bloomHead": "Yüzü ve omuzları görünen bir insan illüstrasyonu, üzerinde büyük yapraklar ve çiçekler açıyor",
       "beehive": "Bir arı kovanı illüstrasyonu",
-      "leafMix": "Bir gülle birleşmiş iki yaprak illüstrasyonu",
-      "leafMixBee": "Üzerinde bir arının uçuştuğu iki yaprak illüstrasyonu",
-      "leafMixDots": "Ortasında bir çiçek olan 3 yaprak ve çiçekten fışkıran noktalar illüstrasyonu.",
-      "personTea": "Oturmuş, çay tutan bir kişi illüstrasyonu",
+      "leafMix": "Bir güle bitişik iki yaprak illüstrasyonu",
+      "leafMixBee": "İki yaprak illüstrasyonu, üzerinde bir arı uçuyor",
+      "leafMixDots": "Ortasında bir çiçek olan 3 yaprak illüstrasyonu, çiçekten noktalar fışkırıyor",
+      "personTea": "Oturmuş, elinde çay tutan bir insan illüstrasyonu",
       "resourceCardDefault": "Bloom kaynak kartı illüstrasyonu",
-      "personSitting": "Oturan bir kişi illüstrasyonu",
-      "chooseTherapist": "Bir kişinin yandan yüz profili ve bir çiçek illüstrasyonu",
+      "personSitting": "Oturan bir insan illüstrasyonu",
+      "chooseTherapist": "Bir çiçek eşliğinde, bir insanın yüzünün yandan görünüşü illüstrasyonu",
       "dateSelector": "Ortasında bir kalp olan bir takvim illüstrasyonu",
-      "change": "Bir döngü illüstrasyonu - aralarında oklar olan, daire içinde üç güneş",
+      "change": "Bir döngü illüstrasyonu - daire içinde üç güneş, aralarında oklar var",
       "notes": "Ekranında kalp içeren bir mesaj balonu olan bir cep telefonu illüstrasyonu",
       "confidential": "Köşesinde bir kilit olan bir belge illüstrasyonu",
-      "cookieCat": "Bir kurabiyeyle dinlenen bir kedi illüstrasyonu",
+      "cookieCat": "Kurabiyeyle dinlenen bir kedi illüstrasyonu",
       "fruitzLogo": "Fruitz logosu",
       "bloomFruitzLogo": "Fruitz iş birliğiyle Bloom logosu",
-      "bloomHomeIllustration": "Etrafında video simgesi, çiçek, mesaj simgesi ve çiçekli bir insan başı gibi semboller uçuşan, bağdaş kurup oturan bir kişi",
+      "bloomHomeIllustration": "Bacak bacak üstüne atmış bir insan ve etrafında video simgesi, çiçek, mesaj simgesi ve üstünde bir çiçek bulunan bir insan başı gibi semboller uçuşuyor",
       "bookIcon": "Kitap simgesi",
       "articleIcon": "Makale simgesi",
       "videoIcon": "Video simgesi"
@@ -133,14 +133,14 @@
       "mobileDescription": "Ana ekranından erişmek için uygulamayı yükle",
       "desktopDescription": "Bloom'a ana ekranından erişmek için uygulamayı yükle",
       "iosDescription": "Bloom'u ana ekranına ekle",
-      "iosStep1": "1. Paylaş düğmesine dokun",
+      "iosStep1": "1. Paylaş tuşuna dokun",
       "iosStep2": "2. 'Ana Ekrana Ekle'ye dokun",
-      "button-decline-label": "Şimdi değil",
+      "button-decline-label": "Daha sonra",
       "button-install-label": "Yükle"
     },
     "notesFromBloomPromo": {
       "title": "Ücretsiz destekleyici mesajlar",
-      "description": "Haftada iki kez doğrudan WhatsApp'ına mesajlar al",
+      "description": "Haftada iki kez doğrudan WhatsApp'ına mesaj gelsin",
       "buttonText": "Abone ol"
     },
     "characterCount": "{current}/{max} karakter",
@@ -159,7 +159,7 @@
       },
       "sessions": {
         "heading": "Tekil bölümler",
-        "introduction": "İstismarı anlama, sınır koyma, iyileşme ve daha fazlası üzerine bölümler.",
+        "introduction": "Şiddet ve istismarı anlama, sınır koyma, iyileşme ve daha fazlası üzerine bölümler.",
         "browseAll": "Tüm bölümlere göz at"
       },
       "courses": {

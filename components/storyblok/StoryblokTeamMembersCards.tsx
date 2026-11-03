@@ -27,16 +27,13 @@ interface StoryblokTeamMembersCardsProps {
 }
 
 const StoryblokTeamMembersCards = (props: StoryblokTeamMembersCardsProps) => {
-  const { _uid, _editable, team_member_items, cards_expandable } = props;
+  const { _editable, team_member_items, cards_expandable } = props;
 
   const leftTeamMemberCards = team_member_items.filter((card, index) => index % 2 === 0);
   const rightTeamMemberCards = team_member_items.filter((card, index) => index % 2 === 1);
 
   return (
-    <Box
-      sx={cardColumnRowStyle}
-      {...storyblokEditable({ _uid, _editable, team_member_items, cards_expandable })}
-    >
+    <Box sx={cardColumnRowStyle} {...storyblokEditable({ _editable })}>
       <Box sx={cardColumnStyle}>
         {leftTeamMemberCards.map((teamMemberCard) => (
           <ScrollReveal fill key={`${teamMemberCard._uid}_team_member`}>

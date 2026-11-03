@@ -15,3 +15,37 @@ export function isInvalidSlugPageRequest(locale: string, slug: string): boolean 
 
   return RESERVED_SLUG_PREFIXES.some((prefix) => slug === prefix || slug.startsWith(`${prefix}/`));
 }
+
+// Storyblok folders and stories served by their own routes rather than app/[locale]/[slug].
+const DEDICATED_ROUTE_FOLDERS = [
+  'home',
+  'welcome',
+  'meet-the-team',
+  'courses',
+  'about-our-courses',
+  'messaging',
+  'video',
+  'audio',
+  'written',
+  'activity',
+  'grounding',
+  'policies',
+  'library',
+];
+
+export interface StoryblokLink {
+  slug: string;
+  is_folder: boolean;
+  published: boolean;
+}
+
+// Whether app/[locale]/[slug] serves a Storyblok link: a published top-level story outside the
+// folders above. Nested stories (e.g. subscription/whatsapp) have routes of their own.
+export function isSlugPageLink(link: StoryblokLink): boolean {
+  return (
+    link.published &&
+    !link.is_folder &&
+    !link.slug.includes('/') &&
+    !DEDICATED_ROUTE_FOLDERS.includes(link.slug)
+  );
+}

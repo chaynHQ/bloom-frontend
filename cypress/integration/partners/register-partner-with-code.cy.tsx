@@ -6,10 +6,7 @@ describe('Register with access code', () => {
   before(() => {
     cy.cleanUpTestState();
 
-    cy.logInWithEmailAndPassword(
-      Cypress.env('CYPRESS_BADOO_PARTNER_ADMIN_EMAIL'),
-      Cypress.env('CYPRESS_BADOO_PARTNER_ADMIN_PASSWORD'),
-    );
+    cy.logInAsTestAccount('BADOO_PARTNER_ADMIN');
     cy.wait(2000);
 
     cy.createAccessCode({
@@ -33,7 +30,7 @@ describe('Register with access code', () => {
       .contains('Get started')
       .click();
     cy.wait(2000); // waiting for dom to rerender
-    cy.get('h2', { timeout: 8000 }).should('contain', 'Create account');
+    cy.get('h1', { timeout: 8000 }).should('contain', 'Create account');
     cy.get('#partnerAccessCode').should('have.value', welcomeCode);
     cy.get('#name').type('Cypress test');
     cy.get('#email').type(username);

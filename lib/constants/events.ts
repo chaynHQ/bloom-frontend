@@ -191,11 +191,6 @@ export const SESSION_BONUS_CONTENT_COLLAPSED = 'SESSION_BONUS_CONTENT_COLLAPSED'
 export const SESSION_CHAT_EXPANDED = 'SESSION_CHAT_EXPANDED'; // Event in use but not exported - applied using eventPrefix
 export const SESSION_CHAT_COLLAPSED = 'SESSION_CHAT_COLLAPSED'; // Event in use but not exported - applied using eventPrefix
 
-export const SESSION_CHAT_VIDEO_STARTED = 'SESSION_CHAT_VIDEO_STARTED'; // Event in use but not exported - applied using eventPrefix (SessionChat)
-export const SESSION_CHAT_VIDEO_PLAYED = 'SESSION_CHAT_VIDEO_PLAYED'; // Event in use but not exported - applied using eventPrefix (SessionChat)
-export const SESSION_CHAT_VIDEO_PAUSED = 'SESSION_CHAT_VIDEO_PAUSED'; // Event in use but not exported - applied using eventPrefix (SessionChat)
-export const SESSION_CHAT_VIDEO_FINISHED = 'SESSION_CHAT_VIDEO_FINISHED'; // Event in use but not exported - applied using eventPrefix (SessionChat)
-
 export const SESSION_FEEDBACK_EXPANDED = 'SESSION_FEEDBACK_EXPANDED'; // Event in use but not exported - applied using eventPrefix
 export const SESSION_FEEDBACK_COLLAPSED = 'SESSION_FEEDBACK_COLLAPSED'; // Event in use but not exported - applied using eventPrefix
 

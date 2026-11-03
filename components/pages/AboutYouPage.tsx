@@ -6,13 +6,13 @@ import PartnerHeader from '@/components/layout/PartnerHeader';
 import { Link as i18nLink } from '@/i18n/routing';
 import { SURVEY_FORMS } from '@/lib/constants/enums';
 import { ABOUT_YOU_VIEWED, SIGNUP_SURVEY_SKIPPED } from '@/lib/constants/events';
+import { useHydratedSearchParams } from '@/lib/hooks/useHydratedSearchParams';
 import logEvent from '@/lib/utils/logEvent';
 import bloomLogo from '@/public/bloom_logo.svg';
 import illustrationBloomHeadYellow from '@/public/illustration_bloom_head_yellow.svg';
 import { rowStyle } from '@/styles/common';
 import { Box, Button, Card, CardContent, Container, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import { useSearchParams } from 'next/navigation';
 import { ReactNode, useEffect, useMemo } from 'react';
 
 const containerStyle = {
@@ -41,9 +41,9 @@ const getForm = (formLabel: string) => {
 };
 
 export default function AboutYouPage() {
-  const searchParams = useSearchParams();
-  const qParam = searchParams.get('q');
-  const return_url = searchParams.get('return_url');
+  const searchParams = useHydratedSearchParams();
+  const qParam = searchParams?.get('q');
+  const return_url = searchParams?.get('return_url');
   const t = useTranslations('Account.aboutYou');
 
   const questionSetParam = useMemo(() => (qParam ? qParam : SURVEY_FORMS.default), [qParam]);

@@ -17,7 +17,7 @@ interface StoryblokRowProps {
 }
 
 const StoryblokRow = (props: StoryblokRowProps) => {
-  const { _uid, _editable, columns, horizontal_alignment, vertical_alignment } = props;
+  const { _editable, columns, horizontal_alignment, vertical_alignment } = props;
 
   const columnArray = Array.isArray(columns) ? columns : [columns];
 
@@ -63,9 +63,7 @@ const StoryblokRow = (props: StoryblokRowProps) => {
     });
   });
   return (
-    <Box
-      {...storyblokEditable({ _uid, _editable, columns, horizontal_alignment, vertical_alignment })}
-    >
+    <Box {...storyblokEditable({ _editable })}>
       <Row
         numberOfColumns={numberOfColumns}
         horizontalAlignment={horizontal_alignment}

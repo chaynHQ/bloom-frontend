@@ -22,6 +22,14 @@ To set-up, configure the Cypress variables in `env.local`.
 2. For `CYPRESS_MAIL_SLURP_API_KEY` and `CYPRESS_INBOX_ID`: Create a [Mailslurp account](https://www.mailslurp.com/), navigate to your dashboard to obtain the API key, then [create an Mailslurp inbox](https://docs.mailslurp.com/inboxes/).
 3. For local Bloom Users: Create local Bloom users from your local frontend. You will need a public user, a super admin user, and 2 partner admin users. Directions in [configure-users.md](configure-users.md).
 
+## Reading variables in tests
+
+`cypress.config.ts` splits the variables in two (Cypress 16 removed `Cypress.env()`):
+
+- **Public values** (`NEXT_PUBLIC_*` and the test account emails/name) are read synchronously with `Cypress.expose('KEY')`. A new public variable must be added to `exposedKeys`.
+- **Secrets** (passwords, the CI firewall bypass token) stay in the Node process. Read them with `cy.env(['KEY'], { log: false }).then(({ KEY }) => …)`, and add new ones to `secretKeys`. To log in as a seeded account, use `cy.logInAsTestAccount('PUBLIC')` (or `SUPER_ADMIN`, `BUMBLE_PARTNER_ADMIN`, `BADOO_PARTNER_ADMIN`).
+- MailSlurp runs in the Node process via `cy.task('waitForLatestEmail')`, so its API key never reaches the browser.
+
 ## Run Tests:
 
 To run the tests, follow the instructions below:

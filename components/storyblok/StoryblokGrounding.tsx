@@ -13,6 +13,7 @@ import {
   GROUNDING_SUPPORT_CARD_CLICKED,
   GROUNDING_VIEWED,
 } from '@/lib/constants/events';
+import { useHydratedSearchParams } from '@/lib/hooks/useHydratedSearchParams';
 import { useLogEventOnce } from '@/lib/hooks/useLogEventOnce';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { useUserAuthStatus } from '@/lib/hooks/useUserAuthStatus';
@@ -26,7 +27,6 @@ import { Box, Button, Card, CardActionArea, Container, Divider, Typography } fro
 import { useStoryblokState } from '@storyblok/react';
 import { ISbStoryData, storyblokEditable } from '@storyblok/react/rsc';
 import { useLocale, useTranslations } from 'next-intl';
-import { useSearchParams } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 
@@ -107,7 +107,6 @@ const StoryblokGrounding = ({ story: initialStory, stories = [] }: StoryblokGrou
   const t = useTranslations('Resources');
   const locale = useLocale();
   const router = useRouter();
-  const searchParams = useSearchParams();
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
@@ -119,7 +118,7 @@ const StoryblokGrounding = ({ story: initialStory, stories = [] }: StoryblokGrou
   const userSettled = userAuthStatus !== 'resolving';
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
-  const { _uid, _editable, title, description, seo_description, header_image } = (story?.content ??
+  const { _editable, title, description, header_image } = (story?.content ??
     {}) as GroundingPageContent;
 
   const visibleStories = useMemo(
@@ -130,6 +129,7 @@ const StoryblokGrounding = ({ story: initialStory, stories = [] }: StoryblokGrou
     [stories, locale, userContentPartners],
   );
 
+  const searchParams = useHydratedSearchParams();
   const openId = searchParams?.get('id') ?? searchParams?.get('openacc') ?? undefined;
   const openStory = openId ? visibleStories.find((story) => story.slug === openId) : undefined;
 
@@ -171,9 +171,7 @@ const StoryblokGrounding = ({ story: initialStory, stories = [] }: StoryblokGrou
   };
 
   return (
-    <Box
-      {...storyblokEditable({ _uid, _editable, title, description, seo_description, header_image })}
-    >
+    <Box {...storyblokEditable({ _editable })}>
       {title && (
         <Header
           title={title}

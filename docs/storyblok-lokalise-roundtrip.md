@@ -20,16 +20,25 @@ and `scripts/fixStoryblokTranslations.mjs` (applies a hand-written find/replace 
 
 ## 1. Scope
 
-**In scope — 33 stories** (whatever `translateStoryblok.mjs` also translates):
+**In scope:**
 
-- `grounding/overview` + all `grounding/*` exercises (`resource_grounding`)
-- all `activity/*` exercises (`resource_activity`)
-- `home`, `welcome/bumble`, `welcome/badoo`, `meet-the-team`
+- `home`, `library`, `welcome/bumble`, `welcome/badoo`, `meet-the-team`
 - `messaging`, `subscription/whatsapp`, `therapy/book-session`, `policies/terms-of-service`
 
-**Excluded** (media not localised for these locales — same rule as `translateStoryblok.mjs`):
-`courses/*`, `video/*`, `audio/*`, `written/*`, and any `Course` / `Session` / `session_iba` /
-`resource_video` / `resource_audio` / `resource_written` component.
+**Grounding and activity pages are out of scope**, including `grounding/overview` and the
+exercise card descriptions. The exercise text and titles are human translations of Chayn's
+source documents (narrator transcripts, the bilingual activities doc), match the narrated audio,
+and must not be overwritten. Exports before 2026-10-27 included them — ignore those keys in old
+Lokalise projects.
+
+Terminology, register and punctuation rules: see
+[translation-style-guide-tr.md](translation-style-guide-tr.md) and
+[translation-style-guide-ar.md](translation-style-guide-ar.md).
+
+**Excluded:** `courses/*`, `video/*`, `audio/*`, `written/*` (media not localised for these
+locales — same rule as `translateStoryblok.mjs`), `grounding/*` and `activity/*`, and any
+`Course` / `Session` / `session_iba` / `resource_video` / `resource_audio` / `resource_written` /
+`resource_grounding` / `resource_activity` / `grounding_page` component.
 
 The exclusion is enforced in `storyblokLokalise.lib.mjs` (`EXCLUDED_PREFIXES`,
 `EXCLUDED_COMPONENTS`). App UI strings (`i18n/messages/**`) are **not** part of this — they
@@ -186,6 +195,22 @@ Useful flags:
 
 Every story it writes is snapshotted to `.storyblok-translation/<slug>.beforeimport.json`
 first, and Storyblok keeps per-story version history, so rollback is always possible.
+(Snapshots written before 2026-10-27 hold the post-import state because of a since-fixed bug;
+use Storyblok's version history for those.)
+
+### Before importing an old export
+
+The importer compares incoming values with **live** Storyblok only. If live content changed
+after the export (e.g. a later content upload), importing would silently revert it. So:
+
+1. Run a fresh export to a scratch folder (`--out /tmp/sb-live`) — read-only.
+2. Compare baseline export vs fresh export vs Lokalise download per key. Import only keys where
+   live still equals the baseline; review the rest by hand.
+3. Pass `--manifest /tmp/sb-live/manifest.json` so English edits elsewhere in a rich-text field
+   don't make the importer skip the whole field.
+4. Read link-split sentences joined up (fragments around a link are separate keys and
+   translators often edit them out of context), and check rich-text fields whose translation
+   has its bloks in a different order from the English — leaves are paired by position.
 
 ### Reading the summary
 

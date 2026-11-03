@@ -37,15 +37,12 @@ export interface StoryblokTeamMembersSectionProps {
 }
 
 const StoryblokTeamMembersSection = (props: StoryblokTeamMembersSectionProps) => {
-  const { _uid, _editable, title, description, team_member_items, cards_expandable, color } = props;
+  const { _editable, title, description, team_member_items, cards_expandable, color } = props;
 
   return (
     <PageSection color={color} alignment="flex-start">
       <Typography variant="h2">{title}</Typography>
-      <Box
-        sx={rowStyles}
-        {...storyblokEditable({ _uid, _editable, team_member_items, cards_expandable })}
-      >
+      <Box sx={rowStyles} {...storyblokEditable({ _editable })}>
         <Box sx={columnStyles}>
           {team_member_items?.map((teamMemberCard) => (
             <StoryblokTeamMemberCard

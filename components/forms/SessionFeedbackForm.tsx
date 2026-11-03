@@ -9,9 +9,9 @@ import { getImageSizes } from '@/lib/utils/imageSizes';
 import logEvent from '@/lib/utils/logEvent';
 import illustrationPerson4Peach from '@/public/illustration_person4_peach.svg';
 import { staticFieldLabelStyle } from '@/styles/common';
-import LoadingButton from '@mui/lab/LoadingButton';
 import {
   Box,
+  Button,
   FormControl,
   FormControlLabel,
   Radio,
@@ -189,7 +189,7 @@ const SessionFeedbackForm = (props: SessionFeedbackFormProps) => {
           </Typography>
         )}
 
-        <LoadingButton
+        <Button
           variant="contained"
           color="secondary"
           type="submit"
@@ -197,7 +197,7 @@ const SessionFeedbackForm = (props: SessionFeedbackFormProps) => {
           sx={{ marginInlineStart: 'auto', display: 'block' }}
         >
           {t('sendButtonText')}
-        </LoadingButton>
+        </Button>
       </form>
     </>
   );

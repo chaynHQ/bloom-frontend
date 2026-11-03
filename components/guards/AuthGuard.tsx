@@ -1,10 +1,13 @@
 'use client';
 
+import { ContentUnavailable } from '@/components/common/ContentUnavailable';
 import LoadingContainer from '@/components/common/LoadingContainer';
 import { redirect, usePathname, useRouter } from '@/i18n/routing';
 import { useTypedSelector } from '@/lib/hooks/store';
 import useLoadUser from '@/lib/hooks/useLoadUser';
+import { useUserContentPartners } from '@/lib/hooks/useUserContentPartners';
 import { getIsMaintenanceMode } from '@/lib/utils/maintenanceMode';
+import { localeOpenToPartners } from '@/lib/utils/partnerContentAccess';
 import { useLocale } from 'next-intl';
 import { ReactNode } from 'react';
 import { PartnerAdminGuard } from './PartnerAdminGuard';
@@ -26,6 +29,7 @@ export function AuthGuard({ children }: { children: ReactNode }) {
   const userId = useTypedSelector((state) => state.user.id);
   const userLoading = useTypedSelector((state) => state.user.loading);
   const userAuthLoading = useTypedSelector((state) => state.user.authStateLoading);
+  const userContentPartners = useUserContentPartners();
 
   const isMaintenanceMode = getIsMaintenanceMode();
   const { userResourceError } = useLoadUser();
@@ -47,6 +51,13 @@ export function AuthGuard({ children }: { children: ReactNode }) {
       redirect({ href: '/', locale });
     }
     return <LoadingContainer />;
+  }
+
+  // Doesn't wait for auth so these pages still server-render; partner members get this message
+  // once their partner accesses load. action-handler is exempt so Firebase email links (verify
+  // email, reset password) always work.
+  if (pathHead !== 'action-handler' && !localeOpenToPartners(locale, userContentPartners)) {
+    return <ContentUnavailable reason="language" />;
   }
 
   const isPublicPage = !authenticatedPathHeads.includes(pathHead);

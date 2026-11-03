@@ -25,7 +25,6 @@ export interface StoryblokLinkCardProps {
 
 const StoryblokLinkCard = (props: StoryblokLinkCardProps) => {
   const {
-    _uid,
     _editable,
     title,
     description,
@@ -43,21 +42,7 @@ const StoryblokLinkCard = (props: StoryblokLinkCardProps) => {
   if (!title || !href) return <></>;
 
   return (
-    <Box
-      {...storyblokEditable({
-        _uid,
-        _editable,
-        title,
-        description,
-        link,
-        icon,
-        size,
-        background,
-        arrow_color,
-        hide_arrow,
-      })}
-      sx={{ height: '100%' }}
-    >
+    <Box {...storyblokEditable({ _editable })} sx={{ height: '100%' }}>
       <ScrollReveal fill sx={{ height: '100%' }}>
         <LinkCard
           title={title}

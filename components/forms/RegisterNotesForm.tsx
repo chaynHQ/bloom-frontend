@@ -11,9 +11,9 @@ import {
 } from '@/lib/constants/events';
 import { getErrorMessage } from '@/lib/utils/errorMessage';
 import logEvent from '@/lib/utils/logEvent';
-import { LoadingButton } from '@mui/lab';
 import {
   Box,
+  Button,
   Checkbox,
   FormControl,
   FormControlLabel,
@@ -201,7 +201,7 @@ const RegisterNotesForm = () => {
             </Link>
           </Typography>
 
-          <LoadingButton
+          <Button
             variant="contained"
             color="secondary"
             type="submit"
@@ -209,7 +209,7 @@ const RegisterNotesForm = () => {
             sx={{ width: { xs: '100%', md: 'auto' }, maxWidth: 240 }}
           >
             {tNotes('createAccountButton')}
-          </LoadingButton>
+          </Button>
         </Box>
       </Box>
     </BaseRegisterForm>

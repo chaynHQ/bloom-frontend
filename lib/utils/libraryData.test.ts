@@ -1,11 +1,13 @@
 import {
   bucketOf,
+  featureItems,
   filterLibraryItems,
   libraryFiltersToQuery,
   normaliseSlug,
   parentCourseSlug,
   parseLibraryFilters,
   pathRequiresAccount,
+  sortByFolderPosition,
   storyToLibraryItem,
   toggle,
   toLibraryStory,
@@ -13,6 +15,11 @@ import {
   type LibraryItem,
   type LibraryStory,
 } from './libraryData';
+import { createLibrarySearch } from './librarySearch';
+
+// filterLibraryItems with the search the library page would build for these items.
+const filter = (items: LibraryItem[], filters: LibraryFilters) =>
+  filterLibraryItems(items, filters, createLibrarySearch(items, 'en'));
 
 // A Storyblok story, trimmed to the fields the library reads. `content` is loose: the real
 // payloads differ per component.
@@ -160,6 +167,7 @@ describe('toLibraryStory', () => {
     const projected = toLibraryStory({
       uuid: 'uuid-1',
       full_slug: 'courses/managing-anxiety/',
+      published_at: '2025-09-02T10:00:00.000Z',
       id: 12345,
       content: {
         name: 'Managing anxiety',
@@ -174,17 +182,22 @@ describe('toLibraryStory', () => {
         video_transcript: { type: 'doc', content: ['…a very large document…'] },
         bonus: ['…blocks…'],
         activity: ['…blocks…'],
-        seo_description: 'Dropped too.',
+        seo_description: 'Managing anxiety after trauma.',
+        seo_keywords: 'anxiety, panic attacks',
+        seo_title: 'Dropped too.',
       },
     } as unknown as Parameters<typeof toLibraryStory>[0]);
 
     expect(projected).toEqual({
       uuid: 'uuid-1',
       full_slug: 'courses/managing-anxiety/',
+      published_at: '2025-09-02T10:00:00.000Z',
       content: {
         name: 'Managing anxiety',
         component: 'Course',
         description: 'A course.',
+        seo_description: 'Managing anxiety after trauma.',
+        seo_keywords: 'anxiety, panic attacks',
         themes: ['healing-journey'],
         duration: '12',
         languages: ['default'],
@@ -229,6 +242,51 @@ describe('parentCourseSlug', () => {
     expect(parentCourseSlug('de/courses/managing-anxiety/what-is-anxiety')).toBe(
       'de/courses/managing-anxiety',
     );
+  });
+});
+
+describe('sortByFolderPosition', () => {
+  const course = (slug: string, parent_id: number | null) => ({ slug, parent_id });
+  const folder = (id: number, position: number) => ({ id, is_folder: true, position });
+  const slugs = (stories: { slug: string }[]) => stories.map((story) => story.slug);
+
+  it('orders course start pages by their folder position', () => {
+    const stories = [course('healing', 1), course('society', 2), course('recovering', 3)];
+    const links = [folder(1, 70), folder(2, 60), folder(3, 10)];
+
+    expect(slugs(sortByFolderPosition(stories, links))).toEqual([
+      'recovering',
+      'society',
+      'healing',
+    ]);
+  });
+
+  it('puts stories with an unlisted folder last, in their incoming order', () => {
+    const stories = [course('orphan-a', 9), course('rootless', null), course('listed', 1)];
+
+    expect(slugs(sortByFolderPosition(stories, [folder(1, 0)]))).toEqual([
+      'listed',
+      'orphan-a',
+      'rootless',
+    ]);
+  });
+
+  it('only reads folder links', () => {
+    const stories = [course('a', 1), course('b', 2)];
+    const links = [folder(1, 20), folder(2, 10), { id: 1, is_folder: false, position: -100 }];
+
+    expect(slugs(sortByFolderPosition(stories, links))).toEqual(['b', 'a']);
+  });
+
+  it('keeps the incoming order without links, and leaves the input untouched', () => {
+    const stories = [course('a', 1), course('b', 2)];
+
+    expect(slugs(sortByFolderPosition(stories, []))).toEqual(['a', 'b']);
+    expect(slugs(sortByFolderPosition(stories, [folder(1, 20), folder(2, 10)]))).toEqual([
+      'b',
+      'a',
+    ]);
+    expect(slugs(stories)).toEqual(['a', 'b']);
   });
 });
 
@@ -301,6 +359,68 @@ describe('bucketOf', () => {
   });
 });
 
+describe('featureItems', () => {
+  const item = (id: string) => ({ id }) as LibraryItem;
+  const items = ['a', 'b', 'c', 'd', 'e', 'f', 'g'].map(item);
+  const ids = (list: LibraryItem[]) => list.map((entry) => entry.id);
+
+  it('moves the picks to the front in the picked order, keeping the rest in order', () => {
+    const result = featureItems(items, ['e', 'b']);
+
+    expect(ids(result.items)).toEqual(['e', 'b', 'a', 'c', 'd', 'f', 'g']);
+    expect([...result.featuredIds]).toEqual(['e', 'b']);
+  });
+
+  it('skips picks the viewer cannot see, without leaving a gap', () => {
+    expect(ids(featureItems(items, ['not-in-locale', 'c']).items)).toEqual([
+      'c',
+      'a',
+      'b',
+      'd',
+      'e',
+      'f',
+      'g',
+    ]);
+  });
+
+  it('caps the featured items at five, counting only visible picks', () => {
+    const result = featureItems(items, ['hidden', 'g', 'f', 'e', 'd', 'c', 'b']);
+
+    expect(ids(result.items).slice(0, 5)).toEqual(['g', 'f', 'e', 'd', 'c']);
+    expect(ids(result.items).slice(5)).toEqual(['a', 'b']);
+    expect(result.featuredIds.size).toBe(5);
+  });
+
+  it('ignores a pick made twice', () => {
+    expect(ids(featureItems(items, ['c', 'c']).items)).toEqual(['c', 'a', 'b', 'd', 'e', 'f', 'g']);
+  });
+
+  it('keeps the default order with no picks', () => {
+    expect(ids(featureItems(items, undefined).items)).toEqual(ids(items));
+    expect(ids(featureItems(items, []).items)).toEqual(ids(items));
+    expect(featureItems(items, undefined).featuredIds.size).toBe(0);
+  });
+
+  it('keeps featured items first through filters, and between equally relevant search results', () => {
+    const lesson = (id: string, title: string) =>
+      ({ id, kind: 'session', themes: ['healing-journey'], title, description: '' }) as LibraryItem;
+    const featured = featureItems(
+      [lesson('x', 'Fear in the body'), lesson('y', 'Body image'), lesson('z', 'Anger')],
+      ['y'],
+    ).items;
+    const filters: LibraryFilters = {
+      keyword: '',
+      kind: 'all',
+      themes: ['healing-journey'],
+      formats: [],
+      lengths: [],
+    };
+
+    expect(ids(filter(featured, filters))).toEqual(['y', 'x', 'z']);
+    expect(ids(filter(featured, { ...filters, keyword: 'body' }))).toEqual(['y', 'x']);
+  });
+});
+
 describe('toggle', () => {
   it('adds a value that is absent and removes one that is present', () => {
     expect(toggle(['audio'], 'video')).toEqual(['audio', 'video']);
@@ -344,7 +464,7 @@ describe('filterLibraryItems', () => {
     lengths: [],
   };
   const idsFrom = (filters: Partial<LibraryFilters>) =>
-    filterLibraryItems(items, { ...noFilters, ...filters }).map((i) => i.id);
+    filter(items, { ...noFilters, ...filters }).map((i) => i.id);
 
   it('returns everything when no filter is set', () => {
     expect(idsFrom({})).toEqual(['course', 'audio', 'video', 'lesson']);
@@ -376,10 +496,8 @@ describe('filterLibraryItems', () => {
   it('matches a theme when the item carries it among several', () => {
     const multi = item({ id: 'multi', themes: ['staying-safe', 'healing-journey'] });
 
-    expect(filterLibraryItems([multi], { ...noFilters, themes: ['staying-safe'] })).toHaveLength(1);
-    expect(filterLibraryItems([multi], { ...noFilters, themes: ['why-abuse-happens'] })).toEqual(
-      [],
-    );
+    expect(filter([multi], { ...noFilters, themes: ['staying-safe'] })).toHaveLength(1);
+    expect(filter([multi], { ...noFilters, themes: ['why-abuse-happens'] })).toEqual([]);
   });
 
   it('searches the title and the description, ignoring case and surrounding space', () => {
@@ -387,9 +505,9 @@ describe('filterLibraryItems', () => {
     const boundaries = item({ id: 'boundaries', title: 'Boundaries', description: 'Feeling calm' });
     const both = [anxiety, boundaries];
 
-    expect(filterLibraryItems(both, { ...noFilters, keyword: '  ANXIETY ' })).toEqual([anxiety]);
-    expect(filterLibraryItems(both, { ...noFilters, keyword: 'calm' })).toEqual([boundaries]);
-    expect(filterLibraryItems(both, { ...noFilters, keyword: 'nothing here' })).toEqual([]);
+    expect(filter(both, { ...noFilters, keyword: '  ANXIETY ' })).toEqual([anxiety]);
+    expect(filter(both, { ...noFilters, keyword: 'calm' })).toEqual([boundaries]);
+    expect(filter(both, { ...noFilters, keyword: 'nothing here' })).toEqual([]);
   });
 
   it('puts title matches ahead of description-only ones', () => {
@@ -398,9 +516,7 @@ describe('filterLibraryItems', () => {
     const named = item({ id: 'named', title: 'What are boundaries', description: '' });
 
     expect(
-      filterLibraryItems([mentions, named], { ...noFilters, keyword: 'boundaries' }).map(
-        (i) => i.id,
-      ),
+      filter([mentions, named], { ...noFilters, keyword: 'boundaries' }).map((i) => i.id),
     ).toEqual(['named', 'mentions']);
   });
 
@@ -413,7 +529,7 @@ describe('filterLibraryItems', () => {
     const second = item({ id: 'second', title: 'Boundaries with family' });
 
     expect(
-      filterLibraryItems([first, second], { ...noFilters, keyword: 'boundaries' }).map((i) => i.id),
+      filter([first, second], { ...noFilters, keyword: 'boundaries' }).map((i) => i.id),
     ).toEqual(['first', 'second']);
   });
 });

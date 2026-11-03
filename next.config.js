@@ -1,7 +1,6 @@
 /**
  * @type {import('next').NextConfig}
  */
-const runtimeCaching = require('next-pwa/cache');
 const {
   scriptSrcUrls,
   workerSrcUrls,
@@ -15,13 +14,6 @@ const {
 } = require('./scriptUrls');
 const withNextIntl = require('next-intl/plugin')();
 
-const withPWA = require('next-pwa')({
-  dest: 'public',
-  runtimeCaching,
-  buildExcludes: ['app-build-manifest.json'],
-  disable: process.env.NODE_ENV === 'development',
-});
-
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
@@ -30,152 +22,151 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 const LOCALE_PATTERN = ':locale(en|es|de|fr|pt|hi|ar|tr)';
 
 module.exports = withBundleAnalyzer(
-  withNextIntl(
-    withPWA({
-      reactStrictMode: true,
-      compiler: {
-        emotion: true,
-      },
-      images: {
-        remotePatterns: [{ protocol: 'https', hostname: 'a.storyblok.com' }],
-      },
-      serverExternalPackages: ['newrelic'],
-      async redirects() {
-        return [
-          {
-            source: '/welcome',
-            destination: '/library',
-            permanent: false,
-          },
-          {
-            source: `/${LOCALE_PATTERN}/welcome`,
-            destination: '/:locale/library',
-            permanent: false,
-          },
-          {
-            source: '/login',
-            destination: '/library',
-            permanent: false,
-          },
-          {
-            source: `/${LOCALE_PATTERN}/login`,
-            destination: '/:locale/library',
-            permanent: false,
-          },
-          {
-            source: '/partnership/:path*',
-            destination: '/welcome/:path*',
-            permanent: true,
-          },
-          {
-            source: `/${LOCALE_PATTERN}/partnership/:path*`,
-            destination: '/:locale/welcome/:path*',
-            permanent: true,
-          },
-          {
-            source: '/chat',
-            destination: '/messaging',
-            permanent: true,
-          },
-          {
-            source: `/${LOCALE_PATTERN}/chat`,
-            destination: '/:locale/messaging',
-            permanent: true,
-          },
-          {
-            source: '/activities',
-            destination: '/library?format=activity',
-            permanent: true,
-          },
-          {
-            source: `/${LOCALE_PATTERN}/activities`,
-            destination: '/:locale/library?format=activity',
-            permanent: true,
-          },
-          // Video resources live under /video, audio under /audio; these keep older links working.
-          {
-            source: '/shorts/:slug',
-            destination: '/video/:slug',
-            permanent: true,
-          },
-          {
-            source: `/${LOCALE_PATTERN}/shorts/:slug`,
-            destination: '/:locale/video/:slug',
-            permanent: true,
-          },
-          {
-            source: '/videos/:slug',
-            destination: '/video/:slug',
-            permanent: true,
-          },
-          {
-            source: `/${LOCALE_PATTERN}/videos/:slug`,
-            destination: '/:locale/video/:slug',
-            permanent: true,
-          },
-          {
-            source: '/conversations/:slug',
-            destination: '/audio/:slug',
-            permanent: true,
-          },
-          {
-            source: `/${LOCALE_PATTERN}/conversations/:slug`,
-            destination: '/:locale/audio/:slug',
-            permanent: true,
-          },
-          {
-            source: '/about-our-courses',
-            destination: '/library',
-            permanent: false,
-          },
-          // The old Courses landing route; individual course pages are unaffected.
-          {
-            source: '/courses',
-            destination: '/library',
-            permanent: false,
-          },
-          {
-            source: `/${LOCALE_PATTERN}/courses`,
-            destination: '/:locale/library',
-            permanent: false,
-          },
-        ];
-      },
-      async rewrites() {
-        return [
-          {
-            source: '/welcome/(b|B)(a|A)(d|D)(o|O)(o|O)',
-            destination: '/welcome/badoo',
-          },
-          {
-            source: '/welcome/(b|B)(u|U)(m|M)(b|B)(l|L)(e|E)',
-            destination: '/welcome/bumble',
-          },
-          {
-            source: '/welcome/(f|F)(r|R)(u|U)(i|I)(t|T)(z|Z)',
-            destination: '/welcome/fruitz',
-          },
-        ];
-      },
-      // Content-Security-Policy Header: The Content-Security-Policy header is updated to include the necessary directives for Firebase API, Front Chat, Rollbar, SimplyBook, and Zapier.
-      // script-src: Allows scripts from the same origin, inline scripts, Google's APIs, Hotjar, Storyblok, and Front Chat.
-      // style-src: Allows styles from the same origin, inline styles, Google's Fonts API, Hotjar, and Storyblok.
-      // font-src: Allows fonts from the same origin, Google's Fonts API, and Front Chat.
-      // img-src: Allows images from the same origin, data URIs, Hotjar, Storyblok, and Front Chat.
-      // connect-src: Allows connections to the same origin, a specified API endpoint, Hotjar, Storyblok, Front Chat, Firebase, Rollbar, SimplyBook, and Zapier.
-      // frame-src: Allows frames from the same origin, Hotjar, and Storyblok.
-      // object-src: Disallows all object sources.
-      // base-uri: Restricts the base URI to the same origin.
-      // form-action: Restricts form actions to the same origin.
-      // frame-ancestors: Restricts embedding to the same origin.
-      async headers() {
-        return [
-          {
-            source: '/(.*)',
-            headers: [
-              {
-                key: 'Content-Security-Policy',
-                value: `
+  withNextIntl({
+    reactStrictMode: true,
+    compiler: {
+      emotion: true,
+    },
+    images: {
+      remotePatterns: [{ protocol: 'https', hostname: 'a.storyblok.com' }],
+    },
+    serverExternalPackages: ['newrelic'],
+    async redirects() {
+      return [
+        {
+          source: '/welcome',
+          destination: '/library',
+          permanent: false,
+        },
+        {
+          source: `/${LOCALE_PATTERN}/welcome`,
+          destination: '/:locale/library',
+          permanent: false,
+        },
+        {
+          source: '/login',
+          destination: '/library',
+          permanent: false,
+        },
+        {
+          source: `/${LOCALE_PATTERN}/login`,
+          destination: '/:locale/library',
+          permanent: false,
+        },
+        {
+          source: '/partnership/:path*',
+          destination: '/welcome/:path*',
+          permanent: true,
+        },
+        {
+          source: `/${LOCALE_PATTERN}/partnership/:path*`,
+          destination: '/:locale/welcome/:path*',
+          permanent: true,
+        },
+        {
+          source: '/chat',
+          destination: '/messaging',
+          permanent: true,
+        },
+        {
+          source: `/${LOCALE_PATTERN}/chat`,
+          destination: '/:locale/messaging',
+          permanent: true,
+        },
+        {
+          source: '/activities',
+          destination: '/library?format=activity',
+          permanent: true,
+        },
+        {
+          source: `/${LOCALE_PATTERN}/activities`,
+          destination: '/:locale/library?format=activity',
+          permanent: true,
+        },
+        // Video resources live under /video, audio under /audio; these keep older links working.
+        {
+          source: '/shorts/:slug',
+          destination: '/video/:slug',
+          permanent: true,
+        },
+        {
+          source: `/${LOCALE_PATTERN}/shorts/:slug`,
+          destination: '/:locale/video/:slug',
+          permanent: true,
+        },
+        {
+          source: '/videos/:slug',
+          destination: '/video/:slug',
+          permanent: true,
+        },
+        {
+          source: `/${LOCALE_PATTERN}/videos/:slug`,
+          destination: '/:locale/video/:slug',
+          permanent: true,
+        },
+        {
+          source: '/conversations/:slug',
+          destination: '/audio/:slug',
+          permanent: true,
+        },
+        {
+          source: `/${LOCALE_PATTERN}/conversations/:slug`,
+          destination: '/:locale/audio/:slug',
+          permanent: true,
+        },
+        {
+          source: '/about-our-courses',
+          destination: '/library',
+          permanent: false,
+        },
+        // The old Courses landing route; individual course pages are unaffected.
+        {
+          source: '/courses',
+          destination: '/library',
+          permanent: false,
+        },
+        {
+          source: `/${LOCALE_PATTERN}/courses`,
+          destination: '/:locale/library',
+          permanent: false,
+        },
+      ];
+    },
+    async rewrites() {
+      return [
+        {
+          source: '/welcome/(b|B)(a|A)(d|D)(o|O)(o|O)',
+          destination: '/welcome/badoo',
+        },
+        {
+          source: '/welcome/(b|B)(u|U)(m|M)(b|B)(l|L)(e|E)',
+          destination: '/welcome/bumble',
+        },
+        {
+          source: '/welcome/(f|F)(r|R)(u|U)(i|I)(t|T)(z|Z)',
+          destination: '/welcome/fruitz',
+        },
+      ];
+    },
+    // Content-Security-Policy Header: The Content-Security-Policy header is updated to include the necessary directives for Firebase API, Front Chat, Rollbar, SimplyBook, and Zapier.
+    // script-src: Allows scripts from the same origin, inline scripts, Google's APIs, Hotjar, Storyblok, and Front Chat.
+    // style-src: Allows styles from the same origin, inline styles, Google's Fonts API, Hotjar, and Storyblok.
+    // font-src: Allows fonts from the same origin, Google's Fonts API, and Front Chat.
+    // img-src: Allows images from the same origin, data URIs, Hotjar, Storyblok, and Front Chat.
+    // connect-src: Allows connections to the same origin, a specified API endpoint, Hotjar, Storyblok, Front Chat, Firebase, Rollbar, SimplyBook, and Zapier.
+    // frame-src: Allows frames from the same origin, Hotjar, and Storyblok.
+    // object-src: Disallows all object sources.
+    // base-uri: Restricts the base URI to the same origin.
+    // form-action: Restricts form actions to the same origin.
+    // frame-ancestors: Restricts embedding to the same origin.
+    async headers() {
+      return [
+        {
+          source: '/(.*)',
+          headers: [
+            {
+              key: 'Content-Security-Policy',
+              value: `
                   default-src 'self';
                   script-src 'self' 'unsafe-inline' ${scriptSrcUrls.join(' ')};
                   child-src 'self' blob:;
@@ -192,46 +183,45 @@ module.exports = withBundleAnalyzer(
                   frame-ancestors ${frameAncestorsUrls.join(' ')};
                   upgrade-insecure-requests;
                 `
-                  .replace(/\s{2,}/g, ' ')
-                  .trim(),
-              },
-              {
-                key: 'Referrer-Policy',
-                value: 'strict-origin-when-cross-origin',
-              },
-              {
-                key: 'X-Content-Type-Options',
-                value: 'nosniff',
-              },
-              {
-                key: 'X-Frame-Options',
-                value: 'SAMEORIGIN',
-              },
-              {
-                key: 'X-XSS-Protection',
-                value: '1; mode=block',
-              },
-              {
-                key: 'Permissions-Policy',
-                value:
-                  'camera=(), microphone=(self), geolocation=(), usb=(), bluetooth=(), payment=(), accelerometer=(), gyroscope=(), magnetometer=(), ambient-light-sensor=(), autoplay=(self "https://www.youtube-nocookie.com" "https://www.youtube.com")',
-              },
-              {
-                key: 'Cross-Origin-Opener-Policy',
-                value: 'same-origin-allow-popups',
-              },
-              ...(process.env.NODE_ENV === 'production'
-                ? [
-                    {
-                      key: 'Strict-Transport-Security',
-                      value: 'max-age=31536000; includeSubDomains; preload',
-                    },
-                  ]
-                : []),
-            ],
-          },
-        ];
-      },
-    }),
-  ),
+                .replace(/\s{2,}/g, ' ')
+                .trim(),
+            },
+            {
+              key: 'Referrer-Policy',
+              value: 'strict-origin-when-cross-origin',
+            },
+            {
+              key: 'X-Content-Type-Options',
+              value: 'nosniff',
+            },
+            {
+              key: 'X-Frame-Options',
+              value: 'SAMEORIGIN',
+            },
+            {
+              key: 'X-XSS-Protection',
+              value: '1; mode=block',
+            },
+            {
+              key: 'Permissions-Policy',
+              value:
+                'camera=(), microphone=(self), geolocation=(), usb=(), bluetooth=(), payment=(), accelerometer=(), gyroscope=(), magnetometer=(), ambient-light-sensor=(), autoplay=(self "https://www.youtube-nocookie.com" "https://www.youtube.com")',
+            },
+            {
+              key: 'Cross-Origin-Opener-Policy',
+              value: 'same-origin-allow-popups',
+            },
+            ...(process.env.NODE_ENV === 'production'
+              ? [
+                  {
+                    key: 'Strict-Transport-Security',
+                    value: 'max-age=31536000; includeSubDomains; preload',
+                  },
+                ]
+              : []),
+          ],
+        },
+      ];
+    },
+  }),
 );

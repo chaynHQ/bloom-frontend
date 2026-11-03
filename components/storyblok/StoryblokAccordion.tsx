@@ -1,6 +1,7 @@
 'use client';
 
 import { ACCORDION_OPENED } from '@/lib/constants/events';
+import { useHydratedSearchParams } from '@/lib/hooks/useHydratedSearchParams';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import logEvent from '@/lib/utils/logEvent';
 import { RichTextOptions } from '@/lib/utils/richText';
@@ -18,7 +19,6 @@ import {
 } from '@mui/material';
 import { storyblokEditable } from '@storyblok/react/rsc';
 import Image from 'next/image';
-import { useSearchParams } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
 
@@ -67,8 +67,8 @@ interface StoryblokAccordionProps {
   theme: 'primary' | 'secondary';
 }
 const StoryblokAccordion = (props: StoryblokAccordionProps) => {
-  const { _uid, _editable, accordion_items, theme } = props;
-  const searchParams = useSearchParams();
+  const { _editable, accordion_items, theme } = props;
+  const searchParams = useHydratedSearchParams();
   const isSmallScreen = useMediaQuery(muiTheme.breakpoints.down('md'));
   const headerOffset = isSmallScreen ? 48 : 136;
 
@@ -92,13 +92,16 @@ const StoryblokAccordion = (props: StoryblokAccordionProps) => {
   }, [headerOffset, accordionInUrl]);
 
   return (
-    <Box sx={containerStyle} {...storyblokEditable({ _uid, _editable, accordion_items, theme })}>
+    <Box sx={containerStyle} {...storyblokEditable({ _editable })}>
       {accordion_items.map((ai, i) => (
         <Accordion
           data-testid="accordion-item"
           id={ai.accordion_id ?? undefined}
           ref={ai.accordion_id === accordionInUrl ? scrollRef : undefined}
-          key={`panel${i}`}
+          // defaultExpanded is read on mount only, and ?openacc= is known after hydration.
+          key={
+            accordionInUrl && ai.accordion_id === accordionInUrl ? `panel${i}-open` : `panel${i}`
+          }
           defaultExpanded={accordionInUrl === ai.accordion_id}
           onChange={handleChange(ai.title)}
           sx={themes[theme]}

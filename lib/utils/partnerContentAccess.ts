@@ -27,11 +27,30 @@ interface FilterableStory {
   content?: Record<string, any> | null;
 }
 
+// Whether a signed-out visitor, and so a search engine, can open a story: content pages only open
+// partner-only content to that partner's members. Session pages gate on their course's partners.
+// Mirrors the pages' gate (hasAccessToPage), where an empty list is closed to signed-out visitors,
+// not the library listing's filter, where it means everyone.
+export function isPublicContent(includedForPartners: string[] | undefined): boolean {
+  return (includedForPartners ?? []).some((partner) => partner.toLowerCase() === 'public');
+}
+
 // A story's `languages` must include the locale (English is Storyblok's `default`); a story with
 // none set is treated as source-language English.
 export function storyAvailableInLocale(languages: string[] | undefined, locale: string): boolean {
   const contentLanguage = locale === 'en' ? 'default' : locale;
   return languages?.length ? languages.includes(contentLanguage) : contentLanguage === 'default';
+}
+
+// Arabic and Turkish aren't offered to partner audiences yet: AuthGuard blocks those locales for
+// partner viewers and the language menu hides them.
+const PARTNER_RESTRICTED_LOCALES = ['ar', 'tr'];
+
+export function localeOpenToPartners(locale: string, userPartners: string[]): boolean {
+  return (
+    !PARTNER_RESTRICTED_LOCALES.includes(locale) ||
+    userPartners.every((partner) => partner.toLowerCase() === 'public')
+  );
 }
 
 // Whether a story is visible to a viewer in the given locale (see `storyAvailableInLocale`) and its

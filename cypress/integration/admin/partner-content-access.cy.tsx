@@ -18,10 +18,11 @@ describe('users signing up through partner channels can properly access partner-
     cy.contains('[qa-id=library-card]', title).should('exist');
   };
 
+  // Search falls back to partial matches, so other items sharing a word with the title can appear.
   const expectNotFound = (title: string) => {
     searchLibraryFor(title);
-    cy.get('[qa-id=library-results-count]').should('contain', '0 results');
-    cy.get('[qa-id=library-card]').should('not.exist');
+    cy.get('[qa-id=library-results-count]').should('be.visible');
+    cy.contains('[qa-id=library-card]', title).should('not.exist');
   };
 
   beforeEach(() => {
@@ -35,7 +36,7 @@ describe('users signing up through partner channels can properly access partner-
     cy.visit('/welcome/bumble');
     cy.get('a', { timeout: 8000 }).contains('Get started').click();
     cy.wait(2000); // waiting for dom to rerender
-    cy.get('h2', { timeout: 8000 }).should('contain', 'Create account');
+    cy.get('h1', { timeout: 8000 }).should('contain', 'Create account');
     cy.get('#name').type('Cypress test');
     cy.get('#email').type(username_partner);
     cy.get('#password').type('testpassword');

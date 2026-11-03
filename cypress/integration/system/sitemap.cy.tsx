@@ -1,6 +1,7 @@
 describe('Sitemap should have', () => {
   const SITEMAP_URL = '/sitemap.xml';
-  const BLOOM_URL = 'https://bloom.chayn.co';
+  // The sitemap lists URLs on the origin the app is served from.
+  const BLOOM_URL = Cypress.config('baseUrl');
   before(() => {
     cy.cleanUpTestState();
   });

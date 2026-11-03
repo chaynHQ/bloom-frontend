@@ -24,7 +24,7 @@ Additional Resources:
 
 ## Prerequisites
 
-- NodeJS 22.x
+- NodeJS 24.x (24.12 or later, required by Firebase 13)
 - Yarn v1.x
 
 #### Recommended Minimum System Requirements:

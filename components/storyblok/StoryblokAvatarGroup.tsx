@@ -26,7 +26,6 @@ export interface StoryblokAvatarGroupProps {
 
 const StoryblokAvatarGroup = (props: StoryblokAvatarGroupProps) => {
   const {
-    _uid,
     _editable,
     images,
     size = 'medium',
@@ -42,7 +41,7 @@ const StoryblokAvatarGroup = (props: StoryblokAvatarGroupProps) => {
   if (!avatars.length) return <></>;
 
   return (
-    <Box {...storyblokEditable({ _uid, _editable, images, size, layout, alignment, separate })}>
+    <Box {...storyblokEditable({ _editable })}>
       <AvatarGroup
         avatars={avatars}
         size={size}

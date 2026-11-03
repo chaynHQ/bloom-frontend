@@ -4,6 +4,7 @@ import RegisterForm, { PartnerRegisterForm } from '@/components/forms/RegisterFo
 import PartnerHeader from '@/components/layout/PartnerHeader';
 import { Link as i18nLink, useRouter } from '@/i18n/routing';
 import { generatePartnershipPromoLogoClick, REGISTER_VIEWED } from '@/lib/constants/events';
+import { useHydratedSearchParams } from '@/lib/hooks/useHydratedSearchParams';
 import { useLogEventOnce } from '@/lib/hooks/useLogEventOnce';
 import { getAllPartnersContent, getPartnerContent } from '@/lib/constants/partners';
 import { useTypedSelector } from '@/lib/hooks/store';
@@ -26,7 +27,6 @@ import {
 } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { useSearchParams } from 'next/navigation';
 import { useEffect, useMemo, useRef } from 'react';
 
 const containerStyle = {
@@ -75,17 +75,21 @@ export default function RegisterPage() {
   const t = useTranslations('Auth');
   const tS = useTranslations('Shared');
   const router = useRouter();
-  const searchParams = useSearchParams();
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
   const entryPartnerAccessCode = useTypedSelector((state) => state.user.entryPartnerAccessCode);
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
+  const searchParams = useHydratedSearchParams();
   useReferralPartner();
 
-  const code = searchParams.get('code');
-  const partner = searchParams.get('partner');
+  const code = searchParams?.get('code');
+  const partner = searchParams?.get('partner');
 
-  useLogEventOnce(REGISTER_VIEWED, { register_partner: partner || entryPartnerReferral || null });
+  useLogEventOnce(
+    REGISTER_VIEWED,
+    { register_partner: partner || entryPartnerReferral || null },
+    searchParams !== null,
+  );
 
   // Derive partner content and code param from URL and state.
   // Prefer an explicit ?partner query, else fall back to a referral captured on entry
@@ -231,7 +235,7 @@ export default function RegisterPage() {
         <Box sx={cardContainerStyle}>
           <Card>
             <CardContent>
-              <Typography variant="h2" component="h2">
+              <Typography variant="h2" component="h1">
                 {t('register.title')}
               </Typography>
 

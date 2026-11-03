@@ -4,10 +4,7 @@ describe('Therapy Usage', () => {
 
   before(() => {
     // create a partner access code with therapy
-    cy.logInWithEmailAndPassword(
-      Cypress.env('CYPRESS_BUMBLE_PARTNER_ADMIN_EMAIL'),
-      Cypress.env('CYPRESS_BUMBLE_PARTNER_ADMIN_PASSWORD'),
-    );
+    cy.logInAsTestAccount('BUMBLE_PARTNER_ADMIN');
     cy.visit('/partner-admin/create-access-code');
     cy.waitForAuthenticatedApp();
     cy.get('input[type="radio"]').should('exist').check('therapy'); //select radio button on form
@@ -147,7 +144,9 @@ describe('Therapy Usage', () => {
       .contains('Therapist: Test Therapist')
       .should('be.visible');
     cy.get('[data-testid="therapy-booking-item"] > div[aria-expanded="true"]').click();
-    cy.get('[data-testid="therapy-booking-item"]').contains('Date:').should('not.be.visible');
+    // The details unmount on collapse (unmountOnExit), so check they're gone rather than hidden.
+    cy.get('[data-testid="therapy-booking-item"] > div[aria-expanded="false"]').should('exist');
+    cy.get('[data-testid="therapy-booking-item"]').should('not.contain', 'Date:');
   });
 
   it('Should open and close the cancel confirmation dialog for an Upcoming therapy session', () => {

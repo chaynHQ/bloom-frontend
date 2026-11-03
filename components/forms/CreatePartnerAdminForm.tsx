@@ -10,7 +10,6 @@ import {
 import { useTypedSelector } from '@/lib/hooks/store';
 import { getErrorMessage } from '@/lib/utils/errorMessage';
 import logEvent from '@/lib/utils/logEvent';
-import LoadingButton from '@mui/lab/LoadingButton';
 import { Box, Button, MenuItem, Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
@@ -148,9 +147,9 @@ const CreatePartnerAdminForm = () => {
           {formError}
         </Typography>
       )}
-      <LoadingButton variant="contained" color="secondary" type="submit" loading={loading}>
+      <Button variant="contained" color="secondary" type="submit" loading={loading}>
         {t('title')}
-      </LoadingButton>
+      </Button>
     </form>
   );
 };

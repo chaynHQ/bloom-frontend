@@ -21,6 +21,7 @@ import { getPartnerContent } from '@/lib/constants/partners';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { useFeaturedLibraryItems } from '@/lib/hooks/useFeaturedLibraryItems';
 import { useLibrarySectionEvents } from '@/lib/hooks/useLibrarySectionEvents';
+import { useHydratedSearchParams } from '@/lib/hooks/useHydratedSearchParams';
 import { useLogEventOnce } from '@/lib/hooks/useLogEventOnce';
 import useReferralPartner from '@/lib/hooks/useReferralPartner';
 import { useUserAuthStatus } from '@/lib/hooks/useUserAuthStatus';
@@ -35,7 +36,6 @@ import { Box, Button, Typography } from '@mui/material';
 import { useStoryblokState } from '@storyblok/react';
 import { ISbStoryData, SbBlokData } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
-import { useSearchParams } from 'next/navigation';
 import { useEffect, useMemo, useRef } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
 
@@ -56,7 +56,7 @@ export default function WelcomePage({ story: initialStory, libraryStories, partn
 
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const searchParams = useHydratedSearchParams();
   useReferralPartner();
 
   const userId = useTypedSelector((state) => state.user.id);
@@ -72,8 +72,8 @@ export default function WelcomePage({ story: initialStory, libraryStories, partn
   const partnerSlug = partnerName.toLowerCase();
   const content = story.content;
 
-  const code = searchParams.get('code');
-  const partner = searchParams.get('partner');
+  const code = searchParams?.get('code');
+  const partner = searchParams?.get('partner');
   const entryCode = entryPartnerReferral === partnerSlug ? entryPartnerAccessCode : '';
   const accessCode = code || entryCode;
 
@@ -88,10 +88,10 @@ export default function WelcomePage({ story: initialStory, libraryStories, partn
   // Entry code in state, add to url query in case of refresh
   const urlUpdated = useRef(false);
   useEffect(() => {
-    if (code || !entryCode || urlUpdated.current) return;
+    if (!searchParams || code || !entryCode || urlUpdated.current) return;
     urlUpdated.current = true;
     router.push({ pathname, query: { code: entryCode, partner } });
-  }, [router, pathname, partner, code, entryCode]);
+  }, [router, pathname, searchParams, partner, code, entryCode]);
 
   const registerPath = `/auth/register?partner=${partnerSlug}${accessCode ? `&code=${accessCode}` : ''}`;
 

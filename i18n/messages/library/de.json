@@ -1,11 +1,5 @@
 {
   "Library": {
-    "metadata": {
-      "title": "Bibliothek",
-      "description": "Entdecke Bloom-Kurse und einzelne Sessions an einem Ort."
-    },
-    "title": "Erkunde unsere Bibliothek",
-    "introduction": "Sessions und Kurse von Bloom, die dir helfen, zu lernen, nachzudenken und deine Erfahrungen zu verarbeiten – in einem sicheren und stärkenden Raum.",
     "exploreByTheme": "Nach Thema erkunden",
     "filterHeading": "Bibliothek filtern",
     "filterButtonLabel": "Filter",

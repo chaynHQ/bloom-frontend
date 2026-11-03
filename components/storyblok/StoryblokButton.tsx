@@ -24,7 +24,6 @@ interface StoryblokButtonProps {
 
 const StoryblokButton = (props: StoryblokButtonProps) => {
   const {
-    _uid,
     _editable,
     text,
     color = 'secondary.main',
@@ -38,7 +37,7 @@ const StoryblokButton = (props: StoryblokButtonProps) => {
   const { muiColor, sx } = getButtonStyleProps(color, variant);
 
   return (
-    <Box {...storyblokEditable({ _uid, _editable, text, color, link, size, variant })}>
+    <Box {...storyblokEditable({ _editable })}>
       <Button
         sx={{ marginY: 2, ...sx }}
         variant={variant}

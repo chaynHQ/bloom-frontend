@@ -10,7 +10,6 @@ import {
 import { useTypedSelector } from '@/lib/hooks/store';
 import { getErrorMessage } from '@/lib/utils/errorMessage';
 import logEvent from '@/lib/utils/logEvent';
-import LoadingButton from '@mui/lab/LoadingButton';
 import { Box, Button, MenuItem, Typography } from '@mui/material';
 import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
@@ -152,7 +151,7 @@ const UpdatePartnerActiveForm = () => {
         </Typography>
       )}
       {selectedPartner && isActive !== null && (
-        <LoadingButton
+        <Button
           variant="contained"
           color={isActive ? 'error' : 'secondary'}
           type="submit"
@@ -160,7 +159,7 @@ const UpdatePartnerActiveForm = () => {
           sx={{ mt: 2 }}
         >
           {t.rich(isActive ? 'activeLabel' : 'inactiveLabel', { partner: selectedPartnerName })}
-        </LoadingButton>
+        </Button>
       )}
     </form>
   );

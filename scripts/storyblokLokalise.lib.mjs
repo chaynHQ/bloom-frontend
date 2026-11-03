@@ -39,11 +39,17 @@ export const ALL_LANGS = ['de', 'fr', 'es', 'pt', 'hi', 'ar', 'tr'];
 
 /* ----------------------------- scope ----------------------------- */
 
-// Media-bearing content whose video/audio is not localised for these locales. Excluded by
-// slug prefix AND by root component (defence in depth). Mirrors translateStoryblok.mjs.
-// `activity/` and `grounding/` exercises ARE in scope — their embedded audio just falls
-// back to English.
-export const EXCLUDED_PREFIXES = ['courses/', 'video/', 'audio/', 'written/'];
+// Excluded by slug prefix AND by root component (defence in depth): courses, sessions and
+// resources (their media isn't localised), and grounding + activity pages (their text is
+// human-translated from Chayn's source documents and matches the narrated audio).
+export const EXCLUDED_PREFIXES = [
+  'courses/',
+  'video/',
+  'audio/',
+  'written/',
+  'grounding/',
+  'activity/',
+];
 export const EXCLUDED_COMPONENTS = new Set([
   'course',
   'Course',
@@ -54,6 +60,9 @@ export const EXCLUDED_COMPONENTS = new Set([
   'resource_video',
   'resource_audio',
   'resource_written',
+  'resource_grounding',
+  'resource_activity',
+  'grounding_page',
 ]);
 
 export function isStoryExcluded(story) {

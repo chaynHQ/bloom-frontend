@@ -73,18 +73,14 @@ export const StoryblokTextResourcePage = ({
   });
 
   const {
-    _uid,
     _editable,
     name,
     description,
     header_image,
     body,
-    login_required,
     team_members_section,
     page_sections,
     related_content,
-    related_grounding,
-    related_session,
   } = content;
 
   // Reading the page is the only engagement signal, so progress starts as soon as it's viewed.
@@ -101,21 +97,7 @@ export const StoryblokTextResourcePage = ({
   }
 
   return (
-    <Box
-      {...storyblokEditable({
-        _uid,
-        _editable,
-        name,
-        description,
-        body,
-        login_required,
-        team_members_section,
-        page_sections,
-        related_content,
-        related_grounding,
-        related_session,
-      })}
-    >
+    <Box {...storyblokEditable({ _editable })}>
       <ResourcePageLayout
         format={format}
         name={name}

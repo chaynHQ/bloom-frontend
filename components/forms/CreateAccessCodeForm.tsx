@@ -12,7 +12,6 @@ import {
 import { useTypedSelector } from '@/lib/hooks/store';
 import { getErrorMessage } from '@/lib/utils/errorMessage';
 import logEvent from '@/lib/utils/logEvent';
-import LoadingButton from '@mui/lab/LoadingButton';
 import {
   Box,
   Button,
@@ -169,9 +168,9 @@ const CreateAccessCodeForm = () => {
           {formError}
         </Typography>
       )}
-      <LoadingButton variant="contained" color="secondary" type="submit" loading={loading}>
+      <Button variant="contained" color="secondary" type="submit" loading={loading}>
         {t('title')}
-      </LoadingButton>
+      </Button>
     </form>
   );
 };

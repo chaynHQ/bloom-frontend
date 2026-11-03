@@ -22,7 +22,7 @@ export interface StoryblokPageProps {
 
 const StoryblokPage = ({ story: initialStory }: { story: ISbStoryData }) => {
   const story = useStoryblokState(initialStory) ?? initialStory;
-  const { _uid, _editable, title, description, header_image, page_sections } =
+  const { _editable, title, description, header_image, page_sections } =
     story.content as StoryblokPageProps;
 
   const userId = useTypedSelector((state) => state.user.id);
@@ -41,9 +41,7 @@ const StoryblokPage = ({ story: initialStory }: { story: ISbStoryData }) => {
   const isFullyPublicPage = pathname.startsWith('/policies');
 
   return (
-    <main
-      {...storyblokEditable({ _uid, _editable, title, description, header_image, page_sections })}
-    >
+    <main {...storyblokEditable({ _editable })}>
       <Header
         title={headerProps.title}
         introduction={headerProps.introduction}

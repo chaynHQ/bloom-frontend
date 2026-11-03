@@ -16,8 +16,8 @@ import { useTypedSelector } from '@/lib/hooks/store';
 import logEvent from '@/lib/utils/logEvent';
 import { rowStyle } from '@/styles/common';
 import { CheckCircleOutlined } from '@mui/icons-material';
-import { LoadingButton } from '@mui/lab';
 import {
+  Button,
   FormControl,
   FormControlLabel,
   FormLabel,
@@ -162,7 +162,7 @@ const EmailRemindersSettingsForm = () => {
         </Typography>
       )}
       {showUpdateLaterMessage && <Typography variant="body2">{t('update')}</Typography>}
-      <LoadingButton
+      <Button
         qa-id="email-reminders-settings-submit"
         sx={{ mt: 3 }}
         variant="contained"
@@ -174,7 +174,7 @@ const EmailRemindersSettingsForm = () => {
         disabled={!selectedInput}
       >
         {t('submitLabel')}
-      </LoadingButton>
+      </Button>
     </form>
   );
 };

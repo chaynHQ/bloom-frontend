@@ -7,8 +7,15 @@ import logEvent from '@/lib/utils/logEvent';
 import { ResourceFeedback } from '@/lib/store/resourcesSlice';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import illustrationPerson4Peach from '@/public/illustration_person4_peach.svg';
-import LoadingButton from '@mui/lab/LoadingButton';
-import { Box, FormControl, FormControlLabel, Radio, RadioGroup, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  FormControl,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+  Typography,
+} from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import * as React from 'react';
@@ -140,15 +147,9 @@ const ResourceFeedbackForm = (props: ResourceFeedbackFormProps) => {
 
         {formError && <Typography sx={{ color: 'error.main', mb: 2 }}>{formError}</Typography>}
 
-        <LoadingButton
-          variant="contained"
-          color="error"
-          type="submit"
-          loading={loading}
-          sx={{ mt: 1 }}
-        >
+        <Button variant="contained" color="error" type="submit" loading={loading} sx={{ mt: 1 }}>
           {t('sendButtonText')}
-        </LoadingButton>
+        </Button>
       </form>
     </>
   );

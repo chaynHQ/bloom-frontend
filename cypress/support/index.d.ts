@@ -39,6 +39,9 @@ declare namespace Cypress {
     getAuthEmail(): Chainable<Element>;
     clearUserState(): Chainable<Element>;
     logInWithEmailAndPassword(email: string, password: string): Chainable<Element>;
+    logInAsTestAccount(
+      account: 'SUPER_ADMIN' | 'BUMBLE_PARTNER_ADMIN' | 'BADOO_PARTNER_ADMIN' | 'PUBLIC',
+    ): Chainable<Element>;
     logout(): Chainable<Element>;
     deleteAllCypressUsers(): Chainable<Element>;
     cleanUpTestState(): Chainable<Element>;

@@ -46,8 +46,13 @@ describe('Library page', () => {
         'aria-pressed',
         'true',
       );
-      // Every visible card carries the selected theme in its eyebrow.
-      cards().each(($card) => expect($card.text()).to.contain('Setting boundaries'));
+      // Course sessions name their course in the eyebrow; every other card carries the theme.
+      cards().filter(':contains("Setting boundaries")').should('have.length.greaterThan', 0);
+      cards().each(($card) => {
+        const isCourseSession =
+          $card.attr('data-kind') === 'session' && $card.find('a[href*="/courses/"]').length > 0;
+        if (!isCourseSession) expect($card.text()).to.contain('Setting boundaries');
+      });
     });
 
     it('opens on the Courses tab from a ?type=course deep link', () => {
@@ -152,8 +157,12 @@ describe('Library page', () => {
         expectCount((count) => expect(count).to.be.lessThan(all));
         cy.get('a[aria-label="What is somatics?"]').should('exist');
 
-        // Somatics content is all single sessions.
+        // The kind filter narrows the search results rather than replacing them.
         cy.get('[qa-id=library-kind-course]').click();
+        cy.get('a[aria-label="What is somatics?"]').should('not.exist');
+        cy.get('[qa-id=library-card][data-kind=session]').should('not.exist');
+
+        cy.get('[qa-id=library-search-input]').clear().type('zzzznotarealtopic');
         cy.contains('No matches for those filters').should('be.visible');
         cards().should('have.length', 0);
 
@@ -181,13 +190,11 @@ describe('Library page', () => {
       cards()
         .first()
         .should('have.attr', 'data-kind', 'session')
-        .find('a[href*="/courses/"]')
+        .find('a[href*="/courses/recovering-from-toxic-and-abusive-relationships/"]')
         .should('exist');
 
-      // Course lessons have no duration, so they name their course where a session reports length.
-      cards()
-        .first()
-        .should('contain', 'Part of course: Recovering from toxic and abusive relationships');
+      // The lesson has a duration, so its card shows that rather than its course name.
+      cards().first().should('contain', '21 min').and('not.contain', 'Part of course');
     });
   });
 

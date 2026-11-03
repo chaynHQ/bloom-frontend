@@ -19,7 +19,6 @@ export interface StoryblokQuoteCardProps {
 
 const StoryblokQuoteCard = (props: StoryblokQuoteCardProps) => {
   const {
-    _uid,
     _editable,
     text,
     attribution,
@@ -30,10 +29,7 @@ const StoryblokQuoteCard = (props: StoryblokQuoteCardProps) => {
   if (!text) return <></>;
 
   return (
-    <Box
-      {...storyblokEditable({ _uid, _editable, text, attribution, text_size, background })}
-      sx={{ mb: 2, '&:last-of-type': { mb: 0 } }}
-    >
+    <Box {...storyblokEditable({ _editable })} sx={{ mb: 2, '&:last-of-type': { mb: 0 } }}>
       <ScrollReveal fill>
         <QuoteCard
           text={render(text, RichTextOptions)}

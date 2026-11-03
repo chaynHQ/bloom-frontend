@@ -7,8 +7,7 @@ import { ErrorDisplay, FEEDBACK_FORM_URL } from '@/lib/constants/common';
 import { UPDATE_USER_ALREADY_EXISTS } from '@/lib/constants/errors';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { CheckCircleOutlined } from '@mui/icons-material';
-import { LoadingButton } from '@mui/lab';
-import { Box, Link, Typography } from '@mui/material';
+import { Box, Button, Link, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import ConfirmDialog from './ConfirmDialog';
@@ -121,7 +120,7 @@ const ProfileSettingsForm = () => {
             {error}
           </Typography>
         )}
-        <LoadingButton
+        <Button
           id="profile-settings-submit"
           sx={{ mt: 1 }}
           variant="contained"
@@ -135,7 +134,7 @@ const ProfileSettingsForm = () => {
           disabled={isSuccess || !diffExists}
         >
           {t('profileSettings.submitLabel')}
-        </LoadingButton>
+        </Button>
         <ConfirmDialog
           title={t('profileSettings.confirmDialogTitle')}
           cancelLabel={t('profileSettings.confirmDialogCancel')}

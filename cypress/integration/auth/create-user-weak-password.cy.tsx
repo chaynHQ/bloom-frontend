@@ -14,7 +14,7 @@ describe('Create User', () => {
     // TODO - workout why #primary-get-started-button works locallly and headless but not in github actions
     cy.get('a[href="/auth/register"]').first().click({ force: true });
     cy.wait(2000);
-    cy.get('h2').should('contain', 'Create account');
+    cy.get('h1').should('contain', 'Create account');
     cy.get('#name').type('Cypress test');
     cy.get('#email').type(username);
     cy.get('#password').type('123');
