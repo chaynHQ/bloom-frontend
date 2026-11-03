@@ -64,7 +64,7 @@ export interface StoryblokCoursePageProps {
   video: { url: string };
   video_transcript: StoryblokRichtext;
   weeks: { name: string; sessions: any }[]; // TODO: replace type with StoryblokSessionPageProps
-  // A modular course's resources (video, audio, written), in order; replaces `weeks`.
+  // The resources this language lists, in order. Empty for a course built from weeks.
   sessions?: ISbStoryData[];
   included_for_partners: string[];
   languages: string[];

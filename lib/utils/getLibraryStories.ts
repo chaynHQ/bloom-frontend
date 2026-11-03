@@ -82,7 +82,8 @@ export async function getCourseStories(locale: string): Promise<LibraryStory[]> 
   return sortByFolderPosition(stories, folderLinks).map(toLibraryStory);
 }
 
-// Read by every video, audio and written page for its "Part of" links; cached per locale to stay
+// Read by the video, audio and written pages for their "Part of" links, and by the course resource
+// route for its static params and labels; cached per locale to stay
 // under Storyblok's rate limit during builds.
 export const getCachedCourseStories = unstable_cache(
   getCourseStories,
