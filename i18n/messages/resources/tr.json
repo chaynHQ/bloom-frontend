@@ -86,7 +86,7 @@
     },
     "backToSessions": "Bölümlere dön",
     "backToLibrary": "Kütüphaneye dön",
-    "partOf": "Part of:",
+    "partOf": "Yer aldığı kurslar:",
     "alsoPartOfCourses": "Bu bölüm şu {count, plural, one {kursta} other {kurslarda}} da yer alıyor:",
     "grounding": {
       "close": "Kapat",

@@ -34,7 +34,7 @@
     "courseDuration": "حوالي {hours} ساعة و{minutes} دقيقة",
     "courseDurationHoursOnly": "حوالي {hours} ساعة",
     "partOfCourse": "جزء من دورة تدريبية: {course}",
-    "partOfCourses": "Part of {count} courses",
+    "partOfCourses": "جزء من {count, plural, zero {# دورات تدريبية} one {دورة تدريبية واحدة} two {دورتين تدريبيتين} few {# دورات تدريبية} many {# دورة تدريبية} other {# دورة تدريبية}}",
     "accountNeeded": "تحتاجون إلى حساب",
     "loadMore": "عرض المزيد",
     "noResults": {
