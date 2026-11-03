@@ -9,11 +9,11 @@ import {
 } from '@reduxjs/toolkit/query/react';
 import { getAuthToken } from './auth';
 import { RootState } from './store';
-import { Course, Courses, SessionFeedback } from './store/coursesSlice';
+import { Courses, SessionFeedback, SessionProgressResponse } from './store/coursesSlice';
 import { PartnerAccess, PartnerAccesses } from './store/partnerAccessSlice';
 import { PartnerAdmin } from './store/partnerAdminSlice';
 import { Partner, PartnerFeature } from './store/partnersSlice';
-import { Resource, ResourceFeedback, Resources } from './store/resourcesSlice';
+import { ResourceFeedback, ResourceProgressResponse, Resources } from './store/resourcesSlice';
 import { TherapySession, TherapySessions } from './store/therapySessionsSlice';
 import { setUserToken, Subscription, Subscriptions, User } from './store/userSlice';
 import { API_URL } from './constants/common';
@@ -29,6 +29,11 @@ export interface GetUserResponse {
 
 interface StoryblokUuidActionPayload {
   storyblokUuid: string;
+}
+
+interface ResourceProgressPayload extends StoryblokUuidActionPayload {
+  // The modular course the resource was opened in, if any.
+  courseStoryblokUuid?: string;
 }
 
 interface WhatsappUnsubscribePayload {
@@ -172,7 +177,7 @@ export const api = createApi({
         };
       },
     }),
-    startSession: builder.mutation<Course, StoryblokUuidActionPayload>({
+    startSession: builder.mutation<SessionProgressResponse, StoryblokUuidActionPayload>({
       query(body) {
         return {
           url: 'session-user',
@@ -181,7 +186,7 @@ export const api = createApi({
         };
       },
     }),
-    completeSession: builder.mutation<Course, StoryblokUuidActionPayload>({
+    completeSession: builder.mutation<SessionProgressResponse, StoryblokUuidActionPayload>({
       query(body) {
         return {
           url: 'session-user/complete',
@@ -191,7 +196,7 @@ export const api = createApi({
       },
       invalidatesTags: [{ type: 'UserCourses' }],
     }),
-    startResource: builder.mutation<Resource, StoryblokUuidActionPayload>({
+    startResource: builder.mutation<ResourceProgressResponse, ResourceProgressPayload>({
       query(body) {
         return {
           url: 'resource-user',
@@ -199,8 +204,12 @@ export const api = createApi({
           body,
         };
       },
+      // Starting a resource inside a course can start that course.
+      invalidatesTags: (_result, _error, { courseStoryblokUuid }) =>
+        courseStoryblokUuid ? [{ type: 'UserCourses' }] : [],
     }),
-    completeResource: builder.mutation<Resource, StoryblokUuidActionPayload>({
+    // Completing a resource anywhere can complete a course it belongs to.
+    completeResource: builder.mutation<ResourceProgressResponse, ResourceProgressPayload>({
       query(body) {
         return {
           url: 'resource-user/complete',
@@ -208,6 +217,7 @@ export const api = createApi({
           body,
         };
       },
+      invalidatesTags: [{ type: 'UserCourses' }],
     }),
     addPartnerAdmin: builder.mutation<
       PartnerAdmin,

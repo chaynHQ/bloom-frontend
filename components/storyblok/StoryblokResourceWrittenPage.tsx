@@ -2,6 +2,7 @@
 
 import { RESOURCE_CATEGORIES } from '@/lib/constants/enums';
 import { RESOURCE_WRITTEN_VIEWED } from '@/lib/constants/events';
+import { type ResourcePageContextProps } from '@/lib/hooks/useStoryblokResourcePage';
 import { ISbStoryData, SbBlokData } from '@storyblok/react/rsc';
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 import { StoryblokRelatedContentStory } from './StoryblokRelatedContent';
@@ -28,8 +29,12 @@ export interface StoryblokResourceWrittenPageProps {
   included_for_partners: string[];
 }
 
-const StoryblokResourceWrittenPage = ({ story }: { story: ISbStoryData }) => (
+const StoryblokResourceWrittenPage = ({
+  story,
+  ...context
+}: { story: ISbStoryData } & ResourcePageContextProps) => (
   <StoryblokTextResourcePage
+    {...context}
     initialStory={story}
     format="written"
     category={RESOURCE_CATEGORIES.WRITTEN}

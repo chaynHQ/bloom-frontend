@@ -171,7 +171,7 @@ export function createLibrarySearch(
         id: item.id,
         title: item.title,
         keywords: item.keywords ?? '',
-        courseTitle: item.courseTitle ?? '',
+        courseTitle: [item.courseTitle, ...(item.courseTitles ?? [])].filter(Boolean).join(' '),
         description: [item.description, item.seoDescription].filter(Boolean).join(' '),
         themes: labels.themes.join(' '),
         format: labels.format,

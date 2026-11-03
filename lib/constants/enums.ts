@@ -25,6 +25,7 @@ export enum RESOURCE_CATEGORIES {
   AUDIO = 'audio',
   WRITTEN = 'written',
   ACTIVITY = 'activity',
+  GROUNDING = 'grounding',
 }
 
 export enum EXERCISE_CATEGORIES {

@@ -60,7 +60,7 @@ Bloom is white-labelled for partners (Bumble, Badoo, Fruitz, etc.). A user's `pa
 
 ### Content: Storyblok CMS
 
-All course, session, page, and resource content comes from Storyblok. `lib/storyblok.ts` registers all Storyblok component mappings (e.g. `course` → `StoryblokCoursePage`). Dynamic `[slug]` pages fetch and render Storyblok stories. Images are only allowed from `a.storyblok.com`.
+All course, session, page, and resource content comes from Storyblok. `lib/storyblok.ts` registers all Storyblok component mappings (e.g. `course` → `StoryblokCoursePage`). Dynamic `[slug]` pages fetch and render Storyblok stories. Images are only allowed from `a.storyblok.com`. Courses, sessions and resources (weeks vs resource lists, per language) are explained in `docs/courses-sessions-and-resources.md`.
 
 ### Layout & Providers
 

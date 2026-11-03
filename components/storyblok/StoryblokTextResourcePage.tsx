@@ -6,6 +6,7 @@ import { RESOURCE_CATEGORIES } from '@/lib/constants/enums';
 import { type ResourceEventPrefix } from '@/lib/hooks/useResourceProgress';
 import {
   useStoryblokResourcePage,
+  type ResourcePageContextProps,
   type ResourceStoryContent,
 } from '@/lib/hooks/useStoryblokResourcePage';
 import { type ContentType } from '@/lib/utils/libraryData';
@@ -19,7 +20,8 @@ import { StoryblokTeamMembersSectionProps } from './StoryblokTeamMembersSection'
 
 // The `resource_written` and `resource_activity` blocks are identical in shape: a rich-text `body`
 // rendered as the media, no transcript, and progress that starts on view (there's no play event
-// to hook it to). They differ only in the category/events they report under.
+// to hook it to). They differ only in the category/events they report under. A
+// `resource_grounding` exercise is a subset of that shape, shown this way inside a course.
 export interface TextResourceContent extends ResourceStoryContent {
   _uid: string;
   _editable: string;
@@ -34,7 +36,7 @@ export interface TextResourceContent extends ResourceStoryContent {
   related_grounding: ISbStoryData[];
 }
 
-interface StoryblokTextResourcePageProps {
+interface StoryblokTextResourcePageProps extends ResourcePageContextProps {
   initialStory: ISbStoryData;
   format: ContentType;
   category: RESOURCE_CATEGORIES;
@@ -48,6 +50,8 @@ export const StoryblokTextResourcePage = ({
   category,
   eventPrefix,
   viewedEvent,
+  courseContext,
+  partOfCourseStories,
 }: StoryblokTextResourcePageProps) => {
   const {
     content,
@@ -63,6 +67,8 @@ export const StoryblokTextResourcePage = ({
     relatedSessionHref,
     relatedSessionName,
     userContentPartners,
+    courseNav,
+    partOfCourses,
     start,
     complete,
   } = useStoryblokResourcePage<TextResourceContent>({
@@ -70,6 +76,8 @@ export const StoryblokTextResourcePage = ({
     category,
     eventPrefix,
     viewedEvent,
+    courseContext,
+    partOfCourseStories,
   });
 
   const {
@@ -81,6 +89,8 @@ export const StoryblokTextResourcePage = ({
     team_members_section,
     page_sections,
     related_content,
+    activity,
+    bonus,
   } = content;
 
   // Reading the page is the only engagement signal, so progress starts as soon as it's viewed.
@@ -120,6 +130,10 @@ export const StoryblokTextResourcePage = ({
         userContentPartners={userContentPartners}
         relatedSessionHref={relatedSessionHref}
         relatedSessionName={relatedSessionName}
+        activity={activity}
+        bonus={bonus}
+        partOfCourses={partOfCourses}
+        courseNav={courseNav}
         media={<Box>{render(body, RichTextOptions)}</Box>}
       />
     </Box>

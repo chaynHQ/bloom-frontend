@@ -158,3 +158,30 @@ export const getStoryblokStories = async (
     rollbar.error('Error getting storyblok data for page', error as Error, { sbParams });
   }
 };
+
+// Storyblok only resolves `Course.sessions` when the default language lists resources too, so a
+// course that keeps its weeks in English and lists resources in another language gets bare uuids
+// there. Those resources are fetched here; any not found (unpublished) stay uuids and are skipped.
+export const resolveCourseResources = async (
+  course: ISbStoryData | undefined,
+  locale: string,
+): Promise<ISbStoryData | undefined> => {
+  const sessions: unknown[] | undefined = course?.content?.sessions;
+  const uuids = (sessions ?? []).filter((item): item is string => typeof item === 'string');
+  if (!course || !sessions || uuids.length === 0) return course;
+
+  const resources = await getStoryblokStories(locale, { per_page: 100 }, uuids.join(','));
+  if (!resources)
+    throw new Error(`Storyblok request for course "${course.full_slug}" resources failed`);
+  const byUuid = new Map(resources.map((resource) => [resource.uuid, resource]));
+
+  return {
+    ...course,
+    content: {
+      ...course.content,
+      sessions: sessions.map((item) =>
+        typeof item === 'string' ? (byUuid.get(item) ?? item) : item,
+      ),
+    },
+  };
+};

@@ -118,17 +118,17 @@ export function LibraryCard({
   const badgeType: ContentType = isCourse ? 'course' : (item.format ?? 'video');
   const showAccountBadge = showAccountNeeded && !item.progress && item.requiresAccount;
   const isIllustrated = layout === 'illustrated' && Boolean(item.imageSrc);
+  const courseCount = item.courseTitles?.length;
+  const courseLabel = courseCount
+    ? t('partOfCourses', { count: courseCount })
+    : item.courseTitle && t('partOfCourse', { course: item.courseTitle });
 
   return (
     <Card qa-id="library-card" data-kind={item.kind} data-format={item.format ?? ''} sx={cardStyle}>
       <CardActionArea
         component={i18nLink}
         href={item.href}
-        aria-label={
-          item.courseTitle
-            ? `${item.title}, ${t('partOfCourse', { course: item.courseTitle })}`
-            : item.title
-        }
+        aria-label={courseLabel ? `${item.title}, ${courseLabel}` : item.title}
         onClick={onSelect}
         sx={actionAreaStyle}
       >
@@ -154,9 +154,9 @@ export function LibraryCard({
           {/* A course session names its course where other cards list themes, so same-named
               sessions from different courses can be told apart. */}
           {!isIllustrated &&
-            (item.courseTitle ? (
+            (item.courseTitle || courseCount ? (
               <Typography variant="body2" sx={courseStyle}>
-                {item.courseTitle}
+                {courseCount ? courseLabel : item.courseTitle}
               </Typography>
             ) : (
               item.themes.length > 0 && (

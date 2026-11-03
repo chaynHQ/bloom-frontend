@@ -86,6 +86,8 @@
     },
     "backToSessions": "Zurück zu den Sessions",
     "backToLibrary": "Zurück zur Bibliothek",
+    "partOf": "Part of:",
+    "alsoPartOfCourses": "Diese Session ist auch Teil {count, plural, one {des Kurses} other {der Kurse}}:",
     "grounding": {
       "close": "Schließen",
       "exercisesCount": "{count, plural, one {# Übung} other {# Übungen}}",

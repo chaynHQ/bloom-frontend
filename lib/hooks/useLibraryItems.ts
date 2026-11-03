@@ -1,10 +1,13 @@
 'use client';
 
 import { useGetUserCoursesQuery } from '@/lib/api';
+import { PROGRESS_STATUS } from '@/lib/constants/enums';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { useUserAuthStatus } from '@/lib/hooks/useUserAuthStatus';
 import { useUserContentPartners } from '@/lib/hooks/useUserContentPartners';
+import { getCourseProgress, resourceProgressByUuid } from '@/lib/utils/courseSessions';
 import {
+  courseResourceUuids,
   normaliseSlug,
   parentCourseSlug,
   storyToLibraryItem,
@@ -42,8 +45,32 @@ export function useLibraryItems(stories: LibraryStories): LibraryItem[] {
       filterStoriesForLocaleAndPartnerAccess(list, locale, userPartners);
 
     const courseStories = accessible(stories.courses).filter((story) => !story.content.coming_soon);
-    const courseItems = courseStories.map((story) =>
-      withProgress(storyToLibraryItem(story, locale), coursesProgress),
+
+    const resourceProgress = resourceProgressByUuid(resourcesProgress);
+    const courseItems = courseStories.map((story) => {
+      const item = storyToLibraryItem(story, locale);
+      const progress = getCourseProgress(
+        coursesProgress,
+        story.uuid,
+        courseResourceUuids(story),
+        resourceProgress,
+      );
+      if (progress === PROGRESS_STATUS.NOT_STARTED) return item;
+      return {
+        ...item,
+        progress: progress === PROGRESS_STATUS.COMPLETED ? 'completed' : 'started',
+      } satisfies LibraryItem;
+    });
+
+    // Each resource's visible modular courses, for its "Part of" label.
+    const courseTitlesByResource = new Map<string, string[]>();
+    courseStories.forEach((story) =>
+      courseResourceUuids(story).forEach((uuid) =>
+        courseTitlesByResource.set(uuid, [
+          ...(courseTitlesByResource.get(uuid) ?? []),
+          story.content.name,
+        ]),
+      ),
     );
 
     // A Public course opens its first lesson to logged-out visitors, so that lesson's library card
@@ -73,9 +100,13 @@ export function useLibraryItems(stories: LibraryStories): LibraryItem[] {
         ),
       );
 
-    const sessionItems = accessible(stories.resources).map((story) =>
-      withProgress(storyToLibraryItem(story, locale), resourcesProgress),
-    );
+    const sessionItems = accessible(stories.resources).map((story) => {
+      const item = withProgress(storyToLibraryItem(story, locale), resourcesProgress);
+      const courseTitles = courseTitlesByResource.get(story.uuid) ?? [];
+      if (courseTitles.length === 1) return { ...item, courseTitle: courseTitles[0] };
+      if (courseTitles.length > 1) return { ...item, courseTitles };
+      return item;
+    });
 
     return [...courseItems, ...courseSessionItems, ...sessionItems];
   }, [stories, locale, userPartners, coursesProgress, resourcesProgress]);
