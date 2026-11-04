@@ -6,7 +6,6 @@ import { breadcrumbJsonLd, JsonLd, resourceJsonLd } from '@/lib/utils/structured
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 
-export const dynamicParams = false;
 export const revalidate = 14400; // invalidate every 4 hours
 
 type Params = Promise<{ locale: string; slug: string }>;

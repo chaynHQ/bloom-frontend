@@ -8,7 +8,6 @@ import { breadcrumbJsonLd, JsonLd, videoJsonLd } from '@/lib/utils/structuredDat
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 
-export const dynamicParams = false;
 export const revalidate = 14400; // invalidate every 4 hours
 
 type Params = Promise<{ locale: string; slug: string }>;
