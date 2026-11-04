@@ -102,11 +102,12 @@ export const getStoryblokStory = async (
 
     return data?.story as ISbStoryData;
   } catch (error) {
-    rollbar.error('Error getting storyblok data for page', error as Error, { slug, sbParams });
-    // Only a missing story is a 404. Pages are cached, so any other failure (rate limit, outage)
-    // throws instead: revalidation then keeps the last good page, and a build fails rather than
-    // deploying "not found" pages.
+    // Only a missing story is a 404. It isn't logged: unbuilt slugs render on demand, so any address
+    // a visitor or crawler tries can end up here. Pages are cached, so any other failure (rate
+    // limit, outage) throws instead: revalidation then keeps the last good page, and a build fails
+    // rather than deploying "not found" pages.
     if ((error as { status?: number }).status === 404) return undefined;
+    rollbar.error('Error getting storyblok data for page', error as Error, { slug, sbParams });
     throw new Error(`Storyblok request for "${slug ?? uuids}" failed`, { cause: error });
   }
 };

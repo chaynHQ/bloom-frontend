@@ -87,6 +87,7 @@ describe('storyblok utilities', () => {
       mockGet.mockRejectedValueOnce({ message: 'Not Found', status: 404 } as never);
 
       expect(await getStoryblokStory('test-slug', 'en')).toBeUndefined();
+      expect(rollbar.error).not.toHaveBeenCalled();
     });
 
     it('should return the story data if fetching succeeds', async () => {

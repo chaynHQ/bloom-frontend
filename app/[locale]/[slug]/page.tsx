@@ -12,7 +12,6 @@ import {
 } from '@/lib/utils/validateSlugPageRequest';
 import { notFound } from 'next/navigation';
 
-export const dynamicParams = false;
 export const revalidate = 14400; // invalidate every 4 hours
 
 type Params = Promise<{ locale: string; slug: string }>;
