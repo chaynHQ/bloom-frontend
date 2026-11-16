@@ -143,15 +143,19 @@ async function create() {
 }
 
 async function publish() {
+  const stories = [];
   for (const slug of SLUGS) {
     const fullSlug = `${PARTNERS_FOLDER_SLUG}/${slug}`;
     const story = await findStory(fullSlug);
     if (!story) throw new Error(`${fullSlug} not found. Run without --publish first.`);
+    stories.push(story);
+  }
+  for (const story of stories) {
     if (story.published && !story.unpublished_changes) {
-      console.log(`  ${fullSlug}: already published`);
+      console.log(`  ${story.full_slug}: already published`);
       continue;
     }
-    console.log(`  ${fullSlug}: would publish #${story.id}`);
+    console.log(`  ${story.full_slug}: would publish #${story.id}`);
     if (APPLY) {
       await mapi('GET', `/stories/${story.id}/publish`);
       console.log('    published');

@@ -35,7 +35,9 @@ const WELCOME_FOLDER_SLUG = 'welcome';
 const LOGO_FILE = 'bloom_logo.svg';
 // Bloom's primary palette colour; brand_color is required.
 const BRAND_COLOR = '#f3d6d8';
-const WAIT_SECONDS = Number(process.argv.find((a) => a.startsWith('--wait='))?.split('=')[1] ?? 30);
+// The backend's webhook fetches the published story, so it must still be published when the
+// webhook is handled; the window allows for a slow or cold staging backend.
+const WAIT_SECONDS = Number(process.argv.find((a) => a.startsWith('--wait='))?.split('=')[1] ?? 60);
 
 async function create() {
   const partnersFolder = await requireFolder(PARTNERS_FOLDER_SLUG);
@@ -74,6 +76,9 @@ async function create() {
 }
 
 async function publishPartners() {
+  if (!Number.isFinite(WAIT_SECONDS) || WAIT_SECONDS < 0) {
+    throw new Error('--wait must be a number of seconds');
+  }
   const stories = [];
   for (const { slug } of TEST_PARTNERS) {
     const fullSlug = `${PARTNERS_FOLDER_SLUG}/${slug}`;
@@ -96,9 +101,18 @@ async function publishPartners() {
     await new Promise((resolve) => setTimeout(resolve, WAIT_SECONDS * 1000));
   } finally {
     // Also after a failed publish: none of them should stay published in the shared space.
+    const stillPublished = [];
     for (const story of published) {
-      await mapi('GET', `/stories/${story.id}/unpublish`);
-      console.log(`  unpublished ${story.full_slug}`);
+      try {
+        await mapi('GET', `/stories/${story.id}/unpublish`);
+        console.log(`  unpublished ${story.full_slug}`);
+      } catch (err) {
+        console.error(err.message);
+        stillPublished.push(story.full_slug);
+      }
+    }
+    if (stillPublished.length) {
+      throw new Error(`Still published, unpublish by hand: ${stillPublished.join(', ')}`);
     }
   }
 }

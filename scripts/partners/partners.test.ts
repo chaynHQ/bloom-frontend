@@ -42,6 +42,7 @@ class FakeStoryblok {
   requests: Request[] = [];
   failUploads = false;
   failPublishOf?: number;
+  failUnpublishOf?: number;
   url = '';
   private nextId = 1000;
   private server = http.createServer((req, res) => {
@@ -147,6 +148,7 @@ class FakeStoryblok {
         return [200, { story }];
       }
       case 'GET /stories/:id/unpublish': {
+        if (id === this.failUnpublishOf) return [500, { error: 'unpublish failed' }];
         const story = this.stories.find((s) => s.id === id)!;
         story.published = false;
         return [200, { story }];
@@ -416,10 +418,15 @@ describe('migratePartners.mjs', () => {
   });
 
   describe('--publish', () => {
-    it('refuses to publish before the stories exist', async () => {
-      const { code } = await run('migratePartners.mjs', '--publish', '--apply');
+    it('publishes nothing unless all three stories exist', async () => {
+      await run('migratePartners.mjs', '--apply');
+      fake.stories = fake.stories.filter((s) => s.full_slug !== 'partners/fruitz');
+      fake.requests = [];
+
+      const { code, stderr } = await run('migratePartners.mjs', '--publish', '--apply');
 
       expect(code).toBe(1);
+      expect(stderr).toContain('partners/fruitz not found');
       expect(fake.writes()).toEqual([]);
     });
 
@@ -547,6 +554,39 @@ describe('createTestPartners.mjs', () => {
         ...partnerIds().map((id) => `GET /stories/${id}/unpublish`),
       ]);
       expect(fake.stories.filter((s) => s.published)).toEqual([]);
+    });
+
+    it('refuses a --wait that is not a number of seconds', async () => {
+      await run('createTestPartners.mjs', '--apply');
+      fake.requests = [];
+
+      const { code } = await run(
+        'createTestPartners.mjs',
+        '--publish-partners',
+        '--apply',
+        '--wait=soon',
+      );
+
+      expect(code).toBe(1);
+      expect(fake.writes()).toEqual([]);
+    });
+
+    it('still unpublishes the others when one unpublish fails, and names the one left', async () => {
+      await run('createTestPartners.mjs', '--apply');
+      fake.failUnpublishOf = partnerIds()[0];
+
+      const { code, stderr } = await run(
+        'createTestPartners.mjs',
+        '--publish-partners',
+        '--apply',
+        '--wait=0',
+      );
+
+      expect(code).toBe(1);
+      expect(stderr).toContain('Still published, unpublish by hand: partners/test-partner\n');
+      expect(fake.stories.filter((s) => s.published).map((s) => s.full_slug)).toEqual([
+        'partners/test-partner',
+      ]);
     });
 
     it('unpublishes the stories it published when a later publish fails', async () => {
