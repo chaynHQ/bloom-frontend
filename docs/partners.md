@@ -17,7 +17,7 @@ Do this on staging first, then production.
 
 Publishing never launches a partner: only a super admin activating it does. A published partner story can be read through Storyblok's public API, though, so publish it only once the partnership can be public.
 
-On staging, which doesn't generate images, a designer uploads the lockup and illustration and the content team adds the datasource entry by hand.
+Staging reads drafts, so it shows the images production generates straight away. If anything is missing after a publish (no partner in a dashboard, no images, no datasource entry), publish the story again: each step only fills in what's missing.
 
 ## The `partner` content type
 
@@ -59,7 +59,7 @@ The slug is the partner's permanent key: the welcome page is `/welcome/<slug>`, 
 
 ## Image generation
 
-`lib/partnerAssets/` runs from `/api/revalidate`, after the response, when a published partner story has an empty `illustration` or a language's `partnership_logo` is empty. It renders each lockup (Bloom wordmark, "In partnership with" in that language, the partner's logo) to a PNG at 3×, recolours the Bloom-head illustration with a pastel of `brand_color`, uploads them, fills only the empty fields in the draft, and adds the datasource entry. It never publishes.
+`lib/partnerAssets/` runs from `/api/revalidate`, after the response, whenever a partner story is published. It adds the partner's datasource entry if it's missing, then, if `illustration` or a language's `partnership_logo` is empty and the story has a `logo` and `brand_color`, it renders each lockup (Bloom wordmark, "In partnership with" in that language, the partner's logo) to a PNG at 3×, recolours the Bloom-head illustration with a pastel of `brand_color`, uploads them, and fills only the empty fields in the draft. It never publishes.
 
 It runs in production and locally, never on staging: both environments receive the same Storyblok webhooks, so it would run twice. It needs `STORYBLOK_OAUTH_TOKEN` and `STORYBLOK_SPACE_ID` in Vercel's production environment (see `docs/configure-env.md`); without them it's skipped with a warning. An editor who saves from a tab opened before generation finished clears the generated fields, and the next publish generates them again.
 

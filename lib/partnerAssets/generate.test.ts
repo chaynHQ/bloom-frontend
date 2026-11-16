@@ -172,6 +172,11 @@ function fakeStoryblok(story: { id: number; slug: string; content: Record<string
   return state;
 }
 
+const datasourceRequests = [
+  `GET ${MAPI}/datasources?search=partners`,
+  `GET ${MAPI}/datasource_entries?datasource_id=${PARTNERS_DATASOURCE}&per_page=1000`,
+];
+
 beforeEach(() => {
   process.env.STORYBLOK_OAUTH_TOKEN = 'mapi-token';
   process.env.STORYBLOK_SPACE_ID = SPACE;
@@ -293,6 +298,7 @@ describe('generatePartnerAssets', () => {
     expect(storyblok.newEntries).toHaveLength(1);
     expect(storyblok.requests.slice(requestsAfterFirstRun)).toEqual([
       `GET ${MAPI}/stories/${bumbleForFriends.id}`,
+      ...datasourceRequests,
     ]);
   });
 
@@ -337,12 +343,45 @@ describe('generatePartnerAssets', () => {
     }
   });
 
-  it('does nothing when every field is filled', async () => {
+  it('only checks the datasource when every field is filled', async () => {
     const storyblok = fakeStoryblok(bumbleTranslated);
 
     await generatePartnerAssets(bumbleTranslated.id);
 
-    expect(storyblok.requests).toEqual([`GET ${MAPI}/stories/${bumbleTranslated.id}`]);
+    expect(storyblok.requests).toEqual([
+      `GET ${MAPI}/stories/${bumbleTranslated.id}`,
+      ...datasourceRequests,
+    ]);
+  });
+
+  it('adds the datasource entry when the images were uploaded by hand', async () => {
+    const storyblok = fakeStoryblok({
+      ...bumbleForFriends,
+      content: { ...bumbleTranslated.content, name: 'Bumble For Friends' },
+    });
+
+    await generatePartnerAssets(bumbleForFriends.id);
+
+    expect(storyblok.newEntries).toEqual([
+      { name: 'bff', value: 'Bumble For Friends', datasource_id: PARTNERS_DATASOURCE },
+    ]);
+    expect(storyblok.created).toEqual([]);
+  });
+
+  it('skips images without a logo, but still adds the datasource entry', async () => {
+    const info = jest.spyOn(console, 'info').mockImplementation(() => {});
+    const storyblok = fakeStoryblok({
+      ...bumbleForFriends,
+      content: { ...bumbleForFriends.content, logo: emptyAsset },
+    });
+
+    await generatePartnerAssets(bumbleForFriends.id);
+
+    expect(storyblok.created).toEqual([]);
+    expect(storyblok.puts).toEqual([]);
+    expect(storyblok.newEntries).toHaveLength(1);
+    expect(info).toHaveBeenCalledTimes(1);
+    info.mockRestore();
   });
 
   it('keeps a field an editor filled while generation ran', async () => {

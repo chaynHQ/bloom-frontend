@@ -51,8 +51,7 @@ export function fillEmptyFields(content: StoryContent, generated: Record<string,
   return filled;
 }
 
-async function downloadLogo(logo: StoryblokAsset | undefined) {
-  if (!logo?.filename) throw new Error('The partner story has no logo');
+async function downloadLogo(logo: StoryblokAsset) {
   if (new URL(logo.filename).hostname !== 'a.storyblok.com') {
     throw new Error(`The partner logo isn't a Storyblok asset: ${logo.filename}`);
   }
@@ -86,16 +85,20 @@ function renderField(field: string, slug: string, content: StoryContent, logo: B
 
 export async function generatePartnerAssets(storyId: number) {
   const story = await getStory(storyId);
+  const name = story.content.name as string | undefined;
+  // On every publish, not only when images are generated: they may have been uploaded by hand.
+  if (name) await ensurePartnersDatasourceEntry(story.slug, name);
+
   const fields = fieldsToGenerate(story.content);
   if (!fields.length) return;
 
-  const name = story.content.name as string | undefined;
-  if (!name) throw new Error('The partner story has no name');
   const logoAsset = story.content.logo as StoryblokAsset | undefined;
+  if (!logoAsset?.filename || !story.content.brand_color) {
+    console.info(`Partner images for ${story.slug} not generated: no logo or brand_color yet`);
+    return;
+  }
   const logo = await downloadLogo(logoAsset);
-  const folderId = logoAsset?.id ? await getAssetFolderId(logoAsset.id) : null;
-  // Before any upload: once the fields are filled, a later publish never gets this far again.
-  await ensurePartnersDatasourceEntry(story.slug, name);
+  const folderId = logoAsset.id ? await getAssetFolderId(logoAsset.id) : null;
 
   const generated: Record<string, StoryblokAsset> = {};
   for (const field of fields) {
