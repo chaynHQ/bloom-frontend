@@ -2,15 +2,15 @@
 
 Adding a partner today needs a developer: API calls to create it, branding committed to the repo, translation keys in 8 locales and a deploy. This plan makes it a content and admin task. The content team publishes the partner's stories in Storyblok, assets are generated for a designer to review, and a super admin switches the partner on in the admin dashboard. No code change, API call or deploy.
 
-| Phase | What                                                                                                   | Where                 | PR (lanes)    | Status  |
-| ----- | ------------------------------------------------------------------------------------------------------ | --------------------- | ------------- | ------- |
-| **1** | Partner `slug`, Storyblok link and therapy limit in the database; access codes checked against it      | bloom-backend         | **1** (B)     | Planned |
-| **2** | `partner` content type; Bumble, Badoo and Fruitz moved onto it                                         | Storyblok, by scripts | **2** (S)     | Planned |
-| **3** | Frontend reads partners from Storyblok and the backend; welcome pages gated on launch; dashboard table | bloom-frontend        | **2** (F, A)  | Planned |
-| **4** | Lockups and illustrations generated from the partner's logo and colour                                 | bloom-frontend        | **3** (G)     | Planned |
-| Later | Drop the unused partner branding columns, once phases 1–3 are stable in production                     | bloom-backend         | one migration | Planned |
+| Phase | What                                                                                                   | Where          | PR                                          | Status    |
+| ----- | ------------------------------------------------------------------------------------------------------ | -------------- | ------------------------------------------- | --------- |
+| **1** | Partner `slug`, Storyblok link and therapy limit in the database; access codes checked against it      | bloom-backend  | chaynHQ/bloom-backend#1302                  | In review |
+| **2** | `partner` content type; Bumble, Badoo and Fruitz moved onto it                                         | Storyblok      | None: done directly in Storyblok, as drafts | Done      |
+| **3** | Frontend reads partners from Storyblok and the backend; welcome pages gated on launch; dashboard table | bloom-frontend | chaynHQ/bloom-frontend#2032                 | In review |
+| **4** | Lockups and illustrations generated from the partner's logo and colour                                 | bloom-frontend | Later PR                                    | Planned   |
+| Later | Drop the unused partner branding columns, once phases 1–3 are stable in production                     | bloom-backend  | One migration                               | Planned   |
 
-Three PRs: backend, frontend, asset generation. PRs 1 and 2 go to staging for the team to test, then to production together. Phases 1–3 remove developers from onboarding. Until phase 4 ships, a designer uploads the lockup and illustration, and the content team adds the partner to the `partners` datasource. The prompts for each lane are in [partner-onboarding-prompts.md](partner-onboarding-prompts.md).
+Phases 1 and 3 are one PR each, backend and frontend. Both go to staging for the team to test, then to production together. Phases 1–3 remove developers from onboarding. Until phase 4 ships, a designer uploads the lockup and illustration, and the content team adds the partner to the `partners` datasource. The prompt for phase 4 is in [partner-onboarding-prompts.md](partner-onboarding-prompts.md).
 
 - [How it works today](#how-it-works-today)
 - [Decisions](#decisions)
@@ -126,7 +126,7 @@ One migration:
 - adds `therapySessionsPerCode` and sets **every existing partner to 6**, exactly today's `@Max(6)`;
 - adds nothing else and drops nothing.
 
-The unused branding columns (`logo`, `logoAlt`, `partnershipLogo`, `partnershipLogoAlt`, `bloomGirlIllustration`, `bloomGirlIllustrationAlt`, `website`, `footerLine1`, `footerLine2`, `facebookUrl`, `twitterUrl`, `instagramUrl`, `youtubeUrl`, `tiktokUrl`, `githubUrl`) leave `PartnerEntity` and `UpdatePartnerDto`, but stay in the database; they're all nullable, so the new code ignores them. Keeping PR 1 add-only means the previous backend still works against the new schema, so a backend rollback is safe. A later one-migration PR drops them, after checking they hold no data.
+The unused branding columns (`logo`, `logoAlt`, `partnershipLogo`, `partnershipLogoAlt`, `bloomGirlIllustration`, `bloomGirlIllustrationAlt`, `website`, `footerLine1`, `footerLine2`, `facebookUrl`, `twitterUrl`, `instagramUrl`, `youtubeUrl`, `tiktokUrl`, `githubUrl`) leave `PartnerEntity` and `UpdatePartnerDto`, but stay in the database; they're all nullable, so the new code ignores them. Keeping the backend PR add-only means the previous backend still works against the new schema, so a backend rollback is safe. A later one-migration PR drops them, after checking they hold no data.
 
 ### Storyblok webhook
 
@@ -156,7 +156,7 @@ Unchanged: `PATCH /v1/partner-access/:id`, automatic access codes, live chat, re
 
 ## API contract
 
-Fixed before the lanes start, so backend and frontend build in parallel.
+Fixed before building started, so backend and frontend were built in parallel.
 
 ```ts
 // GET /v1/partner/active (public): active partners only, just enough to build the launched set
@@ -194,7 +194,7 @@ A server loader, cached with `PARTNERS_CACHE_TAG` and revalidated every 4 hours 
 
 It returns the branded and launched sets, joined by slug. `BaseLayout` passes the sets to a `PartnersProvider` wrapping everything that uses them, including `ReferralPartnerTracker` and `Footer`.
 
-**On failure the loader throws, and nothing catches it.** Pages are statically cached, so an empty fallback would be saved into the page for 4 hours: `/welcome/bumble` would cache a 404 and referrals would be dropped. When a regeneration throws, Next keeps serving the last page it generated, so an outage leaves partners stale, never missing. A response from `GET /v1/partner/active` that isn't a list (e.g. from a backend without PR 1) counts as a failure too. A render with no earlier page errors and isn't cached; the next request retries. This makes the backend a dependency of a first render, which is rare because Vercel's data cache survives deploys; a build with the backend down fails rather than shipping without partners.
+**On failure the loader throws, and nothing catches it.** Pages are statically cached, so an empty fallback would be saved into the page for 4 hours: `/welcome/bumble` would cache a 404 and referrals would be dropped. When a regeneration throws, Next keeps serving the last page it generated, so an outage leaves partners stale, never missing. A response from `GET /v1/partner/active` that isn't a list (e.g. from a backend without phase 1) counts as a failure too. A render with no earlier page errors and isn't cached; the next request retries. This makes the backend a dependency of a first render, which is rare because Vercel's data cache survives deploys; a build with the backend down fails rather than shipping without partners.
 
 The Storyblok webhook's `/api/revalidate` refreshes the tag. When a super admin changes a partner, the dashboard calls a server action that checks the caller is a super admin (it sends the Firebase token to `GET /v1/user/me`) and revalidates the tag. The backend never calls the frontend.
 
@@ -245,9 +245,9 @@ It needs a Storyblok management token in Vercel's production environment only; u
 
 ## Moving existing partners
 
-1. Lane S creates `partners/bumble`, `partners/badoo` and `partners/fruitz` as drafts, made from `lib/constants/partners.ts` and the current files. Staging reads drafts, so the team tests with them.
-2. Once the team has signed off on staging, S publishes them. That's harmless to the production code at the time: its backend ignores `partner` stories and its frontend never reads them. Production reads only published stories, so this must happen before PR 2 reaches production.
-3. On release day, PR 1 then PR 2 reach production ([Release](#release)). The frontend finds the partners by slug; a later republish of each story sets its `storyblokUuid`. Phase 3 deletes the constants, files and per-partner strings.
+1. `partners/bumble`, `partners/badoo` and `partners/fruitz` exist as drafts in Storyblok, made from `lib/constants/partners.ts` and the current files (done). Staging reads drafts, so the team tests with them.
+2. Once the team has signed off on staging, the content team publishes them. That's harmless to the production code at the time: its backend ignores `partner` stories and its frontend never reads them. Production reads only published stories, so this must happen before the frontend reaches production.
+3. On release day, the backend then the frontend reach production ([Release](#release)). The frontend finds the partners by slug; a later republish of each story sets its `storyblokUuid`. Phase 3 deletes the constants, files and per-partner strings.
 4. Optional, after phase 4: clear Bumble's and Badoo's `partnership_logo` and republish for translated lockups.
 
 ## Critical paths
@@ -266,13 +266,13 @@ There are no test partners anywhere: no scripts, no Storyblok test stories, no s
 
 Unit tests use these four as in-memory fixtures, set up as each test needs (e.g. BFF inactive, or active with a therapy limit of 0 and an automatic access code). Cypress uses only Bumble, Badoo, Fruitz and unknown slugs, which behave the same in every environment. The BFF cases are checked by hand on staging.
 
-**Adding BFF on staging,** once PRs 1 and 2 are there, the way any new partner is added:
+**Adding BFF on staging,** once the backend and frontend PRs are there, the way any new partner is added:
 
-1. The content team creates `partners/bumble-for-friends` with BFF's real branding (a designer uploads the lockup and illustration until phase 4), and publishes it. The staging backend's webhook creates its row, inactive. Production's backend ignores it until PR 1 is released.
+1. The content team creates `partners/bumble-for-friends` with BFF's real branding (a designer uploads the lockup and illustration until phase 4), and publishes it. The staging backend's webhook creates its row, inactive. Production's backend ignores it until the backend PR is released.
 2. The content team adds `bumble-for-friends | Bumble For Friends` to the `partners` datasource and creates `welcome/bumble-for-friends` as a draft. Staging reads drafts; it's published at launch.
 3. A super admin finds BFF in the staging dashboard and changes its settings as each staging check below needs.
 
-### 1. Therapy limit on access codes (lanes B, A)
+### 1. Therapy limit on access codes
 
 | Test                                                                                                   | Where                            |
 | ------------------------------------------------------------------------------------------------------ | -------------------------------- |
@@ -287,7 +287,7 @@ Unit tests use these four as in-memory fixtures, set up as each test needs (e.g.
 
 **Staging:** create Bumble and Badoo codes with and without therapy; compare the rows with one created in production.
 
-### 2. Partner lookup (lane B)
+### 2. Partner lookup
 
 | Test                                                                                                                               | Where                             |
 | ---------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- |
@@ -297,7 +297,7 @@ Unit tests use these four as in-memory fixtures, set up as each test needs (e.g.
 | Partner webhook: creates inactive; links an existing row by slug, then by name; never renames or reactivates; unpublish is a no-op | `webhooks.service.spec.ts`        |
 | The automatic access code lookup finds Bumble For Friends                                                                          | `partner-feature.service.spec.ts` |
 
-### 3. Content for referred visitors (lane F)
+### 3. Content for referred visitors
 
 | Test                                                                                                                                                                             | Where                            |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
@@ -309,13 +309,13 @@ Unit tests use these four as in-memory fixtures, set up as each test needs (e.g.
 
 **Staging:** with BFF active, as a signed-out visitor, open `/welcome/bumble-for-friends`, then the library.
 
-### 4. Welcome page gate and partner data (lane F)
+### 4. Welcome page gate and partner data
 
 | Test                                                                                                      | Where                        |
 | --------------------------------------------------------------------------------------------------------- | ---------------------------- |
 | Launched: renders. Inactive, no welcome story, no partner story, unknown slug: not found                  | Unit test of the loader/gate |
 | With drafts (`STORYBLOK_ENVIRONMENT` = `draft`), a draft-only welcome and partner story count as existing | Unit test of the loader      |
-| `GET /v1/partner/active` returning an error or a non-list (a backend without PR 1): the loader throws     | Unit test of the loader      |
+| `GET /v1/partner/active` returning an error or a non-list (a backend without phase 1): the loader throws  | Unit test of the loader      |
 | Backend or Storyblok fetch fails: the loader throws, caches nothing, and the next call fetches again      | Unit test of the loader      |
 | Sitemap and `generateStaticParams` include launched partners only                                         | New `app/sitemap.test.ts`    |
 | `/welcome/bumble` renders; `/welcome/fruitz` and `/welcome/nonsense` show not found                       | `welcome.cy.tsx`             |
@@ -325,7 +325,7 @@ Review: no caller of the loader catches its error.
 
 **Staging:** before BFF is activated, `/welcome/bumble-for-friends` 404s. Activate it in the dashboard and check the page renders straight away; deactivate it and check it 404s again. This also checks the dashboard's revalidation.
 
-### 5. Referral and UTM attribution (lane F)
+### 5. Referral and UTM attribution
 
 The mechanism doesn't change: a `/welcome/<slug>` path, or a slug anywhere in the five UTM parameters, stores the partner in Redux and a session cookie; the register page reads `?partner=`. Only the slug list becomes dynamic.
 
@@ -342,7 +342,7 @@ The mechanism doesn't change: a `/welcome/<slug>` path, or a slug anywhere in th
 
 **Staging:** register through a Bumble welcome link with a code and through a UTM link, and check the analytics events still carry `bumble`. With BFF active and its automatic access code on, register through `/welcome/bumble-for-friends` and through `?utm_source=bumble-for-friends`; check each creates a BFF access, not a Bumble one.
 
-### 6. Partner updates (lanes B, A)
+### 6. Partner updates
 
 | Test                                                                                                                         | Where                        |
 | ---------------------------------------------------------------------------------------------------------------------------- | ---------------------------- |
@@ -358,13 +358,13 @@ The mechanism doesn't change: a `/welcome/<slug>` path, or a slug anywhere in th
 
 ### Release
 
-PRs 1 and 2 merge to `develop` once reviewed, so both go to staging. The team tests there for as long as it needs; nothing else changes on `develop` meanwhile. The release PRs to `main` that merging opens wait for release day.
+The backend and frontend PRs merge to `develop` once reviewed, so both go to staging. The team tests there for as long as it needs; nothing else changes on `develop` meanwhile. The release PRs to `main` that merging opens wait for release day.
 
 Before release day:
 
 - on production, check that the partners' names in the database match the `partners` datasource values (`Badoo`, `Fruitz`, `Bumble`) apart from case (the course sync now matches names exactly), and that no two slugify alike (the migration would fail);
 - check that Storyblok's webhook log shows deliveries succeeding to both frontends' `/api/revalidate` and both backends, and that Render's health check is on, so a backend that fails to start never takes traffic;
-- once the team signs off on staging, S publishes Bumble, Badoo and Fruitz.
+- once the team signs off on staging, the content team publishes `partners/bumble`, `partners/badoo` and `partners/fruitz`.
 
 Release day:
 
@@ -372,7 +372,7 @@ Release day:
 2. Release the frontend. If it builds before the backend is live, its build fails (the loader rejects the old backend's response); deploy it again.
 3. Smoke-test: the Bumble and Badoo welcome pages, a Bumble welcome link with a code, a UTM link, the footer for a Bumble member, and a partner admin creating a code.
 
-Either side rolls back on its own. Reverting the frontend restores the constants, files and strings; the published partner stories are harmless to it. Reverting the backend is safe because PR 1 drops nothing.
+Either side rolls back on its own. Reverting the frontend restores the constants, files and strings; the published partner stories are harmless to it. Reverting the backend is safe because the backend PR drops nothing.
 
 No Storyblok roles or webhook changes are needed: publishing can't launch anything without a super admin.
 
@@ -385,48 +385,28 @@ No Storyblok roles or webhook changes are needed: publishing can't launch anythi
 | 3. Frontend         | 4–6 days      | Medium     | **Medium**      |
 | 4. Asset generation | 2–3 days      | Medium     | Low             |
 
-Parallel lanes speed up the writing, not the review. Expect PR 1 in review and S's drafts by day 2, PR 2 in review by day 3, then a day or two for the line-by-line review of the critical paths, then both on staging. Production follows the team's testing. PR 3 ships after that, when a designer can review its output.
+Production follows the team's testing on staging. Phase 4 ships after that, when a designer can review its output.
 
 What still needs people: reviewing roughly 2,000–3,000 changed lines, Storyblok publishes, the Simplybook therapy check, design sign-off, and production releases (`develop` → `main` in both repos).
 
-### Lanes
+### Rollout
 
-Three PRs, built by five Claude Code sessions, at most three at once. A lane edits only the files it owns; if it needs a change elsewhere it says so. Lanes never merge into `develop`; you merge PRs in the order below. Prompts: [partner-onboarding-prompts.md](partner-onboarding-prompts.md).
+| Step  | Who                       | What                                                                                                                                                                                       |
+| ----- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 1     | Reviewer                  | Review chaynHQ/bloom-backend#1302 and merge it to `develop`. Check the staging backend deployed (the migration runs on startup) and that staging's `GET /v1/partner/active` returns a list |
+| 2     | Reviewer                  | Rerun chaynHQ/bloom-frontend#2032's failed checks: its build calls that endpoint, so it fails until step 1 is on staging. Review it and merge it to `develop`                              |
+| 3     | Content team, super admin | Add Bumble For Friends on staging ([Partners used for testing](#partners-used-for-testing)) and configure it in the dashboard                                                              |
+| 4     | Team                      | Run the staging checks in each critical path above                                                                                                                                         |
+| 5     | Content team              | After sign-off, publish `partners/bumble`, `partners/badoo` and `partners/fruitz`                                                                                                          |
+| 6     | Release                   | Backend, then frontend, to production ([Release](#release))                                                                                                                                |
+| Later | —                         | Phase 4, asset generation ([prompt](partner-onboarding-prompts.md)); one migration to drop the branding columns, after checking they hold no data                                          |
 
-| PR                     | Lane                   | Branch and folder                                                   | Owns                                                                                                                                                                                                                                                                   | Critical paths |
-| ---------------------- | ---------------------- | ------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- |
-| **1** Backend          | **B** Backend          | `partners/backend`, backend main checkout                           | Everything in bloom-backend for phase 1                                                                                                                                                                                                                                | 1, 2, 6        |
-| **2** Frontend         | **F** Frontend         | `partners/frontend`, frontend main checkout, port 3000. Owns the PR | Everything in PR 2 that S and A don't own: the two docs, the contract, partner data, welcome pages, referral and content access, branding, `shared` strings, partner Cypress specs                                                                                     | 3, 4, 5        |
-|                        | **S** Storyblok        | `partners/storyblok`, worktree `../bloom-frontend-s`                | `scripts/partners/`. The only lane that writes to Storyblok                                                                                                                                                                                                            | —              |
-|                        | **A** Admin            | `partners/admin`, worktree `../bloom-frontend-a`, port 3001         | `AdminDashboardPage`; the new partners table; `CreateAccessCodeForm`; `UpdatePartnerActiveForm`; `lib/api.ts`; `partnersSlice`; the revalidate server action; `i18n/messages/admin/` and `partnerAdmin/`; `cypress/integration/admin/` except `partner-content-access` | 1, 6           |
-| **3** Asset generation | **G** Asset generation | `partners/assets`, worktree `../bloom-frontend-g`                   | `lib/partnerAssets/`; its font; `package.json`; `yarn.lock`; `next.config.js`; `app/api/revalidate/route.ts`                                                                                                                                                           | —              |
-
-S and A push their branches without a PR; F merges them into `partners/frontend` when they're done. They only touch files F doesn't, so the merges are clean. F's first commit is the contract (types, cache tag, new `Partner` fields, the `PartnerAdmin.partner` type, the three shared strings): A branches from it, so it lands before A starts.
-
-PR 2 is large. F commits one step at a time, and its description maps each critical path to its commits, so it can be reviewed commit by commit.
-
-**Order**
-
-| When                             | Who               | What                                                                                                                                                          |
-| -------------------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Now                              | B, F, S           | F commits the docs and contract first and pushes. F builds against the API contract with mocks until B runs locally. S creates the schema and drafts          |
-| S finished, B's PR up            | A                 | Branches from `partners/frontend`                                                                                                                             |
-| PR 1 reviewed                    | You               | Merge PR 1 to `develop`                                                                                                                                       |
-| S and A finished                 | F                 | Merges `partners/storyblok` and `partners/admin`, reruns everything, marks PR 2 ready for review                                                              |
-| PR 2 reviewed                    | You, content team | Merge PR 2 to `develop`, after PR 1. Add Bumble For Friends in Storyblok ([Partners used for testing](#partners-used-for-testing)); the team tests on staging |
-| Team signed off                  | S                 | Publishes Bumble, Badoo and Fruitz                                                                                                                            |
-| Release day                      | You               | Backend, then frontend, to production ([Release](#release))                                                                                                   |
-| Phases 1–3 stable, designer free | G                 | Branches from `develop`; PR 3 merges after design sign-off                                                                                                    |
-| Whenever convenient              | —                 | One migration drops the branding columns, after checking they hold no data                                                                                    |
+Merging to `develop` opens release PRs to `main` in both repos; leave them until release day.
 
 **Shared things**
 
-- **Storyblok:** one space serves staging and production. Only S changes schema or publishes; G writes only to test drafts until its output is approved.
-- **Local backend and database:** one backend, run from B's checkout on port 35001. Only B runs migrations.
-- **Worktrees:** copy `.env.local` from the main checkout and run `yarn install`.
-- **Dependencies:** only G changes `package.json`.
-- **Translations:** F owns `shared`; A owns `admin` and `partnerAdmin`.
-- **Cypress:** F's and A's suites run one after the other, never at once: both create and delete Cypress users in the same database.
+- **Storyblok:** one space serves staging and production. Only the content team publishes; phase 4 writes nothing to Storyblok until its output is approved.
+- **Cypress:** suites that create and delete Cypress users share a database, so run them one after the other.
 
 ## Left out on purpose
 
