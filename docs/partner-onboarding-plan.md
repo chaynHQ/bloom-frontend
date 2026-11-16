@@ -2,13 +2,13 @@
 
 Adding a partner today needs a developer: API calls to create it, branding committed to the repo, translation keys in 8 locales and a deploy. This plan makes it a content and admin task. The content team publishes the partner's stories in Storyblok, assets are generated for a designer to review, and a super admin switches the partner on in the admin dashboard. No code change, API call or deploy.
 
-| Phase | What                                                                                                   | Where          | PR                                          | Status    |
-| ----- | ------------------------------------------------------------------------------------------------------ | -------------- | ------------------------------------------- | --------- |
-| **1** | Partner `slug`, Storyblok link and therapy limit in the database; access codes checked against it      | bloom-backend  | chaynHQ/bloom-backend#1302                  | In review |
-| **2** | `partner` content type; Bumble, Badoo and Fruitz moved onto it                                         | Storyblok      | None: done directly in Storyblok, as drafts | Done      |
-| **3** | Frontend reads partners from Storyblok and the backend; welcome pages gated on launch; dashboard table | bloom-frontend | chaynHQ/bloom-frontend#2032                 | In review |
-| **4** | Lockups and illustrations generated from the partner's logo and colour                                 | bloom-frontend | chaynHQ/bloom-frontend#2032                 | In review |
-| Later | Drop the unused partner branding columns, once phases 1–3 are stable in production                     | bloom-backend  | One migration                               | Planned   |
+| Phase | What                                                                                                   | Where          | PR                                          | Status            |
+| ----- | ------------------------------------------------------------------------------------------------------ | -------------- | ------------------------------------------- | ----------------- |
+| **1** | Partner `slug`, Storyblok link and therapy limit in the database; access codes checked against it      | bloom-backend  | chaynHQ/bloom-backend#1302                  | Merged to develop |
+| **2** | `partner` content type; Bumble, Badoo and Fruitz moved onto it                                         | Storyblok      | None: done directly in Storyblok, as drafts | Done              |
+| **3** | Frontend reads partners from Storyblok and the backend; welcome pages gated on launch; dashboard table | bloom-frontend | chaynHQ/bloom-frontend#2032                 | In review         |
+| **4** | Lockups and illustrations generated from the partner's logo and colour                                 | bloom-frontend | chaynHQ/bloom-frontend#2032                 | In review         |
+| Later | Drop the unused partner branding columns, once phases 1–3 are stable in production                     | bloom-backend  | One migration                               | Planned           |
 
 Phase 1 is the backend PR; phases 3 and 4 are the frontend PR. Both go to staging for the team to test, then to production together. Phases 1–3 remove developers from onboarding; phase 4 generates the lockup and illustration for a designer to review, and adds the partner to the `partners` datasource.
 
