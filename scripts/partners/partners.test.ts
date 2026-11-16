@@ -41,6 +41,7 @@ class FakeStoryblok {
   assets: Asset[] = [];
   requests: Request[] = [];
   failUploads = false;
+  failPublishOf?: number;
   url = '';
   private nextId = 1000;
   private server = http.createServer((req, res) => {
@@ -89,11 +90,11 @@ class FakeStoryblok {
 
   writes() {
     return this.requests
-      .filter((r) => r.method !== 'GET' || /\/(publish|finish_upload)$/.test(r.path))
+      .filter((r) => r.method !== 'GET' || /\/(publish|unpublish|finish_upload)$/.test(r.path))
       .map((r) => `${r.method} ${r.path}`);
   }
 
-  private addStory(story: Json): Story {
+  addStory(story: Json): Story {
     const parent = this.stories.find((s) => s.id === story.parent_id);
     const created: Story = {
       is_folder: false,
@@ -140,8 +141,14 @@ class FakeStoryblok {
       case 'GET /stories/:id':
         return [200, { story: this.stories.find((s) => s.id === id) }];
       case 'GET /stories/:id/publish': {
+        if (id === this.failPublishOf) return [500, { error: 'publish failed' }];
         const story = this.stories.find((s) => s.id === id)!;
         Object.assign(story, { published: true, unpublished_changes: false });
+        return [200, { story }];
+      }
+      case 'GET /stories/:id/unpublish': {
+        const story = this.stories.find((s) => s.id === id)!;
+        story.published = false;
         return [200, { story }];
       }
       case 'GET /datasources':
@@ -437,6 +444,131 @@ describe('migratePartners.mjs', () => {
       fake.requests = [];
       await run('migratePartners.mjs', '--publish', '--apply');
       expect(fake.writes()).toEqual([]);
+    });
+  });
+});
+
+describe('createTestPartners.mjs', () => {
+  const welcomeContent = { component: 'welcome_page', title: 'Bloom × Bumble', top_sections: [] };
+  const slugs = ['test-partner', 'test-partner-plus', 'retired-partner'];
+  const partnerIds = () => slugs.map((s) => fake.story(`partners/${s}`)!.id);
+
+  beforeEach(() => {
+    fake.addFolder('partners');
+    const welcomeId = fake.addFolder('welcome');
+    fake.addStory({
+      name: 'Bumble',
+      slug: 'bumble',
+      parent_id: welcomeId,
+      content: welcomeContent,
+    });
+  });
+
+  it('writes nothing without --apply', async () => {
+    const { code } = await run('createTestPartners.mjs');
+
+    expect(code).toBe(0);
+    expect(fake.writes()).toEqual([]);
+  });
+
+  it.each([
+    ['test-partner', 'Test Partner'],
+    ['test-partner-plus', 'Test Partner Plus'],
+    ['retired-partner', 'Retired Partner'],
+  ])('creates %s as partners/ and welcome/ drafts titled "(test)"', async (slug, name) => {
+    expect((await run('createTestPartners.mjs', '--apply')).code).toBe(0);
+
+    expect(fake.story(`partners/${slug}`)).toMatchObject({
+      name: `${name} (test)`,
+      published: false,
+      content: {
+        component: 'partner',
+        name,
+        brand_color: '#f3d6d8',
+        logo: { filename: `https://a.storyblok.com/f/${SPACE_ID}/415x71/abc/bloom_logo.svg` },
+      },
+    });
+    expect(fake.story(`welcome/${slug}`)).toMatchObject({
+      name: `${name} (test)`,
+      published: false,
+      content: welcomeContent,
+    });
+  });
+
+  it('uploads the logo once, never publishes and never writes to the datasource', async () => {
+    await run('createTestPartners.mjs', '--apply');
+
+    const uploads = fake.requests.filter((r) => r.method === 'POST' && r.path === '/assets');
+    expect(uploads.map((r) => r.body!.filename)).toEqual(['bloom_logo.svg']);
+    expect(fake.writes().filter((w) => /publish|datasource/.test(w))).toEqual([]);
+  });
+
+  it('changes nothing when run again', async () => {
+    await run('createTestPartners.mjs', '--apply');
+    fake.requests = [];
+
+    await run('createTestPartners.mjs', '--apply');
+
+    expect(fake.writes()).toEqual([]);
+  });
+
+  describe('--publish-partners', () => {
+    it('refuses to publish before the stories exist', async () => {
+      const { code } = await run('createTestPartners.mjs', '--publish-partners', '--apply');
+
+      expect(code).toBe(1);
+      expect(fake.writes()).toEqual([]);
+    });
+
+    it('publishes nothing without --apply', async () => {
+      await run('createTestPartners.mjs', '--apply');
+      fake.requests = [];
+
+      const { stdout } = await run('createTestPartners.mjs', '--publish-partners');
+
+      expect(stdout).toContain('Would publish');
+      expect(fake.writes()).toEqual([]);
+    });
+
+    it('publishes the partners/ stories, then unpublishes them, never touching welcome/', async () => {
+      await run('createTestPartners.mjs', '--apply');
+      fake.requests = [];
+
+      const { code } = await run(
+        'createTestPartners.mjs',
+        '--publish-partners',
+        '--apply',
+        '--wait=0',
+      );
+
+      expect(code).toBe(0);
+      expect(fake.writes()).toEqual([
+        ...partnerIds().map((id) => `GET /stories/${id}/publish`),
+        ...partnerIds().map((id) => `GET /stories/${id}/unpublish`),
+      ]);
+      expect(fake.stories.filter((s) => s.published)).toEqual([]);
+    });
+
+    it('unpublishes the stories it published when a later publish fails', async () => {
+      await run('createTestPartners.mjs', '--apply');
+      const [first, second] = partnerIds();
+      fake.failPublishOf = second;
+      fake.requests = [];
+
+      const { code } = await run(
+        'createTestPartners.mjs',
+        '--publish-partners',
+        '--apply',
+        '--wait=0',
+      );
+
+      expect(code).toBe(1);
+      expect(fake.writes()).toEqual([
+        `GET /stories/${first}/publish`,
+        `GET /stories/${second}/publish`,
+        `GET /stories/${first}/unpublish`,
+      ]);
+      expect(fake.stories.filter((s) => s.published)).toEqual([]);
     });
   });
 });

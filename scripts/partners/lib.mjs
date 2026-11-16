@@ -27,7 +27,7 @@ export async function findStory(fullSlug) {
   return stories[0] || null;
 }
 
-async function getStory(id) {
+export async function getStory(id) {
   const { story } = await mapi('GET', `/stories/${id}`);
   return story;
 }
