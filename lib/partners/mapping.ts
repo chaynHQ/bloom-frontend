@@ -1,5 +1,4 @@
-import type { PartnerContent } from '@/lib/constants/partners';
-import type { PartnerBrand } from './types';
+import type { BrandedPartner } from './types';
 
 type StoryblokAsset = { filename?: string | null } | null;
 
@@ -22,47 +21,29 @@ export interface PartnerStory {
 }
 
 // Storyblok keeps an emptied asset field as an asset with an empty filename.
-const assetUrl = (asset?: StoryblokAsset) => asset?.filename || null;
-const text = (value?: string | null) => value || null;
+const assetUrl = (asset?: StoryblokAsset) => asset?.filename || undefined;
+const text = (value?: string | null) => value || undefined;
 
-export function toPartnerBrand(story: PartnerStory): PartnerBrand {
+// The alt and footer keys are shared strings that take the partner's `name`; `footerLine2` is the
+// legal name itself, shown as written.
+export function toPartnerContent(story: PartnerStory, id?: string): BrandedPartner {
   const { content } = story;
   return {
+    id,
     slug: story.slug,
     name: content.name,
-    legalName: content.legal_name,
     logo: assetUrl(content.logo) ?? '',
-    brandColor: content.brand_color,
+    logoAlt: 'alt.partnerLogo',
     partnershipLogo: assetUrl(content.partnership_logo),
-    illustration: assetUrl(content.illustration),
+    partnershipLogoAlt: 'alt.partnershipLogo',
+    bloomGirlIllustration: assetUrl(content.illustration),
     website: text(content.website),
+    footerLine1: 'footer.inPartnershipWith',
+    footerLine2: content.legal_name,
     facebook: text(content.facebook),
     instagram: text(content.instagram),
     twitter: text(content.twitter),
     youtube: text(content.youtube),
     tiktok: text(content.tiktok),
-  };
-}
-
-// The alt and footer keys are shared strings that take the partner's `name`; `footerLine2` is the
-// legal name itself, shown as written.
-export function toPartnerContent(brand: PartnerBrand, id?: string): PartnerContent {
-  return {
-    id,
-    slug: brand.slug,
-    name: brand.name,
-    logo: brand.logo,
-    logoAlt: 'alt.partnerLogo',
-    partnershipLogo: brand.partnershipLogo ?? undefined,
-    partnershipLogoAlt: 'alt.partnershipLogo',
-    bloomGirlIllustration: brand.illustration ?? undefined,
-    website: brand.website ?? undefined,
-    footerLine1: 'footer.inPartnershipWith',
-    footerLine2: brand.legalName,
-    facebook: brand.facebook ?? undefined,
-    instagram: brand.instagram ?? undefined,
-    twitter: brand.twitter ?? undefined,
-    youtube: brand.youtube ?? undefined,
-    tiktok: brand.tiktok ?? undefined,
   };
 }

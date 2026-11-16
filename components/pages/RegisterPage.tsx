@@ -180,7 +180,7 @@ export default function RegisterPage() {
                     component={i18nLink}
                     key={`${partner.name}-link`}
                     aria-label={tS(partner.logoAlt, { name: partner.name })}
-                    onClick={() => logEvent(generatePartnershipPromoLogoClick(partner.slug!))}
+                    onClick={() => logEvent(generatePartnershipPromoLogoClick(partner.slug))}
                     href={`/welcome/${partner.slug}${codeParam && '?code=' + codeParam}`}
                     sx={[
                       {

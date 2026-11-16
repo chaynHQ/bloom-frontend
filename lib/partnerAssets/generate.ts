@@ -31,6 +31,9 @@ const LOCKUP_LANGUAGES = Object.keys(IN_PARTNERSHIP_WITH) as LockupLanguage[];
 
 const lockupField = (language: LockupLanguage) =>
   language === 'en' ? 'partnership_logo' : `partnership_logo__i18n__${language}`;
+const LOCKUP_FIELD_LANGUAGES: Record<string, LockupLanguage> = Object.fromEntries(
+  LOCKUP_LANGUAGES.map((language) => [lockupField(language), language]),
+);
 
 // Storyblok keeps a cleared asset as one with an empty filename, and an unset translation as no key.
 const isEmpty = (value: unknown) => !(value as StoryblokAsset | null | undefined)?.filename;
@@ -70,7 +73,7 @@ function renderField(field: string, slug: string, content: StoryContent, logo: B
       height: Math.round(height),
     };
   }
-  const language = LOCKUP_LANGUAGES.find((candidate) => lockupField(candidate) === field)!;
+  const language = LOCKUP_FIELD_LANGUAGES[field];
   const { png, width, height } = renderLockup(logo, IN_PARTNERSHIP_WITH[language]);
   return {
     filename: `bloom_${slug}_logo_${language}.png`,

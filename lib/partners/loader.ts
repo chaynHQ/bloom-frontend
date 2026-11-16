@@ -1,7 +1,7 @@
 import { API_URL, PARTNERS_CACHE_TAG, STORYBLOK_ENVIRONMENT } from '@/lib/constants/common';
 import { getStoryblokApi } from '@/lib/storyblok';
 import { unstable_cache } from 'next/cache';
-import { type PartnerStory, toPartnerBrand, toPartnerContent } from './mapping';
+import { type PartnerStory, toPartnerContent } from './mapping';
 import type { ActivePartner, PartnerSets } from './types';
 
 async function getActivePartners(): Promise<ActivePartner[]> {
@@ -48,13 +48,12 @@ export async function loadPartnerSets(locale: string): Promise<PartnerSets> {
   ]);
 
   const activeBySlug = new Map(activePartners.map((partner) => [partner.slug, partner]));
-  const brands = stories.map(toPartnerBrand);
 
   return {
-    branded: brands.map((brand) => toPartnerContent(brand)),
-    launched: brands
-      .filter((brand) => activeBySlug.has(brand.slug) && welcomeSlugs.has(brand.slug))
-      .map((brand) => toPartnerContent(brand, activeBySlug.get(brand.slug)!.id)),
+    branded: stories.map((story) => toPartnerContent(story)),
+    launched: stories
+      .filter((story) => activeBySlug.has(story.slug) && welcomeSlugs.has(story.slug))
+      .map((story) => toPartnerContent(story, activeBySlug.get(story.slug)!.id)),
   };
 }
 

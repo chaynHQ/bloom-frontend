@@ -3,7 +3,6 @@ import { StaticImageData } from 'next/image';
 
 export interface PartnerContent {
   id?: string;
-  slug?: string;
   name: string; // rename to display name to show value is intended for display and can be upper case
   logo: string | StaticImageData;
   logoAlt: string;

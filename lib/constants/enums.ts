@@ -42,10 +42,6 @@ export enum EMAIL_REMINDERS_FREQUENCY {
   NEVER = 'NEVER',
 }
 
-export enum PARTNER_ACCESS_FEATURES {
-  THERAPY = 'therapy',
-}
-
 export enum STORYBLOK_STORY_STATUS {
   PUBLISHED = 'published',
   UNPUBLISHED = 'unpublished',

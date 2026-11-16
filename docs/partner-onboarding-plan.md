@@ -10,7 +10,7 @@ Adding a partner today needs a developer: API calls to create it, branding commi
 | **4** | Lockups and illustrations generated from the partner's logo and colour                                 | bloom-frontend | chaynHQ/bloom-frontend#2032                 | In review |
 | Later | Drop the unused partner branding columns, once phases 1–3 are stable in production                     | bloom-backend  | One migration                               | Planned   |
 
-Phases 1 and 3 are one PR each, backend and frontend. Both go to staging for the team to test, then to production together. Phases 1–3 remove developers from onboarding. Until phase 4 ships, a designer uploads the lockup and illustration, and the content team adds the partner to the `partners` datasource. The prompt for phase 4 is in [partner-onboarding-prompts.md](partner-onboarding-prompts.md).
+Phase 1 is the backend PR; phases 3 and 4 are the frontend PR. Both go to staging for the team to test, then to production together. Phases 1–3 remove developers from onboarding; phase 4 generates the lockup and illustration for a designer to review, and adds the partner to the `partners` datasource.
 
 - [How it works today](#how-it-works-today)
 - [Decisions](#decisions)
@@ -386,7 +386,7 @@ No Storyblok roles or webhook changes are needed: publishing can't launch anythi
 | 3. Frontend         | 4–6 days      | Medium     | **Medium**      |
 | 4. Asset generation | 2–3 days      | Medium     | Low             |
 
-Production follows the team's testing on staging. Phase 4 ships after that, when a designer can review its output.
+Production follows the team's testing on staging. Phase 4 ships with phase 3 but only runs in production, so a designer reviews its output after the first production publish.
 
 What still needs people: reviewing roughly 2,000–3,000 changed lines, Storyblok publishes, the Simplybook therapy check, design sign-off, and production releases (`develop` → `main` in both repos).
 

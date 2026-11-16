@@ -16,7 +16,6 @@ import {
   WELCOME_SUPPORT_CARD_CLICKED,
   WELCOME_VIEWED,
 } from '@/lib/constants/events';
-import type { PartnerContent } from '@/lib/constants/partners';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { useFeaturedLibraryItems } from '@/lib/hooks/useFeaturedLibraryItems';
 import { useLibrarySectionEvents } from '@/lib/hooks/useLibrarySectionEvents';
@@ -24,6 +23,7 @@ import { useHydratedSearchParams } from '@/lib/hooks/useHydratedSearchParams';
 import { useLogEventOnce } from '@/lib/hooks/useLogEventOnce';
 import useReferralPartner from '@/lib/hooks/useReferralPartner';
 import { useUserAuthStatus } from '@/lib/hooks/useUserAuthStatus';
+import type { BrandedPartner } from '@/lib/partners/types';
 import { type LibraryStories } from '@/lib/utils/libraryData';
 import logEvent, { getEventUserData } from '@/lib/utils/logEvent';
 import { RichTextOptions } from '@/lib/utils/richText';
@@ -42,7 +42,7 @@ interface Props {
   story: ISbStoryData;
   libraryStories: LibraryStories;
   // The launched partner for the route's slug, resolved once by the page.
-  partner: PartnerContent;
+  partner: BrandedPartner;
 }
 
 const introTitleStyle = { mb: 2, maxWidth: 800 } as const;
@@ -72,7 +72,7 @@ export default function WelcomePage({
 
   const userAuthStatus = useUserAuthStatus();
   const isLoggedIn = !authStateLoading && Boolean(userId);
-  const partnerSlug = partnerContent.slug!;
+  const partnerSlug = partnerContent.slug;
   const content = story.content;
 
   const code = searchParams?.get('code');

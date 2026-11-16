@@ -5,8 +5,8 @@ import path from 'path';
 type Size = { width: number; height: number };
 type Box = Size & { x: number; y: number };
 
-// In the units of the old hand-made lockup (public/bloom_bumble_logo.svg): a 400-wide wordmark,
-// the line of text, then the partner's logo at the wordmark's width.
+// In the units of the old hand-made Bumble lockup: a 400-wide wordmark, the line of text, then
+// the partner's logo at the wordmark's width.
 const WIDTH = 400;
 const WORDMARK = { width: 415, height: 71 };
 const TEXT_SIZE = 40;

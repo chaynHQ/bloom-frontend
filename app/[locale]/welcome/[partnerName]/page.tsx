@@ -44,7 +44,7 @@ export async function generateMetadata({ params }: { params: Params }) {
 export async function generateStaticParams() {
   const { launched } = await getPartnerSets(routing.defaultLocale);
   return launched.flatMap((partner) =>
-    routing.locales.map((locale) => ({ partnerName: partner.slug!, locale })),
+    routing.locales.map((locale) => ({ partnerName: partner.slug, locale })),
   );
 }
 

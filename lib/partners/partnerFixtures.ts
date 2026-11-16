@@ -1,6 +1,6 @@
 // Unit-test fixtures for the plan's "Partners used for testing": Bumble, Badoo and Fruitz as they
 // are today, and Bumble For Friends, whose slug (bff) differs from its name, which contains "Bumble".
-import { toPartnerBrand, toPartnerContent } from './mapping';
+import { toPartnerContent } from './mapping';
 import { ActivePartner } from './types';
 
 const asset = (file: string) => ({
@@ -71,11 +71,12 @@ export const emptyPartnershipLogoStory = {
 };
 
 const contentFor = (slug: string, id?: string) =>
-  toPartnerContent(toPartnerBrand(partnerStories.find((story) => story.slug === slug)!), id);
+  toPartnerContent(
+    partnerStories.find((story) => story.slug === slug)!,
+    id,
+  );
 
-export const brandedPartners = partnerStories.map((story) =>
-  toPartnerContent(toPartnerBrand(story)),
-);
+export const brandedPartners = partnerStories.map((story) => toPartnerContent(story));
 
 // The launched set today, and once Bumble For Friends is activated.
 export const launchedPartners = ['bumble', 'badoo'].map((slug) => contentFor(slug, `id-${slug}`));

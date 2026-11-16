@@ -1,9 +1,8 @@
 'use client';
 
-import type { PartnerContent } from '@/lib/constants/partners';
 import { createContext, ReactNode, useContext } from 'react';
 import { findPartner } from './resolve';
-import type { PartnerSets } from './types';
+import type { BrandedPartner, PartnerSets } from './types';
 
 const PartnersContext = createContext<PartnerSets | null>(null);
 
@@ -24,15 +23,15 @@ function usePartnerSets(): PartnerSets {
   return partners;
 }
 
-export function useBrandedPartners(): PartnerContent[] {
+export function useBrandedPartners(): BrandedPartner[] {
   return usePartnerSets().branded;
 }
 
-export function useLaunchedPartners(): PartnerContent[] {
+export function useLaunchedPartners(): BrandedPartner[] {
   return usePartnerSets().launched;
 }
 
 // For members and partner admins, whose partner comes from the backend by name.
-export function usePartner(name?: string | null): PartnerContent | undefined {
+export function usePartner(name?: string | null): BrandedPartner | undefined {
   return findPartner(useBrandedPartners(), name);
 }
