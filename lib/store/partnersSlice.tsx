@@ -18,6 +18,10 @@ export interface Partner {
   name: string;
   partnerFeature: PartnerFeature[];
   isActive: boolean;
+  slug?: string;
+  storyblokUuid?: string | null;
+  therapySessionsPerCode?: number;
+  automaticAccessCode?: boolean;
 }
 const initialState: Partner[] = [];
 

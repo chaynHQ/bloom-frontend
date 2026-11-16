@@ -1,5 +1,5 @@
 import { createHmac, timingSafeEqual } from 'crypto';
-import { COURSE_STORIES_CACHE_TAG } from '@/lib/constants/common';
+import { COURSE_STORIES_CACHE_TAG, PARTNERS_CACHE_TAG } from '@/lib/constants/common';
 import { revalidatePath, revalidateTag } from 'next/cache';
 
 // Storyblok signs each webhook with the shared secret: a hex HMAC-SHA1 of the raw body.
@@ -23,5 +23,6 @@ export async function POST(request: Request) {
 
   revalidatePath('/', 'layout');
   revalidateTag(COURSE_STORIES_CACHE_TAG, { expire: 0 });
+  revalidateTag(PARTNERS_CACHE_TAG, { expire: 0 });
   return Response.json({ revalidated: true });
 }

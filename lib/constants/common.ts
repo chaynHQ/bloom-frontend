@@ -16,6 +16,7 @@ export const STORYBLOK_ENVIRONMENT = ENVIRONMENT === 'production' ? 'published' 
 
 // Cache tag for the per-locale course list, cleared by the Storyblok revalidate webhook.
 export const COURSE_STORIES_CACHE_TAG = 'course-stories';
+export const PARTNERS_CACHE_TAG = 'partners';
 
 export type ErrorDisplay =
   string | ReactElement<any, string | JSXElementConstructor<any>> | ReactNode[] | ReactNode | null;

@@ -25,6 +25,7 @@
       "chaynDescription": "Bloom, <link>Chayn</link> tarafından hizmetinize sunuluyor. Chayn, toplumsal cinsiyete dayalı şiddete maruz kalanların iyileşme sürecini desteklemek için kaynaklar geliştiren; dünyanın her yerinden hayatta kalanlar ve dayanışma içindekiler tarafından yürütülen kâr amacı gütmeyen, küresel bir kuruluştur.",
       "chaynLine1": "<bold>CHAYN</bold> CIO tarafından oluşturuldu.",
       "chaynLine2": "Birleşik Krallık Hayır Kuruluşu Numarası: 1196098",
+      "inPartnershipWith": "İş birliğiyle",
       "bumbleLine1": "İş birliğiyle",
       "bumbleLine2": "BUMBLE HOLDING LTD",
       "badooLine1": "İş birliğiyle",
@@ -79,6 +80,8 @@
     "alt": {
       "chaynLogo": "Chayn logosu",
       "bloomLogo": "Bloom logosu",
+      "partnerLogo": "{name} logosu",
+      "partnershipLogo": "{name} iş birliğiyle Bloom logosu",
       "bumbleLogo": "Bumble logosu",
       "bloomBumbleLogo": "Bumble iş birliğiyle Bloom logosu",
       "badooLogo": "Badoo logosu",

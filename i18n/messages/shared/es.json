@@ -25,6 +25,7 @@
       "chaynDescription": "Bloom es traído por <link>Chayn</link>, una organización global sin ánimo de lucro, dirigida por sobrevivientes y personas aliadas de todo el mundo, creando recursos para apoyar la sanación de sobrevivientes de violencia de género.",
       "chaynLine1": "Construído por <bold>CHAYN</bold> CIO.",
       "chaynLine2": "Número de Caridad del RU: 1196098",
+      "inPartnershipWith": "En asociación con",
       "bumbleLine1": "En asociación con",
       "bumbleLine2": "BUMBLE HOLDING LTD",
       "badooLine1": "En asociación con",
@@ -79,6 +80,8 @@
     "alt": {
       "chaynLogo": "Logo de Chayn",
       "bloomLogo": "Logo de Bloom",
+      "partnerLogo": "Logo de {name}",
+      "partnershipLogo": "Logo de Bloom para {name}",
       "bumbleLogo": "Logo de Bumble",
       "bloomBumbleLogo": "Logo de Bloom para Bumble",
       "badooLogo": "Logo de Badoo",

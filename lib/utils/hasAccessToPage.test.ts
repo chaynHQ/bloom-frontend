@@ -12,7 +12,7 @@ const emptyPartnerAdmin: PartnerAdmin = {
   updatedAt: null,
 };
 const partnerAdmin: PartnerAdmin = {
-  partner: { name: 'Bumble' } as PartnerContent,
+  partner: { name: 'Bumble' } as PartnerAdmin['partner'],
   id: null,
   active: null,
   createdAt: null,

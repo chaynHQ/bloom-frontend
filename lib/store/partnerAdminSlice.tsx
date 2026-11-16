@@ -2,13 +2,14 @@ import { api, GetUserResponse } from '@/lib/api';
 
 import { getPartnerContent, PartnerContent } from '@/lib/constants/partners';
 import { createSlice } from '@reduxjs/toolkit';
+import { Partner } from './partnersSlice';
 
 export interface PartnerAdmin {
   id: string | null;
   active: boolean | null;
   createdAt: Date | null;
   updatedAt: Date | null;
-  partner: PartnerContent | null;
+  partner: (PartnerContent & Partner) | null;
 }
 
 const initialState: PartnerAdmin = {

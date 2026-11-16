@@ -25,6 +25,7 @@
       "chaynDescription": "يصل إليك Bloom عبر <link>Chayn</link>، وهي منظمة غير ربحية عالمية يديرها ناجيات وناجون وحليفات وحلفاء من حول العالم، وتنشئ موارد لدعم تعافي الناجيات والناجين من العنف القائم على النوع الاجتماعي.",
       "chaynLine1": "تم تطويره بواسطة <bold>CHAYN</bold> CIO.",
       "chaynLine2": "رقم الجمعية الخيرية في المملكة المتحدة: 1196098",
+      "inPartnershipWith": "بالشراكة مع",
       "bumbleLine1": "بالشراكة مع",
       "bumbleLine2": "شركة بامبل القابضة المحدودة",
       "badooLine1": "بالشراكة مع",
@@ -79,6 +80,8 @@
     "alt": {
       "chaynLogo": "شعار Chayn",
       "bloomLogo": "شعار Bloom",
+      "partnerLogo": "شعار {name}",
+      "partnershipLogo": "شعار Bloom بالشراكة مع {name}",
       "bumbleLogo": "شعار Bumble",
       "bloomBumbleLogo": "شعار Bloom بالشراكة مع Bumble",
       "badooLogo": "شعار Badoo",
