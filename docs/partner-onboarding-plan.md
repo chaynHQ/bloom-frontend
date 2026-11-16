@@ -71,7 +71,7 @@ The frontend works with two sets:
 | **Branded**  | its `partners/<slug>` story exists                                                | Branding for signed-in members and partner admins: their footer and the partner admin pages                                                                                                                                        |
 | **Launched** | branded, **and** active in the backend, **and** its `welcome/<slug>` story exists | Anything driven by a URL or a referral: the welcome page, `?partner=` on register and in the footer, the referral cookie, UTM attribution, the sitemap, the partner lists on register and apply-a-code, referred visitors' content |
 
-"Exists" means in `STORYBLOK_ENVIRONMENT`: published in production, draft or published on staging and locally. The test partners' stories are drafts, so a `published` check would leave them unlaunched on staging and fail every staging check.
+"Exists" means in `STORYBLOK_ENVIRONMENT`: published in production, draft or published on staging and locally. A new partner's welcome story stays a draft until launch (Bumble For Friends on staging), so a `published` check would leave it unlaunched on staging and fail every staging check.
 
 Only the launched set is ever reachable from a URL, so a partner that's published but not yet launched shows up nowhere a visitor can type.
 
@@ -109,8 +109,6 @@ Stories live in a `partners/` folder. The story slug is the partner's permanent 
 Alt text and "In partnership with" are shared app strings with the name filled in: `footer.inPartnershipWith`, `alt.partnerLogo`, `alt.partnershipLogo`. They're added from the existing translators' wording for Bumble, so nothing needs translating again.
 
 The `partners` datasource stays, so the 8 `included_for_partners` fields don't change. Entries are name = slug, value = display name (as today: `bumble | Bumble`); `Public` stays.
-
-Test partner stories (see [Critical paths](#test-partners)) are drafts whose Storyblok titles say "test – never publish". Publishing one by mistake is harmless: production gets an inactive row and nothing launches.
 
 ## Backend
 
@@ -155,10 +153,6 @@ Unchanged: `PATCH /v1/partner-access/:id`, automatic access codes, live chat, re
 ### Lookups
 
 `getPartner(value)` and `getPartnerWithPartnerFeaturesByName(value)` match `LOWER(name) = LOWER(value) OR slug = LOWER(value)`, with no `LIKE`. Callers: the `course_partner` sync (names from `included_for_partners`), the automatic access code lookup (name) and `GET /v1/partner/:name` (the register page; name or slug).
-
-### Test partners
-
-`scripts/create-test-partners.sh <apiUrl> <superAdminToken>` creates the [test partners](#test-partners) with `POST` and `PATCH`, and is safe to re-run. Run it locally and on staging. `seed-local-db.sh` restores a staging dump, so once staging has them, fresh local databases do too.
 
 ## API contract
 
@@ -218,7 +212,7 @@ The Storyblok webhook's `/api/revalidate` refreshes the tag. When a super admin 
 | Static branding merged into Redux          | Removed from `partnerAccessSlice` and `partnerAdminSlice`                                                                                                                                                                                                                               |
 | Per-partner footer and alt keys            | `footer.inPartnershipWith`, `alt.partnerLogo`, `alt.partnershipLogo` with `{name}`; the per-partner keys removed from all 8 locales                                                                                                                                                     |
 | `StaticImageData` imports                  | Storyblok asset URLs. `next/image` needs `width` and `height` for remote URLs (read them from the Storyblok URL) and `unoptimized` for SVGs, which the optimiser rejects                                                                                                                |
-| Per-partner event names (`BUMBLE_PROMO_…`) | Unchanged for Bumble and Badoo; hyphens in a slug become underscores (`TEST_PARTNER_PROMO_…`)                                                                                                                                                                                           |
+| Per-partner event names (`BUMBLE_PROMO_…`) | Unchanged for Bumble and Badoo; hyphens in a slug become underscores (`BUMBLE_FOR_FRIENDS_PROMO_…`)                                                                                                                                                                                     |
 | Sitemap lists every published `welcome/*`  | Launched partners only                                                                                                                                                                                                                                                                  |
 
 Chayn's own footer content (`publicContent`) stays in `lib/constants/partners.ts`, exported for `Footer` and `lib/utils/structuredData.tsx`; everything partner-specific leaves it. Delete `bumble_logo.svg`, `badoo_logo.svg`, `fruitz_logo.svg`, `bloom_bumble_logo.svg`, `bloom_badoo_logo.svg`, `bloom_fruitz_logo.svg`, `illustration_bloom_head_pink.svg` and `illustration_bloom_head_purple.svg`. Keep `illustration_bloom_head_yellow.svg`: other pages use it.
@@ -260,17 +254,23 @@ It needs a Storyblok management token in Vercel's production environment only; u
 
 Six changes can lose sign-ups or give the wrong access without an error. Each gets its tests written before the code, a line-by-line review and a check on staging. Everything else can be reviewed quickly.
 
-### Test partners
+### Partners used for testing
 
-Bumble and Badoo can't show these bugs: their slug and name match and no names overlap.
+There are no test partners anywhere: no scripts, no Storyblok test stories, no seeded rows. The cases Bumble and Badoo can't show (their slug and name match, and no names overlap) come from real partners:
 
-| Partner             | Slug                | Status   | Therapy limit | Automatic access code | Storyblok (drafts)         |
-| ------------------- | ------------------- | -------- | ------------- | --------------------- | -------------------------- |
-| `Test Partner`      | `test-partner`      | active   | 0             | on                    | `partners/` and `welcome/` |
-| `Test Partner Plus` | `test-partner-plus` | active   | 6             | off                   | `partners/` and `welcome/` |
-| `Retired Partner`   | `retired-partner`   | inactive | 0             | off                   | `partners/` and `welcome/` |
+| Partner            | Slug                 | Why it's useful                                                                                                              |
+| ------------------ | -------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| Bumble, Badoo      | `bumble`, `badoo`    | Today's behaviour must not change                                                                                            |
+| Fruitz             | `fruitz`             | Branded but not launched: it has no welcome page                                                                             |
+| Bumble For Friends | `bumble-for-friends` | New. Its slug differs from its name, "Bumble" is inside its name and slug, and it's inactive until a super admin launches it |
 
-Created by the backend's `create-test-partners.sh` locally and on staging, and by lane S in Storyblok as drafts. Production reads only published stories and has no such rows.
+Unit tests use these four as in-memory fixtures, set up as each test needs (e.g. BFF inactive, or active with a therapy limit of 0 and an automatic access code). Cypress uses only Bumble, Badoo, Fruitz and unknown slugs, which behave the same in every environment. The BFF cases are checked by hand on staging.
+
+**Adding BFF on staging,** once PRs 1 and 2 are there, the way any new partner is added:
+
+1. The content team creates `partners/bumble-for-friends` with BFF's real branding (a designer uploads the lockup and illustration until phase 4), and publishes it. The staging backend's webhook creates its row, inactive. Production's backend ignores it until PR 1 is released.
+2. The content team adds `bumble-for-friends | Bumble For Friends` to the `partners` datasource and creates `welcome/bumble-for-friends` as a draft. Staging reads drafts; it's published at launch.
+3. A super admin finds BFF in the staging dashboard and changes its settings as each staging check below needs.
 
 ### 1. Therapy limit on access codes (lanes B, A)
 
@@ -282,7 +282,8 @@ Created by the backend's `create-test-partners.sh` locally and on staging, and b
 | Limit 0, therapy requested: 400                                                                        | `partner-access.service.spec.ts` |
 | Automatic access code sign-up for a limit-0 partner still works                                        | `partner-access.service.spec.ts` |
 | Migration: existing partners at 6; new rows at 0                                                       | Migration review + local run     |
-| Badoo's admin creates a therapy code with 6 sessions; Test Partner's admin sees no therapy option      | `cypress/integration/admin/`     |
+| Badoo's admin creates a therapy code with 6 sessions                                                   | `cypress/integration/admin/`     |
+| A partner admin whose partner's limit is 0 sees no therapy option                                      | `CreateAccessCodeForm.test.tsx`  |
 
 **Staging:** create Bumble and Badoo codes with and without therapy; compare the rows with one created in production.
 
@@ -290,23 +291,23 @@ Created by the backend's `create-test-partners.sh` locally and on staging, and b
 
 | Test                                                                                                                               | Where                             |
 | ---------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- |
-| `bumble`, `Bumble`, `BUMBLE` find Bumble; `test-partner` and `Test Partner` find Test Partner (both lookups)                       | `partner.service.spec.ts`         |
-| `Test Partner` doesn't find Test Partner Plus; `umble` and `B_mble` find nothing                                                   | `partner.service.spec.ts`         |
-| A course tagged `Public` and `Test Partner` links Test Partner only                                                                | `webhooks.service.spec.ts`        |
+| `bumble`, `Bumble`, `BUMBLE` find Bumble; `bumble-for-friends` and `Bumble For Friends` find Bumble For Friends (both lookups)     | `partner.service.spec.ts`         |
+| `Bumble` doesn't find Bumble For Friends; `umble` and `B_mble` find nothing                                                        | `partner.service.spec.ts`         |
+| A course tagged `Public` and `Bumble For Friends` links Bumble For Friends only, not Bumble                                        | `webhooks.service.spec.ts`        |
 | Partner webhook: creates inactive; links an existing row by slug, then by name; never renames or reactivates; unpublish is a no-op | `webhooks.service.spec.ts`        |
-| The automatic access code lookup finds Test Partner                                                                                | `partner-feature.service.spec.ts` |
+| The automatic access code lookup finds Bumble For Friends                                                                          | `partner-feature.service.spec.ts` |
 
 ### 3. Content for referred visitors (lane F)
 
-| Test                                                                                                                            | Where                            |
-| ------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
-| Referral `test-partner` sees content tagged `Test Partner`, not content tagged only `Test Partner Plus`                         | `partnerContentAccess.test.ts`   |
-| Referral `test-partner` opens a course tagged `Test Partner` (`hasAccessToPage` gets the name)                                  | `hasAccessToPage.test.ts`        |
-| Referrals `retired-partner`, `nonsense` and an old `fruitz` cookie are ignored: the visitor is public and sees `Public` content | `partnerContentAccess.test.ts`   |
-| Referral `bumble` behaves exactly as today                                                                                      | both                             |
-| A signed-in member is matched by their access codes, as today                                                                   | `useUserContentPartners.test.ts` |
+| Test                                                                                                                                                                             | Where                            |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
+| Referral `bumble-for-friends` sees content tagged `Bumble For Friends`, not content tagged only `Bumble`; referral `bumble` doesn't see content tagged only `Bumble For Friends` | `partnerContentAccess.test.ts`   |
+| Referral `bumble-for-friends` opens a course tagged `Bumble For Friends` (`hasAccessToPage` gets the name)                                                                       | `hasAccessToPage.test.ts`        |
+| Referrals to an inactive Bumble For Friends, `nonsense` and an old `fruitz` cookie are ignored: the visitor is public and sees `Public` content                                  | `partnerContentAccess.test.ts`   |
+| Referral `bumble` behaves exactly as today                                                                                                                                       | both                             |
+| A signed-in member is matched by their access codes, as today                                                                                                                    | `useUserContentPartners.test.ts` |
 
-**Staging:** as a signed-out visitor, open `/welcome/test-partner`, then the library.
+**Staging:** with BFF active, as a signed-out visitor, open `/welcome/bumble-for-friends`, then the library.
 
 ### 4. Welcome page gate and partner data (lane F)
 
@@ -317,29 +318,29 @@ Created by the backend's `create-test-partners.sh` locally and on staging, and b
 | `GET /v1/partner/active` returning an error or a non-list (a backend without PR 1): the loader throws     | Unit test of the loader      |
 | Backend or Storyblok fetch fails: the loader throws, caches nothing, and the next call fetches again      | Unit test of the loader      |
 | Sitemap and `generateStaticParams` include launched partners only                                         | New `app/sitemap.test.ts`    |
-| `/welcome/bumble` renders; `/welcome/retired-partner` and `/welcome/fruitz` show not found                | `welcome.cy.tsx`             |
-| `/?partner=fruitz` and `/auth/register?partner=retired-partner` show no partner branding                  | `welcome.cy.tsx`             |
+| `/welcome/bumble` renders; `/welcome/fruitz` and `/welcome/nonsense` show not found                       | `welcome.cy.tsx`             |
+| `/?partner=fruitz` and `/auth/register?partner=nonsense` show no partner branding                         | `welcome.cy.tsx`             |
 
 Review: no caller of the loader catches its error.
 
-**Staging:** deactivate Test Partner Plus in the dashboard and check its welcome page 404s straight away; reactivate it and check it's back. This also checks the dashboard's revalidation.
+**Staging:** before BFF is activated, `/welcome/bumble-for-friends` 404s. Activate it in the dashboard and check the page renders straight away; deactivate it and check it 404s again. This also checks the dashboard's revalidation.
 
 ### 5. Referral and UTM attribution (lane F)
 
 The mechanism doesn't change: a `/welcome/<slug>` path, or a slug anywhere in the five UTM parameters, stores the partner in Redux and a session cookie; the register page reads `?partner=`. Only the slug list becomes dynamic.
 
-| Test                                                                                                                     | Where                                  |
-| ------------------------------------------------------------------------------------------------------------------------ | -------------------------------------- |
-| Every existing case passes unchanged                                                                                     | `useReferralPartner.test.ts`           |
-| `/welcome/test-partner` sets the referral; `/welcome/retired-partner` doesn't                                            | `useReferralPartner.test.ts`           |
-| `utm_source=bumble` and `utm_campaign=bumble-june-2026` attribute Bumble                                                 | `useReferralPartner.test.ts`           |
-| `utm_source=test-partner-plus` attributes Test Partner Plus                                                              | `useReferralPartner.test.ts`           |
-| A UTM naming Retired Partner attributes nobody                                                                           | `useReferralPartner.test.ts`           |
-| `bumble` gives `BUMBLE_PROMO_GET_STARTED_CLICKED`; `test-partner` gives `TEST_PARTNER_PROMO_GET_STARTED_CLICKED`         | events unit test                       |
-| `/auth/register?partner=test-partner` shows the register form without a code field (automatic access code)               | `register-partner-without-code.cy.tsx` |
-| Registering through `/welcome/test-partner` creates a Test Partner access; a Bumble welcome link with a code still works | `register-partner-*.cy.tsx`            |
+| Test                                                                                                                         | Where                                  |
+| ---------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
+| Every existing case passes unchanged                                                                                         | `useReferralPartner.test.ts`           |
+| `/welcome/bumble-for-friends` sets the referral when BFF is launched, not when it's inactive                                 | `useReferralPartner.test.ts`           |
+| `utm_source=bumble` and `utm_campaign=bumble-june-2026` attribute Bumble                                                     | `useReferralPartner.test.ts`           |
+| `utm_source=bumble-for-friends` attributes Bumble For Friends, not Bumble                                                    | `useReferralPartner.test.ts`           |
+| Before BFF launches, `utm_source=bumble-for-friends` attributes Bumble, as it does today (only launched slugs count)         | `useReferralPartner.test.ts`           |
+| `bumble` gives `BUMBLE_PROMO_GET_STARTED_CLICKED`; `bumble-for-friends` gives `BUMBLE_FOR_FRIENDS_PROMO_GET_STARTED_CLICKED` | events unit test                       |
+| `/welcome/bumble` and `/auth/register?utm_source=bumble` show the register form without a code field, as today               | `register-partner-without-code.cy.tsx` |
+| A Bumble welcome link with a code still works                                                                                | `register-partner-*.cy.tsx`            |
 
-**Staging:** register through a Bumble welcome link with a code and through a UTM link; check the analytics events still carry `bumble`.
+**Staging:** register through a Bumble welcome link with a code and through a UTM link, and check the analytics events still carry `bumble`. With BFF active and its automatic access code on, register through `/welcome/bumble-for-friends` and through `?utm_source=bumble-for-friends`; check each creates a BFF access, not a Bumble one.
 
 ### 6. Partner updates (lanes B, A)
 
@@ -351,7 +352,7 @@ The mechanism doesn't change: a `/welcome/<slug>` path, or a slug anywhere in th
 | `{ automaticAccessCode: true }` creates the row; `false` sets it inactive; `true` again reuses it                            | `partner.service.spec.ts`    |
 | Changing the therapy limit or automatic access code in the table sends only that field                                       | `cypress/integration/admin/` |
 
-**Staging:** change Test Partner's limit and automatic access code and check Test Partner Plus's members keep their access.
+**Staging:** set BFF's therapy limit to 0 and switch its automatic access code off; check the register page asks for a code and a sign-up without one is refused. Switch it back on and check sign-up works.
 
 ## Delivery
 
@@ -367,7 +368,7 @@ Before release day:
 
 Release day:
 
-1. Release the backend (`develop` → `main`). Check that production's `GET /v1/partner/active` lists the active partners, including Bumble and Badoo.
+1. Release the backend (`develop` → `main`). Check that production's `GET /v1/partner/active` lists the active partners, including Bumble and Badoo. Republish `partners/bumble-for-friends` once, so production gets BFF's row, inactive; it launches when a super admin activates it and its welcome story is published.
 2. Release the frontend. If it builds before the backend is live, its build fails (the loader rejects the old backend's response); deploy it again.
 3. Smoke-test: the Bumble and Badoo welcome pages, a Bumble welcome link with a code, a UTM link, the footer for a Bumble member, and a partner admin creating a code.
 
@@ -394,7 +395,7 @@ Three PRs, built by five Claude Code sessions, at most three at once. A lane edi
 
 | PR                     | Lane                   | Branch and folder                                                   | Owns                                                                                                                                                                                                                                                                   | Critical paths |
 | ---------------------- | ---------------------- | ------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- |
-| **1** Backend          | **B** Backend          | `partners/backend`, backend main checkout                           | Everything in bloom-backend for phase 1, including `scripts/create-test-partners.sh`                                                                                                                                                                                   | 1, 2, 6        |
+| **1** Backend          | **B** Backend          | `partners/backend`, backend main checkout                           | Everything in bloom-backend for phase 1                                                                                                                                                                                                                                | 1, 2, 6        |
 | **2** Frontend         | **F** Frontend         | `partners/frontend`, frontend main checkout, port 3000. Owns the PR | Everything in PR 2 that S and A don't own: the two docs, the contract, partner data, welcome pages, referral and content access, branding, `shared` strings, partner Cypress specs                                                                                     | 3, 4, 5        |
 |                        | **S** Storyblok        | `partners/storyblok`, worktree `../bloom-frontend-s`                | `scripts/partners/`. The only lane that writes to Storyblok                                                                                                                                                                                                            | —              |
 |                        | **A** Admin            | `partners/admin`, worktree `../bloom-frontend-a`, port 3001         | `AdminDashboardPage`; the new partners table; `CreateAccessCodeForm`; `UpdatePartnerActiveForm`; `lib/api.ts`; `partnersSlice`; the revalidate server action; `i18n/messages/admin/` and `partnerAdmin/`; `cypress/integration/admin/` except `partner-content-access` | 1, 6           |
@@ -406,17 +407,17 @@ PR 2 is large. F commits one step at a time, and its description maps each criti
 
 **Order**
 
-| When                             | Who     | What                                                                                                                                                 |
-| -------------------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Now                              | B, F, S | F commits the docs and contract first and pushes. F builds against the API contract with mocks until B runs locally. S creates the schema and drafts |
-| S finished, B's PR up            | A       | Branches from `partners/frontend`                                                                                                                    |
-| PR 1 reviewed                    | You     | Merge PR 1 to `develop`; once staging deploys, run `create-test-partners.sh` against staging                                                         |
-| S and A finished                 | F       | Merges `partners/storyblok` and `partners/admin`, reruns everything, marks PR 2 ready for review                                                     |
-| PR 2 reviewed                    | You     | Merge PR 2 to `develop`, after PR 1. The team tests on staging                                                                                       |
-| Team signed off                  | S       | Publishes Bumble, Badoo and Fruitz                                                                                                                   |
-| Release day                      | You     | Backend, then frontend, to production ([Release](#release))                                                                                          |
-| Phases 1–3 stable, designer free | G       | Branches from `develop`; PR 3 merges after design sign-off                                                                                           |
-| Whenever convenient              | —       | One migration drops the branding columns, after checking they hold no data                                                                           |
+| When                             | Who               | What                                                                                                                                                          |
+| -------------------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Now                              | B, F, S           | F commits the docs and contract first and pushes. F builds against the API contract with mocks until B runs locally. S creates the schema and drafts          |
+| S finished, B's PR up            | A                 | Branches from `partners/frontend`                                                                                                                             |
+| PR 1 reviewed                    | You               | Merge PR 1 to `develop`                                                                                                                                       |
+| S and A finished                 | F                 | Merges `partners/storyblok` and `partners/admin`, reruns everything, marks PR 2 ready for review                                                              |
+| PR 2 reviewed                    | You, content team | Merge PR 2 to `develop`, after PR 1. Add Bumble For Friends in Storyblok ([Partners used for testing](#partners-used-for-testing)); the team tests on staging |
+| Team signed off                  | S                 | Publishes Bumble, Badoo and Fruitz                                                                                                                            |
+| Release day                      | You               | Backend, then frontend, to production ([Release](#release))                                                                                                   |
+| Phases 1–3 stable, designer free | G                 | Branches from `develop`; PR 3 merges after design sign-off                                                                                                    |
+| Whenever convenient              | —                 | One migration drops the branding columns, after checking they hold no data                                                                                    |
 
 **Shared things**
 
@@ -429,18 +430,19 @@ PR 2 is large. F commits one step at a time, and its description maps each criti
 
 ## Left out on purpose
 
-| Not built                                                   | Why                                                                                                     |
-| ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| Activation checks and a readiness checklist                 | An unready partner isn't launched; the welcome link in the dashboard shows the result                   |
-| Backend calling the frontend to revalidate                  | The dashboard's server action does it, with no shared secret or firewall rule                           |
-| Per-partner live chat, or a separate "therapy enabled" flag | Every partner has live chat; a limit of 0 means no therapy                                              |
-| Backend setting therapy sessions itself                     | Would change how every code is granted; checking the values sent is enough                              |
-| Welcome page → partner reference field, UTM keyword field   | The slug already pairs them and is what partners use                                                    |
-| Joining Storyblok and the database by `storyblokUuid`       | Test partners are drafts, so their rows are never linked; the slug is the key and renaming is ruled out |
-| A cached fallback for a backend outage                      | Next already serves the last good page; any fallback would be cached into pages for 4 hours             |
-| Regenerate and resync buttons, CLI                          | Clearing a field and republishing does both                                                             |
-| Vector lockups, extra fonts                                 | A 3× PNG is sharp at header size; every partner language is Latin script                                |
-| Storyblok roles, webhook renames                            | Publishing can't launch anything; the webhooks already work                                             |
+| Not built                                                   | Why                                                                                                                                                      |
+| ----------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Activation checks and a readiness checklist                 | An unready partner isn't launched; the welcome link in the dashboard shows the result                                                                    |
+| Backend calling the frontend to revalidate                  | The dashboard's server action does it, with no shared secret or firewall rule                                                                            |
+| Per-partner live chat, or a separate "therapy enabled" flag | Every partner has live chat; a limit of 0 means no therapy                                                                                               |
+| Backend setting therapy sessions itself                     | Would change how every code is granted; checking the values sent is enough                                                                               |
+| Welcome page → partner reference field, UTM keyword field   | The slug already pairs them and is what partners use                                                                                                     |
+| Joining Storyblok and the database by `storyblokUuid`       | The slug already pairs them, and renaming is ruled out                                                                                                   |
+| Test partners, scripts or seeded rows                       | Real partners cover every case: Bumble For Friends for a slug that differs from the name and overlapping names, Fruitz for a partner that isn't launched |
+| A cached fallback for a backend outage                      | Next already serves the last good page; any fallback would be cached into pages for 4 hours                                                              |
+| Regenerate and resync buttons, CLI                          | Clearing a field and republishing does both                                                                                                              |
+| Vector lockups, extra fonts                                 | A 3× PNG is sharp at header size; every partner language is Latin script                                                                                 |
+| Storyblok roles, webhook renames                            | Publishing can't launch anything; the webhooks already work                                                                                              |
 
 ## Open questions
 

@@ -4,7 +4,7 @@ Prompts for the five Claude Code sessions in [partner-onboarding-plan.md](partne
 
 Every prompt includes these rules:
 
-> **Lane rules.** Read the whole plan (`/Users/anna/Sites/bloom-frontend/docs/partner-onboarding-plan.md`) and this repo's `CLAUDE.md` first. Edit only the files your lane owns in the plan's Lanes table; if you need a change anywhere else, stop and tell me. Write your critical-path tests first and watch them fail, then implement. Never touch a staging or production database. Never publish in Storyblok unless you are lane S and I have said so. Follow `CLAUDE.md`'s code style and keep comments to a non-obvious why. Implement the API contract exactly; if it can't work as written, stop and tell me. Build only what the plan asks for; its "Left out on purpose" table lists what not to add. Done means lint, type-check and tests pass, then commit and push. Lanes B, F and G open a draft PR against `develop` that lists the critical-path tests and anything not done, and report the link; lanes S and A push their branch and tell me it's ready for F to merge. Never merge into `develop`: I merge in the plan's order.
+> **Lane rules.** Read the whole plan (`/Users/anna/Sites/bloom-frontend/docs/partner-onboarding-plan.md`) and this repo's `CLAUDE.md` first. Edit only the files your lane owns in the plan's Lanes table; if you need a change anywhere else, stop and tell me. Write your critical-path tests first and watch them fail, then implement. Never touch a staging or production database. Never publish in Storyblok unless you are lane S and I have said so. There are no test partners: never create test partner data in Storyblok or any database, and use only Bumble, Badoo, Fruitz and Bumble For Friends in tests (plan: Partners used for testing). Follow `CLAUDE.md`'s code style and keep comments to a non-obvious why. Implement the API contract exactly; if it can't work as written, stop and tell me. Build only what the plan asks for; its "Left out on purpose" table lists what not to add. Done means lint, type-check and tests pass, then commit and push. Lanes B, F and G open a draft PR against `develop` that lists the critical-path tests and anything not done, and report the link; lanes S and A push their branch and tell me it's ready for F to merge. Never merge into `develop`: I merge in the plan's order.
 
 ---
 
@@ -13,7 +13,7 @@ Every prompt includes these rules:
 Folder: `/Users/anna/Sites/bloom-backend` (main checkout). Start now.
 
 ```
-You are lane B (Backend) of the partner onboarding build: phase 1, PR 1. [Lane rules from /Users/anna/Sites/bloom-frontend/docs/partner-onboarding-prompts.md apply.] Your sections of the plan: Backend, API contract, and Critical paths 1, 2 and 6 (including Test partners).
+You are lane B (Backend) of the partner onboarding build: phase 1, PR 1. [Lane rules from /Users/anna/Sites/bloom-frontend/docs/partner-onboarding-prompts.md apply.] Your sections of the plan: Backend, API contract, and Critical paths 1, 2 and 6 (and Partners used for testing).
 
 Set-up: git switch develop && git pull && git switch -c partners/backend.
 
@@ -40,20 +40,19 @@ Tests first, for every backend row of critical paths 1, 2 and 6. Then:
    - store the values sent unchanged.
    Don't touch PATCH partner-access/:id, user.service, basePartnerAccess, redemption or therapy booking.
 5. Storyblok webhook: STORYBLOK_PAGE_COMPONENTS.PARTNER = 'partner', and the partner branch exactly as in the plan's "Storyblok webhook" (lookup order uuid → slug → name; create inactive; never rename or reactivate; log a slug or name mismatch). updateInactiveStoryStatus must not throw for a partner UUID.
-6. scripts/create-test-partners.sh <apiUrl> <superAdminToken>: creates the three test partners in the plan's table with POST, then sets status, therapy limit and automatic access code with PATCH. Safe to re-run. Leave seed-local-db.sh alone: it restores a staging dump.
 
 Verify:
 - the full test suite and lint;
 - on the local database: migration:run, migration:revert, migration:run;
-- run the script locally twice, then curl GET /v1/partner/active, GET /v1/partner/test-partner and GET /v1/partner/Test%20Partner;
-- with a super-admin token: a Badoo code with 6 therapy sessions succeeds; a Test Partner code with therapy gets 400; PATCH Test Partner Plus with { active: true } leaves a deactivated access deactivated.
+- curl GET /v1/partner/active, GET /v1/partner/bumble and GET /v1/partner/Bumble;
+- through the services against the local database: a Badoo code with 6 therapy sessions succeeds and one with 7 gets 400; PATCH Badoo with { active: true } leaves a deactivated access deactivated.
 Leave the local backend running on 35001 when you're done; lanes F and A use it.
 
 Finish: the PR description adds these notes:
 - before production, run on the production database and send me the output:
   SELECT name, "isActive" FROM partner ORDER BY name;
   I'll check that names match the datasource values (Badoo, Fruitz, Bumble) apart from case and that no two slugify alike;
-- after PR 1 reaches staging: run create-test-partners.sh against staging;
+- on staging, the content team adds Bumble For Friends in Storyblok and its row comes from this PR's webhook (plan: Partners used for testing);
 - the previous backend works against this schema, so a rollback is safe; the branding columns are dropped in a later PR.
 ```
 
@@ -64,7 +63,7 @@ Folder: `/Users/anna/Sites/bloom-frontend` (main checkout). Start now.
 ```
 You are lane F (Frontend) of the partner onboarding build: phase 3, PR 2. You own the PR; lanes S and A build parts of it on their own branches, and you merge those in when I say. [Lane rules from docs/partner-onboarding-prompts.md apply.] Your sections of the plan: Branded and launched partners, API contract, Frontend (Partner data, Changes, Welcome pages), Critical paths 3, 4 and 5. This is the riskiest lane: partner sign-up and attribution must behave exactly as today for Bumble and Badoo. PR 2 stays a draft until S's and A's branches are merged into it.
 
-Set-up: git switch develop && git pull && git switch -c partners/frontend. The untracked docs/partner-onboarding-plan.md and docs/partner-onboarding-prompts.md come with you. Run the dev server with yarn dev (port 3000). Until lane B's backend runs locally with the test partners, mock GET /v1/partner/active from the API contract. Ask me when you need the real one.
+Set-up: git switch develop && git pull && git switch -c partners/frontend. The untracked docs/partner-onboarding-plan.md and docs/partner-onboarding-prompts.md come with you. Run the dev server with yarn dev (port 3000). Until lane B's backend runs locally, mock GET /v1/partner/active from the API contract. Ask me when you need the real one.
 
 Step 0, the contract. Do exactly this, then commit as "Partner onboarding: plan and shared contract", push, and open the draft PR so the preview deploys. Lane A branches from this commit.
 - lib/partners/types.ts: `ActivePartner` exactly as in the plan's API contract (id, name, slug); `PartnerBrand`, the camelCase shape of a partner story from the plan's "partner content type" table: slug, name, legalName, logo, brandColor, partnershipLogo, illustration (asset fields as URL strings; partnershipLogo and illustration may be null), website, facebook, instagram, twitter, youtube, tiktok (string | null). Types only.
@@ -101,7 +100,7 @@ Then tests first: every row of critical paths 3, 4 and 5. Then, one commit per s
 
 Verify:
 - unit tests, yarn type-check, yarn lint;
-- against the local backend with the test partners and S's drafts, run the Cypress partners suite and the other specs above. Check with me that lane A isn't running Cypress at the same time;
+- against the local backend and S's Bumble, Badoo and Fruitz drafts, run the Cypress partners suite and the other specs above. Check with me that lane A isn't running Cypress at the same time;
 - screenshot the Bumble and Badoo welcome pages, the register page with ?partner=bumble, the footer for a Bumble member, and the partner admin's create-access-code header, before and after. They must look the same; show me the pairs.
 
 When I say S or A is ready: git fetch && git merge origin/partners/storyblok (or origin/partners/admin), with no squash; rerun type-check, lint, unit tests and both Cypress suites; push. Finally, write the PR description: what changed, a table mapping each critical path (3, 4, 5, and A's rows of 1 and 6) to its tests and commits, the staging checks from the plan, and "merge to develop after PR 1; release to production only as in the plan's Release section". Tell me when it's ready for review.
@@ -112,7 +111,7 @@ When I say S or A is ready: git fetch && git merge origin/partners/storyblok (or
 Folder: `/Users/anna/Sites/bloom-frontend`. Start now.
 
 ```
-You are lane S (Storyblok) of the partner onboarding build: phase 2, part of PR 2. [Lane rules from docs/partner-onboarding-prompts.md apply.] Your sections of the plan: Storyblok, Moving existing partners, Test partners. One Storyblok space serves staging and production: schema changes are live for editors at once, and a publish fires both backends' and both frontends' webhooks.
+You are lane S (Storyblok) of the partner onboarding build: phase 2, part of PR 2. [Lane rules from docs/partner-onboarding-prompts.md apply.] Your sections of the plan: Storyblok, Moving existing partners, Partners used for testing. One Storyblok space serves staging and production: schema changes are live for editors at once, and a publish fires both backends' and both frontends' webhooks.
 
 Set-up:
   git fetch && git worktree add ../bloom-frontend-s -b partners/storyblok origin/develop
@@ -133,11 +132,6 @@ Write scripts in scripts/partners/. Each one is idempotent, dry-run by default, 
    - website and socials from the constants;
    - brand_color read from each illustration's circle fill (for a gradient, its first stop).
    A separate --publish flag publishes these three. Don't run it until I say the team has signed off on staging.
-3. createTestPartners.mjs creates draft partners/ and welcome/ stories for the plan's three test partners:
-   - Storyblok titles end "(test – never publish)", content.name exactly "Test Partner", "Test Partner Plus", "Retired Partner";
-   - welcome content copied from welcome/bumble's draft;
-   - logo: public/bloom_logo.svg.
-   These are never published, and never added to the partners datasource (editors would see them in every included_for_partners picker).
 
 Show me each dry run before you apply it. Verify: the draft CDN API returns every new story, and the published CDN API returns none of them until --publish.
 
@@ -174,7 +168,7 @@ Iterate on the table's design with screenshots at desktop and mobile widths, usi
 Verify:
 - yarn type-check, yarn lint, unit tests;
 - the Cypress admin suite (except partner-content-access, which is lane F's). Check with me that lane F isn't running Cypress;
-- by hand: change Test Partner's limit and automatic access code and check the request bodies hold only that field; deactivate and reactivate Test Partner Plus; create Badoo and Test Partner codes as their partner admins.
+- by hand, on your local database only: change Badoo's therapy limit and check the request body holds only that field; switch Fruitz's automatic access code off and on, and deactivate and reactivate Fruitz (it isn't launched); create a Badoo code as Badoo's admin. Put every value back afterwards.
 
 Finish: push partners/admin and tell me it's ready for F to merge.
 ```
@@ -184,7 +178,7 @@ Finish: push partners/admin and tell me it's ready for F to merge.
 Folder: `/Users/anna/Sites/bloom-frontend`. Start once phases 1–3 are stable in production.
 
 ```
-You are lane G (Asset generation) of the partner onboarding build: phase 4, PR 3. [Lane rules from docs/partner-onboarding-prompts.md apply.] Your section of the plan: Asset generation. Until I approve the output, write only to the test partner drafts.
+You are lane G (Asset generation) of the partner onboarding build: phase 4, PR 3. [Lane rules from docs/partner-onboarding-prompts.md apply.] Your section of the plan: Asset generation. Until I approve the output, write nothing to Storyblok: generate to local files, and test write-back against a mocked Management API.
 
 Set-up:
   git fetch && git worktree add ../bloom-frontend-g -b partners/assets origin/develop
@@ -206,13 +200,13 @@ Build lib/partnerAssets/:
 5. next.config.js: whatever @resvg/resvg-js needs to bundle on Vercel (e.g. serverExternalPackages).
 
 Iterate with screenshots:
-- generate for the three test partners plus two awkward logos (very wide, square icon), in all six languages, and look at every image;
+- generate for Bumble, Badoo, Fruitz and Bumble For Friends (its logo from the BFF story once the content team has added it) plus two awkward logos (very wide, square icon), in all six languages, and look at every image;
 - compare the English Bumble output with the old public/bloom_bumble_logo.svg;
 - show me a contact sheet.
 
 Verify:
 - unit tests for layout maths, colour clamping, empty-field-only write-back and the staging skip;
-- a local webhook call for partners/test-partner fills its draft, and a second call changes nothing.
+- once I approve the output: a local webhook call for partners/bumble-for-friends fills only its empty fields in the draft, and a second call changes nothing.
 
 Finish: the PR description notes that production needs STORYBLOK_OAUTH_TOKEN and STORYBLOK_SPACE_ID in Vercel's production environment only, preferably a dedicated account's token.
 ```
