@@ -12,7 +12,7 @@ import { RootState } from './store';
 import { Courses, SessionFeedback, SessionProgressResponse } from './store/coursesSlice';
 import { PartnerAccess, PartnerAccesses } from './store/partnerAccessSlice';
 import { PartnerAdmin } from './store/partnerAdminSlice';
-import { Partner, PartnerFeature } from './store/partnersSlice';
+import { AdminPartner, Partner, PartnerFeature, UpdatePartner } from './store/partnersSlice';
 import { ResourceFeedback, ResourceProgressResponse, Resources } from './store/resourcesSlice';
 import { TherapySession, TherapySessions } from './store/therapySessionsSlice';
 import { setUserToken, Subscription, Subscriptions, User } from './store/userSlice';
@@ -140,7 +140,7 @@ export const api = createApi({
     getPartnerByName: builder.query<Partner, string>({
       query: (name) => ({ url: `partner/${name}` }),
     }),
-    getPartners: builder.query<Partner[], undefined>({
+    getPartners: builder.query<AdminPartner[], undefined>({
       query: () => ({ url: `partner` }),
     }),
     getAutomaticAccessCodeFeatureForPartner: builder.query<PartnerFeature, string>({
@@ -265,12 +265,34 @@ export const api = createApi({
       }),
     }),
 
-    updatePartnerActive: builder.mutation<Partner, { id: string; active: boolean }>({
-      query: ({ id, active }) => ({
+    updatePartner: builder.mutation<unknown, UpdatePartner & { id: string }>({
+      query: ({ id, ...body }) => ({
         url: `partner/${id}`,
         method: 'PATCH',
-        body: { active },
+        body,
       }),
+      // The response is the bare partner row, without automaticAccessCode, so the cached list is
+      // updated from what was sent once the backend accepts it
+      async onQueryStarted({ id, ...changes }, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch {
+          return;
+        }
+        dispatch(
+          api.util.updateQueryData('getPartners', undefined, (partners) => {
+            const partner = partners.find((p) => p.id === id);
+            if (!partner) return;
+            if (changes.active !== undefined) partner.isActive = changes.active;
+            if (changes.therapySessionsPerCode !== undefined) {
+              partner.therapySessionsPerCode = changes.therapySessionsPerCode;
+            }
+            if (changes.automaticAccessCode !== undefined) {
+              partner.automaticAccessCode = changes.automaticAccessCode;
+            }
+          }),
+        );
+      },
     }),
     createEventLog: builder.mutation<
       EventLog,
@@ -359,7 +381,7 @@ export const {
   useUnsubscribeFromWhatsappMutation,
   useUpdatePartnerAccessMutation,
   useUpdatePartnerAdminMutation,
-  useUpdatePartnerActiveMutation,
+  useUpdatePartnerMutation,
   useCreateEventLogMutation,
   useCreateSessionFeedbackMutation,
   useCreateResourceFeedbackMutation,

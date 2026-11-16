@@ -5,14 +5,14 @@
       "introduction": "Birine Bloom'a erişim vermek istediğin her seferde bir erişim kodu oluşturmak için bu formu kullan.",
       "courseAccess": "Yalnızca kurslara erişim",
       "liveChatAccess": "Kurslara ve mesajlaşmaya erişim",
-      "therapyAccess": "Kurslara, mesajlaşmaya ve altı terapi seansına erişim",
+      "therapySessionsAccess": "Access to courses, messaging and {count, plural, one {# therapy session} other {# therapy sessions}}",
       "resultLink": "Lütfen kullanıcıya, e-posta adresini kullanarak kaydolabileceği ilgili bağlantıya gitmesini söyle.",
       "resultCode": "Kaydolduktan sonra hesap simgesine tıklayıp 'Kod ekle' seçeneğini seçebilir ve şu kodu kullanabilir: <partnerAccessCode></partnerAccessCode>",
       "form": {
         "featuresLabel": "Bu kullanıcıya sunulan destek türünü seç",
         "featureCoursesLabel": "Yalnızca kurslar",
         "featureLiveChatLabel": "Kurslar ve mesajlaşma",
-        "featureTherapyLabel": "Kurslar, mesajlaşma ve altı terapi seansı",
+        "featureTherapySessionsLabel": "Courses, messaging and {count, plural, one {# therapy session} other {# therapy sessions}}",
         "reset": "Başka bir kod oluştur",
         "errors": {
           "createPartnerAccessError": "Erişim kodu oluşturulurken bir hata oluştu. Tekrar dene ya da Bloom ekibine mesaj gönder.",

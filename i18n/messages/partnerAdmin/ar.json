@@ -5,14 +5,14 @@
       "introduction": "يمكنك استخدام هذا النموذج لإنشاء رمز وصول كلما أردت منح شخص ما إمكانية الوصول إلى Bloom.",
       "courseAccess": "الوصول إلى الدورات فقط",
       "liveChatAccess": "الوصول إلى الدورات والمراسلة",
-      "therapyAccess": "الوصول إلى الدورات والمراسلة وست جلسات علاج نفسي",
+      "therapySessionsAccess": "Access to courses, messaging and {count, plural, one {# therapy session} other {# therapy sessions}}",
       "resultLink": "يُرجى إخبار المستخدمة أو المستخدم بالانتقال إلى الرابط المعني للتسجيل باستخدام عنوان البريد الإلكتروني.",
       "resultCode": "بعد التسجيل، يمكن النقر على أيقونة الحساب واختيار خيار 'إضافة رمز' واستخدام الرمز التالي: <partnerAccessCode></partnerAccessCode>",
       "form": {
         "featuresLabel": "اختيار نوع الدعم المقدّم لهذه المستخدمة أو هذا المستخدم",
         "featureCoursesLabel": "الدورات فقط",
         "featureLiveChatLabel": "الدورات والمراسلة",
-        "featureTherapyLabel": "الدورات والمراسلة وست جلسات علاج نفسي",
+        "featureTherapySessionsLabel": "Courses, messaging and {count, plural, one {# therapy session} other {# therapy sessions}}",
         "reset": "إنشاء رمز آخر",
         "errors": {
           "createPartnerAccessError": "حدث خطأ أثناء إنشاء رمز الوصول. يُرجى المحاولة مرة أخرى أو مراسلة فريق Bloom.",

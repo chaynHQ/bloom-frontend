@@ -19,7 +19,25 @@ export interface Partner {
   partnerFeature: PartnerFeature[];
   isActive: boolean;
   slug?: string;
-  storyblokUuid?: string | null;
+  therapySessionsPerCode?: number;
+}
+
+// GET /v1/partner (super admin)
+export interface AdminPartner {
+  id: string;
+  name: string;
+  slug: string;
+  storyblokUuid: string | null;
+  isActive: boolean;
+  therapySessionsPerCode: number;
+  automaticAccessCode: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// PATCH /v1/partner/:id. Send only the fields being changed
+export interface UpdatePartner {
+  active?: boolean;
   therapySessionsPerCode?: number;
   automaticAccessCode?: boolean;
 }
@@ -41,8 +59,17 @@ const slice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    // The admin view has no partner features. Only the partner admin form reads this list as a
+    // super admin, and the register form fetches a partner's automatic access code itself.
     builder.addMatcher(api.endpoints.getPartners.matchFulfilled, (state, { payload }) => {
-      return payload;
+      return payload.map(({ id, name, slug, isActive, therapySessionsPerCode }) => ({
+        id,
+        name,
+        slug,
+        isActive,
+        therapySessionsPerCode,
+        partnerFeature: [],
+      }));
     });
     builder.addMatcher(api.endpoints.getUser.matchFulfilled, (state, { payload }) => {
       if (payload.partnerAccesses) {
@@ -52,13 +79,6 @@ const slice = createSlice({
       }
     });
     builder.addMatcher(api.endpoints.getPartnerByName.matchFulfilled, (state, { payload }) => {
-      if (payload) {
-        const partners = state.filter((p) => p.id !== payload.id);
-        // ensure list of partners is unique
-        return partners.concat(payload);
-      }
-    });
-    builder.addMatcher(api.endpoints.updatePartnerActive.matchFulfilled, (state, { payload }) => {
       if (payload) {
         const partners = state.filter((p) => p.id !== payload.id);
         // ensure list of partners is unique

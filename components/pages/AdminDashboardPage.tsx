@@ -1,5 +1,6 @@
 'use client';
 
+import PartnersTable from '@/components/admin/PartnersTable';
 import CreatePartnerAdminForm from '@/components/forms/CreatePartnerAdminForm';
 import DeleteCypressUsersForm from '@/components/forms/DeleteCypressUsersForm';
 import UpdatePartnerAdminForm from '@/components/forms/UpdatePartnerAdminForm';
@@ -12,7 +13,6 @@ import { rowStyle } from '@/styles/common';
 import { Box, Card, CardContent, Container, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useEffect } from 'react';
-import UpdatePartnerActiveForm from '../forms/UpdatePartnerActiveForm';
 
 const containerStyle = {
   backgroundColor: 'secondary.light',
@@ -23,6 +23,11 @@ const cardStyle = {
   width: { xs: '100%', md: '60%' },
   margin: { xs: '10px' },
 } as const;
+
+const wideCardStyle = { ...cardStyle, width: '100%' } as const;
+
+// globals.css zeroes the last paragraph's margin
+const partnersDescriptionStyle = { '&:last-of-type': { marginBottom: 3 } } as const;
 
 export default function AdminDashboardPage() {
   const t = useTranslations('Admin');
@@ -42,6 +47,15 @@ export default function AdminDashboardPage() {
     <Box>
       <AdminHeader title={headerProps.title} />
       <Container sx={containerStyle}>
+        <Card sx={wideCardStyle}>
+          <CardContent>
+            <Typography variant="h2" component="h2">
+              {t('partners.title')}
+            </Typography>
+            <Typography sx={partnersDescriptionStyle}>{t('partners.description')}</Typography>
+            <PartnersTable />
+          </CardContent>
+        </Card>
         <Card sx={cardStyle}>
           <CardContent>
             <Typography variant="h2" component="h2">
@@ -80,14 +94,6 @@ export default function AdminDashboardPage() {
               {t('updatePartnerAdmin.title')}
             </Typography>
             <UpdatePartnerAdminForm />
-          </CardContent>
-        </Card>
-        <Card sx={cardStyle}>
-          <CardContent>
-            <Typography variant="h2" component="h2">
-              {t('updatePartner.title')}
-            </Typography>
-            <UpdatePartnerActiveForm />
           </CardContent>
         </Card>
         {showDeleteCypressUsers && (

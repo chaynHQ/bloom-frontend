@@ -35,20 +35,33 @@
       "error": "خطأ في تحديث مشرف الشريك: ",
       "reset": "تحديث مشرف شريك آخر"
     },
-    "updatePartner": {
-      "title": "تحديث حالة نشاط الشريك",
-      "activeLabel": "إلغاء تنشيط {partner}",
-      "inactiveLabel": "إعادة تنشيط {partner}",
-      "partnerNameLabel": "اختيار الشريك",
-      "partnerActiveLabel": "الشريك نشط",
-      "successDescription": "تم تحديث {partner} بنجاح إلى {status}",
-      "inactiveDescription": "{partner} غير نشط حاليًا. ستؤدّي إعادة تنشيط {partner} إلى استعادة الشريك وجميع مشرفي الشريك ومستخدميه السابقين",
-      "activeDescription": "{partner} نشط حاليًا. سيؤدّي إلغاء تنشيط {partner} أيضًا إلى إلغاء تنشيط مشرفي الشريك ومستخدميه، وتحويلهم إلى مستخدمين عامّين. سيتم الاحتفاظ بجميع بيانات الشريك وبيانات المستخدمين، ويمكن إعادة تنشيط الشريك لاحقًا.",
-      "inactiveSuccess": "تم أيضًا تحديث مشرفي {partner} ومستخدمي الشريك، وسيصلون الآن إلى Bloom كمستخدمين عامّين",
-      "activeSuccess": "تم أيضًا تحديث مشرفي {partner} ومستخدمي الشريك السابقين، وسيكون لديهم الآن الوصول إلى Bloom كمستخدمي شريك",
-      "formError": "يُرجى التأكّد من اختيار شريك",
-      "error": "خطأ في تحديث حالة نشاط الشريك: ",
-      "reset": "إعادة تعيين النموذج"
+    "partners": {
+      "title": "Partners",
+      "description": "Changes apply straight away. A partner's welcome page is live only when the partner is active and its partner and welcome stories are published in Storyblok.",
+      "loading": "Loading partners",
+      "loadError": "Couldn't load partners: {error}",
+      "columns": {
+        "partner": "Partner",
+        "status": "Status",
+        "therapySessionsPerCode": "Therapy sessions per code",
+        "automaticAccessCode": "Automatic access code",
+        "welcomePage": "Welcome page",
+        "actions": "Actions"
+      },
+      "active": "Active",
+      "inactive": "Inactive",
+      "therapySessionsPerCodeLabel": "Therapy sessions per code for {partner}",
+      "automaticAccessCodeLabel": "Automatic access code for {partner}",
+      "welcomePageLink": "View",
+      "welcomePageLabel": "{partner} welcome page (opens in a new tab)",
+      "activate": "Activate",
+      "deactivate": "Deactivate",
+      "deactivateTitle": "Deactivate {partner}?",
+      "deactivateDescription": "This also deactivates its admins and every member's access through it, and takes its welcome page down. Activating it again restores them.",
+      "cancel": "Cancel",
+      "saved": "{partner} updated.",
+      "notRefreshed": "{partner} updated, but the site couldn't be refreshed, so its welcome page can take up to 4 hours to change.",
+      "updateError": "Couldn't update {partner}: {error}"
     },
     "deleteCypressUsers": {
       "title": "حذف حسابات الاختبار",
