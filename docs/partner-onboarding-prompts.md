@@ -33,7 +33,7 @@ Iterate with screenshots:
 
 Verify:
 - unit tests for layout maths, colour clamping, empty-field-only write-back and the staging skip;
-- once I approve the output: a local webhook call for partners/bumble-for-friends fills only its empty fields in the draft, and a second call changes nothing.
+- once I approve the output: a local webhook call for partners/bff fills only its empty fields in the draft, and a second call changes nothing.
 
 Finish: the PR description notes that production needs STORYBLOK_OAUTH_TOKEN and STORYBLOK_SPACE_ID in Vercel's production environment only, preferably a dedicated account's token.
 ```

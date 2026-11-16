@@ -63,7 +63,7 @@ const badoo = {
 const bumbleForFriends = {
   id: 'bff',
   name: 'Bumble For Friends',
-  slug: 'bumble-for-friends',
+  slug: 'bff',
   isActive: true,
   therapySessionsPerCode: 0,
   partnerFeature: [],
@@ -126,7 +126,7 @@ describe('CreateAccessCodeForm', () => {
     await createCode();
 
     const link = await screen.findByRole('link');
-    expect(link.getAttribute('href')).toMatch(/\/welcome\/bumble-for-friends$/);
+    expect(link.getAttribute('href')).toMatch(/\/welcome\/bff$/);
     expect(screen.getByText('ABC123')).toBeTruthy();
   });
 });

@@ -10,7 +10,7 @@ describe('findPartner', () => {
   });
 
   it('matches whole names only', () => {
-    expect(findPartner(brandedPartners, 'Bumble For Friends')?.slug).toBe('bumble-for-friends');
+    expect(findPartner(brandedPartners, 'Bumble For Friends')?.slug).toBe('bff');
     expect(findPartner(brandedPartners, 'Bumble')?.slug).toBe('bumble');
     expect(findPartner(brandedPartners, 'umble')).toBeUndefined();
     expect(findPartner(brandedPartners, null)).toBeUndefined();
@@ -20,9 +20,7 @@ describe('findPartner', () => {
 describe('resolveLaunchedPartner', () => {
   it('resolves a launched slug', () => {
     expect(resolveLaunchedPartner(launchedPartners, 'bumble')?.name).toBe('Bumble');
-    expect(resolveLaunchedPartner(launchedPartnersWithBff, 'bumble-for-friends')?.name).toBe(
-      'Bumble For Friends',
-    );
+    expect(resolveLaunchedPartner(launchedPartnersWithBff, 'bff')?.name).toBe('Bumble For Friends');
   });
 
   it('ignores case, so an existing ?partner=Bumble link keeps working', () => {
@@ -30,7 +28,7 @@ describe('resolveLaunchedPartner', () => {
   });
 
   it('ignores an inactive Bumble For Friends', () => {
-    expect(resolveLaunchedPartner(launchedPartners, 'bumble-for-friends')).toBeUndefined();
+    expect(resolveLaunchedPartner(launchedPartners, 'bff')).toBeUndefined();
   });
 
   it.each(['fruitz', 'nonsense', 'Bumble For Friends', '', null, undefined])(

@@ -155,14 +155,14 @@ describe('localeOpenToPartners', () => {
 });
 
 // The referral cookie holds a slug; callers resolve it to the launched partner and pass its name.
-// "Bumble" is inside Bumble For Friends' name and slug, so neither may see the other's content.
+// "Bumble" is inside Bumble For Friends' name, so neither may see the other's content.
 describe('content for a referred visitor', () => {
   const story = (slug: string, includedForPartners: string[]) =>
     ({ slug, content: { included_for_partners: includedForPartners } }) as unknown as ISbStoryData;
   const stories = [
     story('public', ['Public']),
     story('bumble', ['Bumble']),
-    story('bumble-for-friends', ['Bumble For Friends']),
+    story('bff', ['Bumble For Friends']),
     story('both-bumbles', ['Bumble', 'Bumble For Friends']),
   ];
 
@@ -172,8 +172,8 @@ describe('content for a referred visitor', () => {
     return filterStoriesForLocaleAndPartnerAccess(stories, 'en', partners).map((s) => s.slug);
   };
 
-  it('referral bumble-for-friends sees Bumble For Friends content, not Bumble-only content', () => {
-    expect(visibleTo('bumble-for-friends')).toEqual(['bumble-for-friends', 'both-bumbles']);
+  it('referral bff sees Bumble For Friends content, not Bumble-only content', () => {
+    expect(visibleTo('bff')).toEqual(['bff', 'both-bumbles']);
   });
 
   it('referral bumble sees Bumble content, not Bumble For Friends-only content, as today', () => {
@@ -182,7 +182,7 @@ describe('content for a referred visitor', () => {
   });
 
   it('a referral to an inactive Bumble For Friends is ignored: the visitor sees Public content', () => {
-    expect(visibleTo('bumble-for-friends', launchedPartners)).toEqual(['public']);
+    expect(visibleTo('bff', launchedPartners)).toEqual(['public']);
   });
 
   it.each(['nonsense', 'fruitz'])(

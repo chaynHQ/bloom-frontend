@@ -1,5 +1,5 @@
 // Unit-test fixtures for the plan's "Partners used for testing": Bumble, Badoo and Fruitz as they
-// are today, and Bumble For Friends, whose slug differs from its name and contains "bumble".
+// are today, and Bumble For Friends, whose slug (bff) differs from its name, which contains "Bumble".
 import { toPartnerBrand, toPartnerContent } from './mapping';
 import { ActivePartner } from './types';
 
@@ -35,16 +35,16 @@ export const partnerStories = [
   partnerStory('bumble', 'Bumble', 'BUMBLE HOLDING LTD'),
   partnerStory('badoo', 'Badoo', 'BADOO LTD'),
   partnerStory('fruitz', 'Fruitz', 'FRUITZ LTD'),
-  partnerStory('bumble-for-friends', 'Bumble For Friends', 'BUMBLE HOLDING LTD', false),
+  partnerStory('bff', 'Bumble For Friends', 'BUMBLE HOLDING LTD', false),
 ];
 
 const bumble: ActivePartner = { id: 'id-bumble', name: 'Bumble', slug: 'bumble' };
 const badoo: ActivePartner = { id: 'id-badoo', name: 'Badoo', slug: 'badoo' };
 const fruitz: ActivePartner = { id: 'id-fruitz', name: 'Fruitz', slug: 'fruitz' };
 const bumbleForFriends: ActivePartner = {
-  id: 'id-bumble-for-friends',
+  id: 'id-bff',
   name: 'Bumble For Friends',
-  slug: 'bumble-for-friends',
+  slug: 'bff',
 };
 
 // GET /v1/partner/active before and after a super admin activates Bumble For Friends.
@@ -62,7 +62,7 @@ export const welcomeLinks = {
   folder: { slug: 'welcome', is_folder: true, published: true },
   bumble: welcomeLink('bumble'),
   badoo: welcomeLink('badoo'),
-  'bumble-for-friends': welcomeLink('bumble-for-friends', false),
+  bff: welcomeLink('bff', false),
 };
 
 export const emptyPartnershipLogoStory = {
@@ -79,7 +79,4 @@ export const brandedPartners = partnerStories.map((story) =>
 
 // The launched set today, and once Bumble For Friends is activated.
 export const launchedPartners = ['bumble', 'badoo'].map((slug) => contentFor(slug, `id-${slug}`));
-export const launchedPartnersWithBff = [
-  ...launchedPartners,
-  contentFor('bumble-for-friends', 'id-bumble-for-friends'),
-];
+export const launchedPartnersWithBff = [...launchedPartners, contentFor('bff', 'id-bff')];

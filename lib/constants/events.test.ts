@@ -14,15 +14,16 @@ describe('per-partner event names', () => {
     );
   });
 
-  it('turn hyphens in a slug into underscores', () => {
-    expect(generatePartnerPromoGetStartedEvent('bumble-for-friends')).toBe(
-      'BUMBLE_FOR_FRIENDS_PROMO_GET_STARTED_CLICKED',
-    );
-    expect(generatePartnerPromoGoToCoursesEvent('bumble-for-friends')).toBe(
-      'BUMBLE_FOR_FRIENDS_PROMO_GO_TO_COURSES_CLICKED',
-    );
-    expect(generatePartnershipPromoLogoClick('bumble-for-friends')).toBe(
-      'PARTNERSHIP_PROMO_BUMBLE_FOR_FRIENDS_LOGO_CLICKED',
+  it('upper-cases the slug', () => {
+    expect(generatePartnerPromoGetStartedEvent('bff')).toBe('BFF_PROMO_GET_STARTED_CLICKED');
+    expect(generatePartnerPromoGoToCoursesEvent('bff')).toBe('BFF_PROMO_GO_TO_COURSES_CLICKED');
+    expect(generatePartnershipPromoLogoClick('bff')).toBe('PARTNERSHIP_PROMO_BFF_LOGO_CLICKED');
+  });
+
+  // Today's slugs have no hyphens; a future one might.
+  it('turns hyphens in a slug into underscores', () => {
+    expect(generatePartnerPromoGetStartedEvent('two-words')).toBe(
+      'TWO_WORDS_PROMO_GET_STARTED_CLICKED',
     );
   });
 });

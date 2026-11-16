@@ -52,7 +52,7 @@ beforeEach(() => {
               'policies/terms-of-service',
               'welcome/bumble',
               'welcome/badoo',
-              'welcome/bumble-for-friends',
+              'welcome/bff',
               // A welcome story for a partner that isn't launched.
               'welcome/fruitz',
             ].map((slug) => [slug, link(slug)]),
@@ -69,7 +69,7 @@ beforeEach(() => {
 const welcomeSlugs = (urls: string[]) =>
   [...new Set(urls.map((url) => url.match(/\/welcome\/([^/?]+)$/)?.[1]).filter(Boolean))].sort();
 
-const launchedSlugs = ['badoo', 'bumble', 'bumble-for-friends'];
+const launchedSlugs = ['badoo', 'bff', 'bumble'];
 
 describe('sitemap', () => {
   it('lists welcome pages for launched partners only', async () => {
@@ -93,22 +93,18 @@ describe('welcome page', () => {
     const paths = await generateStaticParams();
 
     expect([...new Set(paths.map((path) => path.partnerName))].sort()).toEqual(launchedSlugs);
-    expect(paths).toContainEqual({ partnerName: 'bumble-for-friends', locale: 'de' });
+    expect(paths).toContainEqual({ partnerName: 'bff', locale: 'de' });
   });
 
   it('renders for a launched partner, with the partner resolved once from the slug', async () => {
-    const element = (await WelcomeRoute(params('bumble-for-friends'))) as ReactElement<{
+    const element = (await WelcomeRoute(params('bff'))) as ReactElement<{
       partner: { name: string; slug: string };
     }>;
 
-    expect(getStoryblokStory).toHaveBeenCalledWith(
-      'welcome/bumble-for-friends',
-      'en',
-      expect.anything(),
-    );
+    expect(getStoryblokStory).toHaveBeenCalledWith('welcome/bff', 'en', expect.anything());
     expect(element.props.partner).toMatchObject({
       name: 'Bumble For Friends',
-      slug: 'bumble-for-friends',
+      slug: 'bff',
     });
   });
 
@@ -124,7 +120,7 @@ describe('welcome page', () => {
       launched: launchedPartners,
     });
 
-    await expect(WelcomeRoute(params('bumble-for-friends'))).rejects.toThrow('NEXT_NOT_FOUND');
+    await expect(WelcomeRoute(params('bff'))).rejects.toThrow('NEXT_NOT_FOUND');
     expect(getStoryblokStory).not.toHaveBeenCalled();
   });
 

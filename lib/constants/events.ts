@@ -286,7 +286,7 @@ export const RESET_PASSWORD_HERE_CLICKED = 'RESET_PASSWORD_HERE_CLICKED';
 export const CREATE_ACCOUNT_LINK_CLICKED = 'CREATE_ACCOUNT_LINK_CLICKED';
 
 // REGISTER EVENTS
-// From a partner slug; hyphens become underscores (bumble-for-friends → BUMBLE_FOR_FRIENDS).
+// From a partner slug, upper-cased with hyphens as underscores (bff → BFF).
 const partnerEventKey = (partner: string) => partner.toUpperCase().replace(/-/g, '_');
 
 export const generatePartnershipPromoLogoClick = (partner: string) =>

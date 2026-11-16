@@ -138,26 +138,14 @@ describe('hasAccessToPage', () => {
     const referralName = (slug: string, launched = launchedPartnersWithBff) =>
       resolveLaunchedPartner(launched, slug)?.name;
 
-    it('referral bumble-for-friends opens a course tagged Bumble For Friends', () => {
+    it('referral bff opens a course tagged Bumble For Friends', () => {
       expect(
-        hasAccessToPage(
-          false,
-          ['Bumble For Friends'],
-          [],
-          emptyPartnerAdmin,
-          referralName('bumble-for-friends'),
-        ),
+        hasAccessToPage(false, ['Bumble For Friends'], [], emptyPartnerAdmin, referralName('bff')),
       ).toEqual(true);
     });
-    it('referral bumble-for-friends does not open a Bumble-only course', () => {
+    it('referral bff does not open a Bumble-only course', () => {
       expect(
-        hasAccessToPage(
-          false,
-          ['Bumble'],
-          [],
-          emptyPartnerAdmin,
-          referralName('bumble-for-friends'),
-        ),
+        hasAccessToPage(false, ['Bumble'], [], emptyPartnerAdmin, referralName('bff')),
       ).toEqual(false);
     });
     it('referral bumble opens a Bumble course, not a Public-only or Bumble For Friends one, as today', () => {
@@ -184,7 +172,7 @@ describe('hasAccessToPage', () => {
           ['Public'],
           [],
           emptyPartnerAdmin,
-          referralName('bumble-for-friends', launchedPartners),
+          referralName('bff', launchedPartners),
         ),
       ).toEqual(true);
     });

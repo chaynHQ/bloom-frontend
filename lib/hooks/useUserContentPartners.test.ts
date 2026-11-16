@@ -53,10 +53,7 @@ describe('useUserContentPartners', () => {
   });
 
   it('resolves a referral slug to the launched partner name', () => {
-    mockState(
-      { user: { id: null }, partnerAccesses: [], partnerAdmin: emptyAdmin },
-      'bumble-for-friends',
-    );
+    mockState({ user: { id: null }, partnerAccesses: [], partnerAdmin: emptyAdmin }, 'bff');
     expect(renderHook(() => useUserContentPartners()).result.current).toEqual([
       'bumble for friends',
     ]);
@@ -65,7 +62,7 @@ describe('useUserContentPartners', () => {
   it('ignores a referral to an inactive Bumble For Friends: the visitor is public', () => {
     mockState(
       { user: { id: null }, partnerAccesses: [], partnerAdmin: emptyAdmin },
-      'bumble-for-friends',
+      'bff',
       launchedPartners,
     );
     expect(renderHook(() => useUserContentPartners()).result.current).toEqual(['public']);

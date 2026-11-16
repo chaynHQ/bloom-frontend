@@ -121,17 +121,17 @@ describe('useReferralPartner - launched partners only', () => {
 
   afterEach(() => jest.clearAllMocks());
 
-  it('/welcome/bumble-for-friends sets the referral once Bumble For Friends is launched', () => {
+  it('/welcome/bff sets the referral once Bumble For Friends is launched', () => {
     (useLaunchedPartners as jest.Mock).mockReturnValue(launchedPartnersWithBff);
-    (usePathname as jest.Mock).mockReturnValue('/welcome/bumble-for-friends');
+    (usePathname as jest.Mock).mockReturnValue('/welcome/bff');
 
     renderHook(() => useReferralPartner());
 
-    expect(setEntryPartnerReferral).toHaveBeenCalledWith('bumble-for-friends');
-    expect(Cookies.set).toHaveBeenCalledWith('referralPartner', 'bumble-for-friends');
+    expect(setEntryPartnerReferral).toHaveBeenCalledWith('bff');
+    expect(Cookies.set).toHaveBeenCalledWith('referralPartner', 'bff');
   });
 
-  it.each(['/welcome/bumble-for-friends', '/welcome/fruitz', '/welcome/nonsense'])(
+  it.each(['/welcome/bff', '/welcome/fruitz', '/welcome/nonsense'])(
     '%s does not set a referral while that partner is not launched',
     (pathname) => {
       (usePathname as jest.Mock).mockReturnValue(pathname);
@@ -155,21 +155,29 @@ describe('useReferralPartner - launched partners only', () => {
     },
   );
 
-  it('utm_source=bumble-for-friends attributes Bumble For Friends, not Bumble', () => {
+  it('utm_source=bff attributes Bumble For Friends', () => {
     (useLaunchedPartners as jest.Mock).mockReturnValue(launchedPartnersWithBff);
-    (useSearchParams as jest.Mock).mockReturnValue(
-      makeSearchParams({ utm_source: 'bumble-for-friends' }),
-    );
+    (useSearchParams as jest.Mock).mockReturnValue(makeSearchParams({ utm_source: 'bff' }));
 
     renderHook(() => useReferralPartner());
 
     expect(setEntryPartnerReferral).toHaveBeenCalledTimes(1);
-    expect(setEntryPartnerReferral).toHaveBeenCalledWith('bumble-for-friends');
+    expect(setEntryPartnerReferral).toHaveBeenCalledWith('bff');
   });
 
-  it('before Bumble For Friends launches, utm_source=bumble-for-friends attributes Bumble, as today', () => {
+  it('before Bumble For Friends launches, utm_source=bff attributes nobody', () => {
+    (useSearchParams as jest.Mock).mockReturnValue(makeSearchParams({ utm_source: 'bff' }));
+
+    renderHook(() => useReferralPartner());
+
+    expect(setEntryPartnerReferral).not.toHaveBeenCalled();
+    expect(Cookies.set).not.toHaveBeenCalled();
+  });
+
+  it('UTM data naming both bumble and bff attributes the longest slug, bumble', () => {
+    (useLaunchedPartners as jest.Mock).mockReturnValue(launchedPartnersWithBff);
     (useSearchParams as jest.Mock).mockReturnValue(
-      makeSearchParams({ utm_source: 'bumble-for-friends' }),
+      makeSearchParams({ utm_source: 'bumble', utm_campaign: 'bff-launch' }),
     );
 
     renderHook(() => useReferralPartner());

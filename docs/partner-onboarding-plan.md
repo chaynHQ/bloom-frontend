@@ -212,7 +212,7 @@ The Storyblok webhook's `/api/revalidate` refreshes the tag. When a super admin 
 | Static branding merged into Redux          | Removed from `partnerAccessSlice` and `partnerAdminSlice`                                                                                                                                                                                                                               |
 | Per-partner footer and alt keys            | `footer.inPartnershipWith`, `alt.partnerLogo`, `alt.partnershipLogo` with `{name}`; the per-partner keys removed from all 8 locales                                                                                                                                                     |
 | `StaticImageData` imports                  | Storyblok asset URLs. `next/image` needs `width` and `height` for remote URLs (read them from the Storyblok URL) and `unoptimized` for SVGs, which the optimiser rejects                                                                                                                |
-| Per-partner event names (`BUMBLE_PROMO_…`) | Unchanged for Bumble and Badoo; hyphens in a slug become underscores (`BUMBLE_FOR_FRIENDS_PROMO_…`)                                                                                                                                                                                     |
+| Per-partner event names (`BUMBLE_PROMO_…`) | Unchanged for Bumble and Badoo; others use their slug, upper-cased with hyphens as underscores (`BFF_PROMO_…`)                                                                                                                                                                          |
 | Sitemap lists every published `welcome/*`  | Launched partners only                                                                                                                                                                                                                                                                  |
 
 Chayn's own footer content (`publicContent`) stays in `lib/constants/partners.ts`, exported for `Footer` and `lib/utils/structuredData.tsx`; everything partner-specific leaves it. Delete `bumble_logo.svg`, `badoo_logo.svg`, `fruitz_logo.svg`, `bloom_bumble_logo.svg`, `bloom_badoo_logo.svg`, `bloom_fruitz_logo.svg`, `illustration_bloom_head_pink.svg` and `illustration_bloom_head_purple.svg`. Keep `illustration_bloom_head_yellow.svg`: other pages use it.
@@ -258,18 +258,18 @@ Six changes can lose sign-ups or give the wrong access without an error. Each ge
 
 There are no test partners anywhere: no scripts, no Storyblok test stories, no seeded rows. The cases Bumble and Badoo can't show (their slug and name match, and no names overlap) come from real partners:
 
-| Partner            | Slug                 | Why it's useful                                                                                                              |
-| ------------------ | -------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| Bumble, Badoo      | `bumble`, `badoo`    | Today's behaviour must not change                                                                                            |
-| Fruitz             | `fruitz`             | Branded but not launched: it has no welcome page                                                                             |
-| Bumble For Friends | `bumble-for-friends` | New. Its slug differs from its name, "Bumble" is inside its name and slug, and it's inactive until a super admin launches it |
+| Partner            | Slug              | Why it's useful                                                                                                     |
+| ------------------ | ----------------- | ------------------------------------------------------------------------------------------------------------------- |
+| Bumble, Badoo      | `bumble`, `badoo` | Today's behaviour must not change                                                                                   |
+| Fruitz             | `fruitz`          | Branded but not launched: it has no welcome page                                                                    |
+| Bumble For Friends | `bff`             | New. Its slug differs from its name, "Bumble" is inside its name, and it's inactive until a super admin launches it |
 
 Unit tests use these four as in-memory fixtures, set up as each test needs (e.g. BFF inactive, or active with a therapy limit of 0 and an automatic access code). Cypress uses only Bumble, Badoo, Fruitz and unknown slugs, which behave the same in every environment. The BFF cases are checked by hand on staging.
 
 **Adding BFF on staging,** once the backend and frontend PRs are there, the way any new partner is added:
 
-1. The content team creates `partners/bumble-for-friends` with BFF's real branding (a designer uploads the lockup and illustration until phase 4), and publishes it. The staging backend's webhook creates its row, inactive. Production's backend ignores it until the backend PR is released.
-2. The content team adds `bumble-for-friends | Bumble For Friends` to the `partners` datasource and creates `welcome/bumble-for-friends` as a draft. Staging reads drafts; it's published at launch.
+1. The content team creates `partners/bff` with BFF's real branding (a designer uploads the lockup and illustration until phase 4), and publishes it. The staging backend's webhook creates its row, inactive. Production's backend ignores it until the backend PR is released.
+2. The content team adds `bff | Bumble For Friends` to the `partners` datasource and creates `welcome/bff` as a draft. Staging reads drafts; it's published at launch.
 3. A super admin finds BFF in the staging dashboard and changes its settings as each staging check below needs.
 
 ### 1. Therapy limit on access codes
@@ -289,25 +289,25 @@ Unit tests use these four as in-memory fixtures, set up as each test needs (e.g.
 
 ### 2. Partner lookup
 
-| Test                                                                                                                               | Where                             |
-| ---------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- |
-| `bumble`, `Bumble`, `BUMBLE` find Bumble; `bumble-for-friends` and `Bumble For Friends` find Bumble For Friends (both lookups)     | `partner.service.spec.ts`         |
-| `Bumble` doesn't find Bumble For Friends; `umble` and `B_mble` find nothing                                                        | `partner.service.spec.ts`         |
-| A course tagged `Public` and `Bumble For Friends` links Bumble For Friends only, not Bumble                                        | `webhooks.service.spec.ts`        |
-| Partner webhook: creates inactive; links an existing row by slug, then by name; never renames or reactivates; unpublish is a no-op | `webhooks.service.spec.ts`        |
-| The automatic access code lookup finds Bumble For Friends                                                                          | `partner-feature.service.spec.ts` |
+| Test                                                                                                                                                       | Where                             |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- |
+| `bumble`, `Bumble`, `BUMBLE` find Bumble; `bff`, `BFF` and `Bumble For Friends` find Bumble For Friends; `bumble-for-friends` finds nothing (both lookups) | `partner.service.spec.ts`         |
+| `Bumble` doesn't find Bumble For Friends; `umble` and `B_mble` find nothing                                                                                | `partner.service.spec.ts`         |
+| A course tagged `Public` and `Bumble For Friends` links Bumble For Friends only, not Bumble                                                                | `webhooks.service.spec.ts`        |
+| Partner webhook: creates inactive; links an existing row by slug, then by name; never renames or reactivates; unpublish is a no-op                         | `webhooks.service.spec.ts`        |
+| The automatic access code lookup finds Bumble For Friends                                                                                                  | `partner-feature.service.spec.ts` |
 
 ### 3. Content for referred visitors
 
-| Test                                                                                                                                                                             | Where                            |
-| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
-| Referral `bumble-for-friends` sees content tagged `Bumble For Friends`, not content tagged only `Bumble`; referral `bumble` doesn't see content tagged only `Bumble For Friends` | `partnerContentAccess.test.ts`   |
-| Referral `bumble-for-friends` opens a course tagged `Bumble For Friends` (`hasAccessToPage` gets the name)                                                                       | `hasAccessToPage.test.ts`        |
-| Referrals to an inactive Bumble For Friends, `nonsense` and an old `fruitz` cookie are ignored: the visitor is public and sees `Public` content                                  | `partnerContentAccess.test.ts`   |
-| Referral `bumble` behaves exactly as today                                                                                                                                       | both                             |
-| A signed-in member is matched by their access codes, as today                                                                                                                    | `useUserContentPartners.test.ts` |
+| Test                                                                                                                                                              | Where                            |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
+| Referral `bff` sees content tagged `Bumble For Friends`, not content tagged only `Bumble`; referral `bumble` doesn't see content tagged only `Bumble For Friends` | `partnerContentAccess.test.ts`   |
+| Referral `bff` opens a course tagged `Bumble For Friends` (`hasAccessToPage` gets the name)                                                                       | `hasAccessToPage.test.ts`        |
+| Referrals to an inactive Bumble For Friends, `nonsense` and an old `fruitz` cookie are ignored: the visitor is public and sees `Public` content                   | `partnerContentAccess.test.ts`   |
+| Referral `bumble` behaves exactly as today                                                                                                                        | both                             |
+| A signed-in member is matched by their access codes, as today                                                                                                     | `useUserContentPartners.test.ts` |
 
-**Staging:** with BFF active, as a signed-out visitor, open `/welcome/bumble-for-friends`, then the library.
+**Staging:** with BFF active, as a signed-out visitor, open `/welcome/bff`, then the library.
 
 ### 4. Welcome page gate and partner data
 
@@ -323,24 +323,25 @@ Unit tests use these four as in-memory fixtures, set up as each test needs (e.g.
 
 Review: no caller of the loader catches its error.
 
-**Staging:** before BFF is activated, `/welcome/bumble-for-friends` 404s. Activate it in the dashboard and check the page renders straight away; deactivate it and check it 404s again. This also checks the dashboard's revalidation.
+**Staging:** before BFF is activated, `/welcome/bff` 404s. Activate it in the dashboard and check the page renders straight away; deactivate it and check it 404s again. This also checks the dashboard's revalidation.
 
 ### 5. Referral and UTM attribution
 
 The mechanism doesn't change: a `/welcome/<slug>` path, or a slug anywhere in the five UTM parameters, stores the partner in Redux and a session cookie; the register page reads `?partner=`. Only the slug list becomes dynamic.
 
-| Test                                                                                                                         | Where                                  |
-| ---------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
-| Every existing case passes unchanged                                                                                         | `useReferralPartner.test.ts`           |
-| `/welcome/bumble-for-friends` sets the referral when BFF is launched, not when it's inactive                                 | `useReferralPartner.test.ts`           |
-| `utm_source=bumble` and `utm_campaign=bumble-june-2026` attribute Bumble                                                     | `useReferralPartner.test.ts`           |
-| `utm_source=bumble-for-friends` attributes Bumble For Friends, not Bumble                                                    | `useReferralPartner.test.ts`           |
-| Before BFF launches, `utm_source=bumble-for-friends` attributes Bumble, as it does today (only launched slugs count)         | `useReferralPartner.test.ts`           |
-| `bumble` gives `BUMBLE_PROMO_GET_STARTED_CLICKED`; `bumble-for-friends` gives `BUMBLE_FOR_FRIENDS_PROMO_GET_STARTED_CLICKED` | events unit test                       |
-| `/welcome/bumble` and `/auth/register?utm_source=bumble` show the register form without a code field, as today               | `register-partner-without-code.cy.tsx` |
-| A Bumble welcome link with a code still works                                                                                | `register-partner-*.cy.tsx`            |
+| Test                                                                                                                                | Where                                  |
+| ----------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
+| Every existing case passes unchanged                                                                                                | `useReferralPartner.test.ts`           |
+| `/welcome/bff` sets the referral when BFF is launched, not when it's inactive                                                       | `useReferralPartner.test.ts`           |
+| `utm_source=bumble` and `utm_campaign=bumble-june-2026` attribute Bumble                                                            | `useReferralPartner.test.ts`           |
+| `utm_source=bff` attributes Bumble For Friends                                                                                      | `useReferralPartner.test.ts`           |
+| Before BFF launches, `utm_source=bff` attributes nobody (only launched slugs count)                                                 |
+| UTM data naming both `bumble` and `bff` (e.g. `utm_source=bumble&utm_campaign=bff-launch`) attributes Bumble: the longest slug wins | `useReferralPartner.test.ts`           | `useReferralPartner.test.ts` |
+| `bumble` gives `BUMBLE_PROMO_GET_STARTED_CLICKED`; `bff` gives `BFF_PROMO_GET_STARTED_CLICKED`                                      | events unit test                       |
+| `/welcome/bumble` and `/auth/register?utm_source=bumble` show the register form without a code field, as today                      | `register-partner-without-code.cy.tsx` |
+| A Bumble welcome link with a code still works                                                                                       | `register-partner-*.cy.tsx`            |
 
-**Staging:** register through a Bumble welcome link with a code and through a UTM link, and check the analytics events still carry `bumble`. With BFF active and its automatic access code on, register through `/welcome/bumble-for-friends` and through `?utm_source=bumble-for-friends`; check each creates a BFF access, not a Bumble one.
+**Staging:** register through a Bumble welcome link with a code and through a UTM link, and check the analytics events still carry `bumble`. With BFF active and its automatic access code on, register through `/welcome/bff` and through `?utm_source=bff`; check each creates a BFF access, not a Bumble one.
 
 ### 6. Partner updates
 
@@ -368,7 +369,7 @@ Before release day:
 
 Release day:
 
-1. Release the backend (`develop` → `main`). Check that production's `GET /v1/partner/active` lists the active partners, including Bumble and Badoo. Republish `partners/bumble-for-friends` once, so production gets BFF's row, inactive; it launches when a super admin activates it and its welcome story is published.
+1. Release the backend (`develop` → `main`). Check that production's `GET /v1/partner/active` lists the active partners, including Bumble and Badoo. Republish `partners/bff` once, so production gets BFF's row, inactive; it launches when a super admin activates it and its welcome story is published.
 2. Release the frontend. If it builds before the backend is live, its build fails (the loader rejects the old backend's response); deploy it again.
 3. Smoke-test: the Bumble and Badoo welcome pages, a Bumble welcome link with a code, a UTM link, the footer for a Bumble member, and a partner admin creating a code.
 

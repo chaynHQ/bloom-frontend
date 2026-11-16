@@ -57,7 +57,7 @@ const partners = [
   partner({
     id: 'bff',
     name: 'Bumble For Friends',
-    slug: 'bumble-for-friends',
+    slug: 'bff',
     therapySessionsPerCode: 0,
     automaticAccessCode: true,
   }),
@@ -82,10 +82,10 @@ describe('PartnersTable', () => {
   it('lists every partner with its slug, status and welcome page link', () => {
     renderTable();
 
-    const bff = row('bumble-for-friends');
+    const bff = row('bff');
     expect(within(bff).getByText('Bumble For Friends')).toBeTruthy();
     expect(within(bff).getByText('Active')).toBeTruthy();
-    expect(within(bff).getByRole('link').getAttribute('href')).toBe('/welcome/bumble-for-friends');
+    expect(within(bff).getByRole('link').getAttribute('href')).toBe('/welcome/bff');
     expect(within(row('fruitz')).getByText('Inactive')).toBeTruthy();
   });
 
@@ -114,7 +114,7 @@ describe('PartnersTable', () => {
   it('toggling the automatic access code sends only that field', async () => {
     renderTable();
 
-    fireEvent.click(within(row('bumble-for-friends')).getByRole('switch'));
+    fireEvent.click(within(row('bff')).getByRole('switch'));
 
     await waitFor(() => expect(updatePartner).toHaveBeenCalledTimes(1));
     expect(updatePartner).toHaveBeenCalledWith({ id: 'bff', automaticAccessCode: false });
@@ -158,7 +158,7 @@ describe('PartnersTable', () => {
     updatePartner.mockReturnValue(new Promise(() => {}));
     renderTable();
 
-    fireEvent.click(within(row('bumble-for-friends')).getByRole('switch'));
+    fireEvent.click(within(row('bff')).getByRole('switch'));
 
     await waitFor(() =>
       expect(within(row('badoo')).getByRole('combobox').hasAttribute('disabled')).toBe(true),
@@ -172,7 +172,7 @@ describe('PartnersTable', () => {
   it("revalidates the site's partners after a successful update", async () => {
     renderTable();
 
-    fireEvent.click(within(row('bumble-for-friends')).getByRole('switch'));
+    fireEvent.click(within(row('bff')).getByRole('switch'));
 
     await waitFor(() => expect(revalidatePartners).toHaveBeenCalledWith('super-admin-token'));
   });
@@ -181,7 +181,7 @@ describe('PartnersTable', () => {
     updatePartner.mockResolvedValue({ error: { status: 400, data: { message: 'Bad request' } } });
     renderTable();
 
-    fireEvent.click(within(row('bumble-for-friends')).getByRole('switch'));
+    fireEvent.click(within(row('bff')).getByRole('switch'));
 
     await waitFor(() =>
       expect(screen.getByRole('alert').textContent).toMatch(/Bumble For Friends/),
