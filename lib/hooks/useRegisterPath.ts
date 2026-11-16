@@ -1,13 +1,13 @@
 'use client';
 
-import { useCookieReferralPartner } from '@/lib/hooks/useCookieReferralPartner';
+import { useLaunchedReferralPartner } from '@/lib/hooks/useLaunchedReferralPartner';
 import { useMemo } from 'react';
 
 export function useRegisterPath(): string {
-  const referralPartner = useCookieReferralPartner();
+  const referralSlug = useLaunchedReferralPartner()?.slug;
 
   return useMemo(
-    () => (referralPartner ? `/auth/register?partner=${referralPartner}` : '/auth/register'),
-    [referralPartner],
+    () => (referralSlug ? `/auth/register?partner=${referralSlug}` : '/auth/register'),
+    [referralSlug],
   );
 }

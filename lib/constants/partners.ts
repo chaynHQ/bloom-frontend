@@ -30,7 +30,8 @@ export interface PartnerContent {
   github?: string;
 }
 
-const publicContent: PartnerContent = {
+// Chayn's own footer and organisation details.
+export const publicContent: PartnerContent = {
   name: 'Chayn',
   logo: chaynLogo,
   logoAlt: 'alt.chaynLogo',
@@ -90,18 +91,10 @@ const fruitzContent: PartnerContent = {
   tiktok: 'https://www.tiktok.com/@fruitz_app',
 };
 
-// Lowercase keys for all real (non-public) partners. Used to detect a partner
-// name within incoming UTM data so a referral can be attributed dynamically.
-export const partnerKeys = ['bumble', 'badoo'];
-
 export const getPartnerContent = (partnerName: string) => {
   const partner = partnerName.toLowerCase();
   if (partner === 'public') return publicContent;
   if (partner === 'bumble') return bumbleContent;
   if (partner === 'badoo') return badooContent;
   if (partner === 'fruitz') return fruitzContent;
-};
-
-export const getAllPartnersContent = () => {
-  return [bumbleContent, badooContent];
 };

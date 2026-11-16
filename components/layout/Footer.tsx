@@ -1,11 +1,13 @@
 'use client';
 
 import { PARTNER_SOCIAL_LINK_CLICKED, SOCIAL_LINK_CLICKED } from '@/lib/constants/events';
-import { PartnerContent, getPartnerContent } from '@/lib/constants/partners';
+import { PartnerContent, publicContent } from '@/lib/constants/partners';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { useCookieReferralPartner } from '@/lib/hooks/useCookieReferralPartner';
 import { useHydratedSearchParams } from '@/lib/hooks/useHydratedSearchParams';
 import { useIsRtl } from '@/lib/hooks/useIsRtl';
+import { useBrandedPartners, useLaunchedPartners } from '@/lib/partners/PartnersProvider';
+import { findPartner, resolveLaunchedPartner } from '@/lib/partners/resolve';
 import bloomLogo from '@/public/bloom_logo.svg';
 import comicReliefLogo from '@/public/comic_relief_logo.png';
 import communityFundLogo from '@/public/community_fund_logo.svg';
@@ -21,6 +23,7 @@ import Image from 'next/image';
 import { useMemo } from 'react';
 
 import { getImageSizes } from '@/lib/utils/imageSizes';
+import { isRemoteSvg } from '@/lib/utils/storyblokImage';
 import logEvent from '@/lib/utils/logEvent';
 import { rowStyle } from '@/styles/common';
 
@@ -101,36 +104,38 @@ const Footer = () => {
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const referralPartner = useCookieReferralPartner();
 
+  const brandedPartners = useBrandedPartners();
+  const launchedPartners = useLaunchedPartners();
+
+  // Members and partner admins by their partner's name; anything from the URL or the referral
+  // cookie only when it is a launched partner's slug.
   const partners = useMemo(() => {
-    const addUniquePartner = (partnersList: PartnerContent[], partnerName: string) => {
-      if (!partnersList.find((p) => p.name.toLowerCase() === partnerName.toLowerCase())) {
-        const partnerContentResult = getPartnerContent(partnerName);
-        if (partnerContentResult) partnersList.push(partnerContentResult);
+    const partnersList: PartnerContent[] = [publicContent];
+    const addUniquePartner = (partner?: PartnerContent) => {
+      if (
+        partner &&
+        !partnersList.some((p) => p.name.toLowerCase() === partner.name.toLowerCase())
+      ) {
+        partnersList.push(partner);
       }
     };
 
-    const partnersList: PartnerContent[] = [getPartnerContent('public') as PartnerContent];
-
-    if (partnerAdmin && partnerAdmin.partner) {
-      addUniquePartner(partnersList, partnerAdmin.partner.name);
-    }
-
+    addUniquePartner(findPartner(brandedPartners, partnerAdmin?.partner?.name));
     partnerAccesses.forEach((partnerAccess) => {
-      addUniquePartner(partnersList, partnerAccess.partner.name);
+      addUniquePartner(findPartner(brandedPartners, partnerAccess.partner.name));
     });
-
-    const partner = searchParams?.get('partner');
-
-    if (partner) {
-      addUniquePartner(partnersList, partner + '');
-    }
-
-    if (referralPartner) {
-      addUniquePartner(partnersList, referralPartner);
-    }
+    addUniquePartner(resolveLaunchedPartner(launchedPartners, searchParams?.get('partner')));
+    addUniquePartner(resolveLaunchedPartner(launchedPartners, referralPartner));
 
     return partnersList;
-  }, [partnerAccesses, searchParams, partnerAdmin, referralPartner]);
+  }, [
+    brandedPartners,
+    launchedPartners,
+    partnerAccesses,
+    searchParams,
+    partnerAdmin,
+    referralPartner,
+  ]);
 
   return (
     <>
@@ -201,8 +206,9 @@ const Footer = () => {
                     ]}
                   >
                     <Image
-                      alt={tS(partner.logoAlt)}
+                      alt={tS(partner.logoAlt, { name: partner.name })}
                       src={partner.logo}
+                      unoptimized={isRemoteSvg(partner.logo)}
                       fill
                       sizes={getImageSizes(logoContainerStyle.width)}
                       style={{
@@ -217,7 +223,8 @@ const Footer = () => {
                     })}
                   </Typography>
                   <Typography variant="body2" component="p">
-                    {tS(partner.footerLine2)}
+                    {/* Chayn's second line is translated; a partner's is its legal name. */}
+                    {partner === publicContent ? tS(partner.footerLine2) : partner.footerLine2}
                   </Typography>
                   <Box sx={socialsContainerStyle}>
                     {partner.facebook && (

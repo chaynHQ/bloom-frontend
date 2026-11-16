@@ -1,4 +1,4 @@
-import { PartnerContent } from '@/lib/constants/partners';
+import { Partner } from '@/lib/store/partnersSlice';
 import { PartnerAccess } from '@/lib/store/partnerAccessSlice';
 import { PartnerAdmin } from '@/lib/store/partnerAdminSlice';
 import { expect } from '@jest/globals';
@@ -7,18 +7,18 @@ import { joinedPartners } from './formatPartnerAccesses';
 const partnerAccessBase = {
   partner: {
     name: 'Bzzz',
-  } as PartnerContent,
+  } as Partner,
 } as PartnerAccess;
 const partnerAccess1 = {
   partner: {
     name: 'Moo',
-  } as PartnerContent,
+  } as Partner,
 } as PartnerAccess;
 
 const partnerAdmin = {
   partner: {
     name: 'Baa',
-  } as PartnerContent,
+  } as Partner,
 } as PartnerAdmin;
 
 describe('formatPartnerAccess', () => {

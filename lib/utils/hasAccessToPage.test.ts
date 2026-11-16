@@ -1,4 +1,4 @@
-import { PartnerContent } from '@/lib/constants/partners';
+import { Partner } from '@/lib/store/partnersSlice';
 import { resolveLaunchedPartner } from '@/lib/partners/resolve';
 import { launchedPartners } from '@/lib/partners/testPartners';
 import { PartnerAccess } from '@/lib/store/partnerAccessSlice';
@@ -24,7 +24,7 @@ const partnerAccess = {
   id: '1',
   createdAt: new Date(),
   updatedAt: new Date(),
-  partner: { name: 'Bumble' } as PartnerContent,
+  partner: { name: 'Bumble' } as Partner,
 } as PartnerAccess;
 
 describe('hasAccessToPage', () => {
@@ -116,7 +116,7 @@ describe('hasAccessToPage', () => {
     it('4. logged in with a partner access gets access despite a referral cookie', () => {
       const badooAccess = {
         ...partnerAccess,
-        partner: { name: 'Badoo' } as PartnerContent,
+        partner: { name: 'Badoo' } as Partner,
       } as PartnerAccess;
       expect(
         hasAccessToPage(

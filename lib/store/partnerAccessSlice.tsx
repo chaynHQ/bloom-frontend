@@ -1,5 +1,4 @@
 import { api } from '@/lib/api';
-import { getPartnerContent, PartnerContent } from '@/lib/constants/partners';
 import { createSlice } from '@reduxjs/toolkit';
 import { Partner } from './partnersSlice';
 
@@ -13,30 +12,13 @@ export interface PartnerAccess {
   accessCode: string;
   therapySessionsRemaining: number;
   therapySessionsRedeemed: number;
-  partner: PartnerContent & Partner; // Note static import of partner as well as db
+  partner: Partner;
   active: boolean;
 }
 
 export interface PartnerAccesses extends Array<PartnerAccess> {}
 
 const initialState: PartnerAccesses = [];
-
-const mergeUserPartnerState = (partnerAccesses: PartnerAccess[]) => {
-  return partnerAccesses.map((partnerAccess) => {
-    if (partnerAccess.partner) {
-      let newPartnerAccess: PartnerAccess = {
-        ...partnerAccess,
-      };
-      newPartnerAccess.partner = Object.assign(
-        {},
-        newPartnerAccess.partner,
-        getPartnerContent(partnerAccess.partner.name), // populate state with static values
-      );
-      return newPartnerAccess;
-    }
-    return partnerAccess;
-  });
-};
 
 const slice = createSlice({
   name: 'partnerAccesses',
@@ -48,13 +30,13 @@ const slice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addMatcher(api.endpoints.addUser.matchFulfilled, (state, { payload }) => {
-      if (payload.partnerAccesses) return mergeUserPartnerState(payload.partnerAccesses);
+      if (payload.partnerAccesses) return payload.partnerAccesses;
     });
     builder.addMatcher(api.endpoints.getUser.matchFulfilled, (state, { payload }) => {
-      if (payload.partnerAccesses) return mergeUserPartnerState(payload.partnerAccesses);
+      if (payload.partnerAccesses) return payload.partnerAccesses;
     });
     builder.addMatcher(api.endpoints.assignPartnerAccess.matchFulfilled, (state, { payload }) => {
-      if (payload.id) return state.concat(mergeUserPartnerState([payload]));
+      if (payload.id) return state.concat(payload);
     });
   },
 });

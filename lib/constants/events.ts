@@ -286,14 +286,17 @@ export const RESET_PASSWORD_HERE_CLICKED = 'RESET_PASSWORD_HERE_CLICKED';
 export const CREATE_ACCOUNT_LINK_CLICKED = 'CREATE_ACCOUNT_LINK_CLICKED';
 
 // REGISTER EVENTS
+// From a partner slug; hyphens become underscores (test-partner → TEST_PARTNER).
+const partnerEventKey = (partner: string) => partner.toUpperCase().replace(/-/g, '_');
+
 export const generatePartnershipPromoLogoClick = (partner: string) =>
-  `PARTNERSHIP_PROMO_${partner.toUpperCase()}_LOGO_CLICKED`;
+  `PARTNERSHIP_PROMO_${partnerEventKey(partner)}_LOGO_CLICKED`;
 
 // PARTNER WELCOME EVENTS
 export const generatePartnerPromoGetStartedEvent = (partner: string) =>
-  `${partner.toUpperCase()}_PROMO_GET_STARTED_CLICKED`;
+  `${partnerEventKey(partner)}_PROMO_GET_STARTED_CLICKED`;
 export const generatePartnerPromoGoToCoursesEvent = (partner: string) =>
-  `${partner.toUpperCase()}_PROMO_GO_TO_COURSES_CLICKED`;
+  `${partnerEventKey(partner)}_PROMO_GO_TO_COURSES_CLICKED`;
 
 // The welcome page carries a `welcome_partner` property rather than baking the partner into the
 // event name, so the pages stay comparable with each other and with the home page.

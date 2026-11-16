@@ -1,4 +1,4 @@
-import { PartnerContent } from '@/lib/constants/partners';
+import { Partner } from '@/lib/store/partnersSlice';
 import { resolveLaunchedPartner } from '@/lib/partners/resolve';
 import { launchedPartners } from '@/lib/partners/testPartners';
 import { PartnerAccesses } from '@/lib/store/partnerAccessSlice';
@@ -15,15 +15,15 @@ const partnerAAccess = {
   id: '1',
   createdAt: new Date(),
   updatedAt: new Date(),
-  partner: { name: 'PartnerA' } as PartnerContent,
+  partner: { name: 'PartnerA' } as Partner,
 };
 const partnerBAccess = {
   id: '2',
   createdAt: new Date(),
   updatedAt: new Date(),
-  partner: { name: 'PartnerB' } as PartnerContent,
+  partner: { name: 'PartnerB' } as Partner,
 };
-const partnerAPartner = { name: 'PartnerA' } as PartnerContent;
+const partnerAPartner = { name: 'PartnerA' } as Partner;
 
 describe('getUserContentPartners', () => {
   describe('logged out', () => {

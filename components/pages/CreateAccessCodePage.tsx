@@ -3,6 +3,7 @@
 import CreateAccessCodeForm from '@/components/forms/CreateAccessCodeForm';
 import AdminHeader from '@/components/layout/PartnerAdminHeader';
 import { useTypedSelector } from '@/lib/hooks/store';
+import { usePartner } from '@/lib/partners/PartnersProvider';
 import bloomLogo from '@/public/bloom_logo.svg';
 import { rowStyle } from '@/styles/common';
 import { Box, Card, CardContent, Container, Typography } from '@mui/material';
@@ -20,12 +21,14 @@ const cardStyle = {
 export default function CreateAccessCodePage() {
   const t = useTranslations('PartnerAdmin.createAccessCode');
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
+  const partner = usePartner(partnerAdmin.partner?.name);
 
   const headerProps = {
     title: t('title'),
     introduction: t('introduction'),
-    partnerLogoSrc: partnerAdmin.partner?.logo || bloomLogo,
-    partnerLogoAlt: partnerAdmin.partner?.logoAlt || 'alt.bloomLogo',
+    partnerLogoSrc: partner?.logo || bloomLogo,
+    partnerLogoAlt: partner?.logoAlt || 'alt.bloomLogo',
+    partnerName: partner?.name,
   };
 
   return (
@@ -35,6 +38,7 @@ export default function CreateAccessCodePage() {
         introduction={headerProps.introduction}
         partnerLogoSrc={headerProps.partnerLogoSrc}
         partnerLogoAlt={headerProps.partnerLogoAlt}
+        partnerName={headerProps.partnerName}
       />
       <Container sx={containerStyle}>
         <Card sx={cardStyle}>

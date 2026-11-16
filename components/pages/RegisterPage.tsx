@@ -6,10 +6,12 @@ import { Link as i18nLink, useRouter } from '@/i18n/routing';
 import { generatePartnershipPromoLogoClick, REGISTER_VIEWED } from '@/lib/constants/events';
 import { useHydratedSearchParams } from '@/lib/hooks/useHydratedSearchParams';
 import { useLogEventOnce } from '@/lib/hooks/useLogEventOnce';
-import { getAllPartnersContent, getPartnerContent } from '@/lib/constants/partners';
 import { useTypedSelector } from '@/lib/hooks/store';
 import useReferralPartner from '@/lib/hooks/useReferralPartner';
+import { useLaunchedPartners } from '@/lib/partners/PartnersProvider';
+import { resolveLaunchedPartner } from '@/lib/partners/resolve';
 import { getImageSizes } from '@/lib/utils/imageSizes';
+import { isRemoteSvg } from '@/lib/utils/storyblokImage';
 import logEvent from '@/lib/utils/logEvent';
 import bloomLogo from '@/public/bloom_logo.svg';
 import illustrationBloomHeadYellow from '@/public/illustration_bloom_head_yellow.svg';
@@ -80,6 +82,7 @@ export default function RegisterPage() {
   const entryPartnerAccessCode = useTypedSelector((state) => state.user.entryPartnerAccessCode);
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
   const searchParams = useHydratedSearchParams();
+  const launchedPartners = useLaunchedPartners();
   useReferralPartner();
 
   const code = searchParams?.get('code');
@@ -96,30 +99,29 @@ export default function RegisterPage() {
   // (welcome link or partner UTM link) so the partner is still attached when signing up
   // directly via /auth/register without a partner query.
   const { partnerContent, codeParam, allPartnersContent } = useMemo(() => {
-    const partnerName = partner || entryPartnerReferral;
-    if (partnerName) {
-      const partnerContentResult = getPartnerContent(partnerName + '');
-      if (partnerContentResult) {
-        // If code is in URL, use it; otherwise check if we have entry code for this partner
-        const effectiveCode = code
-          ? code + ''
-          : entryPartnerReferral === partnerContentResult.name.toLowerCase() &&
-              entryPartnerAccessCode
-            ? entryPartnerAccessCode
-            : '';
-        return {
-          partnerContent: partnerContentResult,
-          codeParam: effectiveCode,
-          allPartnersContent: [],
-        };
-      }
+    const partnerContentResult = resolveLaunchedPartner(
+      launchedPartners,
+      partner || entryPartnerReferral,
+    );
+    if (partnerContentResult) {
+      // If code is in URL, use it; otherwise check if we have entry code for this partner
+      const effectiveCode = code
+        ? code + ''
+        : entryPartnerReferral === partnerContentResult.slug && entryPartnerAccessCode
+          ? entryPartnerAccessCode
+          : '';
+      return {
+        partnerContent: partnerContentResult,
+        codeParam: effectiveCode,
+        allPartnersContent: [],
+      };
     }
     return {
       partnerContent: null,
       codeParam: '',
-      allPartnersContent: getAllPartnersContent(),
+      allPartnersContent: launchedPartners,
     };
-  }, [partner, code, entryPartnerReferral, entryPartnerAccessCode]);
+  }, [launchedPartners, partner, code, entryPartnerReferral, entryPartnerAccessCode]);
 
   // Handle URL update for entry code (navigation side effect)
   const hasUpdatedUrl = useRef(false);
@@ -129,7 +131,7 @@ export default function RegisterPage() {
       partner &&
       partnerContent &&
       !code &&
-      entryPartnerReferral === partnerContent.name.toLowerCase() &&
+      entryPartnerReferral === partnerContent.slug &&
       entryPartnerAccessCode &&
       !hasUpdatedUrl.current
     ) {
@@ -177,11 +179,9 @@ export default function RegisterPage() {
                   <Link
                     component={i18nLink}
                     key={`${partner.name}-link`}
-                    aria-label={tS(partner.logoAlt)}
-                    onClick={() => logEvent(generatePartnershipPromoLogoClick(partner.name))}
-                    href={`/welcome/${partner.name.toLowerCase()}${
-                      codeParam && '?code=' + codeParam
-                    }`}
+                    aria-label={tS(partner.logoAlt, { name: partner.name })}
+                    onClick={() => logEvent(generatePartnershipPromoLogoClick(partner.slug!))}
+                    href={`/welcome/${partner.slug}${codeParam && '?code=' + codeParam}`}
                     sx={[
                       {
                         mt: '1rem !important',
@@ -192,8 +192,9 @@ export default function RegisterPage() {
                     ]}
                   >
                     <Image
-                      alt={tS(partner.logoAlt)}
+                      alt={tS(partner.logoAlt, { name: partner.name })}
                       src={partner.logo}
+                      unoptimized={isRemoteSvg(partner.logo)}
                       fill
                       sizes={getImageSizes(logoContainerStyle.maxWidth)}
                       style={{

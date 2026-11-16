@@ -1,5 +1,6 @@
 import { usePathname } from '@/i18n/routing';
-import { partnerKeys } from '@/lib/constants/partners';
+import { useLaunchedPartners } from '@/lib/partners/PartnersProvider';
+import { resolveLaunchedPartner } from '@/lib/partners/resolve';
 import { setEntryPartnerAccessCode, setEntryPartnerReferral } from '@/lib/store/userSlice';
 import Cookies from 'js-cookie';
 import { useEffect, useRef } from 'react';
@@ -13,6 +14,7 @@ export default function useReferralPartner() {
   const pathname = usePathname();
   const searchParams = useHydratedSearchParams();
   const dispatch = useAppDispatch();
+  const launchedPartners = useLaunchedPartners();
   const detected = useRef(false);
 
   // Once per page entry, as soon as the URL's params are known.
@@ -36,7 +38,8 @@ export default function useReferralPartner() {
 
     if (pathname?.includes('/welcome/')) {
       const splitPartnerQuery = pathname.split('/')[2].split('?');
-      referralPartner = splitPartnerQuery[0]; // Gets "bumble" from /welcome/bumble?code=123
+      // Gets "bumble" from /welcome/bumble?code=123
+      referralPartner = resolveLaunchedPartner(launchedPartners, splitPartnerQuery[0])?.slug;
 
       if (splitPartnerQuery.length === 2) {
         const splitCodeQuery = splitPartnerQuery[0].split('='); // Gets "123" from /welcome/bumble?code=123
@@ -67,8 +70,12 @@ export default function useReferralPartner() {
         .join(' ')
         .toLowerCase();
 
+      // The longest slug wins, so test-partner-plus isn't credited to test-partner.
       if (utmData) {
-        referralPartner = partnerKeys.find((key) => utmData.includes(key));
+        referralPartner = launchedPartners
+          .map((partner) => partner.slug!)
+          .filter((slug) => utmData.includes(slug))
+          .sort((a, b) => b.length - a.length)[0];
       }
     }
 
