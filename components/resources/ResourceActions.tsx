@@ -5,11 +5,11 @@ import { RESOURCE_CATEGORIES } from '@/lib/constants/enums';
 import { type CompleteResource } from '@/lib/hooks/useResourceProgress';
 import { Box, Button, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { type ReactNode, useState } from 'react';
 
 const barStyle = {
   display: 'flex',
-  flexDirection: 'column',
+  flexWrap: 'wrap',
   alignItems: 'center',
   gap: 2,
   p: 2,
@@ -24,6 +24,7 @@ interface ResourceActionsProps {
   category: RESOURCE_CATEGORIES;
   eventData: Record<string, unknown>;
   onComplete: CompleteResource;
+  nextButton?: ReactNode;
 }
 
 export const ResourceActions = ({
@@ -31,6 +32,7 @@ export const ResourceActions = ({
   category,
   eventData,
   onComplete,
+  nextButton,
 }: ResourceActionsProps) => {
   const t = useTranslations('Resources');
   const [error, setError] = useState<string | null>(null);
@@ -52,18 +54,25 @@ export const ResourceActions = ({
   };
 
   return (
-    <Box qa-id="resource-actions" sx={barStyle}>
+    // Inside a course this matches the session page's action bar; on its own the button stays centred.
+    <Box
+      qa-id="resource-actions"
+      sx={{ ...barStyle, justifyContent: nextButton ? 'flex-end' : 'center' }}
+    >
       <Button
         qa-id="resource-complete-button"
-        variant="contained"
-        color="error"
+        variant={nextButton ? 'outlined' : 'contained'}
+        color={nextButton ? 'primary' : 'error'}
         onClick={markComplete}
         disabled={loading}
       >
         {t('actions.finish')}
       </Button>
+      {nextButton}
       {error && (
-        <Typography sx={{ width: '100%', color: 'primary.dark', fontWeight: 500 }}>
+        <Typography
+          sx={{ width: '100%', textAlign: 'center', color: 'primary.dark', fontWeight: 500 }}
+        >
           {error}
         </Typography>
       )}

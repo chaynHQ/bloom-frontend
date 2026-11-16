@@ -6,6 +6,7 @@ import illustrationSun from '@/public/illustration_sun.svg';
 import { Box, Button, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
+import { type ReactNode } from 'react';
 
 const cardStyle = {
   display: 'flex',
@@ -29,7 +30,9 @@ const copyStyle = {
   flex: 1,
 } as const;
 
-export const ResourceCompleteCard = () => {
+const actionsStyle = { display: 'flex', flexWrap: 'wrap', gap: 2, mt: 1 } as const;
+
+export const ResourceCompleteCard = ({ nextButton }: { nextButton?: ReactNode }) => {
   const t = useTranslations('Resources.complete');
 
   return (
@@ -50,16 +53,18 @@ export const ResourceCompleteCard = () => {
         <Typography variant="body2" sx={{ color: 'grey.700' }}>
           {t('body')}
         </Typography>
-        <Button
-          variant="contained"
-          color="error"
-          component={i18nLink}
-          href="/library"
-          fullWidth
-          sx={{ mt: 1, maxWidth: 'none' }}
-        >
-          {t('cta')}
-        </Button>
+        <Box sx={actionsStyle}>
+          {/* Next step stays the one filled button; going back steps down to outlined. */}
+          <Button
+            variant={nextButton ? 'outlined' : 'contained'}
+            color={nextButton ? 'primary' : 'error'}
+            component={i18nLink}
+            href="/library"
+          >
+            {t('cta')}
+          </Button>
+          {nextButton}
+        </Box>
       </Box>
     </Box>
   );
