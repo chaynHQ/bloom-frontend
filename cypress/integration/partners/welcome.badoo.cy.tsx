@@ -7,13 +7,14 @@ describe('Welcome badoo page should display', () => {
   beforeEach(() => {
     cy.visit(welcomeBadooPageUrl);
   });
+  // Partner branding comes from Badoo's partner story in Storyblok.
   it('bloom in partnership with badoo logo', () => {
-    cy.checkImage('Bloom in partnership with Badoo logo', 'bloom_badoo_logo');
+    cy.checkImage('Bloom in partnership with Badoo logo', 'a.storyblok.com');
   });
   it('woman head purple illustration', () => {
     cy.checkImage(
       "Illustration of a person's face and shoulders, with big leaves and flowers blooming above them",
-      'illustration_bloom_head_purple',
+      'a.storyblok.com',
     );
   });
   it('partnership explanation text', () => {

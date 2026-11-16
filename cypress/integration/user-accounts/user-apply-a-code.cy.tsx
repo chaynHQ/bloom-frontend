@@ -29,8 +29,11 @@ describe('User apply a code page should display', () => {
   it('our partners panel', () => {
     cy.get('h3').should('contain', 'Our partners');
     cy.get('p').should('contain', 'Read more about our partnerships by clicking on their logo.');
-    cy.checkImage('Bumble logo', 'bumble_logo');
-    cy.checkImage('Badoo logo', 'badoo_logo');
+    // Launched partners' logos, from their partner stories in Storyblok.
+    cy.checkImage('Bumble logo', 'a.storyblok.com');
+    cy.checkImage('Badoo logo', 'a.storyblok.com');
+    cy.get('a[href="/welcome/bumble"]').should('exist');
+    cy.get('a[href="/welcome/badoo"]').should('exist');
   });
 
   it('apply a code panel', () => {
