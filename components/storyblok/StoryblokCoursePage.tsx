@@ -16,7 +16,7 @@ import {
   SESSION_CARD_CLICKED,
 } from '@/lib/constants/events';
 import { useTypedSelector } from '@/lib/hooks/store';
-import { useCookieReferralPartner } from '@/lib/hooks/useCookieReferralPartner';
+import { useLaunchedReferralPartner } from '@/lib/hooks/useLaunchedReferralPartner';
 import { useLibraryItems } from '@/lib/hooks/useLibraryItems';
 import { useLibraryReturnHref } from '@/lib/hooks/useLibraryReturnHref';
 import { useLogEventOnce } from '@/lib/hooks/useLogEventOnce';
@@ -97,7 +97,7 @@ const StoryblokCoursePage = ({
   const t = useTranslations('Courses');
   const libraryHref = useLibraryReturnHref();
   const locale = useLocale();
-  const referralPartner = useCookieReferralPartner();
+  const referralPartnerName = useLaunchedReferralPartner()?.name;
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   // Course & session pages drive the whole overview off `useUserAuthStatus`, not
@@ -123,9 +123,9 @@ const StoryblokCoursePage = ({
         included_for_partners,
         partnerAccesses,
         partnerAdmin,
-        referralPartner,
+        referralPartnerName,
       ),
-    [partnerAccesses, partnerAdmin, included_for_partners, referralPartner, isSignedIn],
+    [partnerAccesses, partnerAdmin, included_for_partners, referralPartnerName, isSignedIn],
   );
 
   const sessions = useMemo(() => getCourseSessions(story, locale), [story, locale]);

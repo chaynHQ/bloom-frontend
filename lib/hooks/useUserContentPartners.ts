@@ -1,7 +1,7 @@
 'use client';
 
 import { useTypedSelector } from '@/lib/hooks/store';
-import { useCookieReferralPartner } from '@/lib/hooks/useCookieReferralPartner';
+import { useLaunchedReferralPartner } from '@/lib/hooks/useLaunchedReferralPartner';
 import { getUserContentPartners } from '@/lib/utils/partnerContentAccess';
 import { useMemo } from 'react';
 
@@ -11,10 +11,11 @@ export function useUserContentPartners(): string[] {
   const userId = useTypedSelector((state) => state.user.id);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const referralPartner = useCookieReferralPartner();
+  const referralPartnerName = useLaunchedReferralPartner()?.name ?? null;
 
   return useMemo(
-    () => getUserContentPartners(partnerAdmin?.partner, partnerAccesses, referralPartner, userId),
-    [partnerAdmin, partnerAccesses, referralPartner, userId],
+    () =>
+      getUserContentPartners(partnerAdmin?.partner, partnerAccesses, referralPartnerName, userId),
+    [partnerAdmin, partnerAccesses, referralPartnerName, userId],
   );
 }

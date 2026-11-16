@@ -1,4 +1,6 @@
-import { PartnerContent } from '@/lib/constants/partners';
+import { Partner } from '@/lib/store/partnersSlice';
+import { resolveLaunchedPartner } from '@/lib/partners/resolve';
+import { launchedPartners, launchedPartnersWithBff } from '@/lib/partners/partnerFixtures';
 import { PartnerAccesses } from '@/lib/store/partnerAccessSlice';
 import { expect } from '@jest/globals';
 import { ISbStoryData } from '@storyblok/react/rsc';
@@ -13,15 +15,15 @@ const partnerAAccess = {
   id: '1',
   createdAt: new Date(),
   updatedAt: new Date(),
-  partner: { name: 'PartnerA' } as PartnerContent,
+  partner: { name: 'PartnerA' } as Partner,
 };
 const partnerBAccess = {
   id: '2',
   createdAt: new Date(),
   updatedAt: new Date(),
-  partner: { name: 'PartnerB' } as PartnerContent,
+  partner: { name: 'PartnerB' } as Partner,
 };
-const partnerAPartner = { name: 'PartnerA' } as PartnerContent;
+const partnerAPartner = { name: 'PartnerA' } as Partner;
 
 describe('getUserContentPartners', () => {
   describe('logged out', () => {
@@ -150,4 +152,43 @@ describe('localeOpenToPartners', () => {
   it('keeps other locales open to partners', () => {
     expect(localeOpenToPartners('de', ['bumble'])).toBe(true);
   });
+});
+
+// The referral cookie holds a slug; callers resolve it to the launched partner and pass its name.
+// "Bumble" is inside Bumble For Friends' name, so neither may see the other's content.
+describe('content for a referred visitor', () => {
+  const story = (slug: string, includedForPartners: string[]) =>
+    ({ slug, content: { included_for_partners: includedForPartners } }) as unknown as ISbStoryData;
+  const stories = [
+    story('public', ['Public']),
+    story('bumble', ['Bumble']),
+    story('bff', ['Bumble For Friends']),
+    story('both-bumbles', ['Bumble', 'Bumble For Friends']),
+  ];
+
+  const visibleTo = (referralSlug: string, launched = launchedPartnersWithBff) => {
+    const referral = resolveLaunchedPartner(launched, referralSlug)?.name ?? null;
+    const partners = getUserContentPartners(null, [], referral, null);
+    return filterStoriesForLocaleAndPartnerAccess(stories, 'en', partners).map((s) => s.slug);
+  };
+
+  it('referral bff sees Bumble For Friends content, not Bumble-only content', () => {
+    expect(visibleTo('bff')).toEqual(['bff', 'both-bumbles']);
+  });
+
+  it('referral bumble sees Bumble content, not Bumble For Friends-only content, as today', () => {
+    expect(visibleTo('bumble')).toEqual(['bumble', 'both-bumbles']);
+    expect(getUserContentPartners(null, [], 'Bumble', null)).toEqual(['bumble']);
+  });
+
+  it('a referral to an inactive Bumble For Friends is ignored: the visitor sees Public content', () => {
+    expect(visibleTo('bff', launchedPartners)).toEqual(['public']);
+  });
+
+  it.each(['nonsense', 'fruitz'])(
+    'referral %s is ignored: the visitor is public and sees Public content',
+    (slug) => {
+      expect(visibleTo(slug)).toEqual(['public']);
+    },
+  );
 });

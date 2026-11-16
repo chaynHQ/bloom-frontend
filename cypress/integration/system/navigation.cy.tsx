@@ -143,6 +143,8 @@ describe('Navigation', () => {
       cy.get(`[qa-id=language-menu-button]`).should('exist');
       cy.get(`[qa-id=meet-team-menu-button]`).should('exist');
       cy.get(`[qa-id=partner-admin-menu-button]`).should('exist');
+      // The welcome link is built from the partner's slug.
+      cy.get(`[qa-id=home-logo-link]`).should('have.attr', 'href', '/welcome/bumble');
       cy.get(`[qa-id=secondary-nav]`).should('exist');
       cy.get(`[qa-id=login-menu-button]`).should('not.exist');
       cy.get(`[qa-id=secondary-nav-therapy-button]`).should('not.exist');

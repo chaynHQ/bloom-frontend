@@ -187,20 +187,43 @@ export const ResourcePageLayout = ({
     signUpCard()
   );
 
+  const nextResource = courseNav?.nextResource;
+  const nextButton = nextResource && (
+    <Button
+      qa-id="resource-next-button"
+      variant="contained"
+      color="error"
+      component={i18nLink}
+      href={nextResource.href}
+      onClick={() =>
+        logEvent(SESSION_NEXT_CLICKED, {
+          ...eventData,
+          card_item_name: nextResource.name,
+          next_session_storyblok_uuid: nextResource.uuid,
+        })
+      }
+    >
+      {tC('sessionDetail.nextSession')}
+    </Button>
+  );
+
   // The action panel below the grounding section — omitted for a signed-out visitor whose
-  // related-session card above has already made the sign-up case.
+  // related-session card above has already made the sign-up case. Signed-in panels carry the
+  // next-step button themselves so it pairs with their own action.
   const bottomAction = isCompleted ? (
-    <ResourceCompleteCard />
+    <ResourceCompleteCard nextButton={nextButton} />
   ) : isSignedIn ? (
     <ResourceActions
       resourceId={resourceId}
       category={category}
       eventData={eventData}
       onComplete={onComplete}
+      nextButton={nextButton}
     />
   ) : relatedSessionHref ? null : (
     signUpCard()
   );
+  const standaloneNextButton = !isCompleted && !isSignedIn && nextButton;
 
   // Inside a course the playlist carries the back link from `lg`; below that it sits inline here.
   const header = (
@@ -266,27 +289,6 @@ export const ResourcePageLayout = ({
     ) : (
       <Container sx={resourceContainerStyle}>{children}</Container>
     );
-
-  const nextResource = courseNav?.nextResource;
-  const nextButton = nextResource && (
-    <Button
-      qa-id="resource-next-button"
-      variant="contained"
-      color="error"
-      component={i18nLink}
-      href={nextResource.href}
-      onClick={() =>
-        logEvent(SESSION_NEXT_CLICKED, {
-          ...eventData,
-          card_item_name: nextResource.name,
-          next_session_storyblok_uuid: nextResource.uuid,
-        })
-      }
-      sx={{ alignSelf: 'center' }}
-    >
-      {tC('sessionDetail.nextSession')}
-    </Button>
-  );
 
   const partOfLinks = partOfCourses.length > 0 && (
     <Typography qa-id="resource-part-of" variant="body2" sx={partOfStyle}>
@@ -392,12 +394,14 @@ export const ResourcePageLayout = ({
             }
           />
 
-          {(bottomAction || nextButton) && (
+          {(bottomAction || standaloneNextButton) && (
             <>
               <Divider sx={{ borderColor: 'sectionBorder' }} />
               <Box sx={resourceCardColumnStyle}>
                 {bottomAction}
-                {nextButton}
+                {standaloneNextButton && (
+                  <Box sx={{ alignSelf: 'center' }}>{standaloneNextButton}</Box>
+                )}
               </Box>
             </>
           )}

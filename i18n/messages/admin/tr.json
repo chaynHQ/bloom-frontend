@@ -18,6 +18,7 @@
     },
     "updateTherapy": {
       "title": "Terapi seanslarını güncelle",
+      "description": "Find a user with therapy access by email to add or remove sessions.",
       "emailLabel": "Kullanıcı e-postasına göre ara",
       "therapySessionsRedeemed": "Kullanılan terapi seansı sayısı",
       "therapySessionsTotal": "Toplam terapi seansı sayısı",
@@ -28,6 +29,7 @@
     },
     "updatePartnerAdmin": {
       "title": "İş ortağı yöneticisini güncelle",
+      "description": "Find a partner admin by email to deactivate or reactivate their account.",
       "emailLabel": "Yönetici e-postasına göre ara",
       "activeAdminLabel": "İş ortağı yöneticisi şu anda aktif",
       "successDescription": "İş ortağı yöneticisi güncellendi!",
@@ -35,20 +37,33 @@
       "error": "İş ortağı yöneticisi güncellenirken hata: ",
       "reset": "Başka bir iş ortağı yöneticisini güncelle"
     },
-    "updatePartner": {
-      "title": "İş ortağı aktiflik durumunu güncelle",
-      "activeLabel": "{partner} ortağını devre dışı bırak",
-      "inactiveLabel": "{partner} ortağını yeniden etkinleştir",
-      "partnerNameLabel": "İş ortağı seç",
-      "partnerActiveLabel": "İş ortağı aktif",
-      "successDescription": "{partner} başarıyla {status} olarak güncellendi",
-      "inactiveDescription": "{partner} şu anda pasif. {partner} ortağını yeniden etkinleştirmek, ortağı ve önceki tüm iş ortağı yöneticilerini ve kullanıcılarını geri yükler",
-      "activeDescription": "{partner} şu anda aktif. {partner} ortağını devre dışı bırakmak, iş ortağı yöneticilerini ve kullanıcılarını da devre dışı bırakarak onları herkese açık kullanıcılara dönüştürür. Tüm iş ortağı verileri ve kullanıcı verileri saklanır ve iş ortağı daha sonra yeniden etkinleştirilebilir.",
-      "inactiveSuccess": "{partner} yöneticileri ve iş ortağı kullanıcıları da güncellendi ve artık Bloom'a herkese açık kullanıcılar olarak erişecekler",
-      "activeSuccess": "Önceki {partner} yöneticileri ve iş ortağı kullanıcıları da güncellendi ve artık Bloom'a iş ortağı kullanıcıları olarak erişebilecekler",
-      "formError": "Bir iş ortağı seçtiğinden emin ol",
-      "error": "İş ortağı aktiflik durumu güncellenirken hata: ",
-      "reset": "Formu sıfırla"
+    "partners": {
+      "title": "Partners",
+      "description": "Changes apply straight away. A partner's welcome page is live only when the partner is active and its partner and welcome stories are published in Storyblok.",
+      "loading": "Loading partners",
+      "loadError": "Couldn't load partners: {error}",
+      "columns": {
+        "partner": "Partner",
+        "status": "Status",
+        "therapySessionsPerCode": "Therapy sessions per code",
+        "automaticAccessCode": "Automatic access code",
+        "welcomePage": "Welcome page",
+        "actions": "Actions"
+      },
+      "active": "Active",
+      "inactive": "Inactive",
+      "therapySessionsPerCodeLabel": "Therapy sessions per code for {partner}",
+      "automaticAccessCodeLabel": "Automatic access code for {partner}",
+      "welcomePageLink": "View",
+      "welcomePageLabel": "View the {partner} welcome page (opens in a new tab)",
+      "activate": "Activate",
+      "deactivate": "Deactivate",
+      "deactivateTitle": "Deactivate {partner}?",
+      "deactivateDescription": "This also deactivates its admins and every member's access through it, and takes its welcome page down. Activating it again restores them.",
+      "cancel": "Cancel",
+      "saved": "{partner} updated.",
+      "notRefreshed": "{partner} updated, but the site couldn't be refreshed, so its welcome page can take up to 4 hours to change.",
+      "updateError": "Couldn't update {partner}: {error}"
     },
     "deleteCypressUsers": {
       "title": "Test hesaplarını sil",

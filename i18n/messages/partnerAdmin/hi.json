@@ -5,14 +5,14 @@
       "introduction": "Aapko jab bhi kisi ko Bloom ki access deni ho toh aap yeh form istemal karke access code bana sakte hain. ",
       "courseAccess": "Sirf coourses ki access hai",
       "liveChatAccess": "Courses aur messaging ko access karo",
-      "therapyAccess": "Courses, messaging aur che therapy sessions ki access",
+      "therapySessionsAccess": "Access to courses, messaging and {count, plural, one {# therapy session} other {# therapy sessions}}",
       "resultLink": "Kripya user ko boliye idhar jaane ko <welcomeURL></welcomeURL>.",
       "resultCode": "Vo apna email aur access code ko istemaal karke register kar sakte hain. <partnerAccessCode></partnerAccessCode>",
       "form": {
         "featuresLabel": "Iss user ko diye gai support type chuniye ",
         "featureCoursesLabel": "Sirf courses ",
         "featureLiveChatLabel": "Courses aur messaging",
-        "featureTherapyLabel": "Courses, messaging aur che therapy sessions",
+        "featureTherapySessionsLabel": "Courses, messaging and {count, plural, one {# therapy session} other {# therapy sessions}}",
         "reset": "Doosra code banaye",
         "errors": {
           "createPartnerAccessError": "Access code banane mein error tha. Doboara prayas kariya ya Bloom ki team se sampark karein. ",

@@ -1,6 +1,7 @@
 'use client';
 
 import { getImageSizes } from '@/lib/utils/imageSizes';
+import { isRemoteSvg, storyblokImageSize } from '@/lib/utils/storyblokImage';
 import { pageHeaderPaddingTop } from '@/styles/common';
 import { Container, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
@@ -18,32 +19,35 @@ interface PartnerAdminHeaderProps {
     string | React.ReactNode[] | React.ReactElement<any, string | React.JSXElementConstructor<any>>;
   introduction?:
     string | React.ReactNode[] | React.ReactElement<any, string | React.JSXElementConstructor<any>>;
-  partnerLogoSrc?: StaticImageData;
+  partnerLogoSrc?: string | StaticImageData;
   partnerLogoAlt?: string;
+  // Fills `{name}` in the partner logo's alt text.
+  partnerName?: string;
 }
 
+const logoWidth = 200;
+
 const PartnerAdminHeader = (props: PartnerAdminHeaderProps) => {
-  const { partnerLogoAlt, partnerLogoSrc, title } = props;
+  const { partnerLogoAlt, partnerLogoSrc, partnerName, title } = props;
 
   const tS = useTranslations('Shared');
+  const remoteSize = partnerLogoSrc && storyblokImageSize(partnerLogoSrc);
 
   return (
     <Container sx={headerContainerStyles}>
-      <Typography
-        variant="h2"
-        component="h2"
-        sx={{
-          fontSize: '1.25rem !important',
-        }}
-      >
+      <Typography variant="h2" component="h1">
         {title}
       </Typography>
       {partnerLogoAlt && partnerLogoSrc && (
         <Image
-          alt={tS(partnerLogoAlt)}
+          alt={tS(partnerLogoAlt, { name: partnerName ?? '' })}
           src={partnerLogoSrc}
-          width={200}
-          sizes={getImageSizes(200)}
+          width={logoWidth}
+          {...(remoteSize && {
+            height: Math.round((logoWidth * remoteSize.height) / remoteSize.width),
+          })}
+          unoptimized={isRemoteSvg(partnerLogoSrc)}
+          sizes={getImageSizes(logoWidth)}
           style={{
             maxWidth: '100%',
             height: 'auto',
