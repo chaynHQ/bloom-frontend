@@ -1,6 +1,6 @@
 # Partner onboarding: phase 4 prompt
 
-Phases 1–3 of [partner-onboarding-plan.md](partner-onboarding-plan.md) are built: the backend in chaynHQ/bloom-backend#1302, the Storyblok content type and drafts directly in Storyblok, and the frontend and admin dashboard in chaynHQ/bloom-frontend#2032. Phase 4, asset generation, is the one left. Start it once phases 1–3 are stable in production, by pasting this prompt into a fresh Claude Code session in `/Users/anna/Sites/bloom-frontend`.
+Phases 1–3 of [partner-onboarding-plan.md](partner-onboarding-plan.md) are built: the backend in chaynHQ/bloom-backend#1302, the Storyblok content type and drafts directly in Storyblok, and the frontend and admin dashboard in chaynHQ/bloom-frontend#2032. Phase 4, asset generation, is built in chaynHQ/bloom-frontend#2032 as well, from the prompt below, adapted to ship on that PR's branch instead of a separate PR.
 
 ```
 You are building phase 4 of partner onboarding, asset generation: a separate PR to develop.

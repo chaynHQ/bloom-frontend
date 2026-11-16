@@ -7,7 +7,7 @@ Adding a partner today needs a developer: API calls to create it, branding commi
 | **1** | Partner `slug`, Storyblok link and therapy limit in the database; access codes checked against it      | bloom-backend  | chaynHQ/bloom-backend#1302                  | In review |
 | **2** | `partner` content type; Bumble, Badoo and Fruitz moved onto it                                         | Storyblok      | None: done directly in Storyblok, as drafts | Done      |
 | **3** | Frontend reads partners from Storyblok and the backend; welcome pages gated on launch; dashboard table | bloom-frontend | chaynHQ/bloom-frontend#2032                 | In review |
-| **4** | Lockups and illustrations generated from the partner's logo and colour                                 | bloom-frontend | Later PR                                    | Planned   |
+| **4** | Lockups and illustrations generated from the partner's logo and colour                                 | bloom-frontend | chaynHQ/bloom-frontend#2032                 | In review |
 | Later | Drop the unused partner branding columns, once phases 1–3 are stable in production                     | bloom-backend  | One migration                               | Planned   |
 
 Phases 1 and 3 are one PR each, backend and frontend. Both go to staging for the team to test, then to production together. Phases 1–3 remove developers from onboarding. Until phase 4 ships, a designer uploads the lockup and illustration, and the content team adds the partner to the `partners` datasource. The prompt for phase 4 is in [partner-onboarding-prompts.md](partner-onboarding-prompts.md).
@@ -400,7 +400,7 @@ What still needs people: reviewing roughly 2,000–3,000 changed lines, Storyblo
 | 4     | Team                      | Run the staging checks in each critical path above                                                                                                                                         |
 | 5     | Content team              | After sign-off, publish `partners/bumble`, `partners/badoo` and `partners/fruitz`                                                                                                          |
 | 6     | Release                   | Backend, then frontend, to production ([Release](#release))                                                                                                                                |
-| Later | —                         | Phase 4, asset generation ([prompt](partner-onboarding-prompts.md)); one migration to drop the branding columns, after checking they hold no data                                          |
+| Later | —                         | One migration to drop the branding columns, after checking they hold no data                                                                                                               |
 
 Merging to `develop` opens release PRs to `main` in both repos; leave them until release day.
 
