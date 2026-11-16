@@ -154,6 +154,21 @@ describe('PartnersTable', () => {
     expect(updatePartner).toHaveBeenCalledWith({ id: 'fruitz', active: true });
   });
 
+  it('disables every control while an update is in flight', async () => {
+    updatePartner.mockReturnValue(new Promise(() => {}));
+    renderTable();
+
+    fireEvent.click(within(row('bumble-for-friends')).getByRole('switch'));
+
+    await waitFor(() =>
+      expect(within(row('badoo')).getByRole('combobox').hasAttribute('disabled')).toBe(true),
+    );
+    expect(within(row('badoo')).getByRole('switch').hasAttribute('disabled')).toBe(true);
+    expect(
+      within(row('fruitz')).getByRole('button', { name: 'Activate' }).hasAttribute('disabled'),
+    ).toBe(true);
+  });
+
   it("revalidates the site's partners after a successful update", async () => {
     renderTable();
 

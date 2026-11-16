@@ -32,7 +32,7 @@ import {
 import { visuallyHidden } from '@mui/utils';
 import { useRollbar } from '@rollbar/react';
 import { useTranslations } from 'next-intl';
-import { ReactNode, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 const MAX_THERAPY_SESSIONS_PER_CODE = 20;
 const therapyOptions = Array.from({ length: MAX_THERAPY_SESSIONS_PER_CODE + 1 }, (_, i) => i);
@@ -89,7 +89,7 @@ const switchStyle = {
   },
 } as const;
 
-type Feedback = { severity: 'success' | 'warning' | 'error'; message: ReactNode };
+type Feedback = { severity: 'success' | 'warning' | 'error'; message: string };
 
 export default function PartnersTable() {
   const t = useTranslations('Admin.partners');
@@ -101,7 +101,11 @@ export default function PartnersTable() {
 
   const [pendingId, setPendingId] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<Feedback | null>(null);
-  const [confirmingDeactivate, setConfirmingDeactivate] = useState<AdminPartner | null>(null);
+  // Kept after the dialog closes, so its text doesn't change while it fades out
+  const [deactivating, setDeactivating] = useState<AdminPartner | null>(null);
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  // One update at a time, so a second change can't clear the first's pending state
+  const busy = pendingId !== null;
 
   const partners = useMemo(
     () => [...(data ?? [])].sort((a, b) => a.name.localeCompare(b.name)),
@@ -146,10 +150,14 @@ export default function PartnersTable() {
     setPendingId(null);
   };
 
+  const askToDeactivate = (partner: AdminPartner) => {
+    setDeactivating(partner);
+    setConfirmOpen(true);
+  };
+
   const confirmDeactivate = (confirmed: boolean) => {
-    const partner = confirmingDeactivate;
-    setConfirmingDeactivate(null);
-    if (confirmed && partner) update(partner, { active: false });
+    setConfirmOpen(false);
+    if (confirmed && deactivating) update(deactivating, { active: false });
   };
 
   if (isLoading) return <CircularProgress size={24} aria-label={t('loading')} />;
@@ -211,7 +219,7 @@ export default function PartnersTable() {
                   </Box>
                   <NativeSelect
                     value={partner.therapySessionsPerCode}
-                    disabled={pending}
+                    disabled={busy}
                     onChange={(event) =>
                       update(partner, { therapySessionsPerCode: Number(event.target.value) })
                     }
@@ -232,7 +240,7 @@ export default function PartnersTable() {
                   </Box>
                   <Switch
                     checked={partner.automaticAccessCode}
-                    disabled={pending}
+                    disabled={busy}
                     sx={switchStyle}
                     onChange={(event) =>
                       update(partner, { automaticAccessCode: event.target.checked })
@@ -265,11 +273,11 @@ export default function PartnersTable() {
                     variant={partner.isActive ? 'outlined' : 'contained'}
                     color={partner.isActive ? 'inherit' : 'secondary'}
                     loading={pending}
-                    disabled={!!pendingId && !pending}
+                    disabled={busy && !pending}
                     sx={actionButtonStyle}
                     onClick={() =>
                       partner.isActive
-                        ? setConfirmingDeactivate(partner)
+                        ? askToDeactivate(partner)
                         : update(partner, { active: true })
                     }
                   >
@@ -291,10 +299,10 @@ export default function PartnersTable() {
         </Alert>
       )}
       <ConfirmDialog
-        isOpen={!!confirmingDeactivate}
+        isOpen={confirmOpen}
         onConfirm={confirmDeactivate}
-        title={t('deactivateTitle', { partner: confirmingDeactivate?.name ?? '' })}
-        text={t('deactivateDescription', { partner: confirmingDeactivate?.name ?? '' })}
+        title={t('deactivateTitle', { partner: deactivating?.name ?? '' })}
+        text={t('deactivateDescription')}
         submitLabel={t('deactivate')}
         cancelLabel={t('cancel')}
       />
