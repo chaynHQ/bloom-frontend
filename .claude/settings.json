@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(./.env.local)",
+      "Read(./.env*.local)",
+      "Read(./.next/**)",
+      "Read(./content_upload/**)",
+      "Read(./coverage/**)",
+      "Read(./newrelic_agent.log)",
+      "Read(./tsconfig.tsbuildinfo)"
+    ]
+  }
+}

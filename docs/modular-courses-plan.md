@@ -160,7 +160,7 @@ A course can be converted on its own, because the frontend already decides weeks
 1. **Script, dry run** (Management API tooling in `scripts/`): for each session, a `resource_video` draft in `video/`. For a session listed in more than one week list, one resource. Unique slugs, using `<slug>-<course>` where the plain slug is taken. Then the course's flattened `weeks` go into `sessions`, in each language whose list differs from the default. Output: the drafts and a mapping file. Skip any story with unpublished changes.
 2. **Review on staging,** which reads drafts. Compare every locale's new list with the old flattened one.
 3. **Publish the resources,** run the backfill for that course, then **publish the course.** The webhook links the resources per language, and members' ticks and completions carry over.
-4. **Deploy** the redirects for that course, then redeploy production for the new course resource pages.
+4. **Deploy** the redirects for that course.
 5. **Unpublish the course's sessions** once the redirects work. Keep the stories until every course is done.
 
 Start with a small published course (SPST has 6 sessions), let it run in production, then do the rest. Courses already listing Turkish and Arabic resources keep those lists; only their default (and Hindi, where it differs) is converted.
