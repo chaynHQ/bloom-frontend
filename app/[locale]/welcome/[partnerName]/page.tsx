@@ -1,26 +1,35 @@
 import WelcomePage from '@/components/pages/WelcomePage';
 import { routing } from '@/i18n/routing';
-import { STORYBLOK_ENVIRONMENT } from '@/lib/constants/common';
+import { getPartnerSets } from '@/lib/partners/loader';
+import { resolveLaunchedPartner } from '@/lib/partners/resolve';
 import { getStoryblokStory } from '@/lib/storyblok';
 import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
 import { getLibraryStories } from '@/lib/utils/getLibraryStories';
-import { ISbResult, ISbStoriesParams, getStoryblokApi } from '@storyblok/react/rsc';
 import { notFound } from 'next/navigation';
 
 export const revalidate = 14400; // invalidate every 4 hours
 
 type Params = Promise<{ locale: string; partnerName: string }>;
 
-async function getStory(locale: string, partnerName: string) {
-  return await getStoryblokStory(`welcome/${partnerName}`, locale, {
+// Only a launched partner has a welcome page, at its exact slug.
+async function getLaunchedPartner(locale: string, slug: string) {
+  const { launched } = await getPartnerSets(locale);
+  const partner = resolveLaunchedPartner(launched, slug);
+  return partner?.slug === slug ? partner : undefined;
+}
+
+async function getStory(locale: string, slug: string) {
+  return await getStoryblokStory(`welcome/${slug}`, locale, {
     resolve_relations: ['resource_carousel.resources'],
   });
 }
 
 export async function generateMetadata({ params }: { params: Params }) {
   const { locale, partnerName } = await params;
-  const story = await getStory(locale, partnerName);
+  const partner = await getLaunchedPartner(locale, partnerName);
+  if (!partner) return;
 
+  const story = await getStory(locale, partnerName);
   if (!story) return;
 
   return generateMetadataBasic({
@@ -33,37 +42,17 @@ export async function generateMetadata({ params }: { params: Params }) {
 }
 
 export async function generateStaticParams() {
-  let paths: { partnerName: string; locale: string }[] = [];
-
-  const locales = routing.locales;
-
-  let sbParams: ISbStoriesParams = {
-    version: STORYBLOK_ENVIRONMENT,
-    starts_with: 'welcome/',
-  };
-
-  const storyblokApi = getStoryblokApi();
-
-  const { data } = (await storyblokApi.get('cdn/links', sbParams)) as ISbResult;
-
-  Object.keys(data.links).forEach((linkKey: string) => {
-    const story = data.links[linkKey];
-
-    if (story.is_folder || !story.published) return;
-
-    const partnerName = story.slug.split('/')[1];
-    if (!partnerName) return;
-
-    for (const locale of locales) {
-      paths.push({ partnerName, locale });
-    }
-  });
-
-  return paths;
+  const { launched } = await getPartnerSets(routing.defaultLocale);
+  return launched.flatMap((partner) =>
+    routing.locales.map((locale) => ({ partnerName: partner.slug!, locale })),
+  );
 }
 
 export default async function Page({ params }: { params: Params }) {
   const { locale, partnerName } = await params;
+
+  const partner = await getLaunchedPartner(locale, partnerName);
+  if (!partner) notFound();
 
   const [story, libraryStories] = await Promise.all([
     getStory(locale, partnerName),
@@ -74,5 +63,5 @@ export default async function Page({ params }: { params: Params }) {
     notFound();
   }
 
-  return <WelcomePage story={story} libraryStories={libraryStories} partnerName={partnerName} />;
+  return <WelcomePage story={story} libraryStories={libraryStories} partner={partner} />;
 }

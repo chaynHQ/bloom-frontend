@@ -1,6 +1,5 @@
 'use client';
 
-import NoDataAvailable from '@/components/common/NoDataAvailable';
 import PageSection from '@/components/common/PageSection';
 import { SignUpSection } from '@/components/common/SignUpSection';
 import { SupportSection } from '@/components/common/SupportSection';
@@ -17,7 +16,7 @@ import {
   WELCOME_SUPPORT_CARD_CLICKED,
   WELCOME_VIEWED,
 } from '@/lib/constants/events';
-import { getPartnerContent } from '@/lib/constants/partners';
+import type { PartnerContent } from '@/lib/constants/partners';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { useFeaturedLibraryItems } from '@/lib/hooks/useFeaturedLibraryItems';
 import { useLibrarySectionEvents } from '@/lib/hooks/useLibrarySectionEvents';
@@ -42,13 +41,17 @@ import { render } from 'storyblok-rich-text-react-renderer';
 interface Props {
   story: ISbStoryData;
   libraryStories: LibraryStories;
-  // Taken from the route, not the story, so a mis-slugged story cannot drop the partner branding.
-  partnerName: string;
+  // The launched partner for the route's slug, resolved once by the page.
+  partner: PartnerContent;
 }
 
 const introTitleStyle = { mb: 2, maxWidth: 800 } as const;
 
-export default function WelcomePage({ story: initialStory, libraryStories, partnerName }: Props) {
+export default function WelcomePage({
+  story: initialStory,
+  libraryStories,
+  partner: partnerContent,
+}: Props) {
   const story = useStoryblokState(initialStory) ?? initialStory;
   const t = useTranslations('Shared.librarySections');
   const tS = useTranslations('Shared');
@@ -69,7 +72,7 @@ export default function WelcomePage({ story: initialStory, libraryStories, partn
 
   const userAuthStatus = useUserAuthStatus();
   const isLoggedIn = !authStateLoading && Boolean(userId);
-  const partnerSlug = partnerName.toLowerCase();
+  const partnerSlug = partnerContent.slug!;
   const content = story.content;
 
   const code = searchParams?.get('code');
@@ -105,12 +108,6 @@ export default function WelcomePage({ story: initialStory, libraryStories, partn
     userAuthStatus !== 'resolving',
   );
 
-  const partnerContent = getPartnerContent(partnerName);
-
-  if (!partnerContent) {
-    return <NoDataAvailable />;
-  }
-
   const { partnershipLogo, partnershipLogoAlt, bloomGirlIllustration } = partnerContent;
 
   // Keeps firing the per-partner events, which feed existing dashboards.
@@ -135,6 +132,7 @@ export default function WelcomePage({ story: initialStory, libraryStories, partn
         partnerLogoAlt={
           partnershipLogo ? partnershipLogoAlt || 'alt.welcomeToBloom' : 'alt.bloomLogo'
         }
+        partnerName={partnerContent.name}
         showWelcomeSubtext={!partnershipLogo}
       />
 
