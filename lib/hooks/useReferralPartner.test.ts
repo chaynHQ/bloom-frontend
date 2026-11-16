@@ -25,7 +25,6 @@ jest.mock('./store', () => ({
 }));
 jest.mock('../store/userSlice', () => ({
   setEntryPartnerReferral: jest.fn((value) => ({ type: 'SET_ENTRY_PARTNER_REFERRAL', value })),
-  setEntryPartnerAccessCode: jest.fn((value) => ({ type: 'SET_ENTRY_PARTNER_ACCESS_CODE', value })),
 }));
 
 const makeSearchParams = (params: Record<string, string>) =>

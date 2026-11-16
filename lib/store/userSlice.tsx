@@ -23,7 +23,6 @@ export interface User {
   MFAisSetup: boolean;
   activeSubscriptions: ActiveSubscription[];
   authStateLoading: boolean;
-  entryPartnerAccessCode: string | null;
   entryPartnerReferral: string | null;
   cookiesAccepted: boolean;
   pwaDismissed: boolean;
@@ -82,7 +81,6 @@ const initialState: User = {
   MFAisSetup: false,
   activeSubscriptions: [],
   authStateLoading: true,
-  entryPartnerAccessCode: null,
   entryPartnerReferral: null,
   cookiesAccepted: false,
   pwaDismissed: false,
@@ -105,9 +103,6 @@ const slice = createSlice({
     },
     setEntryPartnerReferral(state, action: PayloadAction<string>) {
       state.entryPartnerReferral = action.payload;
-    },
-    setEntryPartnerAccessCode(state, action: PayloadAction<string>) {
-      state.entryPartnerAccessCode = action.payload;
     },
     setUserLoading(state, action: PayloadAction<boolean>) {
       state.loading = action.payload;
@@ -180,7 +175,6 @@ export const {
   setAuthStateLoading,
   setCookiesAccepted,
   setLoadError,
-  setEntryPartnerAccessCode,
   setEntryPartnerReferral,
   setUserVerifiedEmail,
   setUserMFAisSetup,

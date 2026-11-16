@@ -6,7 +6,7 @@ import { SupportSection } from '@/components/common/SupportSection';
 import PartnerHeader from '@/components/layout/PartnerHeader';
 import { LibraryCardsSection } from '@/components/library/LibraryCardsSection';
 import DynamicComponent from '@/components/storyblok/DynamicComponent';
-import { Link as i18nLink, usePathname, useRouter } from '@/i18n/routing';
+import { Link as i18nLink } from '@/i18n/routing';
 import { STORYBLOK_COLORS } from '@/lib/constants/enums';
 import {
   generatePartnerPromoGetStartedEvent,
@@ -35,7 +35,7 @@ import { Box, Button, Typography } from '@mui/material';
 import { useStoryblokState } from '@storyblok/react';
 import { ISbStoryData, SbBlokData } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
-import { useEffect, useMemo, useRef } from 'react';
+import { useMemo } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
 
 interface Props {
@@ -57,8 +57,6 @@ export default function WelcomePage({
   const tS = useTranslations('Shared');
   const tW = useTranslations('Welcome');
 
-  const router = useRouter();
-  const pathname = usePathname();
   const searchParams = useHydratedSearchParams();
   useReferralPartner();
 
@@ -67,8 +65,6 @@ export default function WelcomePage({
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
-  const entryPartnerAccessCode = useTypedSelector((state) => state.user.entryPartnerAccessCode);
 
   const userAuthStatus = useUserAuthStatus();
   const isLoggedIn = !authStateLoading && Boolean(userId);
@@ -76,9 +72,6 @@ export default function WelcomePage({
   const content = story.content;
 
   const code = searchParams?.get('code');
-  const partner = searchParams?.get('partner');
-  const entryCode = entryPartnerReferral === partnerSlug ? entryPartnerAccessCode : '';
-  const accessCode = code || entryCode;
 
   const eventData = useMemo(
     () => ({
@@ -88,15 +81,7 @@ export default function WelcomePage({
     [partnerSlug, userCreatedAt, partnerAccesses, partnerAdmin],
   );
 
-  // Entry code in state, add to url query in case of refresh
-  const urlUpdated = useRef(false);
-  useEffect(() => {
-    if (!searchParams || code || !entryCode || urlUpdated.current) return;
-    urlUpdated.current = true;
-    router.push({ pathname, query: { code: entryCode, partner } });
-  }, [router, pathname, searchParams, partner, code, entryCode]);
-
-  const registerPath = `/auth/register?partner=${partnerSlug}${accessCode ? `&code=${accessCode}` : ''}`;
+  const registerPath = `/auth/register?partner=${partnerSlug}${code ? `&code=${code}` : ''}`;
 
   const { courses, sessions } = useFeaturedLibraryItems(libraryStories, content);
   const { logCardClick, logBrowseAll } = useLibrarySectionEvents('welcome', eventData);

@@ -2,7 +2,7 @@
 
 import RegisterForm, { PartnerRegisterForm } from '@/components/forms/RegisterForm';
 import PartnerHeader from '@/components/layout/PartnerHeader';
-import { Link as i18nLink, useRouter } from '@/i18n/routing';
+import { Link as i18nLink } from '@/i18n/routing';
 import { generatePartnershipPromoLogoClick, REGISTER_VIEWED } from '@/lib/constants/events';
 import { useHydratedSearchParams } from '@/lib/hooks/useHydratedSearchParams';
 import { useLogEventOnce } from '@/lib/hooks/useLogEventOnce';
@@ -29,7 +29,7 @@ import {
 } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { useEffect, useMemo, useRef } from 'react';
+import { useMemo } from 'react';
 
 const containerStyle = {
   ...rowStyle,
@@ -76,10 +76,8 @@ const logosContainerStyle = {
 export default function RegisterPage() {
   const t = useTranslations('Auth');
   const tS = useTranslations('Shared');
-  const router = useRouter();
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
-  const entryPartnerAccessCode = useTypedSelector((state) => state.user.entryPartnerAccessCode);
   const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
   const searchParams = useHydratedSearchParams();
   const launchedPartners = useLaunchedPartners();
@@ -104,15 +102,9 @@ export default function RegisterPage() {
       partner || entryPartnerReferral,
     );
     if (partnerContentResult) {
-      // If code is in URL, use it; otherwise check if we have entry code for this partner
-      const effectiveCode = code
-        ? code + ''
-        : entryPartnerReferral === partnerContentResult.slug && entryPartnerAccessCode
-          ? entryPartnerAccessCode
-          : '';
       return {
         partnerContent: partnerContentResult,
-        codeParam: effectiveCode,
+        codeParam: code ? code + '' : '',
         allPartnersContent: [],
       };
     }
@@ -121,28 +113,7 @@ export default function RegisterPage() {
       codeParam: '',
       allPartnersContent: launchedPartners,
     };
-  }, [launchedPartners, partner, code, entryPartnerReferral, entryPartnerAccessCode]);
-
-  // Handle URL update for entry code (navigation side effect)
-  const hasUpdatedUrl = useRef(false);
-
-  useEffect(() => {
-    if (
-      partner &&
-      partnerContent &&
-      !code &&
-      entryPartnerReferral === partnerContent.slug &&
-      entryPartnerAccessCode &&
-      !hasUpdatedUrl.current
-    ) {
-      hasUpdatedUrl.current = true;
-      // Entry code in state, add to url query in case of refresh
-      router.push({
-        pathname: '/auth/register',
-        query: { code: entryPartnerAccessCode, partner: partner },
-      });
-    }
-  }, [router, partner, code, partnerContent, entryPartnerReferral, entryPartnerAccessCode]);
+  }, [launchedPartners, partner, code, entryPartnerReferral]);
 
   // Without a partnership lockup, PartnerHeader renders the translated "Welcome to" line beside
   // the plain Bloom logo.
