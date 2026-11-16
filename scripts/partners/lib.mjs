@@ -2,9 +2,13 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { loadDotEnv, mapi, REPO_ROOT } from '../storyblokLokalise.lib.mjs';
 
-export { mapi, REPO_ROOT };
+export { mapi };
 
 loadDotEnv();
+
+// Where the migration's inputs (constants, public/ files, footer strings) are read from. Phase 3
+// deletes those files once the stories exist, so the tests point this at their own copies.
+export const SOURCE_ROOT = process.env.PARTNERS_SOURCE_ROOT || REPO_ROOT;
 
 export const APPLY = process.argv.includes('--apply');
 export const PUBLISH = process.argv.includes('--publish');
@@ -85,7 +89,7 @@ async function findAsset(basename) {
  */
 export async function ensureAsset(publicFile) {
   if (assetCache.has(publicFile)) return assetCache.get(publicFile);
-  const filePath = path.join(REPO_ROOT, 'public', publicFile);
+  const filePath = path.join(SOURCE_ROOT, 'public', publicFile);
   const body = fs.readFileSync(filePath);
   const size = svgSize(body.toString('utf8'), publicFile);
   const existing = await findAsset(publicFile);

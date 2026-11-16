@@ -22,15 +22,15 @@ import {
   PARTNER_COMPONENT,
   PARTNERS_FOLDER_SLUG,
   PUBLISH,
-  REPO_ROOT,
   requireFolder,
+  SOURCE_ROOT,
 } from './lib.mjs';
 
 const SLUGS = ['bumble', 'badoo', 'fruitz'];
 const SOCIALS = ['website', 'facebook', 'instagram', 'twitter', 'youtube', 'tiktok'];
 
 function readConstants() {
-  const src = fs.readFileSync(path.join(REPO_ROOT, 'lib/constants/partners.ts'), 'utf8');
+  const src = fs.readFileSync(path.join(SOURCE_ROOT, 'lib/constants/partners.ts'), 'utf8');
   const files = Object.fromEntries(
     [...src.matchAll(/^import (\w+) from '@\/public\/([^']+)';$/gm)].map((m) => [m[1], m[2]]),
   );
@@ -85,7 +85,7 @@ async function datasourceNames() {
 async function readPartners() {
   const constants = readConstants();
   const footer = JSON.parse(
-    fs.readFileSync(path.join(REPO_ROOT, 'i18n/messages/shared/en.json'), 'utf8'),
+    fs.readFileSync(path.join(SOURCE_ROOT, 'i18n/messages/shared/en.json'), 'utf8'),
   ).Shared.footer;
   const names = await datasourceNames();
 
@@ -112,7 +112,7 @@ async function readPartners() {
         name: c.name,
         legal_name: legalName,
         brand_color: circleFill(
-          fs.readFileSync(path.join(REPO_ROOT, 'public', files.illustration), 'utf8'),
+          fs.readFileSync(path.join(SOURCE_ROOT, 'public', files.illustration), 'utf8'),
         ),
         ...Object.fromEntries(SOCIALS.map((k) => [k, c[k] ?? ''])),
       },

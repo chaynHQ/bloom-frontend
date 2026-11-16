@@ -2,8 +2,10 @@
  * @jest-environment node
  */
 import { execFile } from 'node:child_process';
+import fs from 'node:fs';
 import http from 'node:http';
 import { AddressInfo } from 'node:net';
+import os from 'node:os';
 import path from 'node:path';
 
 // The scripts are ES modules, which this Jest setup can't import, so each test runs a script
@@ -189,7 +191,86 @@ class FakeStoryblok {
   }
 }
 
+// The migration's inputs as they were on develop before phase 3 deleted them, cut down to what
+// the scripts read. Each illustration paints its circle a different way: a CSS class with a
+// viewBox-only size, an uppercase hex fill, and a gradient whose first stop is the colour.
+const SOURCE_FILES: Record<string, string> = {
+  'lib/constants/partners.ts': `import badooLogo from '@/public/badoo_logo.svg';
+import bloomBadooLogo from '@/public/bloom_badoo_logo.svg';
+import bloomBumbleLogo from '@/public/bloom_bumble_logo.svg';
+import bloomFruitzLogo from '@/public/bloom_fruitz_logo.svg';
+import bumbleLogo from '@/public/bumble_logo.svg';
+import fruitzLogo from '@/public/fruitz_logo.svg';
+import illustrationBloomHeadPink from '@/public/illustration_bloom_head_pink.svg';
+import illustrationBloomHeadPurple from '@/public/illustration_bloom_head_purple.svg';
+import illustrationBloomHeadYellow from '@/public/illustration_bloom_head_yellow.svg';
+
+const bumbleContent: PartnerContent = {
+  name: 'Bumble',
+  logo: bumbleLogo,
+  partnershipLogo: bloomBumbleLogo,
+  bloomGirlIllustration: illustrationBloomHeadYellow,
+  website: 'https://bumble.com',
+  instagram: 'https://www.instagram.com/bumble',
+  youtube: 'https://www.youtube.com/channel/UCERo8J7mug7cVcwIKaoJLww',
+  tiktok: 'https://www.tiktok.com/@bumble',
+};
+
+const badooContent: PartnerContent = {
+  name: 'Badoo',
+  logo: badooLogo,
+  partnershipLogo: bloomBadooLogo,
+  bloomGirlIllustration: illustrationBloomHeadPurple,
+  website: 'https://badoo.com',
+  facebook: 'https://www.facebook.com/badoo/',
+};
+
+const fruitzContent: PartnerContent = {
+  name: 'Fruitz',
+  logo: fruitzLogo,
+  partnershipLogo: bloomFruitzLogo,
+  bloomGirlIllustration: illustrationBloomHeadPink,
+  website: 'https://fruitz.io',
+};
+`,
+  'i18n/messages/shared/en.json': JSON.stringify({
+    Shared: {
+      footer: {
+        bumbleLine2: 'BUMBLE HOLDING LTD',
+        badooLine2: 'BADOO LTD',
+        fruitzLine2: 'FRUITZ LTD',
+      },
+    },
+  }),
+  'public/bumble_logo.svg': '<svg width="1062" height="187" viewBox="0 0 1062 187"></svg>',
+  'public/bloom_bumble_logo.svg': '<svg width="400" height="232" viewBox="0 0 400 232"></svg>',
+  'public/illustration_bloom_head_yellow.svg':
+    '<svg viewBox="0 0 987.8 988.02"><defs><style>.cls-1{fill:none;}.cls-2{fill:#f6c651;}</style></defs>' +
+    '<rect class="cls-1" width="987.8" height="987.8"/><circle class="cls-2" r="431.9"/><path d="M0" fill="#000"/></svg>',
+  'public/badoo_logo.svg': '<svg width="2168.1252" height="480.18524"></svg>',
+  'public/bloom_badoo_logo.svg': '<svg width="400" height="232"></svg>',
+  'public/illustration_bloom_head_purple.svg':
+    '<svg width="988" height="989" fill="none"><g><path d="M503" fill="#E9D8FF"/><path d="M487" fill="black"/></g></svg>',
+  'public/fruitz_logo.svg': '<svg width="400" height="95"></svg>',
+  'public/bloom_fruitz_logo.svg': '<svg width="300" height="174"></svg>',
+  'public/illustration_bloom_head_pink.svg':
+    '<svg width="250" height="286"><path d="M125" fill="url(#paint0)"/><path d="M120" fill="black"/>' +
+    '<defs><linearGradient id="paint0"><stop stop-color="#E063FF"/><stop offset="1" stop-color="#F9B666"/></linearGradient></defs></svg>',
+  'public/bloom_logo.svg': '<svg width="415" height="71" viewBox="0 0 415 71"></svg>',
+};
+
+let sourceRoot: string;
 let fake: FakeStoryblok;
+
+beforeAll(() => {
+  sourceRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'partner-sources-'));
+  for (const [file, content] of Object.entries(SOURCE_FILES)) {
+    fs.mkdirSync(path.dirname(path.join(sourceRoot, file)), { recursive: true });
+    fs.writeFileSync(path.join(sourceRoot, file), content);
+  }
+});
+
+afterAll(() => fs.rmSync(sourceRoot, { recursive: true, force: true }));
 
 const run = (script: string, ...args: string[]) =>
   new Promise<{ code: number; stdout: string; stderr: string }>((resolve) => {
@@ -202,6 +283,7 @@ const run = (script: string, ...args: string[]) =>
           STORYBLOK_MAPI_BASE: `${fake.url}/v1`,
           STORYBLOK_OAUTH_TOKEN: 'test-token',
           STORYBLOK_SPACE_ID: SPACE_ID,
+          PARTNERS_SOURCE_ROOT: sourceRoot,
         },
       },
       (error, stdout, stderr) => resolve({ code: error ? 1 : 0, stdout, stderr }),
