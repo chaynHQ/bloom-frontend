@@ -79,7 +79,7 @@ A course can be mixed this way: the English version keeps its weeks and sessions
 
 `app/[locale]/courses/[slug]/[sessionSlug]/[resourceSlug]/page.tsx` renders a resource inside its course. `sessionSlug` holds the resource's folder, because a slug can exist in two folders, and Next.js requires sibling dynamic segments to share a name. `RESOURCE_PAGES` maps each folder to its page component.
 
-The route uses `dynamicParams = false`, as the course and session routes do. A page that didn't exist at build time returns a 404, and the revalidation webhook can't add one. After publishing a new course, or a resource newly listed in a course, redeploy production.
+Like every Storyblok route, it pre-renders the pages that exist at build time and renders any other on its first visit, then caches it. A new course, or a resource newly listed in a course, is live once published, with no redeploy. An address with no matching story returns a 404 (`notFound()`).
 
 ## Progress and completion
 
@@ -107,8 +107,7 @@ Three rules apply on top of each other: the course's own rules, then the resourc
 1. **Initials:** the backend names a course's Mailchimp and Front fields after the initials of its English name (`getAcronym`: the first letter of each word, skipping lower-case "in, and, the, from, as, or, to"). Give every course an English working name, even one not offered in English, with unique initials of 6 letters or fewer. Taken: CB, MA, IARO, RTAR, RRYTS, SPST, HST, DBR, BH. Never rename a published course.
 2. **Front:** add text fields `course_<initials>` and `course_<initials>_sessions` before publishing. Front replaces every contact field in one update, so a missing field blocks all Front updates for anyone who starts the course.
 3. **Mailchimp:** add text fields `C_<INITIALS>` and `C_<INITIALS>_S` before publishing. The webhook tries to create them on first publish, but only once, and only logs a failure.
-4. **Publish the resources, then the course.** The webhook links the course to its resources; a resource published later is only linked when the course is published again.
-5. **Redeploy production,** so the new course and course resource pages exist (`dynamicParams = false`).
+4. **Publish the resources, then the course.** The webhook links the course to its resources; a resource published later is only linked when the course is published again. The new pages render on their first visit, so no redeploy is needed.
 
 For an existing course offered in a new language, skip steps 1 to 3, and check that no Mailchimp automation on the course's fields would send members the wrong language.
 
