@@ -1,4 +1,6 @@
 import { PartnerContent } from '@/lib/constants/partners';
+import { resolveLaunchedPartner } from '@/lib/partners/resolve';
+import { launchedPartners } from '@/lib/partners/testPartners';
 import { PartnerAccesses } from '@/lib/store/partnerAccessSlice';
 import { expect } from '@jest/globals';
 import { ISbStoryData } from '@storyblok/react/rsc';
@@ -150,4 +152,39 @@ describe('localeOpenToPartners', () => {
   it('keeps other locales open to partners', () => {
     expect(localeOpenToPartners('de', ['bumble'])).toBe(true);
   });
+});
+
+// The referral cookie holds a slug; callers resolve it to the launched partner and pass its name.
+describe('content for a referred visitor', () => {
+  const story = (slug: string, includedForPartners: string[]) =>
+    ({ slug, content: { included_for_partners: includedForPartners } }) as unknown as ISbStoryData;
+  const stories = [
+    story('public', ['Public']),
+    story('bumble', ['Bumble']),
+    story('test-partner', ['Test Partner']),
+    story('test-partner-plus', ['Test Partner Plus']),
+    story('both-test-partners', ['Test Partner', 'Test Partner Plus']),
+  ];
+
+  const visibleTo = (referralSlug: string) => {
+    const referral = resolveLaunchedPartner(launchedPartners, referralSlug)?.name ?? null;
+    const partners = getUserContentPartners(null, [], referral, null);
+    return filterStoriesForLocaleAndPartnerAccess(stories, 'en', partners).map((s) => s.slug);
+  };
+
+  it('referral test-partner sees content tagged Test Partner, not content only for Test Partner Plus', () => {
+    expect(visibleTo('test-partner')).toEqual(['test-partner', 'both-test-partners']);
+  });
+
+  it('referral bumble sees Bumble content, as today', () => {
+    expect(visibleTo('bumble')).toEqual(['bumble']);
+    expect(getUserContentPartners(null, [], 'Bumble', null)).toEqual(['bumble']);
+  });
+
+  it.each(['retired-partner', 'nonsense', 'fruitz'])(
+    'referral %s is ignored: the visitor is public and sees Public content',
+    (slug) => {
+      expect(visibleTo(slug)).toEqual(['public']);
+    },
+  );
 });

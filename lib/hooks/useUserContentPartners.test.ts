@@ -6,6 +6,9 @@ import { useUserContentPartners } from './useUserContentPartners';
 
 jest.mock('./store', () => ({ useTypedSelector: jest.fn() }));
 jest.mock('./useCookieReferralPartner', () => ({ useCookieReferralPartner: jest.fn() }));
+jest.mock('@/lib/partners/PartnersProvider', () => ({
+  useLaunchedPartners: () => require('@/lib/partners/testPartners').launchedPartners,
+}));
 
 interface State {
   user: { id: string | null };
@@ -42,5 +45,33 @@ describe('useUserContentPartners', () => {
       partnerAdmin: emptyAdmin,
     });
     expect(renderHook(() => useUserContentPartners()).result.current).toEqual(['bumble']);
+  });
+
+  it('resolves a referral slug to the launched partner name', () => {
+    mockState(
+      { user: { id: null }, partnerAccesses: [], partnerAdmin: emptyAdmin },
+      'test-partner',
+    );
+    expect(renderHook(() => useUserContentPartners()).result.current).toEqual(['test partner']);
+  });
+
+  it.each(['retired-partner', 'nonsense', 'fruitz'])(
+    'ignores an unlaunched referral %s: the visitor is public',
+    (slug) => {
+      mockState({ user: { id: null }, partnerAccesses: [], partnerAdmin: emptyAdmin }, slug);
+      expect(renderHook(() => useUserContentPartners()).result.current).toEqual(['public']);
+    },
+  );
+
+  it('matches a signed-in member by their access codes, not a lingering referral', () => {
+    mockState(
+      {
+        user: { id: 'user-1' },
+        partnerAccesses: [{ partner: { name: 'Test Partner' } }],
+        partnerAdmin: emptyAdmin,
+      },
+      'bumble',
+    );
+    expect(renderHook(() => useUserContentPartners()).result.current).toEqual(['test partner']);
   });
 });

@@ -7,10 +7,9 @@ import { setEntryPartnerReferral } from '../store/userSlice';
 import { useAppDispatch } from './store';
 import useReferralPartner from './useReferralPartner';
 
-// Mock partners constants to avoid pulling in SVG asset imports (the `@/` alias
-// resolves before the svg fileMock, so the real module fails to load under Jest).
-jest.mock('@/lib/constants/partners', () => ({
-  partnerKeys: ['bumble', 'badoo'],
+// Bumble, Badoo, Test Partner and Test Partner Plus are launched; Fruitz and Retired Partner aren't.
+jest.mock('@/lib/partners/PartnersProvider', () => ({
+  useLaunchedPartners: () => require('@/lib/partners/testPartners').launchedPartners,
 }));
 jest.mock('@/i18n/routing', () => ({
   usePathname: jest.fn(),
@@ -103,4 +102,85 @@ describe('useReferralPartner - UTM detection', () => {
     expect(setEntryPartnerReferral).toHaveBeenCalledWith('bumble');
     expect(setEntryPartnerReferral).not.toHaveBeenCalledWith('badoo');
   });
+});
+
+describe('useReferralPartner - launched partners only', () => {
+  let dispatchMock: jest.Mock;
+
+  beforeEach(() => {
+    dispatchMock = jest.fn();
+    (useAppDispatch as jest.MockedFunction<typeof useAppDispatch>).mockReturnValue(dispatchMock);
+    (usePathname as jest.Mock).mockReturnValue('/');
+    (useSearchParams as jest.Mock).mockReturnValue(makeSearchParams({}));
+    Cookies.set = jest.fn();
+    Cookies.get = jest.fn();
+  });
+
+  afterEach(() => jest.clearAllMocks());
+
+  it('/welcome/test-partner sets the referral', () => {
+    (usePathname as jest.Mock).mockReturnValue('/welcome/test-partner');
+
+    renderHook(() => useReferralPartner());
+
+    expect(setEntryPartnerReferral).toHaveBeenCalledWith('test-partner');
+    expect(Cookies.set).toHaveBeenCalledWith('referralPartner', 'test-partner');
+  });
+
+  it.each(['/welcome/retired-partner', '/welcome/fruitz', '/welcome/nonsense'])(
+    '%s does not set a referral',
+    (pathname) => {
+      (usePathname as jest.Mock).mockReturnValue(pathname);
+
+      renderHook(() => useReferralPartner());
+
+      expect(setEntryPartnerReferral).not.toHaveBeenCalled();
+      expect(Cookies.set).not.toHaveBeenCalled();
+    },
+  );
+
+  it.each([{ utm_source: 'bumble' }, { utm_campaign: 'bumble-june-2026' }])(
+    'attributes Bumble from %p',
+    (params) => {
+      (useSearchParams as jest.Mock).mockReturnValue(makeSearchParams(params));
+
+      renderHook(() => useReferralPartner());
+
+      expect(setEntryPartnerReferral).toHaveBeenCalledWith('bumble');
+      expect(Cookies.set).toHaveBeenCalledWith('referralPartner', 'bumble');
+    },
+  );
+
+  it('utm_source=test-partner-plus attributes Test Partner Plus, the longest matching slug', () => {
+    (useSearchParams as jest.Mock).mockReturnValue(
+      makeSearchParams({ utm_source: 'test-partner-plus' }),
+    );
+
+    renderHook(() => useReferralPartner());
+
+    expect(setEntryPartnerReferral).toHaveBeenCalledTimes(1);
+    expect(setEntryPartnerReferral).toHaveBeenCalledWith('test-partner-plus');
+  });
+
+  it('utm_campaign=test-partner-2026 attributes Test Partner', () => {
+    (useSearchParams as jest.Mock).mockReturnValue(
+      makeSearchParams({ utm_campaign: 'test-partner-2026' }),
+    );
+
+    renderHook(() => useReferralPartner());
+
+    expect(setEntryPartnerReferral).toHaveBeenCalledWith('test-partner');
+  });
+
+  it.each([{ utm_source: 'retired-partner' }, { utm_campaign: 'fruitz-spring' }])(
+    'a UTM naming an unlaunched partner %p attributes nobody',
+    (params) => {
+      (useSearchParams as jest.Mock).mockReturnValue(makeSearchParams(params));
+
+      renderHook(() => useReferralPartner());
+
+      expect(setEntryPartnerReferral).not.toHaveBeenCalled();
+      expect(Cookies.set).not.toHaveBeenCalled();
+    },
+  );
 });

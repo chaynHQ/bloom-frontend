@@ -1,4 +1,6 @@
 import { PartnerContent } from '@/lib/constants/partners';
+import { resolveLaunchedPartner } from '@/lib/partners/resolve';
+import { launchedPartners } from '@/lib/partners/testPartners';
 import { PartnerAccess } from '@/lib/store/partnerAccessSlice';
 import { PartnerAdmin } from '@/lib/store/partnerAdminSlice';
 import { expect } from '@jest/globals';
@@ -129,5 +131,49 @@ describe('hasAccessToPage', () => {
     it('a referral cookie does not grant a logged-in user access to an unrelated partner course', () => {
       expect(hasAccessToPage(true, ['Bumble'], [], emptyPartnerAdmin, 'badoo')).toEqual(false);
     });
+  });
+
+  // Callers resolve the referral slug to the launched partner and pass its name.
+  describe('referral resolved to the launched partner', () => {
+    const referralName = (slug: string) => resolveLaunchedPartner(launchedPartners, slug)?.name;
+
+    it('referral test-partner opens a course tagged Test Partner', () => {
+      expect(
+        hasAccessToPage(
+          false,
+          ['Test Partner'],
+          [],
+          emptyPartnerAdmin,
+          referralName('test-partner'),
+        ),
+      ).toEqual(true);
+    });
+    it('referral test-partner does not open a course only for Test Partner Plus', () => {
+      expect(
+        hasAccessToPage(
+          false,
+          ['Test Partner Plus'],
+          [],
+          emptyPartnerAdmin,
+          referralName('test-partner'),
+        ),
+      ).toEqual(false);
+    });
+    it('referral bumble opens a Bumble course and not a Public-only one, as today', () => {
+      expect(
+        hasAccessToPage(false, ['Bumble'], [], emptyPartnerAdmin, referralName('bumble')),
+      ).toEqual(true);
+      expect(
+        hasAccessToPage(false, ['Public'], [], emptyPartnerAdmin, referralName('bumble')),
+      ).toEqual(false);
+    });
+    it.each(['retired-partner', 'nonsense', 'fruitz'])(
+      'an unlaunched referral %s leaves the visitor public',
+      (slug) => {
+        expect(
+          hasAccessToPage(false, ['Public'], [], emptyPartnerAdmin, referralName(slug)),
+        ).toEqual(true);
+      },
+    );
   });
 });
