@@ -20,7 +20,6 @@ import { notFound } from 'next/navigation';
 // The folder is needed because a slug can exist in more than one folder (`what-are-boundaries` is
 // both a video and an audio). Next.js requires this segment to share the session route's
 // `sessionSlug` name.
-export const dynamicParams = false;
 export const revalidate = 14400; // invalidate every 4 hours
 
 type Params = Promise<{ locale: string; slug: string; sessionSlug: string; resourceSlug: string }>;
