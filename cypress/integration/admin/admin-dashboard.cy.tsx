@@ -11,12 +11,15 @@ describe.skip('Admin dashboard page should display', () => {
   });
 
   it('header section', () => {
-    cy.get('h2').should('contain', 'Superadmin dashboard');
+    cy.get('h1').should('contain', 'Superadmin dashboard');
   });
 
-  it('create an admin account panel', () => {
-    cy.get('h2').should('contain', 'Create an admin account');
-    cy.get('p').should('contain', 'Admin accounts are able to generate therapy codes');
+  it('create partner admin panel', () => {
+    cy.get('h2').should('contain', 'Create partner admin');
+    cy.get('p').should(
+      'contain',
+      "Partner admins can create access codes for their partner's members.",
+    );
 
     cy.get('label.Mui-required').contains('Select partner');
     cy.get('input[name="selectPartner"]').should('exist');
@@ -27,7 +30,7 @@ describe.skip('Admin dashboard page should display', () => {
     cy.get('label.Mui-required').contains('Name');
     cy.get('input[id="name"]').should('exist');
 
-    cy.get('button').contains('Create an admin account');
+    cy.get('button').contains('Create partner admin');
   });
 
   it('update therapy sessions panel', () => {

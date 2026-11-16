@@ -18,6 +18,7 @@
     },
     "updateTherapy": {
       "title": "تحديث جلسات العلاج النفسي",
+      "description": "Find a user with therapy access by email to add or remove sessions.",
       "emailLabel": "البحث حسب البريد الإلكتروني للمستخدم",
       "therapySessionsRedeemed": "عدد جلسات العلاج النفسي المستخدَمة",
       "therapySessionsTotal": "إجمالي عدد جلسات العلاج النفسي",
@@ -28,6 +29,7 @@
     },
     "updatePartnerAdmin": {
       "title": "تحديث مشرف الشريك",
+      "description": "Find a partner admin by email to deactivate or reactivate their account.",
       "emailLabel": "البحث حسب البريد الإلكتروني للمشرف",
       "activeAdminLabel": "مشرف الشريك نشط حاليًا",
       "successDescription": "تم تحديث مشرف الشريك!",

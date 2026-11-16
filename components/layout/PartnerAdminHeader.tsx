@@ -35,13 +35,7 @@ const PartnerAdminHeader = (props: PartnerAdminHeaderProps) => {
 
   return (
     <Container sx={headerContainerStyles}>
-      <Typography
-        variant="h2"
-        component="h2"
-        sx={{
-          fontSize: '1.25rem !important',
-        }}
-      >
+      <Typography variant="h2" component="h1">
         {title}
       </Typography>
       {partnerLogoAlt && partnerLogoSrc && (

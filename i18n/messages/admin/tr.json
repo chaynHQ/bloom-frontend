@@ -18,6 +18,7 @@
     },
     "updateTherapy": {
       "title": "Terapi seanslarını güncelle",
+      "description": "Find a user with therapy access by email to add or remove sessions.",
       "emailLabel": "Kullanıcı e-postasına göre ara",
       "therapySessionsRedeemed": "Kullanılan terapi seansı sayısı",
       "therapySessionsTotal": "Toplam terapi seansı sayısı",
@@ -28,6 +29,7 @@
     },
     "updatePartnerAdmin": {
       "title": "İş ortağı yöneticisini güncelle",
+      "description": "Find a partner admin by email to deactivate or reactivate their account.",
       "emailLabel": "Yönetici e-postasına göre ara",
       "activeAdminLabel": "İş ortağı yöneticisi şu anda aktif",
       "successDescription": "İş ortağı yöneticisi güncellendi!",
