@@ -35,13 +35,10 @@ const lockupField = (language: LockupLanguage) =>
 // Storyblok keeps a cleared asset as one with an empty filename, and an unset translation as no key.
 const isEmpty = (value: unknown) => !(value as StoryblokAsset | null | undefined)?.filename;
 
-// The English lockup stands in for any language without its own, so translations are generated only
-// along with an empty English one: Bumble's and Badoo's keep showing their English lockup until it's
-// cleared.
+// Every empty language gets its lockup, even beside a filled English one, so partners whose lockup
+// was made by hand get translations on their next publish.
 export function fieldsToGenerate(content: StoryContent) {
-  const lockups = isEmpty(content.partnership_logo)
-    ? LOCKUP_LANGUAGES.map(lockupField).filter((field) => isEmpty(content[field]))
-    : [];
+  const lockups = LOCKUP_LANGUAGES.map(lockupField).filter((field) => isEmpty(content[field]));
   return isEmpty(content.illustration) ? [...lockups, 'illustration'] : lockups;
 }
 

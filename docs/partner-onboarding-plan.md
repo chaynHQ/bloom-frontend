@@ -231,7 +231,7 @@ The "update partner" card becomes a partners table: name, slug, status, therapy 
 
 ## Asset generation
 
-Runs in the frontend's `/api/revalidate`, in `after()` so the webhook returns straight away, when a published `partner` story has an empty `partnership_logo` or `illustration`. The route sets `maxDuration = 60` for it. To regenerate, the designer clears the field and publishes again. It only writes drafts, so publishing a generated story never re-triggers it.
+Runs in the frontend's `/api/revalidate`, in `after()` so the webhook returns straight away, when a published `partner` story has an empty `illustration` or an empty `partnership_logo` in any of the six languages, even beside a filled English one. The route sets `maxDuration = 60` for it. To regenerate, the designer clears the field and publishes again. It only writes drafts, so publishing a generated story never re-triggers it.
 
 **It never runs on staging.** Staging and production share the Storyblok space and both receive its webhooks, so running in both would generate and upload everything twice, racing on the same draft. It runs in production and locally.
 
@@ -248,7 +248,7 @@ It needs a Storyblok management token in Vercel's production environment only; u
 1. `partners/bumble`, `partners/badoo` and `partners/fruitz` exist as drafts in Storyblok, made from `lib/constants/partners.ts` and the current files (done). Staging reads drafts, so the team tests with them.
 2. Once the team has signed off on staging, the content team publishes them. That's harmless to the production code at the time: its backend ignores `partner` stories and its frontend never reads them. Production reads only published stories, so this must happen before the frontend reaches production.
 3. On release day, the backend then the frontend reach production ([Release](#release)). The frontend finds the partners by slug; a later republish of each story sets its `storyblokUuid`. Phase 3 deletes the constants, files and per-partner strings.
-4. Optional, after phase 4: clear Bumble's and Badoo's `partnership_logo` and republish for translated lockups.
+4. After phase 4 is in production, the next publish of each story generates its translated lockups beside the existing English one, into the draft for a designer to review.
 
 ## Critical paths
 

@@ -24,7 +24,7 @@ describe('publishedPartnerStoryId', () => {
   it('returns the story id when a partner story is published', () => {
     expect(
       publishedPartnerStoryId(
-        webhook({ action: 'published', story_id: 2, full_slug: 'partners/bumble-for-friends' }),
+        webhook({ action: 'published', story_id: 2, full_slug: 'partners/bff' }),
       ),
     ).toBe(2);
   });

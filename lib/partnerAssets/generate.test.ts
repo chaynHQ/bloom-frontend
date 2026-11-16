@@ -54,11 +54,25 @@ const bumble = {
   }),
 };
 
+// Bumble once every language has its lockup.
+const bumbleTranslated = {
+  ...bumble,
+  content: {
+    ...bumble.content,
+    ...Object.fromEntries(
+      ['de', 'fr', 'es', 'pt', 'hi'].map((lang, i) => [
+        `partnership_logo__i18n__${lang}`,
+        asset(`https://a.storyblok.com/f/142459/1200x696/t/bloom_bumble_logo_${lang}.png`, 50 + i),
+      ]),
+    ),
+  },
+};
+
 // A new partner: nothing generated yet, and not in the partners datasource.
 const bumbleForFriends = {
   id: 2,
-  slug: 'bumble-for-friends',
-  content: content('bumble-for-friends', 'Bumble For Friends', {}),
+  slug: 'bff',
+  content: content('bff', 'Bumble For Friends', {}),
 };
 
 const otherLanguages = ['de', 'fr', 'es', 'pt', 'hi'];
@@ -168,8 +182,12 @@ describe('fieldsToGenerate', () => {
     expect(fieldsToGenerate(bumbleForFriends.content)).toEqual([...lockupFields, 'illustration']);
   });
 
-  it('lists nothing for Bumble today: its English lockup stands in for every language', () => {
-    expect(fieldsToGenerate(bumble.content)).toEqual([]);
+  it('lists Bumble’s missing translations: today it has only an English lockup', () => {
+    expect(fieldsToGenerate(bumble.content)).toEqual(lockupFields.slice(1));
+  });
+
+  it('lists nothing once every field is filled', () => {
+    expect(fieldsToGenerate(bumbleTranslated.content)).toEqual([]);
   });
 
   it('lists only the empty lockups once the English one is cleared', () => {
@@ -182,7 +200,7 @@ describe('fieldsToGenerate', () => {
   });
 
   it('lists only the illustration when only it is cleared', () => {
-    expect(fieldsToGenerate({ ...bumble.content, illustration: emptyAsset })).toEqual([
+    expect(fieldsToGenerate({ ...bumbleTranslated.content, illustration: emptyAsset })).toEqual([
       'illustration',
     ]);
   });
@@ -216,12 +234,12 @@ describe('generatePartnerAssets', () => {
 
     expect(storyblok.created).toEqual([
       ...['en', ...otherLanguages].map((lang) => ({
-        filename: `bloom_bumble-for-friends_logo_${lang}.png`,
+        filename: `bloom_bff_logo_${lang}.png`,
         size: '1200x696',
         asset_folder_id: PARTNERS_FOLDER,
       })),
       {
-        filename: 'illustration_bloom_head_bumble-for-friends.svg',
+        filename: 'illustration_bloom_head_bff.svg',
         size: '988x988',
         asset_folder_id: PARTNERS_FOLDER,
       },
@@ -234,22 +252,19 @@ describe('generatePartnerAssets', () => {
       `https://a.storyblok.com/f/${SPACE}/${size}/h${id}/${file}`;
     expect(saved).toEqual({
       ...bumbleForFriends.content,
-      partnership_logo: asset(url(100, '1200x696', 'bloom_bumble-for-friends_logo_en.png'), 100),
+      partnership_logo: asset(url(100, '1200x696', 'bloom_bff_logo_en.png'), 100),
       ...Object.fromEntries(
         otherLanguages.map((lang, i) => [
           `partnership_logo__i18n__${lang}`,
-          asset(url(101 + i, '1200x696', `bloom_bumble-for-friends_logo_${lang}.png`), 101 + i),
+          asset(url(101 + i, '1200x696', `bloom_bff_logo_${lang}.png`), 101 + i),
         ]),
       ),
-      illustration: asset(
-        url(106, '988x988', 'illustration_bloom_head_bumble-for-friends.svg'),
-        106,
-      ),
+      illustration: asset(url(106, '988x988', 'illustration_bloom_head_bff.svg'), 106),
     });
 
     expect(storyblok.newEntries).toEqual([
       {
-        name: 'bumble-for-friends',
+        name: 'bff',
         value: 'Bumble For Friends',
         datasource_id: PARTNERS_DATASOURCE,
       },
@@ -304,12 +319,30 @@ describe('generatePartnerAssets', () => {
     expect(storyblok.newEntries).toEqual([]);
   });
 
-  it('does nothing for Bumble today', async () => {
+  it('translates Bumble’s existing lockup and keeps its English one and illustration', async () => {
     const storyblok = fakeStoryblok(bumble);
 
     await generatePartnerAssets(bumble.id);
 
-    expect(storyblok.requests).toEqual([`GET ${MAPI}/stories/${bumble.id}`]);
+    expect(storyblok.created.map((c) => c.filename)).toEqual(
+      otherLanguages.map((lang) => `bloom_bumble_logo_${lang}.png`),
+    );
+    const saved = storyblok.puts[0].story.content;
+    expect(saved.partnership_logo).toEqual(bumbleLockup);
+    expect(saved.illustration).toEqual(bumbleIllustration);
+    for (const lang of otherLanguages) {
+      expect(saved[`partnership_logo__i18n__${lang}`].filename).toMatch(
+        new RegExp(`bloom_bumble_logo_${lang}\\.png$`),
+      );
+    }
+  });
+
+  it('does nothing when every field is filled', async () => {
+    const storyblok = fakeStoryblok(bumbleTranslated);
+
+    await generatePartnerAssets(bumbleTranslated.id);
+
+    expect(storyblok.requests).toEqual([`GET ${MAPI}/stories/${bumbleTranslated.id}`]);
   });
 
   it('keeps a field an editor filled while generation ran', async () => {

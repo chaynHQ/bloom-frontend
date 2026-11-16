@@ -31,7 +31,7 @@ const webhook = (payload: object) => {
 const partnerPublished = {
   action: 'published',
   story_id: 2,
-  full_slug: 'partners/bumble-for-friends',
+  full_slug: 'partners/bff',
 };
 
 const runScheduled = () => Promise.all(scheduled.mock.calls.map(([task]) => task()));
