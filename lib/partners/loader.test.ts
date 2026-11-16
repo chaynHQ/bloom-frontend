@@ -7,7 +7,12 @@ import { expect } from '@jest/globals';
 import { unstable_cache } from 'next/cache';
 import { getPartnerSets, loadPartnerSets } from './loader';
 import { resolveLaunchedPartner } from './resolve';
-import { activePartners, partnerStories, welcomeLinks } from './testPartners';
+import {
+  activePartners,
+  activePartnersWithBff,
+  partnerStories,
+  welcomeLinks,
+} from './partnerFixtures';
 
 jest.mock('next/cache', () => ({ unstable_cache: jest.fn((fn) => fn) }));
 jest.mock('@/lib/storyblok', () => ({ getStoryblokApi: jest.fn() }));
@@ -47,20 +52,24 @@ describe('loadPartnerSets', () => {
     mockSources();
     const { branded, launched } = await loadPartnerSets('en');
 
-    expect(slugs(branded)).toEqual([
-      'bumble',
-      'badoo',
-      'fruitz',
-      'test-partner',
-      'test-partner-plus',
-      'retired-partner',
-    ]);
-    expect(slugs(launched)).toEqual(['bumble', 'badoo', 'test-partner', 'test-partner-plus']);
-    expect(launched.find((partner) => partner.slug === 'test-partner')?.id).toBe('id-test-partner');
+    expect(slugs(branded)).toEqual(['bumble', 'badoo', 'fruitz', 'bumble-for-friends']);
+    // Fruitz has no welcome page; Bumble For Friends isn't active yet.
+    expect(slugs(launched)).toEqual(['bumble', 'badoo']);
+    expect(launched.find((partner) => partner.slug === 'bumble')?.id).toBe('id-bumble');
+  });
+
+  it('launches a partner once a super admin activates it', async () => {
+    mockSources({ active: respond(activePartnersWithBff) });
+    const { launched } = await loadPartnerSets('en');
+
+    expect(slugs(launched)).toEqual(['bumble', 'badoo', 'bumble-for-friends']);
+    expect(launched.find((partner) => partner.slug === 'bumble-for-friends')?.name).toBe(
+      'Bumble For Friends',
+    );
   });
 
   it('reads stories and welcome pages in STORYBLOK_ENVIRONMENT, so drafts count', async () => {
-    mockSources();
+    mockSources({ active: respond(activePartnersWithBff) });
     const { launched } = await loadPartnerSets('de');
 
     expect(storyblokGet).toHaveBeenCalledWith(
@@ -71,8 +80,8 @@ describe('loadPartnerSets', () => {
       'cdn/links',
       expect.objectContaining({ version: 'draft', starts_with: 'welcome/' }),
     );
-    // Test Partner's partner and welcome stories are both drafts.
-    expect(slugs(launched)).toContain('test-partner');
+    // Bumble For Friends' partner and welcome stories are both drafts.
+    expect(slugs(launched)).toContain('bumble-for-friends');
   });
 
   it('asks the backend for active partners', async () => {
@@ -142,22 +151,31 @@ describe('getPartnerSets', () => {
 });
 
 describe('the welcome gate', () => {
-  const gate = async (slug: string) => {
-    mockSources();
+  const gate = async (slug: string, sources: Parameters<typeof mockSources>[0] = {}) => {
+    mockSources(sources);
     return resolveLaunchedPartner((await loadPartnerSets('en')).launched, slug);
   };
+  const bffActive = { active: respond(activePartnersWithBff) };
 
   it('opens for a launched partner', async () => {
     expect((await gate('bumble'))?.name).toBe('Bumble');
-    expect((await gate('test-partner'))?.name).toBe('Test Partner');
+    expect((await gate('bumble-for-friends', bffActive))?.name).toBe('Bumble For Friends');
   });
 
-  it.each([
-    ['inactive', 'retired-partner'],
-    ['no welcome story', 'fruitz'],
-    ['no partner story', 'old-partner'],
-    ['unknown slug', 'nonsense'],
-  ])('is closed for a partner with %s', async (_, slug) => {
-    expect(await gate(slug)).toBeUndefined();
+  it('is closed for an inactive partner', async () => {
+    expect(await gate('bumble-for-friends')).toBeUndefined();
+  });
+
+  it('is closed for a partner with no welcome story', async () => {
+    expect(await gate('fruitz')).toBeUndefined();
+  });
+
+  it('is closed for an active partner with a welcome story but no partner story', async () => {
+    const stories = partnerStories.filter((story) => story.slug !== 'bumble-for-friends');
+    expect(await gate('bumble-for-friends', { ...bffActive, stories })).toBeUndefined();
+  });
+
+  it('is closed for an unknown slug', async () => {
+    expect(await gate('nonsense')).toBeUndefined();
   });
 });

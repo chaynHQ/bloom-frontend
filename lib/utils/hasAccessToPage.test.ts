@@ -1,6 +1,6 @@
 import { Partner } from '@/lib/store/partnersSlice';
 import { resolveLaunchedPartner } from '@/lib/partners/resolve';
-import { launchedPartners } from '@/lib/partners/testPartners';
+import { launchedPartners, launchedPartnersWithBff } from '@/lib/partners/partnerFixtures';
 import { PartnerAccess } from '@/lib/store/partnerAccessSlice';
 import { PartnerAdmin } from '@/lib/store/partnerAdminSlice';
 import { expect } from '@jest/globals';
@@ -135,39 +135,60 @@ describe('hasAccessToPage', () => {
 
   // Callers resolve the referral slug to the launched partner and pass its name.
   describe('referral resolved to the launched partner', () => {
-    const referralName = (slug: string) => resolveLaunchedPartner(launchedPartners, slug)?.name;
+    const referralName = (slug: string, launched = launchedPartnersWithBff) =>
+      resolveLaunchedPartner(launched, slug)?.name;
 
-    it('referral test-partner opens a course tagged Test Partner', () => {
+    it('referral bumble-for-friends opens a course tagged Bumble For Friends', () => {
       expect(
         hasAccessToPage(
           false,
-          ['Test Partner'],
+          ['Bumble For Friends'],
           [],
           emptyPartnerAdmin,
-          referralName('test-partner'),
+          referralName('bumble-for-friends'),
         ),
       ).toEqual(true);
     });
-    it('referral test-partner does not open a course only for Test Partner Plus', () => {
+    it('referral bumble-for-friends does not open a Bumble-only course', () => {
       expect(
         hasAccessToPage(
           false,
-          ['Test Partner Plus'],
+          ['Bumble'],
           [],
           emptyPartnerAdmin,
-          referralName('test-partner'),
+          referralName('bumble-for-friends'),
         ),
       ).toEqual(false);
     });
-    it('referral bumble opens a Bumble course and not a Public-only one, as today', () => {
+    it('referral bumble opens a Bumble course, not a Public-only or Bumble For Friends one, as today', () => {
       expect(
         hasAccessToPage(false, ['Bumble'], [], emptyPartnerAdmin, referralName('bumble')),
       ).toEqual(true);
       expect(
         hasAccessToPage(false, ['Public'], [], emptyPartnerAdmin, referralName('bumble')),
       ).toEqual(false);
+      expect(
+        hasAccessToPage(
+          false,
+          ['Bumble For Friends'],
+          [],
+          emptyPartnerAdmin,
+          referralName('bumble'),
+        ),
+      ).toEqual(false);
     });
-    it.each(['retired-partner', 'nonsense', 'fruitz'])(
+    it('a referral to an inactive Bumble For Friends leaves the visitor public', () => {
+      expect(
+        hasAccessToPage(
+          false,
+          ['Public'],
+          [],
+          emptyPartnerAdmin,
+          referralName('bumble-for-friends', launchedPartners),
+        ),
+      ).toEqual(true);
+    });
+    it.each(['nonsense', 'fruitz'])(
       'an unlaunched referral %s leaves the visitor public',
       (slug) => {
         expect(

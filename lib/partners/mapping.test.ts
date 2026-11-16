@@ -1,6 +1,6 @@
 import { expect } from '@jest/globals';
 import { toPartnerBrand, toPartnerContent } from './mapping';
-import { emptyPartnershipLogoStory, partnerStories } from './testPartners';
+import { emptyPartnershipLogoStory, partnerStories } from './partnerFixtures';
 
 describe('toPartnerBrand', () => {
   it('maps a partner story to camelCase fields with asset URLs', () => {

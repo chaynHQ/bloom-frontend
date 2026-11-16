@@ -15,14 +15,14 @@ describe('per-partner event names', () => {
   });
 
   it('turn hyphens in a slug into underscores', () => {
-    expect(generatePartnerPromoGetStartedEvent('test-partner')).toBe(
-      'TEST_PARTNER_PROMO_GET_STARTED_CLICKED',
+    expect(generatePartnerPromoGetStartedEvent('bumble-for-friends')).toBe(
+      'BUMBLE_FOR_FRIENDS_PROMO_GET_STARTED_CLICKED',
     );
-    expect(generatePartnerPromoGoToCoursesEvent('test-partner-plus')).toBe(
-      'TEST_PARTNER_PLUS_PROMO_GO_TO_COURSES_CLICKED',
+    expect(generatePartnerPromoGoToCoursesEvent('bumble-for-friends')).toBe(
+      'BUMBLE_FOR_FRIENDS_PROMO_GO_TO_COURSES_CLICKED',
     );
-    expect(generatePartnershipPromoLogoClick('test-partner')).toBe(
-      'PARTNERSHIP_PROMO_TEST_PARTNER_LOGO_CLICKED',
+    expect(generatePartnershipPromoLogoClick('bumble-for-friends')).toBe(
+      'PARTNERSHIP_PROMO_BUMBLE_FOR_FRIENDS_LOGO_CLICKED',
     );
   });
 });

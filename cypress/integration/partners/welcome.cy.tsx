@@ -42,9 +42,9 @@ describe('Welcome page should', () => {
     cy.get('img[alt="Bloom in partnership with Bumble logo"]').should('exist');
   });
 
-  // Retired Partner is inactive; Fruitz has a partner story but no welcome page.
-  ['retired-partner', 'fruitz'].forEach((slug) => {
-    it(`Display not found page for ${slug}, which isn't launched`, () => {
+  // Fruitz has a partner story but no welcome page; nonsense is no partner at all.
+  ['fruitz', 'nonsense'].forEach((slug) => {
+    it(`Display not found page for ${slug}`, () => {
       cy.visit(`${welcomePageUrl}/${slug}`, { failOnStatusCode: false });
       cy.get('p').contains('This page could not be found');
     });
@@ -59,12 +59,12 @@ describe('Partner branding from a URL', () => {
     cy.get('footer img[alt="Fruitz logo"]').should('not.exist');
   });
 
-  it('is not shown on register for ?partner=retired-partner', () => {
-    cy.visit('/auth/register?partner=retired-partner');
+  it('is not shown on register for ?partner=nonsense', () => {
+    cy.visit('/auth/register?partner=nonsense');
     cy.get('h1', { timeout: 8000 }).should('contain', 'Create account');
     cy.get('img[alt="Bloom logo"]').should('exist');
-    cy.get('img[alt*="Retired Partner"]').should('not.exist');
+    cy.get('img[alt*="nonsense"]').should('not.exist');
     cy.get('#partnerAccessCode').should('not.exist');
-    cy.get('footer').should('not.contain', 'RETIRED PARTNER LTD');
+    cy.get('footer').should('not.contain', 'In partnership with');
   });
 });

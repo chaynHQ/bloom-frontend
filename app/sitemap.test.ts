@@ -2,7 +2,11 @@
  * @jest-environment node
  */
 import { getPartnerSets } from '@/lib/partners/loader';
-import { brandedPartners, launchedPartners } from '@/lib/partners/testPartners';
+import {
+  brandedPartners,
+  launchedPartners,
+  launchedPartnersWithBff,
+} from '@/lib/partners/partnerFixtures';
 import { getStoryblokApi, getStoryblokStory } from '@/lib/storyblok';
 import { expect } from '@jest/globals';
 import { notFound } from 'next/navigation';
@@ -37,7 +41,7 @@ beforeEach(() => {
   jest.clearAllMocks();
   (getPartnerSets as jest.Mock).mockResolvedValue({
     branded: brandedPartners,
-    launched: launchedPartners,
+    launched: launchedPartnersWithBff,
   });
   (getStoryblokApi as jest.Mock).mockReturnValue({
     get: jest.fn(() =>
@@ -48,10 +52,9 @@ beforeEach(() => {
               'policies/terms-of-service',
               'welcome/bumble',
               'welcome/badoo',
+              'welcome/bumble-for-friends',
+              // A welcome story for a partner that isn't launched.
               'welcome/fruitz',
-              'welcome/retired-partner',
-              'welcome/test-partner',
-              'welcome/test-partner-plus',
             ].map((slug) => [slug, link(slug)]),
           ),
         },
@@ -66,7 +69,7 @@ beforeEach(() => {
 const welcomeSlugs = (urls: string[]) =>
   [...new Set(urls.map((url) => url.match(/\/welcome\/([^/?]+)$/)?.[1]).filter(Boolean))].sort();
 
-const launchedSlugs = ['badoo', 'bumble', 'test-partner', 'test-partner-plus'];
+const launchedSlugs = ['badoo', 'bumble', 'bumble-for-friends'];
 
 describe('sitemap', () => {
   it('lists welcome pages for launched partners only', async () => {
@@ -90,29 +93,43 @@ describe('welcome page', () => {
     const paths = await generateStaticParams();
 
     expect([...new Set(paths.map((path) => path.partnerName))].sort()).toEqual(launchedSlugs);
-    expect(paths).toContainEqual({ partnerName: 'test-partner', locale: 'de' });
+    expect(paths).toContainEqual({ partnerName: 'bumble-for-friends', locale: 'de' });
   });
 
   it('renders for a launched partner, with the partner resolved once from the slug', async () => {
-    const element = (await WelcomeRoute(params('test-partner'))) as ReactElement<{
+    const element = (await WelcomeRoute(params('bumble-for-friends'))) as ReactElement<{
       partner: { name: string; slug: string };
     }>;
 
-    expect(getStoryblokStory).toHaveBeenCalledWith('welcome/test-partner', 'en', expect.anything());
-    expect(element.props.partner).toMatchObject({ name: 'Test Partner', slug: 'test-partner' });
+    expect(getStoryblokStory).toHaveBeenCalledWith(
+      'welcome/bumble-for-friends',
+      'en',
+      expect.anything(),
+    );
+    expect(element.props.partner).toMatchObject({
+      name: 'Bumble For Friends',
+      slug: 'bumble-for-friends',
+    });
   });
 
-  it.each(['retired-partner', 'fruitz', 'old-partner', 'nonsense'])(
-    'is not found for %s',
-    async (slug) => {
-      await expect(WelcomeRoute(params(slug))).rejects.toThrow('NEXT_NOT_FOUND');
-      expect(notFound).toHaveBeenCalled();
-      expect(getStoryblokStory).not.toHaveBeenCalled();
-    },
-  );
+  it.each(['fruitz', 'nonsense', 'Bumble'])('is not found for %s', async (slug) => {
+    await expect(WelcomeRoute(params(slug))).rejects.toThrow('NEXT_NOT_FOUND');
+    expect(notFound).toHaveBeenCalled();
+    expect(getStoryblokStory).not.toHaveBeenCalled();
+  });
+
+  it('is not found for Bumble For Friends while it is inactive', async () => {
+    (getPartnerSets as jest.Mock).mockResolvedValue({
+      branded: brandedPartners,
+      launched: launchedPartners,
+    });
+
+    await expect(WelcomeRoute(params('bumble-for-friends'))).rejects.toThrow('NEXT_NOT_FOUND');
+    expect(getStoryblokStory).not.toHaveBeenCalled();
+  });
 
   it('has no metadata for a partner that is not launched', async () => {
-    expect(await generateMetadata(params('retired-partner'))).toBeUndefined();
+    expect(await generateMetadata(params('fruitz'))).toBeUndefined();
     expect(getStoryblokStory).not.toHaveBeenCalled();
   });
 

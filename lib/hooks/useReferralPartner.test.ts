@@ -6,11 +6,12 @@ import { useSearchParams } from 'next/navigation';
 import { setEntryPartnerReferral } from '../store/userSlice';
 import { useAppDispatch } from './store';
 import useReferralPartner from './useReferralPartner';
+import { useLaunchedPartners } from '@/lib/partners/PartnersProvider';
+import { launchedPartners, launchedPartnersWithBff } from '@/lib/partners/partnerFixtures';
 
-// Bumble, Badoo, Test Partner and Test Partner Plus are launched; Fruitz and Retired Partner aren't.
-jest.mock('@/lib/partners/PartnersProvider', () => ({
-  useLaunchedPartners: () => require('@/lib/partners/testPartners').launchedPartners,
-}));
+// Bumble and Badoo are launched, as today; Fruitz isn't. Tests that need Bumble For Friends
+// launched say so.
+jest.mock('@/lib/partners/PartnersProvider', () => ({ useLaunchedPartners: jest.fn() }));
 jest.mock('@/i18n/routing', () => ({
   usePathname: jest.fn(),
 }));
@@ -36,6 +37,7 @@ describe('useReferralPartner - UTM detection', () => {
   beforeEach(() => {
     dispatchMock = jest.fn();
     (useAppDispatch as jest.MockedFunction<typeof useAppDispatch>).mockReturnValue(dispatchMock);
+    (useLaunchedPartners as jest.Mock).mockReturnValue(launchedPartners);
     (usePathname as jest.Mock).mockReturnValue('/');
     Cookies.set = jest.fn();
     Cookies.get = jest.fn();
@@ -110,6 +112,7 @@ describe('useReferralPartner - launched partners only', () => {
   beforeEach(() => {
     dispatchMock = jest.fn();
     (useAppDispatch as jest.MockedFunction<typeof useAppDispatch>).mockReturnValue(dispatchMock);
+    (useLaunchedPartners as jest.Mock).mockReturnValue(launchedPartners);
     (usePathname as jest.Mock).mockReturnValue('/');
     (useSearchParams as jest.Mock).mockReturnValue(makeSearchParams({}));
     Cookies.set = jest.fn();
@@ -118,17 +121,18 @@ describe('useReferralPartner - launched partners only', () => {
 
   afterEach(() => jest.clearAllMocks());
 
-  it('/welcome/test-partner sets the referral', () => {
-    (usePathname as jest.Mock).mockReturnValue('/welcome/test-partner');
+  it('/welcome/bumble-for-friends sets the referral once Bumble For Friends is launched', () => {
+    (useLaunchedPartners as jest.Mock).mockReturnValue(launchedPartnersWithBff);
+    (usePathname as jest.Mock).mockReturnValue('/welcome/bumble-for-friends');
 
     renderHook(() => useReferralPartner());
 
-    expect(setEntryPartnerReferral).toHaveBeenCalledWith('test-partner');
-    expect(Cookies.set).toHaveBeenCalledWith('referralPartner', 'test-partner');
+    expect(setEntryPartnerReferral).toHaveBeenCalledWith('bumble-for-friends');
+    expect(Cookies.set).toHaveBeenCalledWith('referralPartner', 'bumble-for-friends');
   });
 
-  it.each(['/welcome/retired-partner', '/welcome/fruitz', '/welcome/nonsense'])(
-    '%s does not set a referral',
+  it.each(['/welcome/bumble-for-friends', '/welcome/fruitz', '/welcome/nonsense'])(
+    '%s does not set a referral while that partner is not launched',
     (pathname) => {
       (usePathname as jest.Mock).mockReturnValue(pathname);
 
@@ -151,32 +155,33 @@ describe('useReferralPartner - launched partners only', () => {
     },
   );
 
-  it('utm_source=test-partner-plus attributes Test Partner Plus, the longest matching slug', () => {
+  it('utm_source=bumble-for-friends attributes Bumble For Friends, not Bumble', () => {
+    (useLaunchedPartners as jest.Mock).mockReturnValue(launchedPartnersWithBff);
     (useSearchParams as jest.Mock).mockReturnValue(
-      makeSearchParams({ utm_source: 'test-partner-plus' }),
+      makeSearchParams({ utm_source: 'bumble-for-friends' }),
     );
 
     renderHook(() => useReferralPartner());
 
     expect(setEntryPartnerReferral).toHaveBeenCalledTimes(1);
-    expect(setEntryPartnerReferral).toHaveBeenCalledWith('test-partner-plus');
+    expect(setEntryPartnerReferral).toHaveBeenCalledWith('bumble-for-friends');
   });
 
-  it('utm_campaign=test-partner-2026 attributes Test Partner', () => {
+  it('before Bumble For Friends launches, utm_source=bumble-for-friends attributes Bumble, as today', () => {
     (useSearchParams as jest.Mock).mockReturnValue(
-      makeSearchParams({ utm_campaign: 'test-partner-2026' }),
+      makeSearchParams({ utm_source: 'bumble-for-friends' }),
     );
 
     renderHook(() => useReferralPartner());
 
-    expect(setEntryPartnerReferral).toHaveBeenCalledWith('test-partner');
+    expect(setEntryPartnerReferral).toHaveBeenCalledTimes(1);
+    expect(setEntryPartnerReferral).toHaveBeenCalledWith('bumble');
   });
 
-  it.each<Record<string, string>>([
-    { utm_source: 'retired-partner' },
-    { utm_campaign: 'fruitz-spring' },
-  ])('a UTM naming an unlaunched partner %p attributes nobody', (params) => {
-    (useSearchParams as jest.Mock).mockReturnValue(makeSearchParams(params));
+  it('a UTM naming Fruitz, which is not launched, attributes nobody', () => {
+    (useSearchParams as jest.Mock).mockReturnValue(
+      makeSearchParams({ utm_campaign: 'fruitz-spring' }),
+    );
 
     renderHook(() => useReferralPartner());
 

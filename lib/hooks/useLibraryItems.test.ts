@@ -12,7 +12,7 @@ jest.mock('next-intl', () => ({ useLocale: jest.fn() }));
 jest.mock('@/lib/api', () => ({ useGetUserCoursesQuery: jest.fn() }));
 jest.mock('@/lib/hooks/store', () => ({ useTypedSelector: jest.fn() }));
 jest.mock('@/lib/partners/PartnersProvider', () => ({
-  useLaunchedPartners: () => require('@/lib/partners/testPartners').launchedPartners,
+  useLaunchedPartners: () => require('@/lib/partners/partnerFixtures').launchedPartners,
 }));
 jest.mock('@/lib/hooks/useCookieReferralPartner', () => ({
   useCookieReferralPartner: jest.fn(),

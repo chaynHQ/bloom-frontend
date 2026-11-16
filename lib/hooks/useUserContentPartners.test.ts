@@ -3,12 +3,12 @@ import { renderHook } from '@testing-library/react';
 import { useTypedSelector } from './store';
 import { useCookieReferralPartner } from './useCookieReferralPartner';
 import { useUserContentPartners } from './useUserContentPartners';
+import { useLaunchedPartners } from '@/lib/partners/PartnersProvider';
+import { launchedPartners, launchedPartnersWithBff } from '@/lib/partners/partnerFixtures';
 
 jest.mock('./store', () => ({ useTypedSelector: jest.fn() }));
 jest.mock('./useCookieReferralPartner', () => ({ useCookieReferralPartner: jest.fn() }));
-jest.mock('@/lib/partners/PartnersProvider', () => ({
-  useLaunchedPartners: () => require('@/lib/partners/testPartners').launchedPartners,
-}));
+jest.mock('@/lib/partners/PartnersProvider', () => ({ useLaunchedPartners: jest.fn() }));
 
 interface State {
   user: { id: string | null };
@@ -16,7 +16,12 @@ interface State {
   partnerAdmin: { partner: { name: string } | null };
 }
 
-const mockState = (state: State, referralPartner: string | null = null) => {
+const mockState = (
+  state: State,
+  referralPartner: string | null = null,
+  launched = launchedPartnersWithBff,
+) => {
+  (useLaunchedPartners as jest.Mock).mockReturnValue(launched);
   (useTypedSelector as unknown as jest.Mock).mockImplementation((selector) =>
     selector(state as never),
   );
@@ -50,12 +55,23 @@ describe('useUserContentPartners', () => {
   it('resolves a referral slug to the launched partner name', () => {
     mockState(
       { user: { id: null }, partnerAccesses: [], partnerAdmin: emptyAdmin },
-      'test-partner',
+      'bumble-for-friends',
     );
-    expect(renderHook(() => useUserContentPartners()).result.current).toEqual(['test partner']);
+    expect(renderHook(() => useUserContentPartners()).result.current).toEqual([
+      'bumble for friends',
+    ]);
   });
 
-  it.each(['retired-partner', 'nonsense', 'fruitz'])(
+  it('ignores a referral to an inactive Bumble For Friends: the visitor is public', () => {
+    mockState(
+      { user: { id: null }, partnerAccesses: [], partnerAdmin: emptyAdmin },
+      'bumble-for-friends',
+      launchedPartners,
+    );
+    expect(renderHook(() => useUserContentPartners()).result.current).toEqual(['public']);
+  });
+
+  it.each(['nonsense', 'fruitz'])(
     'ignores an unlaunched referral %s: the visitor is public',
     (slug) => {
       mockState({ user: { id: null }, partnerAccesses: [], partnerAdmin: emptyAdmin }, slug);
@@ -67,11 +83,13 @@ describe('useUserContentPartners', () => {
     mockState(
       {
         user: { id: 'user-1' },
-        partnerAccesses: [{ partner: { name: 'Test Partner' } }],
+        partnerAccesses: [{ partner: { name: 'Bumble For Friends' } }],
         partnerAdmin: emptyAdmin,
       },
       'bumble',
     );
-    expect(renderHook(() => useUserContentPartners()).result.current).toEqual(['test partner']);
+    expect(renderHook(() => useUserContentPartners()).result.current).toEqual([
+      'bumble for friends',
+    ]);
   });
 });

@@ -34,7 +34,8 @@ async function getWelcomeSlugs(): Promise<Set<string>> {
   return new Set(links.filter((link) => !link.is_folder).map((link) => link.slug.split('/')[1]));
 }
 
-// Server-only. Drafts count outside production, so the test partners launch on staging.
+// Server-only. Drafts count outside production, so on staging bumble-for-friends can launch
+// from a draft welcome story.
 //
 // Any failed request throws, and no caller catches it: pages are cached, so partial or empty sets
 // would be saved into them for hours (a welcome page cached as not found, referrals dropped). A

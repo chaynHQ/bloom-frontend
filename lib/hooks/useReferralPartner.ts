@@ -70,7 +70,7 @@ export default function useReferralPartner() {
         .join(' ')
         .toLowerCase();
 
-      // The longest slug wins, so test-partner-plus isn't credited to test-partner.
+      // The longest slug wins, so bumble-for-friends isn't credited to bumble.
       if (utmData) {
         referralPartner = launchedPartners
           .map((partner) => partner.slug!)

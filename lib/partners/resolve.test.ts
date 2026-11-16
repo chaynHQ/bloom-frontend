@@ -1,6 +1,6 @@
 import { expect } from '@jest/globals';
 import { findPartner, resolveLaunchedPartner } from './resolve';
-import { brandedPartners, launchedPartners } from './testPartners';
+import { brandedPartners, launchedPartners, launchedPartnersWithBff } from './partnerFixtures';
 
 describe('findPartner', () => {
   it('finds a branded partner by name, ignoring case, as getPartnerContent did', () => {
@@ -10,7 +10,8 @@ describe('findPartner', () => {
   });
 
   it('matches whole names only', () => {
-    expect(findPartner(brandedPartners, 'Test Partner')?.slug).toBe('test-partner');
+    expect(findPartner(brandedPartners, 'Bumble For Friends')?.slug).toBe('bumble-for-friends');
+    expect(findPartner(brandedPartners, 'Bumble')?.slug).toBe('bumble');
     expect(findPartner(brandedPartners, 'umble')).toBeUndefined();
     expect(findPartner(brandedPartners, null)).toBeUndefined();
   });
@@ -19,9 +20,8 @@ describe('findPartner', () => {
 describe('resolveLaunchedPartner', () => {
   it('resolves a launched slug', () => {
     expect(resolveLaunchedPartner(launchedPartners, 'bumble')?.name).toBe('Bumble');
-    expect(resolveLaunchedPartner(launchedPartners, 'test-partner')?.name).toBe('Test Partner');
-    expect(resolveLaunchedPartner(launchedPartners, 'test-partner-plus')?.name).toBe(
-      'Test Partner Plus',
+    expect(resolveLaunchedPartner(launchedPartnersWithBff, 'bumble-for-friends')?.name).toBe(
+      'Bumble For Friends',
     );
   });
 
@@ -29,10 +29,14 @@ describe('resolveLaunchedPartner', () => {
     expect(resolveLaunchedPartner(launchedPartners, 'Bumble')?.name).toBe('Bumble');
   });
 
-  it.each(['retired-partner', 'fruitz', 'nonsense', 'Test Partner', '', null, undefined])(
+  it('ignores an inactive Bumble For Friends', () => {
+    expect(resolveLaunchedPartner(launchedPartners, 'bumble-for-friends')).toBeUndefined();
+  });
+
+  it.each(['fruitz', 'nonsense', 'Bumble For Friends', '', null, undefined])(
     'ignores %p',
     (slug) => {
-      expect(resolveLaunchedPartner(launchedPartners, slug)).toBeUndefined();
+      expect(resolveLaunchedPartner(launchedPartnersWithBff, slug)).toBeUndefined();
     },
   );
 });
