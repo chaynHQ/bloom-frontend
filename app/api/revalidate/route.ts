@@ -1,6 +1,11 @@
 import { createHmac, timingSafeEqual } from 'crypto';
 import { COURSE_STORIES_CACHE_TAG, PARTNERS_CACHE_TAG } from '@/lib/constants/common';
+import { generatePartnerAssetsSafely, publishedPartnerStoryId } from '@/lib/partnerAssets/webhook';
 import { revalidatePath, revalidateTag } from 'next/cache';
+import { after } from 'next/server';
+
+// Partner asset generation runs after the response, within this limit.
+export const maxDuration = 60;
 
 // Storyblok signs each webhook with the shared secret: a hex HMAC-SHA1 of the raw body.
 function isValidSignature(body: string, signature: string | null, secret: string) {
@@ -24,5 +29,9 @@ export async function POST(request: Request) {
   revalidatePath('/', 'layout');
   revalidateTag(COURSE_STORIES_CACHE_TAG, { expire: 0 });
   revalidateTag(PARTNERS_CACHE_TAG, { expire: 0 });
+
+  const partnerStoryId = publishedPartnerStoryId(body);
+  if (partnerStoryId) after(() => generatePartnerAssetsSafely(partnerStoryId));
+
   return Response.json({ revalidated: true });
 }
