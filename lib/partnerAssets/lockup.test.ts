@@ -71,6 +71,12 @@ describe('measureLogo', () => {
     expect(crop.width / crop.height).toBeCloseTo(5, 1);
   });
 
+  it('rejects an SVG logo with live text, which it can’t draw in the partner’s font', () => {
+    const logo = svg(800, 200, '<text x="20" y="120" font-size="100">Bumble</text>');
+
+    expect(() => measureLogo(logo)).toThrow('outlines');
+  });
+
   it('rejects a logo that is neither SVG nor PNG, or has nothing visible', () => {
     expect(() => measureLogo(Buffer.from([0xff, 0xd8, 0xff, 0xe0]))).toThrow('SVG or PNG');
     expect(() => measureLogo(svg(100, 100, ''))).toThrow('nothing visible');

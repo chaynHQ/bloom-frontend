@@ -164,7 +164,7 @@ function fakeStoryblok(story: { id: number; slug: string; content: Record<string
     if (route === '/datasource_entries' && method === 'POST') {
       state.newEntries.push(body.datasource_entry);
       state.entries.push({ id: 3, ...body.datasource_entry });
-      return json({ datasource_entry: body.datasource_entry });
+      return new Response(null, { status: 201 });
     }
     throw new Error(`Unexpected request ${method} ${route}`);
   }) as jest.Mock;
@@ -361,8 +361,8 @@ describe('generatePartnerAssets', () => {
     expect(saved.partnership_logo.filename).toMatch(/_en\.png$/);
   });
 
-  it('throws when the Management API refuses a request, before writing anything', async () => {
-    fakeStoryblok(bumbleForFriends);
+  it('adds the datasource entry first, so a failed upload doesn’t lose it', async () => {
+    const storyblok = fakeStoryblok(bumbleForFriends);
     const fakeFetch = global.fetch as jest.Mock;
     const realImpl = fakeFetch.getMockImplementation()!;
     fakeFetch.mockImplementation(async (input: RequestInfo | URL, init?: RequestInit) =>
@@ -372,6 +372,9 @@ describe('generatePartnerAssets', () => {
     );
 
     await expect(generatePartnerAssets(bumbleForFriends.id)).rejects.toThrow('422');
-    expect(fakeFetch.mock.calls.some(([, init]) => init?.method === 'PUT')).toBe(false);
+    expect(storyblok.puts).toEqual([]);
+    expect(storyblok.newEntries).toEqual([
+      { name: 'bff', value: 'Bumble For Friends', datasource_id: PARTNERS_DATASOURCE },
+    ]);
   });
 });

@@ -1,7 +1,6 @@
 /**
  * @jest-environment node
  */
-// The webhook route's side of asset generation; the route's own behaviour is in its route.test.ts.
 import { maxDuration, POST } from '@/app/api/revalidate/route';
 import { serverInstance as rollbar } from '@/lib/rollbar';
 import { createHmac } from 'crypto';

@@ -82,6 +82,10 @@ export function measureLogo(logo: Buffer) {
     href = dataUri('image/png', logo);
     size = { width: logo.readUInt32BE(16), height: logo.readUInt32BE(20) };
   } else if (logo.toString('utf8').includes('<svg')) {
+    // Text inside an embedded SVG renders only with system fonts, which serverless functions lack.
+    if (/<text[\s>]/.test(logo.toString('utf8'))) {
+      throw new Error('The partner logo has live text: upload it with the text as outlines');
+    }
     href = dataUri('image/svg+xml', logo);
     const { width, height } = new Resvg(logo);
     size = { width, height };

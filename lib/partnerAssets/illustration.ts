@@ -2,8 +2,7 @@ import { clampChroma, formatHex, oklch } from 'culori';
 import fs from 'fs';
 import path from 'path';
 
-// Bumble's yellow and Badoo's lilac, the pastels their illustrations already use, sit inside these
-// bounds. The floor on lightness keeps the black line art at AAA contrast on any hue.
+// The lightness floor keeps the black line art at AAA contrast on any hue.
 export const MIN_LIGHTNESS = 0.82;
 export const MAX_LIGHTNESS = 0.93;
 export const MAX_CHROMA = 0.15;

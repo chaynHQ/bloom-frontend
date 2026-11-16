@@ -35,8 +35,6 @@ const lockupField = (language: LockupLanguage) =>
 // Storyblok keeps a cleared asset as one with an empty filename, and an unset translation as no key.
 const isEmpty = (value: unknown) => !(value as StoryblokAsset | null | undefined)?.filename;
 
-// Every empty language gets its lockup, even beside a filled English one, so partners whose lockup
-// was made by hand get translations on their next publish.
 export function fieldsToGenerate(content: StoryContent) {
   const lockups = LOCKUP_LANGUAGES.map(lockupField).filter((field) => isEmpty(content[field]));
   return isEmpty(content.illustration) ? [...lockups, 'illustration'] : lockups;
@@ -83,8 +81,6 @@ function renderField(field: string, slug: string, content: StoryContent, logo: B
   };
 }
 
-// Fills the empty generated fields of a partner story's draft. It never publishes, so a designer
-// reviews the result, and publishing it doesn't run this again.
 export async function generatePartnerAssets(storyId: number) {
   const story = await getStory(storyId);
   const fields = fieldsToGenerate(story.content);
@@ -95,6 +91,8 @@ export async function generatePartnerAssets(storyId: number) {
   const logoAsset = story.content.logo as StoryblokAsset | undefined;
   const logo = await downloadLogo(logoAsset);
   const folderId = logoAsset?.id ? await getAssetFolderId(logoAsset.id) : null;
+  // Before any upload: once the fields are filled, a later publish never gets this far again.
+  await ensurePartnersDatasourceEntry(story.slug, name);
 
   const generated: Record<string, StoryblokAsset> = {};
   for (const field of fields) {
@@ -105,5 +103,4 @@ export async function generatePartnerAssets(storyId: number) {
   // Read again just before writing: an editor may have saved the story while assets uploaded.
   const current = await getStory(storyId);
   await saveStoryDraft(storyId, fillEmptyFields(current.content, generated));
-  await ensurePartnersDatasourceEntry(story.slug, name);
 }

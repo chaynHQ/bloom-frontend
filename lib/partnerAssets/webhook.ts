@@ -18,7 +18,6 @@ export function publishedPartnerStoryId(body: string): number | null {
 
 let warnedMissingToken = false;
 
-// Run after the webhook has responded. Never throws: generation must not affect revalidation.
 export async function generatePartnerAssetsSafely(storyId: number) {
   // Staging shares production's Storyblok space and receives the same webhooks, so generating on
   // both would upload everything twice and race on the same draft.

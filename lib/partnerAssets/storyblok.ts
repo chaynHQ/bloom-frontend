@@ -1,5 +1,3 @@
-// Storyblok's Management API, with the token in STORYBLOK_OAUTH_TOKEN. Server-only.
-
 export type StoryblokAsset = {
   id: number | null;
   filename: string;
@@ -30,7 +28,8 @@ async function mapi<T>(method: string, route: string, body?: unknown): Promise<T
         `Storyblok ${method} ${route} → ${response.status}: ${await response.text()}`,
       );
     }
-    return response.json();
+    const text = await response.text();
+    return (text ? JSON.parse(text) : undefined) as T;
   }
 }
 
