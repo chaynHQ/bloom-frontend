@@ -304,7 +304,7 @@ renders as text).
 | ----------------------------------------------------------- | -------------------------------------- |
 | `ADMIN_DASHBOARD_VIEWED`                                    | `AdminDashboardPage` mount             |
 | `CREATE_PARTNER_ACCESS_REQUEST/SUCCESS/ERROR`               | `CreateAccessCodeForm`                 |
-| `UPDATE_PARTNER_ACTIVE_REQUEST/SUCCESS/ERROR`               | `UpdatePartnerActiveForm` — `active`   |
+| `UPDATE_PARTNER_ACTIVE_REQUEST/SUCCESS/ERROR`               | `PartnersTable` — `active`             |
 | `UPDATE_THERAPY_SESSIONS` / `UPDATE_THERAPY_SESSIONS_ERROR` | `UpdateTherapyAdminForm`               |
 | `UPDATE_PARTNER_ADMIN` / `UPDATE_PARTNER_ADMIN_ERROR`       | `UpdatePartnerAdminForm`               |
 | `CREATE_PARTNER_ADMIN_REQUEST/SUCCESS/ERROR`                | `CreatePartnerAdminForm` (super admin) |

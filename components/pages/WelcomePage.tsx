@@ -1,13 +1,12 @@
 'use client';
 
-import NoDataAvailable from '@/components/common/NoDataAvailable';
 import PageSection from '@/components/common/PageSection';
 import { SignUpSection } from '@/components/common/SignUpSection';
 import { SupportSection } from '@/components/common/SupportSection';
 import PartnerHeader from '@/components/layout/PartnerHeader';
 import { LibraryCardsSection } from '@/components/library/LibraryCardsSection';
 import DynamicComponent from '@/components/storyblok/DynamicComponent';
-import { Link as i18nLink, usePathname, useRouter } from '@/i18n/routing';
+import { Link as i18nLink } from '@/i18n/routing';
 import { STORYBLOK_COLORS } from '@/lib/constants/enums';
 import {
   generatePartnerPromoGetStartedEvent,
@@ -17,7 +16,6 @@ import {
   WELCOME_SUPPORT_CARD_CLICKED,
   WELCOME_VIEWED,
 } from '@/lib/constants/events';
-import { getPartnerContent } from '@/lib/constants/partners';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { useFeaturedLibraryItems } from '@/lib/hooks/useFeaturedLibraryItems';
 import { useLibrarySectionEvents } from '@/lib/hooks/useLibrarySectionEvents';
@@ -25,6 +23,7 @@ import { useHydratedSearchParams } from '@/lib/hooks/useHydratedSearchParams';
 import { useLogEventOnce } from '@/lib/hooks/useLogEventOnce';
 import useReferralPartner from '@/lib/hooks/useReferralPartner';
 import { useUserAuthStatus } from '@/lib/hooks/useUserAuthStatus';
+import type { BrandedPartner } from '@/lib/partners/types';
 import { type LibraryStories } from '@/lib/utils/libraryData';
 import logEvent, { getEventUserData } from '@/lib/utils/logEvent';
 import { RichTextOptions } from '@/lib/utils/richText';
@@ -36,26 +35,28 @@ import { Box, Button, Typography } from '@mui/material';
 import { useStoryblokState } from '@storyblok/react';
 import { ISbStoryData, SbBlokData } from '@storyblok/react/rsc';
 import { useTranslations } from 'next-intl';
-import { useEffect, useMemo, useRef } from 'react';
+import { useMemo } from 'react';
 import { render } from 'storyblok-rich-text-react-renderer';
 
 interface Props {
   story: ISbStoryData;
   libraryStories: LibraryStories;
-  // Taken from the route, not the story, so a mis-slugged story cannot drop the partner branding.
-  partnerName: string;
+  // The launched partner for the route's slug, resolved once by the page.
+  partner: BrandedPartner;
 }
 
 const introTitleStyle = { mb: 2, maxWidth: 800 } as const;
 
-export default function WelcomePage({ story: initialStory, libraryStories, partnerName }: Props) {
+export default function WelcomePage({
+  story: initialStory,
+  libraryStories,
+  partner: partnerContent,
+}: Props) {
   const story = useStoryblokState(initialStory) ?? initialStory;
   const t = useTranslations('Shared.librarySections');
   const tS = useTranslations('Shared');
   const tW = useTranslations('Welcome');
 
-  const router = useRouter();
-  const pathname = usePathname();
   const searchParams = useHydratedSearchParams();
   useReferralPartner();
 
@@ -64,18 +65,13 @@ export default function WelcomePage({ story: initialStory, libraryStories, partn
   const userCreatedAt = useTypedSelector((state) => state.user.createdAt);
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
-  const entryPartnerReferral = useTypedSelector((state) => state.user.entryPartnerReferral);
-  const entryPartnerAccessCode = useTypedSelector((state) => state.user.entryPartnerAccessCode);
 
   const userAuthStatus = useUserAuthStatus();
   const isLoggedIn = !authStateLoading && Boolean(userId);
-  const partnerSlug = partnerName.toLowerCase();
+  const partnerSlug = partnerContent.slug;
   const content = story.content;
 
   const code = searchParams?.get('code');
-  const partner = searchParams?.get('partner');
-  const entryCode = entryPartnerReferral === partnerSlug ? entryPartnerAccessCode : '';
-  const accessCode = code || entryCode;
 
   const eventData = useMemo(
     () => ({
@@ -85,15 +81,7 @@ export default function WelcomePage({ story: initialStory, libraryStories, partn
     [partnerSlug, userCreatedAt, partnerAccesses, partnerAdmin],
   );
 
-  // Entry code in state, add to url query in case of refresh
-  const urlUpdated = useRef(false);
-  useEffect(() => {
-    if (!searchParams || code || !entryCode || urlUpdated.current) return;
-    urlUpdated.current = true;
-    router.push({ pathname, query: { code: entryCode, partner } });
-  }, [router, pathname, searchParams, partner, code, entryCode]);
-
-  const registerPath = `/auth/register?partner=${partnerSlug}${accessCode ? `&code=${accessCode}` : ''}`;
+  const registerPath = `/auth/register?partner=${partnerSlug}${code ? `&code=${code}` : ''}`;
 
   const { courses, sessions } = useFeaturedLibraryItems(libraryStories, content);
   const { logCardClick, logBrowseAll } = useLibrarySectionEvents('welcome', eventData);
@@ -104,12 +92,6 @@ export default function WelcomePage({ story: initialStory, libraryStories, partn
     { welcome_logged_in: isLoggedIn, ...eventData },
     userAuthStatus !== 'resolving',
   );
-
-  const partnerContent = getPartnerContent(partnerName);
-
-  if (!partnerContent) {
-    return <NoDataAvailable />;
-  }
 
   const { partnershipLogo, partnershipLogoAlt, bloomGirlIllustration } = partnerContent;
 
@@ -135,6 +117,7 @@ export default function WelcomePage({ story: initialStory, libraryStories, partn
         partnerLogoAlt={
           partnershipLogo ? partnershipLogoAlt || 'alt.welcomeToBloom' : 'alt.bloomLogo'
         }
+        partnerName={partnerContent.name}
         showWelcomeSubtext={!partnershipLogo}
       />
 

@@ -1,6 +1,7 @@
 'use client';
 
 import { getImageSizes } from '@/lib/utils/imageSizes';
+import { isRemoteSvg, storyblokImageSize } from '@/lib/utils/storyblokImage';
 import { pageHeaderPaddingTop, rowStyle } from '@/styles/common';
 import { Box, Container, Typography } from '@mui/material';
 import { useLocale, useTranslations } from 'next-intl';
@@ -50,8 +51,10 @@ const logoStyle = {
 } as const;
 
 interface HeaderProps {
-  partnerLogoSrc: StaticImageData;
+  partnerLogoSrc: string | StaticImageData;
   partnerLogoAlt: string;
+  // Fills `{name}` in the partner logo's alt text.
+  partnerName?: string;
   imageSrc: string | StaticImageData;
   imageAlt?: string;
   translatedImageAlt?: string;
@@ -64,6 +67,7 @@ const PartnerHeader = (props: HeaderProps) => {
   const {
     partnerLogoSrc,
     partnerLogoAlt,
+    partnerName,
     imageAlt,
     translatedImageAlt,
     imageSrc,
@@ -88,8 +92,10 @@ const PartnerHeader = (props: HeaderProps) => {
         {props.showWelcomeSubtext && locale !== 'hi' && welcomeText}
         <Box sx={logoContainerStyle}>
           <Image
-            alt={tS(partnerLogoAlt)}
+            alt={tS(partnerLogoAlt, { name: partnerName ?? '' })}
             src={partnerLogoSrc}
+            {...storyblokImageSize(partnerLogoSrc)}
+            unoptimized={isRemoteSvg(partnerLogoSrc)}
             sizes={getImageSizes(logoContainerStyle.width)}
             style={logoStyle}
           />
@@ -100,6 +106,7 @@ const PartnerHeader = (props: HeaderProps) => {
         <Image
           alt={imageAltText}
           src={imageSrc}
+          unoptimized={isRemoteSvg(imageSrc)}
           fill
           priority={priority}
           sizes={getImageSizes(imageWidth)}

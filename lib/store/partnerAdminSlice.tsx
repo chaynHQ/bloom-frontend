@@ -1,14 +1,13 @@
-import { api, GetUserResponse } from '@/lib/api';
-
-import { getPartnerContent, PartnerContent } from '@/lib/constants/partners';
+import { api } from '@/lib/api';
 import { createSlice } from '@reduxjs/toolkit';
+import { Partner } from './partnersSlice';
 
 export interface PartnerAdmin {
   id: string | null;
   active: boolean | null;
   createdAt: Date | null;
   updatedAt: Date | null;
-  partner: PartnerContent | null;
+  partner: Partner | null;
 }
 
 const initialState: PartnerAdmin = {
@@ -17,23 +16,6 @@ const initialState: PartnerAdmin = {
   createdAt: null,
   updatedAt: null,
   partner: null,
-};
-
-const mergeUserPartnerAdminState = (state: PartnerAdmin, payload: GetUserResponse) => {
-  if (payload.partnerAdmin.partner) {
-    let partnerAdmin: PartnerAdmin = {
-      ...payload.partnerAdmin,
-    };
-    partnerAdmin.partner = Object.assign(
-      {},
-      partnerAdmin.partner,
-      // This uses hard coded date from frontend rather than from backend.
-      // in future we can get live data from backend
-      getPartnerContent(payload.partnerAdmin.partner.name),
-    );
-    return partnerAdmin;
-  }
-  return payload.partnerAdmin;
 };
 
 const slice = createSlice({
@@ -46,11 +28,11 @@ const slice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addMatcher(api.endpoints.addUser.matchFulfilled, (state, { payload }) => {
-      if (payload.partnerAdmin) return mergeUserPartnerAdminState(state, payload);
+      if (payload.partnerAdmin) return payload.partnerAdmin;
     });
 
     builder.addMatcher(api.endpoints.getUser.matchFulfilled, (state, { payload }) => {
-      if (payload.partnerAdmin) return mergeUserPartnerAdminState(state, payload);
+      if (payload.partnerAdmin) return payload.partnerAdmin;
     });
   },
 });

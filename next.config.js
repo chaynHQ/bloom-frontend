@@ -30,7 +30,16 @@ module.exports = withBundleAnalyzer(
     images: {
       remotePatterns: [{ protocol: 'https', hostname: 'a.storyblok.com' }],
     },
-    serverExternalPackages: ['newrelic'],
+    // resvg-js loads a native binary, so it can't be bundled.
+    serverExternalPackages: ['newrelic', '@resvg/resvg-js'],
+    // Partner asset generation reads these at runtime; public/ isn't in serverless functions.
+    outputFileTracingIncludes: {
+      '/api/revalidate': [
+        './public/bloom_logo.svg',
+        './public/illustration_bloom_head_yellow.svg',
+        './lib/partnerAssets/fonts/OpenSans-LightItalic.ttf',
+      ],
+    },
     async redirects() {
       return [
         {

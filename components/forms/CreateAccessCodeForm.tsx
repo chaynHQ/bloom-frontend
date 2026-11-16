@@ -3,7 +3,6 @@
 import { Link as i18nLink } from '@/i18n/routing';
 import { useAddPartnerAccessMutation } from '@/lib/api';
 import { BASE_URL } from '@/lib/constants/common';
-import { PARTNER_ACCESS_FEATURES } from '@/lib/constants/enums';
 import {
   CREATE_PARTNER_ACCESS_ERROR,
   CREATE_PARTNER_ACCESS_REQUEST,
@@ -28,13 +27,15 @@ import { useTranslations } from 'next-intl';
 import * as React from 'react';
 import { useState } from 'react';
 
+type AccessTier = 'therapy' | 'liveChat';
+
 const CreateAccessCodeForm = () => {
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const rollbar = useRollbar();
 
   const t = useTranslations('PartnerAdmin.createAccessCode');
   const [loading, setLoading] = useState<boolean>(false);
-  const [selectedTier, setSelectedTier] = useState<PARTNER_ACCESS_FEATURES | null>(null);
+  const [selectedTier, setSelectedTier] = useState<AccessTier | null>(null);
   const [formSubmitSuccess, setFormSubmitSuccess] = useState<boolean>(false);
   const [partnerAccessCode, setPartnerAccessCode] = useState<string | null>(null);
   const [formError, setFormError] = useState<
@@ -42,7 +43,15 @@ const CreateAccessCodeForm = () => {
   >();
   const [addPartnerAccess] = useAddPartnerAccessMutation();
 
-  const welcomeURL = `${BASE_URL}/welcome/${partnerAdmin.partner?.name.toLocaleLowerCase()}`;
+  const therapySessionsPerCode = partnerAdmin.partner?.therapySessionsPerCode ?? 0;
+  // A partner with no therapy still needs codes for courses and messaging
+  const tier: AccessTier = therapySessionsPerCode > 0 ? 'therapy' : 'liveChat';
+  const tierLabel =
+    tier === 'therapy'
+      ? t('form.featureTherapySessionsLabel', { count: therapySessionsPerCode })
+      : t('form.featureLiveChatLabel');
+
+  const welcomeURL = `${BASE_URL}/welcome/${partnerAdmin.partner?.slug}`;
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -54,9 +63,8 @@ const CreateAccessCodeForm = () => {
       return;
     }
 
-    const includeTherapy = selectedTier === PARTNER_ACCESS_FEATURES.THERAPY;
-    const therapySessionsRemaining: number =
-      selectedTier === PARTNER_ACCESS_FEATURES.THERAPY ? 6 : 0;
+    const includeTherapy = selectedTier === 'therapy';
+    const therapySessionsRemaining = includeTherapy ? therapySessionsPerCode : 0;
 
     const eventData = {
       feature_courses: true,
@@ -114,7 +122,9 @@ const CreateAccessCodeForm = () => {
             mb: 1,
           }}
         >
-          {t('therapyAccess')}
+          {selectedTier === 'therapy'
+            ? t('therapySessionsAccess', { count: therapySessionsPerCode })
+            : t('liveChatAccess')}
         </Typography>
         <Typography>
           {t.rich('resultLink', {
@@ -150,13 +160,9 @@ const CreateAccessCodeForm = () => {
           aria-label="feature"
           name="controlled-radio-buttons-group"
           value={selectedTier}
-          onChange={(e) => setSelectedTier(e.target.value as PARTNER_ACCESS_FEATURES)}
+          onChange={(e) => setSelectedTier(e.target.value as AccessTier)}
         >
-          <FormControlLabel
-            value={PARTNER_ACCESS_FEATURES.THERAPY}
-            control={<Radio />}
-            label={t('form.featureTherapyLabel')}
-          />
+          <FormControlLabel value={tier} control={<Radio />} label={tierLabel} />
         </RadioGroup>
       </FormControl>
       {formError && (

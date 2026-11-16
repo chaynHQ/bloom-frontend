@@ -5,14 +5,14 @@
       "introduction": "Utilisez ce formulaire pour créer un code d'accès chaque fois que vous souhaitez donner l'accès à Bloom à une personne.",
       "courseAccess": "Accès aux cours uniquement",
       "liveChatAccess": "Accès au cours et la messagerie ",
-      "therapyAccess": "Accès au cours, la messagerie et six sessions de thérapies",
+      "therapySessionsAccess": "Access to courses, messaging and {count, plural, one {# therapy session} other {# therapy sessions}}",
       "resultLink": "L'utilisateur·rice doit de rendre sur <welcomeURL></welcomeURL>.",
       "resultCode": "L'inscription se fait en utilisant son adresse électronique et le code d'accès <partnerAccessCode></partnerAccessCode>.",
       "form": {
         "featuresLabel": "Sélectionnez le type de support pour cet utilisateur",
         "featureCoursesLabel": "Cours uniquement",
         "featureLiveChatLabel": "Cours et la messagerie",
-        "featureTherapyLabel": "Cours, la messagerie et six sessions de thérapie",
+        "featureTherapySessionsLabel": "Courses, messaging and {count, plural, one {# therapy session} other {# therapy sessions}}",
         "reset": "Créer un autre code",
         "errors": {
           "createPartnerAccessError": "Une erreur s'est produite lors de la création du code d'accès. Réessayez ou contactez l'équipe Bloom.",

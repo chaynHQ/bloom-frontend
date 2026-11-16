@@ -1,13 +1,13 @@
 import { routing } from '@/i18n/routing';
 import { SITE_URL } from '@/lib/constants/common';
-import { getPartnerContent } from '@/lib/constants/partners';
+import { publicContent } from '@/lib/constants/partners';
 import { localisedPath } from '@/lib/utils/generateMetadataBase';
 import { toPlainText } from '@/lib/utils/libraryData';
 import { getYouTubeVideoId } from '@/lib/utils/youtube';
 import type { ISbStoryData } from '@storyblok/react/rsc';
 import { getTranslations } from 'next-intl/server';
 
-const chayn = getPartnerContent('public')!;
+const chayn = publicContent;
 
 const ORGANIZATION_ID = `${chayn.website}/#organization`;
 

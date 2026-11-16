@@ -1,18 +1,20 @@
 import { usePathname } from '@/i18n/routing';
-import { partnerKeys } from '@/lib/constants/partners';
-import { setEntryPartnerAccessCode, setEntryPartnerReferral } from '@/lib/store/userSlice';
+import { useLaunchedPartners } from '@/lib/partners/PartnersProvider';
+import { resolveLaunchedPartner } from '@/lib/partners/resolve';
+import { setEntryPartnerReferral } from '@/lib/store/userSlice';
 import Cookies from 'js-cookie';
 import { useEffect, useRef } from 'react';
 import { useAppDispatch } from './store';
 import { useHydratedSearchParams } from './useHydratedSearchParams';
 
-// Check if entry path is from a partner referral and if so, store referring partner and code in state and local storage
+// Check if entry path is from a partner referral and if so, store referring partner in state and a cookie
 // This enables us to redirect a user to the correct sign up page later (e.g. in SignUpSection)
-// Referrals are detected from welcome/register paths and from a partner name in UTM link data.
+// Referrals are detected from welcome paths and from a partner slug in UTM link data.
 export default function useReferralPartner() {
   const pathname = usePathname();
   const searchParams = useHydratedSearchParams();
   const dispatch = useAppDispatch();
+  const launchedPartners = useLaunchedPartners();
   const detected = useRef(false);
 
   // Once per page entry, as soon as the URL's params are known.
@@ -28,35 +30,12 @@ export default function useReferralPartner() {
       Cookies.set('referralPartner', referralPartner);
       dispatch(setEntryPartnerReferral(referralPartner));
     }
-    async function setReferralCode(referralCode: string) {
-      await dispatch(setEntryPartnerAccessCode(referralCode));
-    }
 
-    let referralPartner, referralCode;
+    let referralPartner: string | undefined;
 
     if (pathname?.includes('/welcome/')) {
-      const splitPartnerQuery = pathname.split('/')[2].split('?');
-      referralPartner = splitPartnerQuery[0]; // Gets "bumble" from /welcome/bumble?code=123
-
-      if (splitPartnerQuery.length === 2) {
-        const splitCodeQuery = splitPartnerQuery[0].split('='); // Gets "123" from /welcome/bumble?code=123
-        if (splitCodeQuery[0] === 'code') {
-          referralCode = splitCodeQuery[1];
-        }
-      }
-    }
-    if (pathname?.includes('/register')) {
-      const splitPartnerQuery = pathname.split('?'); // Gets "partner=bumble&code=123" from /register?partner=bumble&code=123
-      if (splitPartnerQuery.length === 2) {
-        const splitCodeQuery = splitPartnerQuery[1].split('&'); // Gets "partner=bumble" and "code=123"
-
-        if ((splitCodeQuery[0].split('=')[0] = 'partner')) {
-          referralPartner = splitCodeQuery[0].split('=')[1];
-        }
-        if (splitCodeQuery.length === 2 && (splitCodeQuery[1].split('=')[0] = 'code')) {
-          referralCode = splitCodeQuery[1].split('=')[1];
-        }
-      }
+      // Gets "bumble" from /welcome/bumble
+      referralPartner = resolveLaunchedPartner(launchedPartners, pathname.split('/')[2])?.slug;
     }
     // Partners include their name in UTM link data (e.g. ?utm_source=bumble or
     // ?utm_campaign=bumble-june-2026)
@@ -67,8 +46,13 @@ export default function useReferralPartner() {
         .join(' ')
         .toLowerCase();
 
+      // When the data names more than one launched slug, the longest wins, so a slug inside
+      // another partner's slug never takes its referrals.
       if (utmData) {
-        referralPartner = partnerKeys.find((key) => utmData.includes(key));
+        referralPartner = launchedPartners
+          .map((partner) => partner.slug)
+          .filter((slug) => utmData.includes(slug))
+          .sort((a, b) => b.length - a.length)[0];
       }
     }
 
@@ -80,7 +64,6 @@ export default function useReferralPartner() {
       const cookieReferralPartner = Cookies.get('referralPartner');
       if (cookieReferralPartner) dispatch(setEntryPartnerReferral(cookieReferralPartner));
     }
-    if (referralCode) setReferralCode(referralCode);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
 }

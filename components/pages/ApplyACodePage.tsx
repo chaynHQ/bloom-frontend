@@ -4,15 +4,16 @@ import ApplyCodeForm from '@/components/forms/ApplyCodeForm';
 import Header from '@/components/layout/Header';
 import { Link as i18nLink } from '@/i18n/routing';
 import { ASSIGN_NEW_PARTNER_VIEWED } from '@/lib/constants/events';
-import { getAllPartnersContent } from '@/lib/constants/partners';
+import { useLaunchedPartners } from '@/lib/partners/PartnersProvider';
 import { getImageSizes } from '@/lib/utils/imageSizes';
+import { isRemoteSvg } from '@/lib/utils/storyblokImage';
 import logEvent from '@/lib/utils/logEvent';
 import illustrationPerson4Peach from '@/public/illustration_person4_peach.svg';
 import { rowStyle } from '@/styles/common';
 import { Box, Card, CardContent, Container, Link, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 
 const containerStyle = {
   ...rowStyle,
@@ -50,7 +51,7 @@ export default function ApplyACodePage() {
   const t = useTranslations('Account');
   const tS = useTranslations('Shared');
 
-  const allPartnersContent = useMemo(() => getAllPartnersContent(), []);
+  const launchedPartners = useLaunchedPartners();
 
   useEffect(() => {
     logEvent(ASSIGN_NEW_PARTNER_VIEWED);
@@ -93,12 +94,12 @@ export default function ApplyACodePage() {
               </Typography>
               <Typography>{t('applyCode.partnershipsDescription')}</Typography>
               <Box sx={logosContainerStyle}>
-                {allPartnersContent?.map((partner) => (
+                {launchedPartners.map((partner) => (
                   <Link
                     component={i18nLink}
                     key={`${partner.name}-link`}
-                    aria-label={tS(partner.logoAlt)}
-                    href={`/welcome/${partner.name.toLowerCase()}`}
+                    aria-label={tS(partner.logoAlt, { name: partner.name })}
+                    href={`/welcome/${partner.slug}`}
                     sx={[
                       {
                         mt: '1rem !important',
@@ -109,8 +110,9 @@ export default function ApplyACodePage() {
                     ]}
                   >
                     <Image
-                      alt={tS(partner.logoAlt)}
+                      alt={tS(partner.logoAlt, { name: partner.name })}
                       src={partner.logo}
+                      unoptimized={isRemoteSvg(partner.logo)}
                       fill
                       sizes={getImageSizes(logoContainerStyle.maxWidth)}
                       style={{

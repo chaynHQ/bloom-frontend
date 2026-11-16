@@ -81,6 +81,10 @@ NEXT_PUBLIC_ROLLBAR_TOKEN= # Rollbar logging
 
 # CONTENT REVALIDATION
 STORYBLOK_WEBHOOK_SECRET= # Shared secret for the Storyblok revalidation webhook
+
+# PARTNER ASSET GENERATION (production only)
+STORYBLOK_OAUTH_TOKEN= # Storyblok Management API token with write access to the space
+STORYBLOK_SPACE_ID= # Numeric Storyblok space ID
 ```
 
 ### Configure Firebase Variables:
@@ -110,6 +114,10 @@ To set it up for an environment:
 1. Generate a random secret and add it to Vercel as `STORYBLOK_WEBHOOK_SECRET` for that environment. Without it, the route rejects every request.
 2. In Storyblok, go to Settings → Webhooks and add a webhook pointing at `https://<environment domain>/api/revalidate`, with the same secret. For production, trigger it on stories being published, unpublished, deleted and moved. For staging, which shows draft content, also trigger it on stories being saved.
 3. If the Vercel Firewall challenges requests (e.g. the Security Checkpoint), add a rule that lets `/api/revalidate` through, or Storyblok's calls will be blocked.
+
+#### Partner Asset Generation:
+
+When a `partners/<slug>` story is published, `/api/revalidate` also generates the partner's lockups and illustration into the story's draft, filling only empty fields (`lib/partnerAssets/`). It needs `STORYBLOK_OAUTH_TOKEN` and `STORYBLOK_SPACE_ID`, set in Vercel's production environment only: staging shares the Storyblok space and its webhooks, so it never generates. Without them, generation is skipped with a warning.
 
 #### Front Chat (1:1 Messaging):
 

@@ -118,11 +118,11 @@ const TopBar = () => {
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
 
   const welcomeUrl = useMemo(() => {
-    if (partnerAdmin && partnerAdmin.partner) {
-      return `/welcome/${partnerAdmin.partner.name.toLowerCase()}`;
+    if (partnerAdmin?.partner?.slug) {
+      return `/welcome/${partnerAdmin.partner.slug}`;
     }
-    if (partnerAccesses.length > 0) {
-      return `/welcome/${partnerAccesses[0].partner.name.toLowerCase()}`;
+    if (partnerAccesses[0]?.partner.slug) {
+      return `/welcome/${partnerAccesses[0].partner.slug}`;
     }
     return '/';
   }, [partnerAccesses, partnerAdmin]);

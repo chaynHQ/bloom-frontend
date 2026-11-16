@@ -13,6 +13,8 @@ import { mobileBottomNavHeight } from '@/lib/constants/banners';
 import { ENVIRONMENT } from '@/lib/constants/common';
 import { ENVIRONMENTS } from '@/lib/constants/enums';
 import firebase from '@/lib/firebase';
+import { getPartnerSets } from '@/lib/partners/loader';
+import { PartnersProvider } from '@/lib/partners/PartnersProvider';
 import { clientConfig } from '@/lib/rollbar';
 import { getLocaleDirection } from '@/lib/utils/getLocaleDirection';
 import { JsonLd, siteJsonLd } from '@/lib/utils/structuredData';
@@ -66,7 +68,8 @@ export interface BaseLayoutProps {
 firebase;
 
 export default async function BaseLayout({ children, locale }: BaseLayoutProps) {
-  const messages = await getMessages({ locale });
+  // Not caught: a failed partner load must not be cached into pages (see loadPartnerSets).
+  const [messages, partners] = await Promise.all([getMessages({ locale }), getPartnerSets(locale)]);
   const direction = getLocaleDirection(locale);
 
   let browserTimingHeader = undefined;
@@ -110,53 +113,55 @@ export default async function BaseLayout({ children, locale }: BaseLayoutProps) 
             <AppRouterCacheProvider>
               <AppThemeProvider direction={direction}>
                 <StoryblokProvider>
-                  <body>
-                    {/*
+                  <PartnersProvider partners={partners}>
+                    <body>
+                      {/*
                       Google Consent Mode default. Runs during HTML parse — before the GA tag,
                       which <GoogleAnalytics/> loads after `</body>` — so GA sets no cookies until
                       the visitor accepts. CookieBanner sends the `consent` `update` on accept/decline.
                     */}
-                    <script
-                      dangerouslySetInnerHTML={{
-                        __html:
-                          'window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}' +
-                          "gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});" +
-                          "gtag('set','ads_data_redaction',true);",
-                      }}
-                    />
-                    {/*
+                      <script
+                        dangerouslySetInnerHTML={{
+                          __html:
+                            'window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}' +
+                            "gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});" +
+                            "gtag('set','ads_data_redaction',true);",
+                        }}
+                      />
+                      {/*
                       PWA installation events (like `beforeinstallprompt`) must be captured
                       before React hydration. These events fire only once and are lost if not 
                       handled early. That's why we include this script before hydration — 
                       to bind the event listener in time.
                     */}
-                    <script src="/deffer-pwa.js" async></script>
-                    <JsonLd data={siteJsonLd} />
-                    <Suspense fallback={null}>
-                      <ReferralPartnerTracker />
-                    </Suspense>
-                    <TopBar />
-                    {/* Sits at the top of the page flow, directly beneath the fixed TopBar. */}
-                    <RedesignNewsBanner />
-                    <LeaveSiteButton />
-                    <DesktopPwaBanner />
+                      <script src="/deffer-pwa.js" async></script>
+                      <JsonLd data={siteJsonLd} />
+                      <Suspense fallback={null}>
+                        <ReferralPartnerTracker />
+                      </Suspense>
+                      <TopBar />
+                      {/* Sits at the top of the page flow, directly beneath the fixed TopBar. */}
+                      <RedesignNewsBanner />
+                      <LeaveSiteButton />
+                      <DesktopPwaBanner />
 
-                    {/* Before <main> so keyboard focus runs TopBar → bottom nav → page content. */}
-                    <MobileBottomNav />
+                      {/* Before <main> so keyboard focus runs TopBar → bottom nav → page content. */}
+                      <MobileBottomNav />
 
-                    <main>
-                      <FruitzRetirementBanner />
+                      <main>
+                        <FruitzRetirementBanner />
 
-                      <AuthGuard>{children}</AuthGuard>
-                    </main>
-                    <Footer />
-                    <Box sx={{ height: { xs: mobileBottomNavHeight, md: 0 } }} />
-                    <CookieBanner />
-                    {ENVIRONMENT !== ENVIRONMENTS.LOCAL && (
-                      <ConsentedAnalytics hotjarId={process.env.NEXT_PUBLIC_HOTJAR_ID} />
-                    )}
-                    <Analytics />
-                  </body>
+                        <AuthGuard>{children}</AuthGuard>
+                      </main>
+                      <Footer />
+                      <Box sx={{ height: { xs: mobileBottomNavHeight, md: 0 } }} />
+                      <CookieBanner />
+                      {ENVIRONMENT !== ENVIRONMENTS.LOCAL && (
+                        <ConsentedAnalytics hotjarId={process.env.NEXT_PUBLIC_HOTJAR_ID} />
+                      )}
+                      <Analytics />
+                    </body>
+                  </PartnersProvider>
                   <GoogleAnalytics
                     debugMode={ENVIRONMENT !== ENVIRONMENTS.PRODUCTION}
                     gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID || ''}

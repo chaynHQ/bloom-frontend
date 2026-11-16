@@ -1,5 +1,3 @@
-// Note bumble is does not have the automatic access code feature
-
 describe('Create User', () => {
   before(() => {
     cy.cleanUpTestState();

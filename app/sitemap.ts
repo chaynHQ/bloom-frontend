@@ -1,5 +1,6 @@
 import { routing } from '@/i18n/routing';
 import { SITE_URL, STORYBLOK_ENVIRONMENT } from '@/lib/constants/common';
+import { getPartnerSets } from '@/lib/partners/loader';
 import { getStoryblokApi } from '@/lib/storyblok';
 import { localisedPath, storyLocales } from '@/lib/utils/generateMetadataBase';
 import { getLibraryStories } from '@/lib/utils/getLibraryStories';
@@ -19,8 +20,9 @@ const STATIC_PATHS = [
   '/subscription/whatsapp',
 ];
 
-// One story deep in a folder with its own route, e.g. policies/terms-of-service.
-const FOLDER_PAGE = /^(policies|welcome)\/[^/]+$/;
+// One story deep in a folder with its own route, e.g. policies/terms-of-service. Welcome pages
+// are listed only for launched partners.
+const FOLDER_PAGE = /^policies\/[^/]+$/;
 
 function entries(
   path: string,
@@ -59,9 +61,10 @@ async function getPublishedLinks(): Promise<StoryblokLink[]> {
 // a "not in your language" notice, so it is left out, as are coming-soon courses and content only
 // some partners' members can open, which the pages themselves mark noindex.
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [{ courses, courseSessions, resources }, links] = await Promise.all([
+  const [{ courses, courseSessions, resources }, links, { launched }] = await Promise.all([
     getLibraryStories(routing.defaultLocale),
     getPublishedLinks(),
+    getPartnerSets(routing.defaultLocale),
   ]);
 
   const liveCourses = courses.filter(
@@ -80,6 +83,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   return [
     ...STATIC_PATHS.flatMap((path) => entries(path, routing.locales)),
     ...pages.flatMap((link) => entries(`/${link.slug}`, routing.locales)),
+    ...launched.flatMap((partner) => entries(`/welcome/${partner.slug}`, routing.locales)),
     ...[...liveCourses, ...sessions, ...publicResources].flatMap(storyEntries),
   ];
 }
