@@ -139,7 +139,7 @@ describe('useReferralPartner - launched partners only', () => {
     },
   );
 
-  it.each([{ utm_source: 'bumble' }, { utm_campaign: 'bumble-june-2026' }])(
+  it.each<Record<string, string>>([{ utm_source: 'bumble' }, { utm_campaign: 'bumble-june-2026' }])(
     'attributes Bumble from %p',
     (params) => {
       (useSearchParams as jest.Mock).mockReturnValue(makeSearchParams(params));
@@ -172,15 +172,15 @@ describe('useReferralPartner - launched partners only', () => {
     expect(setEntryPartnerReferral).toHaveBeenCalledWith('test-partner');
   });
 
-  it.each([{ utm_source: 'retired-partner' }, { utm_campaign: 'fruitz-spring' }])(
-    'a UTM naming an unlaunched partner %p attributes nobody',
-    (params) => {
-      (useSearchParams as jest.Mock).mockReturnValue(makeSearchParams(params));
+  it.each<Record<string, string>>([
+    { utm_source: 'retired-partner' },
+    { utm_campaign: 'fruitz-spring' },
+  ])('a UTM naming an unlaunched partner %p attributes nobody', (params) => {
+    (useSearchParams as jest.Mock).mockReturnValue(makeSearchParams(params));
 
-      renderHook(() => useReferralPartner());
+    renderHook(() => useReferralPartner());
 
-      expect(setEntryPartnerReferral).not.toHaveBeenCalled();
-      expect(Cookies.set).not.toHaveBeenCalled();
-    },
-  );
+    expect(setEntryPartnerReferral).not.toHaveBeenCalled();
+    expect(Cookies.set).not.toHaveBeenCalled();
+  });
 });

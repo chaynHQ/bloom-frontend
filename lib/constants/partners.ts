@@ -12,13 +12,14 @@ import { StaticImageData } from 'next/image';
 
 export interface PartnerContent {
   id?: string;
+  slug?: string;
   name: string; // rename to display name to show value is intended for display and can be upper case
-  logo: StaticImageData;
+  logo: string | StaticImageData;
   logoAlt: string;
-  partnershipLogo?: StaticImageData;
+  partnershipLogo?: string | StaticImageData;
   partnershipLogoAlt?: string;
-  bloomGirlIllustration?: StaticImageData;
-  website: string;
+  bloomGirlIllustration?: string | StaticImageData;
+  website?: string;
   footerLine1: string;
   footerLine2: string;
   facebook?: string;

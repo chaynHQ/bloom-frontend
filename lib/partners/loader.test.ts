@@ -12,6 +12,9 @@ import { activePartners, partnerStories, welcomeLinks } from './testPartners';
 jest.mock('next/cache', () => ({ unstable_cache: jest.fn((fn) => fn) }));
 jest.mock('@/lib/storyblok', () => ({ getStoryblokApi: jest.fn() }));
 
+// Recorded at import, before beforeEach clears the mocks.
+const [cachedFunction, cacheKeyParts, cacheOptions] = (unstable_cache as jest.Mock).mock.calls[0];
+
 const storyblokGet = jest.fn();
 const fetchMock = jest.fn();
 
@@ -130,11 +133,9 @@ describe('loadPartnerSets', () => {
 
 describe('getPartnerSets', () => {
   it('is cached per locale under the partners tag for 4 hours', async () => {
-    expect(unstable_cache).toHaveBeenCalledWith(
-      loadPartnerSets,
-      expect.arrayContaining(['partners']),
-      { revalidate: 14400, tags: [PARTNERS_CACHE_TAG] },
-    );
+    expect(cachedFunction).toBe(loadPartnerSets);
+    expect(cacheKeyParts).toContain('partners');
+    expect(cacheOptions).toEqual({ revalidate: 14400, tags: [PARTNERS_CACHE_TAG] });
     mockSources();
     await expect(getPartnerSets('en')).resolves.toHaveProperty('launched');
   });
