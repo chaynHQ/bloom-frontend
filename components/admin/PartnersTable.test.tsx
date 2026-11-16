@@ -50,21 +50,18 @@ const partner = (overrides: Partial<AdminPartner>): AdminPartner => ({
   ...overrides,
 });
 
+// Bumble For Friends' slug differs from its name; Fruitz is inactive here to cover activation.
 const partners = [
+  partner({ id: 'badoo', name: 'Badoo', slug: 'badoo', therapySessionsPerCode: 6 }),
+  partner({ id: 'bumble', name: 'Bumble', slug: 'bumble', therapySessionsPerCode: 6 }),
   partner({
-    id: 'tp',
-    name: 'Test Partner',
-    slug: 'test-partner',
+    id: 'bff',
+    name: 'Bumble For Friends',
+    slug: 'bumble-for-friends',
     therapySessionsPerCode: 0,
     automaticAccessCode: true,
   }),
-  partner({
-    id: 'tpp',
-    name: 'Test Partner Plus',
-    slug: 'test-partner-plus',
-    therapySessionsPerCode: 6,
-  }),
-  partner({ id: 'rp', name: 'Retired Partner', slug: 'retired-partner', isActive: false }),
+  partner({ id: 'fruitz', name: 'Fruitz', slug: 'fruitz', isActive: false }),
 ];
 
 const updatePartner = jest.fn();
@@ -85,17 +82,17 @@ describe('PartnersTable', () => {
   it('lists every partner with its slug, status and welcome page link', () => {
     renderTable();
 
-    const plus = row('test-partner-plus');
-    expect(within(plus).getByText('test-partner-plus')).toBeTruthy();
-    expect(within(plus).getByText('Active')).toBeTruthy();
-    expect(within(plus).getByRole('link').getAttribute('href')).toBe('/welcome/test-partner-plus');
-    expect(within(row('retired-partner')).getByText('Inactive')).toBeTruthy();
+    const bff = row('bumble-for-friends');
+    expect(within(bff).getByText('Bumble For Friends')).toBeTruthy();
+    expect(within(bff).getByText('Active')).toBeTruthy();
+    expect(within(bff).getByRole('link').getAttribute('href')).toBe('/welcome/bumble-for-friends');
+    expect(within(row('fruitz')).getByText('Inactive')).toBeTruthy();
   });
 
   it('offers a therapy limit from 0 to 20', () => {
     renderTable();
 
-    const select = within(row('test-partner-plus')).getByRole('combobox');
+    const select = within(row('badoo')).getByRole('combobox');
     const values = within(select)
       .getAllByRole('option')
       .map((option) => (option as HTMLOptionElement).value);
@@ -106,27 +103,27 @@ describe('PartnersTable', () => {
   it('changing the therapy limit sends only the limit', async () => {
     renderTable();
 
-    fireEvent.change(within(row('test-partner')).getByRole('combobox'), {
+    fireEvent.change(within(row('badoo')).getByRole('combobox'), {
       target: { value: '3' },
     });
 
     await waitFor(() => expect(updatePartner).toHaveBeenCalledTimes(1));
-    expect(updatePartner).toHaveBeenCalledWith({ id: 'tp', therapySessionsPerCode: 3 });
+    expect(updatePartner).toHaveBeenCalledWith({ id: 'badoo', therapySessionsPerCode: 3 });
   });
 
   it('toggling the automatic access code sends only that field', async () => {
     renderTable();
 
-    fireEvent.click(within(row('test-partner')).getByRole('switch'));
+    fireEvent.click(within(row('bumble-for-friends')).getByRole('switch'));
 
     await waitFor(() => expect(updatePartner).toHaveBeenCalledTimes(1));
-    expect(updatePartner).toHaveBeenCalledWith({ id: 'tp', automaticAccessCode: false });
+    expect(updatePartner).toHaveBeenCalledWith({ id: 'bff', automaticAccessCode: false });
   });
 
   it('deactivating asks for confirmation first, then sends only active', async () => {
     renderTable();
 
-    fireEvent.click(within(row('test-partner-plus')).getByRole('button', { name: 'Deactivate' }));
+    fireEvent.click(within(row('badoo')).getByRole('button', { name: 'Deactivate' }));
 
     const dialog = screen.getByRole('dialog');
     expect(dialog.textContent).toMatch(/admins/);
@@ -136,13 +133,13 @@ describe('PartnersTable', () => {
     fireEvent.click(within(dialog).getByRole('button', { name: 'Deactivate' }));
 
     await waitFor(() => expect(updatePartner).toHaveBeenCalledTimes(1));
-    expect(updatePartner).toHaveBeenCalledWith({ id: 'tpp', active: false });
+    expect(updatePartner).toHaveBeenCalledWith({ id: 'badoo', active: false });
   });
 
   it('cancelling the confirmation sends nothing', () => {
     renderTable();
 
-    fireEvent.click(within(row('test-partner-plus')).getByRole('button', { name: 'Deactivate' }));
+    fireEvent.click(within(row('badoo')).getByRole('button', { name: 'Deactivate' }));
     fireEvent.click(within(screen.getByRole('dialog')).getByRole('button', { name: 'Cancel' }));
 
     expect(updatePartner).not.toHaveBeenCalled();
@@ -151,16 +148,16 @@ describe('PartnersTable', () => {
   it('activating sends only active', async () => {
     renderTable();
 
-    fireEvent.click(within(row('retired-partner')).getByRole('button', { name: 'Activate' }));
+    fireEvent.click(within(row('fruitz')).getByRole('button', { name: 'Activate' }));
 
     await waitFor(() => expect(updatePartner).toHaveBeenCalledTimes(1));
-    expect(updatePartner).toHaveBeenCalledWith({ id: 'rp', active: true });
+    expect(updatePartner).toHaveBeenCalledWith({ id: 'fruitz', active: true });
   });
 
   it("revalidates the site's partners after a successful update", async () => {
     renderTable();
 
-    fireEvent.click(within(row('test-partner')).getByRole('switch'));
+    fireEvent.click(within(row('bumble-for-friends')).getByRole('switch'));
 
     await waitFor(() => expect(revalidatePartners).toHaveBeenCalledWith('super-admin-token'));
   });
@@ -169,9 +166,11 @@ describe('PartnersTable', () => {
     updatePartner.mockResolvedValue({ error: { status: 400, data: { message: 'Bad request' } } });
     renderTable();
 
-    fireEvent.click(within(row('test-partner')).getByRole('switch'));
+    fireEvent.click(within(row('bumble-for-friends')).getByRole('switch'));
 
-    await waitFor(() => expect(screen.getByRole('alert').textContent).toMatch(/Test Partner/));
+    await waitFor(() =>
+      expect(screen.getByRole('alert').textContent).toMatch(/Bumble For Friends/),
+    );
     expect(revalidatePartners).not.toHaveBeenCalled();
   });
 });
