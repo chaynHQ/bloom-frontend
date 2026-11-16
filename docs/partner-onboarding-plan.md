@@ -81,20 +81,20 @@ Never deactivate a partner to hide it: deactivation also deactivates every membe
 
 ## The new flow
 
-| Step | Who          | Where           | What happens                                                                                                                                   |
-| ---- | ------------ | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1    | Content team | Storyblok       | Create `partners/<slug>`: name, legal name, logo, brand colour, website, socials. Publish once the partnership can be public                   |
-| 2    | (automatic)  | Backend         | The webhook creates the `partner` row, inactive, therapy limit 0, no automatic access code                                                     |
-| 3    | (automatic)  | Frontend        | The webhook generates the lockups and illustration into the story draft and adds the `partners` datasource entry (phase 4; by hand until then) |
-| 4    | Designer     | Storyblok       | Reloads the story, reviews the generated assets, replaces any that need it, publishes again                                                    |
-| 5    | Content team | Storyblok       | Creates and publishes `welcome/<slug>`; tags courses and resources with the partner                                                            |
-| 6    | Super admin  | Admin dashboard | Sets the therapy limit and automatic access code, creates partner admins (existing form), **activates**. Staging first, then production        |
+| Step | Who          | Where           | What happens                                                                                                                                                                                                   |
+| ---- | ------------ | --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1    | Content team | Storyblok       | Create `partners/<slug>`, setting the story's slug to the partner's short URL name first (e.g. `bff`). Then name, legal name, logo, brand colour, website, socials. Publish once the partnership can be public |
+| 2    | (automatic)  | Backend         | The webhook creates the `partner` row, inactive, therapy limit 0, no automatic access code                                                                                                                     |
+| 3    | (automatic)  | Frontend        | The webhook generates the lockups and illustration into the story draft and adds the `partners` datasource entry (phase 4; by hand until then)                                                                 |
+| 4    | Designer     | Storyblok       | Reloads the story, reviews the generated assets, replaces any that need it, publishes again                                                                                                                    |
+| 5    | Content team | Storyblok       | Creates and publishes `welcome/<slug>`; tags courses and resources with the partner                                                                                                                            |
+| 6    | Super admin  | Admin dashboard | Sets the therapy limit and automatic access code, creates partner admins (existing form), **activates**. Staging first, then production                                                                        |
 
 ## Storyblok
 
 ### `partner` content type
 
-Stories live in a `partners/` folder. The story slug is the partner's permanent key: never rename or move a partner story. The backend keeps the slug it first saw and logs a mismatch, and the frontend pairs the story with its row by slug, so a renamed story silently stops launching. If one must change, a developer updates the row's `slug` too.
+Stories live in a `partners/` folder. The story slug is the partner's permanent key: never rename or move a partner story. Set it in the create-story dialog: Storyblok fills it from the story name ("Bumble For Friends" becomes `bumble-for-friends`) unless you type the short slug, e.g. `bff`, before first publishing. The backend keeps the slug it first saw and logs a mismatch, and the frontend pairs the story with its row by slug, so a renamed story silently stops launching. If one must change, a developer updates the row's `slug` too.
 
 | Field                                                              | Type                                      | Translatable | Notes                                                              |
 | ------------------------------------------------------------------ | ----------------------------------------- | ------------ | ------------------------------------------------------------------ |
@@ -114,15 +114,15 @@ The `partners` datasource stays, so the 8 `included_for_partners` fields don't c
 
 ### `partner` table
 
-| Column                   | Type                     | Notes                                                  |
-| ------------------------ | ------------------------ | ------------------------------------------------------ |
-| `slug`                   | text, unique, not null   | From the story slug, or a slugify of the name          |
-| `storyblokUuid`          | text, unique, nullable   | Links the row to its partner story                     |
-| `therapySessionsPerCode` | int, not null, default 0 | The most therapy sessions a code can include; 0 = none |
+| Column                   | Type                     | Notes                                                                  |
+| ------------------------ | ------------------------ | ---------------------------------------------------------------------- |
+| `slug`                   | text, unique, not null   | From the story slug; existing partners' are backfilled from their name |
+| `storyblokUuid`          | text, unique, nullable   | Links the row to its partner story                                     |
+| `therapySessionsPerCode` | int, not null, default 0 | The most therapy sessions a code can include; 0 = none                 |
 
 One migration:
 
-- adds `slug` and backfills it with `slugify(name)` (lowercase, runs of other characters to `-`, trimmed); the unique constraint makes it fail rather than guess if two names slugify alike;
+- adds `slug` and backfills it from the name (lowercase, runs of other characters to `-`, trimmed); the unique constraint makes it fail rather than guess if two names slugify alike;
 - adds `therapySessionsPerCode` and sets **every existing partner to 6**, exactly today's `@Max(6)`;
 - adds nothing else and drops nothing.
 
@@ -172,7 +172,7 @@ type ActivePartner = {
 // GET /v1/partner (super admin): adds slug, storyblokUuid, therapySessionsPerCode,
 // automaticAccessCode: boolean (the AUTOMATIC_ACCESS_CODE partner_feature row is active)
 
-// POST /v1/partner (super admin): request unchanged; also sets slug = slugify(name)
+// POST /v1/partner: removed. A partner is created only by publishing its partners/<slug> story
 
 // PATCH /v1/partner/:id (super admin). Send only the fields being changed
 type UpdatePartner = {
@@ -268,7 +268,7 @@ Unit tests use these four as in-memory fixtures, set up as each test needs (e.g.
 
 **Adding BFF on staging,** once the backend and frontend PRs are there, the way any new partner is added:
 
-1. The content team creates `partners/bff` with BFF's real branding (a designer uploads the lockup and illustration until phase 4), and publishes it. The staging backend's webhook creates its row, inactive. Production's backend ignores it until the backend PR is released.
+1. The content team creates `partners/bff`, typing `bff` as the story's slug (Storyblok would otherwise fill in `bumble-for-friends`), with BFF's real branding (a designer uploads the lockup and illustration until phase 4), and publishes it. The staging backend's webhook creates its row, inactive. Production's backend ignores it until the backend PR is released.
 2. The content team adds `bff | Bumble For Friends` to the `partners` datasource and creates `welcome/bff` as a draft. Staging reads drafts; it's published at launch.
 3. A super admin finds BFF in the staging dashboard and changes its settings as each staging check below needs.
 
@@ -363,7 +363,7 @@ The backend and frontend PRs merge to `develop` once reviewed, so both go to sta
 
 Before release day:
 
-- on production, check that the partners' names in the database match the `partners` datasource values (`Badoo`, `Fruitz`, `Bumble`) apart from case (the course sync now matches names exactly), and that no two slugify alike (the migration would fail);
+- on production, check that the partners' names in the database match the `partners` datasource values (`Badoo`, `Fruitz`, `Bumble`) apart from case (the course sync now matches names exactly), and that no two names give the same slug (the migration would fail);
 - check that Storyblok's webhook log shows deliveries succeeding to both frontends' `/api/revalidate` and both backends, and that Render's health check is on, so a backend that fails to start never takes traffic;
 - once the team signs off on staging, the content team publishes `partners/bumble`, `partners/badoo` and `partners/fruitz`.
 
@@ -419,6 +419,7 @@ Merging to `develop` opens release PRs to `main` in both repos; leave them until
 | Backend setting therapy sessions itself                     | Would change how every code is granted; checking the values sent is enough                                                                               |
 | Welcome page → partner reference field, UTM keyword field   | The slug already pairs them and is what partners use                                                                                                     |
 | Joining Storyblok and the database by `storyblokUuid`       | The slug already pairs them, and renaming is ruled out                                                                                                   |
+| Creating partners through the API                           | `POST /v1/partner` is removed: a partner is created only by publishing its story, so its slug always matches the story's                                 |
 | Test partners, scripts or seeded rows                       | Real partners cover every case: Bumble For Friends for a slug that differs from the name and overlapping names, Fruitz for a partner that isn't launched |
 | A cached fallback for a backend outage                      | Next already serves the last good page; any fallback would be cached into pages for 4 hours                                                              |
 | Regenerate and resync buttons, CLI                          | Clearing a field and republishing does both                                                                                                              |
