@@ -86,6 +86,8 @@
     },
     "backToSessions": "Sessions par vapas jayein",
     "backToLibrary": "Library par vapas jayein",
+    "partOf": "Part of:",
+    "alsoPartOfCourses": "Yeh session {count, plural, one {is course} other {in courses}} ka bhi hissa hai:",
     "grounding": {
       "close": "Band karein",
       "exercisesCount": "{count, plural, one {# exercise} other {# exercises}}",

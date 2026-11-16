@@ -34,6 +34,7 @@
     "courseDuration": "~{hours} saat {minutes} dk",
     "courseDurationHoursOnly": "~{hours} saat",
     "partOfCourse": "Kursun parçası: {course}",
+    "partOfCourses": "{count} kursta yer alıyor",
     "accountNeeded": "Hesap gerekli",
     "loadMore": "Daha fazla göster",
     "noResults": {

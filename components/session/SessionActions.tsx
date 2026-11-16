@@ -10,6 +10,10 @@ import {
   SESSION_NEXT_CLICKED,
 } from '@/lib/constants/events';
 import { type CourseSession } from '@/lib/utils/courseSessions';
+import {
+  logCourseProgressEvents,
+  sessionCourseProgressChanges,
+} from '@/lib/utils/logCourseProgressEvents';
 import logEvent from '@/lib/utils/logEvent';
 import CheckCircleRounded from '@mui/icons-material/CheckCircleRounded';
 import { Box, Button, Typography } from '@mui/material';
@@ -67,6 +71,11 @@ export const SessionActions = ({
 
       if (completeSessionResponse.data) {
         logEvent(SESSION_COMPLETE_SUCCESS, eventData);
+        logCourseProgressEvents(
+          sessionCourseProgressChanges(completeSessionResponse.data),
+          'session',
+          eventData,
+        );
       }
 
       if (completeSessionResponse.error) {

@@ -75,6 +75,9 @@ export const THERAPY_BOOKINGS_LOAD_ERROR = 'THERAPY_BOOKINGS_LOAD_ERROR';
 export const THERAPY_BOOKINGS_VIEWED = 'THERAPY_BOOKINGS_VIEWED';
 export const COURSE_OVERVIEW_VIEWED = 'COURSE_OVERVIEW_VIEWED';
 export const COURSE_START_CLICKED = 'COURSE_START_CLICKED';
+// Logged when the backend reports a course started or completed, for every course type.
+export const COURSE_STARTED = 'COURSE_STARTED';
+export const COURSE_COMPLETED = 'COURSE_COMPLETED';
 export const COURSE_OTHER_COURSE_CLICKED = 'COURSE_OTHER_COURSE_CLICKED';
 
 // LIBRARY EVENTS
@@ -104,8 +107,9 @@ export const STORYBLOK_AUDIO_PLAYED = 'STORYBLOK_AUDIO_PLAYED'; // Event in use 
 export const STORYBLOK_AUDIO_PAUSED = 'STORYBLOK_AUDIO_PAUSED'; // Event in use but not exported - applied using eventPrefix (StoryblokAudio)
 export const STORYBLOK_AUDIO_FINISHED = 'STORYBLOK_AUDIO_FINISHED'; // Event in use but not exported - applied using eventPrefix (StoryblokAudio)
 
-// Resource media events. Each of the four resource families reports under its own prefix
-// (`RESOURCE_VIDEO` / `RESOURCE_AUDIO` / `RESOURCE_WRITTEN` / `RESOURCE_ACTIVITY`)
+// Resource media events. Each resource family reports under its own prefix
+// (`RESOURCE_VIDEO` / `RESOURCE_AUDIO` / `RESOURCE_WRITTEN` / `RESOURCE_ACTIVITY` /
+// `RESOURCE_GROUNDING`)
 export const RESOURCE_VIDEO_VIEWED = 'RESOURCE_VIDEO_VIEWED';
 export const RESOURCE_VIDEO_STARTED = 'RESOURCE_VIDEO_STARTED'; // Applied via eventPrefix (<Video>)
 export const RESOURCE_VIDEO_PLAYED = 'RESOURCE_VIDEO_PLAYED'; // Applied via eventPrefix (<Video>)
@@ -157,6 +161,12 @@ export const RESOURCE_ACTIVITY_VISIT_SESSION = 'RESOURCE_ACTIVITY_VISIT_SESSION'
 // GROUNDING EVENTS
 export const RESOURCE_GROUNDING_VIEWED = 'RESOURCE_GROUNDING_VIEWED';
 export const RESOURCE_GROUNDING_CLOSED = 'RESOURCE_GROUNDING_CLOSED';
+export const RESOURCE_GROUNDING_STARTED_REQUEST = 'RESOURCE_GROUNDING_STARTED_REQUEST'; // Applied via eventPrefix (inside a course)
+export const RESOURCE_GROUNDING_STARTED_SUCCESS = 'RESOURCE_GROUNDING_STARTED_SUCCESS'; // Applied via eventPrefix (inside a course)
+export const RESOURCE_GROUNDING_STARTED_ERROR = 'RESOURCE_GROUNDING_STARTED_ERROR'; // Applied via eventPrefix (inside a course)
+export const RESOURCE_GROUNDING_COMPLETE_REQUEST = 'RESOURCE_GROUNDING_COMPLETE_REQUEST'; // Applied via eventPrefix (inside a course)
+export const RESOURCE_GROUNDING_COMPLETE_SUCCESS = 'RESOURCE_GROUNDING_COMPLETE_SUCCESS'; // Applied via eventPrefix (inside a course)
+export const RESOURCE_GROUNDING_COMPLETE_ERROR = 'RESOURCE_GROUNDING_COMPLETE_ERROR'; // Applied via eventPrefix (inside a course)
 export const GROUNDING_VIEWED = 'GROUNDING_VIEWED';
 export const GROUNDING_LOAD_MORE_CLICKED = 'GROUNDING_LOAD_MORE_CLICKED';
 export const GROUNDING_SUPPORT_CARD_CLICKED = 'GROUNDING_SUPPORT_CARD_CLICKED';

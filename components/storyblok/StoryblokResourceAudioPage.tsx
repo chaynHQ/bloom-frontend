@@ -11,6 +11,7 @@ import {
 } from '@/lib/constants/events';
 import {
   useStoryblokResourcePage,
+  type ResourcePageContextProps,
   type ResourceStoryContent,
 } from '@/lib/hooks/useStoryblokResourcePage';
 import { Box } from '@mui/material';
@@ -37,7 +38,11 @@ export interface StoryblokResourceAudioPageProps extends ResourceStoryContent {
 
 const EVENT_PREFIX = 'RESOURCE_AUDIO' as const;
 
-const StoryblokResourceAudioPage = ({ story: initialStory }: { story: ISbStoryData }) => {
+const StoryblokResourceAudioPage = ({
+  story: initialStory,
+  courseContext,
+  partOfCourseStories,
+}: { story: ISbStoryData } & ResourcePageContextProps) => {
   const {
     content,
     storyUuid,
@@ -52,6 +57,8 @@ const StoryblokResourceAudioPage = ({ story: initialStory }: { story: ISbStoryDa
     relatedSessionHref,
     relatedSessionName,
     userContentPartners,
+    courseNav,
+    partOfCourses,
     start,
     complete,
   } = useStoryblokResourcePage<StoryblokResourceAudioPageProps>({
@@ -61,6 +68,8 @@ const StoryblokResourceAudioPage = ({ story: initialStory }: { story: ISbStoryDa
     viewedEvent: RESOURCE_AUDIO_VIEWED,
     // Fail safe: gate a story that carries no explicit `login_required`.
     loginRequiredByDefault: true,
+    courseContext,
+    partOfCourseStories,
   });
 
   const {
@@ -73,6 +82,8 @@ const StoryblokResourceAudioPage = ({ story: initialStory }: { story: ISbStoryDa
     team_members_section,
     page_sections,
     related_content,
+    activity,
+    bonus,
   } = content;
 
   if (!availableInLocale) {
@@ -113,6 +124,10 @@ const StoryblokResourceAudioPage = ({ story: initialStory }: { story: ISbStoryDa
         userContentPartners={userContentPartners}
         relatedSessionHref={relatedSessionHref}
         relatedSessionName={relatedSessionName}
+        activity={activity}
+        bonus={bonus}
+        partOfCourses={partOfCourses}
+        courseNav={courseNav}
         media={
           <ResourceAudioPlayer
             url={audio.filename}

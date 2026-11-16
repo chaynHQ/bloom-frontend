@@ -1,12 +1,18 @@
+import { PROGRESS_STATUS } from '@/lib/constants/enums';
 import { type Course } from '@/lib/store/coursesSlice';
+import { type Resource } from '@/lib/store/resourcesSlice';
+import { determineCourseProgress } from '@/lib/utils/courseProgress';
 import { getDefaultFullSlug } from '@/lib/utils/getDefaultFullSlug';
-import { parseMinutes } from '@/lib/utils/libraryData';
+import { normaliseSlug, parseMinutes, toPlainText } from '@/lib/utils/libraryData';
 import { ISbStoryData } from '@storyblok/react/rsc';
 
 export type SessionProgress = 'started' | 'completed';
 
+export type CourseResourceFormat = 'video' | 'audio' | 'written' | 'grounding';
+
 // A course's sessions as both the course overview and the session playlist present them:
-// flattened across the course's weeks and numbered continuously.
+// flattened across the course's weeks (or read from a modular course's `sessions`) and numbered
+// continuously.
 export interface CourseSession {
   uuid: string;
   name: string;
@@ -14,7 +20,12 @@ export interface CourseSession {
   href: string;
   position: number; // 1-based, continuous across weeks
   minutes?: number; // from the session's free-text `duration` field, absent when unset
-  hasVideo: boolean;
+  // Unset for a course-only session with no video yet.
+  format?: CourseResourceFormat;
+  // `session`: a course-only Session story. `resource`: a library resource listed by a modular course.
+  kind: 'session' | 'resource';
+  // Resources gate on their own `login_required`; sessions follow the course's rules.
+  loginRequired?: boolean;
 }
 
 interface CourseWeek {
@@ -23,7 +34,75 @@ interface CourseWeek {
   sessions: (ISbStoryData | string)[];
 }
 
+const RESOURCE_FORMATS: Record<string, CourseResourceFormat> = {
+  resource_video: 'video',
+  resource_audio: 'audio',
+  resource_written: 'written',
+  resource_grounding: 'grounding',
+};
+
+// Matches each resource page's own fallback for a story with no `login_required` value.
+const LOGIN_REQUIRED_BY_DEFAULT: Record<CourseResourceFormat, boolean> = {
+  video: true,
+  audio: true,
+  written: false,
+  grounding: false,
+};
+
+const isResolvedStory = (value: unknown): value is ISbStoryData =>
+  typeof value === 'object' && value !== null;
+
+// A modular course lists library resources in its `sessions` field; older courses use `weeks`.
+export function isModularCourse(content: unknown): boolean {
+  const sessions = (content as { sessions?: unknown } | undefined)?.sessions;
+  return Array.isArray(sessions) && sessions.length > 0;
+}
+
+// The resource's page inside the course: `/courses/<course>/<folder>/<slug>`.
+export function courseResourceHref(
+  courseFullSlug: string,
+  resourceFullSlug: string,
+  locale: string,
+) {
+  const coursePath = getDefaultFullSlug(normaliseSlug(courseFullSlug), locale);
+  const resourcePath = getDefaultFullSlug(normaliseSlug(resourceFullSlug), locale);
+  return `${coursePath}${resourcePath}`;
+}
+
 export function getCourseSessions(
+  course: ISbStoryData | undefined,
+  locale: string,
+): CourseSession[] {
+  if (course && isModularCourse(course.content)) {
+    return (course.content.sessions as unknown[])
+      .filter(isResolvedStory)
+      .flatMap((resource) => {
+        const format = RESOURCE_FORMATS[resource.content?.component ?? ''];
+        return format ? [{ resource, format }] : [];
+      })
+      .map(({ resource, format }, index) => {
+        const loginRequired = resource.content.login_required;
+        return {
+          uuid: resource.uuid,
+          name: resource.content.name ?? resource.name,
+          description: toPlainText(resource.content.description),
+          href: courseResourceHref(course.full_slug, resource.full_slug, locale),
+          position: index + 1,
+          minutes: parseMinutes(resource.content.duration),
+          format,
+          kind: 'resource',
+          loginRequired:
+            loginRequired == null ? LOGIN_REQUIRED_BY_DEFAULT[format] : Boolean(loginRequired),
+        };
+      });
+  }
+
+  return getCourseWeekSessions(course, locale);
+}
+
+// A course's sessions from its `weeks`. A course can list resources in some languages and keep its
+// weeks in others, so session pages always use these.
+export function getCourseWeekSessions(
   course: ISbStoryData | undefined,
   locale: string,
 ): CourseSession[] {
@@ -31,7 +110,7 @@ export function getCourseSessions(
 
   return weeks
     .flatMap((week) => week.sessions ?? [])
-    .filter((session): session is ISbStoryData => typeof session === 'object' && session !== null)
+    .filter(isResolvedStory)
     .map((session, index) => ({
       uuid: session.uuid,
       name: session.content?.name ?? session.name,
@@ -39,7 +118,8 @@ export function getCourseSessions(
       href: getDefaultFullSlug(session.full_slug, locale),
       position: index + 1,
       minutes: parseMinutes(session.content?.duration),
-      hasVideo: Boolean(session.content?.video?.url),
+      format: session.content?.video?.url ? 'video' : undefined,
+      kind: 'session',
     }));
 }
 
@@ -70,4 +150,31 @@ export function sessionProgressByUuid(
     map[session.storyblokUuid] = session.completed ? 'completed' : 'started';
     return map;
   }, {});
+}
+
+// Each resource the member has touched, keyed by Storyblok uuid, so a resource done anywhere is
+// ticked in every course that lists it.
+export function resourceProgressByUuid(resources: Resource[]): Record<string, SessionProgress> {
+  return Object.fromEntries(
+    resources.map((resource) => [
+      resource.storyblokUuid,
+      resource.completed ? 'completed' : 'started',
+    ]),
+  );
+}
+
+// A course is in progress once the member has started it inside the course (the backend's
+// course record). A modular course also shows as completed when every listed resource is done,
+// wherever it was done — display only, so it never counts as a completion in reporting.
+export function getCourseProgress(
+  courses: Course[],
+  courseUuid: string,
+  modularResourceUuids: string[] | undefined,
+  resourceProgress: Record<string, SessionProgress>,
+): PROGRESS_STATUS {
+  const progress = determineCourseProgress(courses, courseUuid);
+  const allResourcesCompleted =
+    !!modularResourceUuids?.length &&
+    modularResourceUuids.every((uuid) => resourceProgress[uuid] === 'completed');
+  return allResourcesCompleted ? PROGRESS_STATUS.COMPLETED : progress;
 }

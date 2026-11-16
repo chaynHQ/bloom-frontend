@@ -28,6 +28,8 @@ To run a single Jest test file: `yarn test path/to/file.test.ts`
 
 Husky + lint-staged run ESLint and Prettier on staged files on every commit. If a commit fails, fix lint errors and re-stage any auto-formatted files before committing again.
 
+`storyblok-lokalise/*.json`, `yarn.lock` and `docs/translation-review/` are large generated or working files — exclude them from searches unless the task is about them.
+
 ## Environment Setup
 
 Requires a running [bloom-backend](https://github.com/chaynHQ/bloom-backend) at `http://localhost:35001`. Create `.env.local` from `docs/configure-env.md`. The Storyblok read-only token is public: `NEXT_PUBLIC_STORYBLOK_TOKEN=xB5HoaLRkYs8ySylSUnZjQtt`.
@@ -60,7 +62,7 @@ Bloom is white-labelled for partners (Bumble, Badoo, Fruitz, etc.). A user's `pa
 
 ### Content: Storyblok CMS
 
-All course, session, page, and resource content comes from Storyblok. `lib/storyblok.ts` registers all Storyblok component mappings (e.g. `course` → `StoryblokCoursePage`). Dynamic `[slug]` pages fetch and render Storyblok stories. Images are only allowed from `a.storyblok.com`.
+All course, session, page, and resource content comes from Storyblok. `lib/storyblok.ts` registers all Storyblok component mappings (e.g. `course` → `StoryblokCoursePage`). Dynamic `[slug]` pages fetch and render Storyblok stories. Images are only allowed from `a.storyblok.com`. Courses, sessions and resources (weeks vs resource lists, per language) are explained in `docs/courses-sessions-and-resources.md`.
 
 ### Layout & Providers
 

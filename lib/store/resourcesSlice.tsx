@@ -1,6 +1,7 @@
 import { api } from '@/lib/api';
 import { FEEDBACK_TAGS, RESOURCE_CATEGORIES, STORYBLOK_STORY_STATUS } from '@/lib/constants/enums';
 import { createSlice, Draft } from '@reduxjs/toolkit';
+import { CourseProgressChange } from './coursesSlice';
 import { User } from './userSlice';
 
 export interface Resource {
@@ -11,6 +12,11 @@ export interface Resource {
   storyblokUuid: string;
   category: RESOURCE_CATEGORIES;
   completed: boolean;
+}
+
+// Resource responses list any course the request started or completed.
+export interface ResourceProgressResponse extends Resource {
+  courseProgress?: CourseProgressChange[];
 }
 
 export interface ResourceUser {

@@ -68,6 +68,8 @@ interface CourseSessionListProps {
   accountNeeded: boolean;
   // The first session opens without an account on a public course, so it keeps no lock badge.
   firstSessionFree?: boolean;
+  // Overrides the lock rule above; a modular course's resources lock by their own login setting.
+  isLocked?: (session: CourseSession, index: number) => boolean;
   onSessionSelect: (session: CourseSession) => void;
 }
 
@@ -76,6 +78,7 @@ export function CourseSessionList({
   progressByUuid,
   accountNeeded,
   firstSessionFree = false,
+  isLocked = (_session, index) => accountNeeded && !(firstSessionFree && index === 0),
   onSessionSelect,
 }: CourseSessionListProps) {
   const t = useTranslations('Courses');
@@ -105,7 +108,7 @@ export function CourseSessionList({
               <CourseSessionCard
                 session={session}
                 progress={progressByUuid[session.uuid]}
-                accountNeeded={accountNeeded && !(firstSessionFree && index === 0)}
+                accountNeeded={isLocked(session, index)}
                 onSelect={() => onSessionSelect(session)}
               />
             </ScrollReveal>

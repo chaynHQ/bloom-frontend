@@ -1,5 +1,6 @@
 import { createHmac, timingSafeEqual } from 'crypto';
-import { revalidatePath } from 'next/cache';
+import { COURSE_STORIES_CACHE_TAG } from '@/lib/constants/common';
+import { revalidatePath, revalidateTag } from 'next/cache';
 
 // Storyblok signs each webhook with the shared secret: a hex HMAC-SHA1 of the raw body.
 function isValidSignature(body: string, signature: string | null, secret: string) {
@@ -21,5 +22,6 @@ export async function POST(request: Request) {
   }
 
   revalidatePath('/', 'layout');
+  revalidateTag(COURSE_STORIES_CACHE_TAG, { expire: 0 });
   return Response.json({ revalidated: true });
 }

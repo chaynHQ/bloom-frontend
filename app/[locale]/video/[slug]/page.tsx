@@ -1,12 +1,13 @@
 import StoryblokResourceVideoPage from '@/components/storyblok/StoryblokResourceVideoPage';
 import { getStoryblokStory, resourceFolderStaticParams } from '@/lib/storyblok';
+import { getCachedCourseStories } from '@/lib/utils/getLibraryStories';
+import { courseResourceUuids } from '@/lib/utils/libraryData';
 import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
 import { isPublicContent } from '@/lib/utils/partnerContentAccess';
 import { breadcrumbJsonLd, JsonLd, videoJsonLd } from '@/lib/utils/structuredData';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 
-export const dynamicParams = false;
 export const revalidate = 14400; // invalidate every 4 hours
 
 type Params = Promise<{ locale: string; slug: string }>;
@@ -47,19 +48,25 @@ export function generateStaticParams() {
 export default async function Page({ params }: { params: Params }) {
   const { locale, slug } = await params;
 
-  const story = await getStory(locale, slug);
+  const [story, courseStories] = await Promise.all([
+    getStory(locale, slug),
+    getCachedCourseStories(locale),
+  ]);
 
   if (!story) {
     notFound();
   }
 
+  const partOfCourseStories = courseStories.filter((course) =>
+    courseResourceUuids(course).includes(story.uuid),
+  );
   const breadcrumbs = await breadcrumbJsonLd(locale, [{ name: story.content.name }]);
 
   return (
     <>
       <JsonLd data={videoJsonLd(story, locale, `/video/${slug}`)} />
       <JsonLd data={breadcrumbs} />
-      <StoryblokResourceVideoPage story={story} />
+      <StoryblokResourceVideoPage story={story} partOfCourseStories={partOfCourseStories} />
     </>
   );
 }

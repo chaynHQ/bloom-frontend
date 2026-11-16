@@ -34,6 +34,7 @@
     "courseDuration": "~{hours}hrs {minutes}mins",
     "courseDurationHoursOnly": "~{hours}hrs",
     "partOfCourse": "Part of course: {course}",
+    "partOfCourses": "Part of {count} courses",
     "accountNeeded": "Account needed",
     "loadMore": "Load more",
     "noResults": {

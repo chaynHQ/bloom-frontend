@@ -6,7 +6,6 @@ import { generateMetadataBasic } from '@/lib/utils/generateMetadataBase';
 import { getStoryblokApi, ISbStoriesParams } from '@storyblok/react/rsc';
 import { notFound } from 'next/navigation';
 
-export const dynamicParams = false;
 export const revalidate = 14400; // invalidate every 4 hours
 
 type Params = Promise<{ locale: string; slug: string }>;

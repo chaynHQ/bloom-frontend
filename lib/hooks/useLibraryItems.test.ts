@@ -295,3 +295,73 @@ describe('useLibraryItems progress', () => {
     expect(renderLibrary({ resources: [short] }, asPublicUser)[0].progress).toBeUndefined();
   });
 });
+
+describe('useLibraryItems modular courses', () => {
+  const resourceA = story({ uuid: 'resource-a', name: 'Resource A' });
+  const resourceB = story({
+    uuid: 'resource-b',
+    name: 'Resource B',
+    full_slug: 'audio/resource-b',
+  });
+  const modular = courseStory({
+    uuid: 'modular',
+    full_slug: 'courses/modular/',
+    name: 'Modular course',
+    sessions: ['resource-a', 'resource-b'],
+  });
+  const other = courseStory({
+    uuid: 'other',
+    full_slug: 'courses/other/',
+    name: 'Other course',
+    sessions: ['resource-b'],
+  });
+
+  it('counts a modular course by its resources', () => {
+    const items = renderLibrary({ courses: [modular], resources: [resourceA, resourceB] });
+    expect(items.find((item) => item.id === 'modular')?.sessionCount).toBe(2);
+  });
+
+  it('labels a resource with its one course, or with a count when several list it', () => {
+    const items = renderLibrary({ courses: [modular, other], resources: [resourceA, resourceB] });
+
+    expect(items.find((item) => item.id === 'resource-a')).toMatchObject({
+      courseTitle: 'Modular course',
+    });
+    expect(items.find((item) => item.id === 'resource-b')).toMatchObject({
+      courseTitles: ['Modular course', 'Other course'],
+    });
+  });
+
+  it('ignores courses the viewer cannot see', () => {
+    const hidden = courseStory({ ...other.content, uuid: 'other', coming_soon: true });
+    const items = renderLibrary({ courses: [modular, hidden], resources: [resourceB] });
+
+    expect(items.find((item) => item.id === 'resource-b')).toMatchObject({
+      courseTitle: 'Modular course',
+    });
+  });
+
+  it('shows a course completed when every resource was done elsewhere, without starting it', () => {
+    const items = renderLibrary(
+      { courses: [modular], resources: [resourceA, resourceB] },
+      {
+        ...asPublicUser,
+        resources: [
+          { storyblokUuid: 'resource-a', completed: true },
+          { storyblokUuid: 'resource-b', completed: true },
+        ],
+      },
+    );
+
+    expect(items.find((item) => item.id === 'modular')?.progress).toBe('completed');
+  });
+
+  it('does not start a course from resources done elsewhere', () => {
+    const items = renderLibrary(
+      { courses: [modular], resources: [resourceA, resourceB] },
+      { ...asPublicUser, resources: [{ storyblokUuid: 'resource-a', completed: true }] },
+    );
+
+    expect(items.find((item) => item.id === 'modular')?.progress).toBeUndefined();
+  });
+});

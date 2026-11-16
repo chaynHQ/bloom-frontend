@@ -21,6 +21,21 @@ export interface Course {
   completed: boolean;
   sessions: Session[];
 }
+
+// A course a progress request started and/or completed. `name` is the backend course name, the
+// English working name used in reporting and Mailchimp.
+export interface CourseProgressChange {
+  storyblokUuid: string;
+  name: string;
+  started: boolean;
+  completed: boolean;
+}
+
+// Session responses say whether that request started or completed the session's course.
+export interface SessionProgressResponse extends Course {
+  courseStarted?: boolean;
+  courseCompleted?: boolean;
+}
 export interface SessionUser {
   id: string;
   createdAt: Date;
