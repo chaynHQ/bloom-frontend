@@ -30,8 +30,15 @@ On staging, which doesn't generate images, a designer uploads the lockup and ill
 | `partnership_logo`                                                 | Asset (image)             | Yes          | The "Bloom × partner" lockup, one per language                     |
 | `illustration`                                                     | Asset (image)             | No           | The Bloom-head illustration in the partner's colour                |
 | `website`, `facebook`, `instagram`, `twitter`, `youtube`, `tiktok` | Text                      | No           | Footer links                                                       |
+| `parent`                                                           | Single option             | No           | Only for a sub-brand that shares another partner's logo, see below |
 
 The slug is the partner's permanent key: the welcome page is `/welcome/<slug>`, UTM links name it, and the backend pairs the story with the partner by it. "In partnership with" and the logos' alt text are shared app strings with the partner's name filled in (`footer.inPartnershipWith`, `alt.partnerLogo`, `alt.partnershipLogo`), so a new partner needs no translations.
+
+### Sub-brands
+
+Bumble For Friends uses Bumble's logo, so it sets `parent` to Bumble. Partners with a parent are one brand: the register and apply-a-code pages show the brand's logo once, linked to the parent's welcome page, with a link to each partner's welcome page below it by name; the footer shows one block for the brand, from whichever of its partners the visitor belongs to or arrived through first. A partner with no parent, or whose parent isn't launched, shows on its own as usual.
+
+`parent` takes its options from the `partners` datasource, so it stores the parent's display name. Set it on the sub-brand only, never on the parent, and only one level deep. It's branding only: the backend ignores it, and each partner keeps its own welcome page, access codes, settings and analytics.
 
 ## Changing a partner
 

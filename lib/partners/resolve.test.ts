@@ -1,5 +1,5 @@
 import { expect } from '@jest/globals';
-import { findPartner, resolveLaunchedPartner } from './resolve';
+import { brandKey, findPartner, groupByBrand, resolveLaunchedPartner } from './resolve';
 import { brandedPartners, launchedPartners, launchedPartnersWithBff } from './partnerFixtures';
 
 describe('findPartner', () => {
@@ -37,4 +37,27 @@ describe('resolveLaunchedPartner', () => {
       expect(resolveLaunchedPartner(launchedPartnersWithBff, slug)).toBeUndefined();
     },
   );
+});
+
+describe('groupByBrand', () => {
+  const slugs = (groups: { slug: string }[][]) => groups.map((group) => group.map((p) => p.slug));
+  const bff = launchedPartnersWithBff.find((partner) => partner.slug === 'bff')!;
+  const bumble = launchedPartners.find((partner) => partner.slug === 'bumble')!;
+
+  it('keeps a partner without a parent on its own', () => {
+    expect(slugs(groupByBrand(launchedPartners))).toEqual([['bumble'], ['badoo']]);
+  });
+
+  it('puts a sub-brand with its parent, parent first, whatever the order', () => {
+    expect(slugs(groupByBrand(launchedPartnersWithBff))).toEqual([['bumble', 'bff'], ['badoo']]);
+    expect(slugs(groupByBrand([bff, ...launchedPartners]))).toEqual([['bumble', 'bff'], ['badoo']]);
+  });
+
+  it('shows a sub-brand alone when its parent is not in the list', () => {
+    expect(slugs(groupByBrand([bff]))).toEqual([['bff']]);
+  });
+
+  it('matches the parent by name, ignoring case', () => {
+    expect(brandKey({ ...bff, parent: 'BUMBLE' })).toBe(brandKey(bumble));
+  });
 });

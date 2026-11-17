@@ -17,6 +17,8 @@ export interface PartnerStory {
     twitter?: string | null;
     youtube?: string | null;
     tiktok?: string | null;
+    // From the `partners` datasource, so it holds the parent's display name.
+    parent?: string | null;
   };
 }
 
@@ -45,5 +47,6 @@ export function toPartnerContent(story: PartnerStory, id?: string): BrandedPartn
     twitter: text(content.twitter),
     youtube: text(content.youtube),
     tiktok: text(content.tiktok),
+    parent: text(content.parent),
   };
 }
