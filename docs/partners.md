@@ -38,7 +38,7 @@ The slug is the partner's permanent key: the welcome page is `/welcome/<slug>`, 
 
 Bumble For Friends uses Bumble's logo, so it sets `parent` to Bumble. Partners with a parent are one brand: the register and apply-a-code pages show the brand's logo once, linked to the parent's welcome page, with a link to each partner's welcome page below it by name; the footer shows one block for the brand, from whichever of its partners the visitor belongs to or arrived through first. A partner with no parent, or whose parent isn't launched, shows on its own as usual.
 
-`parent` takes its options from the `partners` datasource, so it stores the parent's display name. Set it on the sub-brand only, never on the parent, and only one level deep. It's branding only: the backend ignores it, and each partner keeps its own welcome page, access codes, settings and analytics.
+`parent` takes its options from the `partners` datasource, so it stores the parent's display name. Set it on the sub-brand only, never on the parent, and only one level deep. The backend also syncs it to `partner.parentId` for reporting. Each partner still keeps its own welcome page, access codes, settings and analytics.
 
 ## Changing a partner
 
