@@ -152,6 +152,24 @@ describe('localeOpenToPartners', () => {
   it('keeps other locales open to partners', () => {
     expect(localeOpenToPartners('de', ['bumble'])).toBe(true);
   });
+  it('closes Arabic and Turkish to Bumble For Friends members, admins and referrals, as to Bumble', () => {
+    const bff = { name: 'Bumble For Friends' } as Partner;
+    const audiences = [
+      getUserContentPartners(
+        null,
+        [{ ...partnerAAccess, partner: bff }] as PartnerAccesses,
+        null,
+        'user-1',
+      ),
+      getUserContentPartners(bff, [], null, 'user-1'),
+      getUserContentPartners(null, [], 'Bumble For Friends', null),
+    ];
+    for (const partners of audiences) {
+      expect(localeOpenToPartners('ar', partners)).toBe(false);
+      expect(localeOpenToPartners('tr', partners)).toBe(false);
+      expect(localeOpenToPartners('de', partners)).toBe(true);
+    }
+  });
 });
 
 // The referral cookie holds a slug; callers resolve it to the launched partner and pass its name.
