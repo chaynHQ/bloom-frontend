@@ -112,8 +112,8 @@ Pages are cached and refresh from Storyblok every 4 hours. To show changes soone
 To set it up for an environment:
 
 1. Generate a random secret and add it to Vercel as `STORYBLOK_WEBHOOK_SECRET` for that environment. Without it, the route rejects every request.
-2. In Storyblok, go to Settings → Webhooks and add a webhook pointing at `https://<environment domain>/api/revalidate`, with the same secret. For production, trigger it on stories being published, unpublished, deleted and moved. For staging, which shows draft content, also trigger it on stories being saved.
-3. If the Vercel Firewall challenges requests (e.g. the Security Checkpoint), add a rule that lets `/api/revalidate` through, or Storyblok's calls will be blocked.
+2. In Storyblok, go to Settings → Webhooks and add a webhook pointing at `https://<environment domain>/api/revalidate`, with the same secret. Trigger it on stories being published, unpublished, deleted and moved. Storyblok has no event for saving a draft, so draft edits show on staging when its cache next refreshes.
+3. Add a Vercel Firewall rule that lets `/api/revalidate` through. The Security Checkpoint otherwise blocks Storyblok's calls, and nothing refreshes or generates partner images. Storyblok's webhook log (Settings → Webhooks) shows whether deliveries succeed.
 
 #### Partner Asset Generation:
 

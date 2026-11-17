@@ -6,18 +6,20 @@ A partner is an organisation whose members use Bloom through it, such as Bumble 
 
 Do this on staging first, then production.
 
-| Step | Who          | Where           | What                                                                                                                                                                                                               |
-| ---- | ------------ | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| 1    | Content team | Storyblok       | Create `partners/<slug>`. In the create dialog, type the slug yourself (e.g. `bff`): Storyblok fills it from the story name otherwise, and it can't change once published. Fill in the fields below and publish it |
-| 2    | (automatic)  | Backend         | The webhook creates the partner, **inactive**, with a therapy limit of 0 and no automatic access code                                                                                                              |
-| 3    | (automatic)  | Frontend        | In production, the webhook generates the lockups and illustration into the story's draft, and adds the partner to the `partners` datasource                                                                        |
-| 4    | Designer     | Storyblok       | Reload the story, review the generated images, replace any that need it, and publish again                                                                                                                         |
-| 5    | Content team | Storyblok       | Create `welcome/<slug>`, and tag courses and resources with the partner in `included_for_partners`. Publish the welcome story at launch                                                                            |
-| 6    | Super admin  | Admin dashboard | Set the therapy limit, automatic access code and, for a sub-brand, its parent, create partner admins, then **activate** the partner                                                                                |
+| Step | Who          | Where           | What                                                                                                                                                                                                                                        |
+| ---- | ------------ | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1    | Content team | Storyblok       | Create `partners/<slug>`. In the create dialog, type the slug yourself (e.g. `bff`): Storyblok fills it from the story name otherwise, and it can't change once published. Fill in the fields below and publish it                          |
+| 2    | (automatic)  | Backend         | Each backend's webhook creates the partner in its own database, staging and production, **inactive**, with a therapy limit of 0 and no automatic access code                                                                                |
+| 3    | (automatic)  | Frontend        | Production's webhook generates the lockups and illustration into the story's draft and, when it generates any, adds the partner to the `partners` datasource. The Storyblok space is shared, so staging, which reads drafts, shows them too |
+| 4    | Designer     | Storyblok       | Reload the story, review the generated images, replace any that need it, and publish again                                                                                                                                                  |
+| 5    | Content team | Storyblok       | Create `welcome/<slug>`, and tag courses and resources with the partner in `included_for_partners`. Publish the welcome story at launch                                                                                                     |
+| 6    | Super admin  | Admin dashboard | In each environment's dashboard (staging, then production at launch): set the therapy limit, automatic access code and, for a sub-brand, its parent, create partner admins, then **activate** the partner                                   |
 
 Publishing never launches a partner: only a super admin activating it does. A published partner story can be read through Storyblok's public API, though, so publish it only once the partnership can be public.
 
-On staging, which doesn't generate images, a designer uploads the lockup and illustration and the content team adds the datasource entry by hand.
+Publishing the partner story during staging setup is safe: a partner is live in production only once a super admin activates it there **and** its welcome story is published. Keep `welcome/<slug>` as a draft until launch; staging shows drafts.
+
+If nothing is generated a minute after publishing, the webhook probably didn't reach production (see `docs/configure-env.md`): publish again, or upload the images by hand. If every image was uploaded before the first publish, nothing is generated, so add the datasource entry by hand: name = the slug, value = the partner's name.
 
 ## The `partner` content type
 
@@ -35,7 +37,7 @@ The slug is the partner's permanent key: the welcome page is `/welcome/<slug>`, 
 
 ### Sub-brands
 
-A sub-brand, such as Bumble For Friends of Bumble, shares its parent's logo. A super admin sets a partner's parent in the admin dashboard's partners table; it's stored in the backend as `partner.parentId` (one level only), so reports can group a brand's partners. The register and apply-a-code pages show a brand's logo once, linked to the parent's welcome page, with a link to each partner's welcome page below it by name, and the footer shows one block per brand. A sub-brand whose parent isn't active shows on its own. Each partner keeps its own welcome page, access codes, settings and analytics.
+A sub-brand, such as Bumble For Friends of Bumble, shares its parent's logo. The sub-brand still needs its own partner story, logo included, for its own lockup and footer. A super admin sets a partner's parent in the admin dashboard's partners table, in each environment; it's stored in the backend as `partner.parentId` (one level only), so reports can group a brand's partners. The register and apply-a-code pages show a brand's logo once, linked to the parent's welcome page, with a link to each partner's welcome page below it by name, and the footer shows one block per brand. A sub-brand whose parent isn't active shows on its own. Each partner keeps its own welcome page, access codes, settings and analytics.
 
 ## Changing a partner
 
@@ -63,9 +65,9 @@ A sub-brand, such as Bumble For Friends of Bumble, shares its parent's logo. A s
 
 ## Image generation
 
-`lib/partnerAssets/` runs from `/api/revalidate`, after the response, when a published partner story has an empty `illustration` or a language's `partnership_logo` is empty. It renders each lockup (Bloom wordmark, "In partnership with" in that language, the partner's logo) to a PNG at 3×, recolours the Bloom-head illustration with a pastel of `brand_color`, uploads them, fills only the empty fields in the draft, and adds the datasource entry. It never publishes.
+`lib/partnerAssets/` runs from `/api/revalidate`, after the response, when a published partner story has an empty `illustration` or a language's `partnership_logo` is empty. It renders each lockup (Bloom wordmark, "In partnership with" in that language, the partner's logo) to a PNG at 3×, recolours the Bloom-head illustration with a pastel of `brand_color`, uploads them, fills only the empty fields in the draft, and adds the datasource entry if it's missing. With no empty image fields it does nothing, including the datasource entry. It never publishes.
 
-It runs in production and locally, never on staging: both environments receive the same Storyblok webhooks, so it would run twice. It needs `STORYBLOK_OAUTH_TOKEN` and `STORYBLOK_SPACE_ID` in Vercel's production environment (see `docs/configure-env.md`); without them it's skipped with a warning. An editor who saves from a tab opened before generation finished clears the generated fields, and the next publish generates them again.
+It runs in production and locally, never on staging: both environments receive the same Storyblok webhooks, so it would run twice. The space is shared, so production's run fills the draft staging reads. It needs `STORYBLOK_OAUTH_TOKEN` and `STORYBLOK_SPACE_ID` in Vercel's production environment (see `docs/configure-env.md`); without them it's skipped with a warning. An editor who saves from a tab opened before generation finished clears the generated fields, and the next publish generates them again.
 
 ## Tests
 
