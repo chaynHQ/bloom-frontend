@@ -49,13 +49,11 @@ export async function loadPartnerSets(locale: string): Promise<PartnerSets> {
 
   const activeBySlug = new Map(activePartners.map((partner) => [partner.slug, partner]));
   const activeById = new Map(activePartners.map((partner) => [partner.id, partner]));
-  const storyNameBySlug = new Map(stories.map((story) => [story.slug, story.content.name]));
 
   const toPartner = (story: PartnerStory, id?: string) => {
     const parentId = activeBySlug.get(story.slug)?.parentId;
     const parentSlug = parentId ? activeById.get(parentId)?.slug : undefined;
-    const parent = parentSlug ? storyNameBySlug.get(parentSlug) : undefined;
-    return { ...toPartnerContent(story, id), ...(parent && { parent }) };
+    return { ...toPartnerContent(story, id), ...(parentSlug && { parentSlug }) };
   };
 
   return {

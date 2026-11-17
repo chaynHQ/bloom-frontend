@@ -1,3 +1,4 @@
+import type { PartnerContent } from '@/lib/constants/partners';
 import type { BrandedPartner } from './types';
 
 // By display name, as the backend and `included_for_partners` give it.
@@ -7,18 +8,18 @@ export function findPartner(partners: BrandedPartner[], name?: string | null) {
   return partners.find((partner) => partner.name.toLowerCase() === match);
 }
 
-// A sub-brand belongs to its parent's brand.
-export function brandKey(partner: { name: string; parent?: string }) {
-  return (partner.parent || partner.name).toLowerCase();
+// A sub-brand belongs to its parent's brand. Chayn's own content has no slug, so no brand.
+export function brandKey(partner: PartnerContent & { slug?: string; parentSlug?: string }) {
+  return partner.parentSlug ?? partner.slug;
 }
 
 // Each brand's partners, in order of first appearance, with the parent first.
 export function groupByBrand(partners: BrandedPartner[]): BrandedPartner[][] {
-  const groups = new Map<string, BrandedPartner[]>();
+  const groups = new Map<string | undefined, BrandedPartner[]>();
   for (const partner of partners) {
     const key = brandKey(partner);
     const group = groups.get(key) ?? [];
-    if (key === partner.name.toLowerCase()) group.unshift(partner);
+    if (!partner.parentSlug) group.unshift(partner);
     else group.push(partner);
     groups.set(key, group);
   }

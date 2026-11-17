@@ -1,7 +1,7 @@
 'use client';
 
 import { Link as i18nLink } from '@/i18n/routing';
-import { brandKey, groupByBrand } from '@/lib/partners/resolve';
+import { groupByBrand } from '@/lib/partners/resolve';
 import type { BrandedPartner } from '@/lib/partners/types';
 import { getImageSizes } from '@/lib/utils/imageSizes';
 import { isRemoteSvg } from '@/lib/utils/storyblokImage';
@@ -93,7 +93,7 @@ export default function PartnerLogoLinks({
         return (
           <Box
             component="li"
-            key={brandKey(lead)}
+            key={lead.slug}
             sx={hasSubBrands ? brandWithSubBrandsStyle : brandStyle}
           >
             <Link

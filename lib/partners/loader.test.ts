@@ -67,29 +67,21 @@ describe('loadPartnerSets', () => {
     expect(launched.find((partner) => partner.slug === 'bff')?.name).toBe('Bumble For Friends');
   });
 
-  it('names a sub-brand’s parent from the backend’s parentId', async () => {
+  it('gives a sub-brand its parent’s slug from the backend’s parentId', async () => {
     mockSources({ active: respond(activePartnersWithBff) });
     const { branded, launched } = await loadPartnerSets('en');
 
     expect(launched).toEqual(launchedPartnersWithBff);
-    expect(branded.find((partner) => partner.slug === 'bff')?.parent).toBe('Bumble');
-    expect(branded.find((partner) => partner.slug === 'bumble')).not.toHaveProperty('parent');
+    expect(branded.find((partner) => partner.slug === 'bff')?.parentSlug).toBe('bumble');
+    expect(branded.find((partner) => partner.slug === 'bumble')).not.toHaveProperty('parentSlug');
   });
 
-  it('leaves a sub-brand on its own when its parent is not active or has no story', async () => {
+  it('leaves a sub-brand on its own when its parent is not active', async () => {
     const bffOnly = activePartnersWithBff.filter((partner) => partner.slug !== 'bumble');
     mockSources({ active: respond(bffOnly) });
-    expect(
-      (await loadPartnerSets('en')).launched.find((partner) => partner.slug === 'bff'),
-    ).not.toHaveProperty('parent');
+    const { launched } = await loadPartnerSets('en');
 
-    mockSources({
-      stories: partnerStories.filter((story) => story.slug !== 'bumble'),
-      active: respond(activePartnersWithBff),
-    });
-    expect(
-      (await loadPartnerSets('en')).launched.find((partner) => partner.slug === 'bff'),
-    ).not.toHaveProperty('parent');
+    expect(launched.find((partner) => partner.slug === 'bff')).not.toHaveProperty('parentSlug');
   });
 
   it('reads stories and welcome pages in STORYBLOK_ENVIRONMENT, so drafts count', async () => {

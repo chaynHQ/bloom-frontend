@@ -84,5 +84,5 @@ export const brandedPartners = partnerStories.map((story) => toPartnerContent(st
 export const launchedPartners = ['bumble', 'badoo'].map((slug) => contentFor(slug, `id-${slug}`));
 export const launchedPartnersWithBff = [
   ...launchedPartners,
-  { ...contentFor('bff', 'id-bff'), parent: 'Bumble' },
+  { ...contentFor('bff', 'id-bff'), parentSlug: 'bumble' },
 ];
