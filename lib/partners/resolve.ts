@@ -7,7 +7,7 @@ export function findPartner(partners: BrandedPartner[], name?: string | null) {
   return partners.find((partner) => partner.name.toLowerCase() === match);
 }
 
-// A parent and its sub-brands share a logo, so they count as one brand, keyed by the parent's name.
+// A sub-brand belongs to its parent's brand.
 export function brandKey(partner: { name: string; parent?: string }) {
   return (partner.parent || partner.name).toLowerCase();
 }

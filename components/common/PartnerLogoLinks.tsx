@@ -28,7 +28,6 @@ const brandStyle = {
   minWidth: 96,
 } as const;
 
-// Wide enough for its longest name on one line.
 const brandWithSubBrandsStyle = {
   ...brandStyle,
   minWidth: 'max-content',
@@ -50,7 +49,6 @@ const nameListStyle = {
   gap: 1,
 } as const;
 
-// Pills rather than captions, so the names read as a choice between partners.
 const nameLinkStyle = {
   display: 'block',
   paddingX: 1.5,
@@ -78,8 +76,7 @@ interface PartnerLogoLinksProps {
   onPartnerClick?: (slug: string) => void;
 }
 
-// One logo per brand. A brand with sub-brands also lists each partner by name, since the shared
-// logo alone can't say which one a visitor is joining through.
+// One logo per brand, with a link per partner by name when the brand has sub-brands.
 export default function PartnerLogoLinks({
   partners,
   href,
@@ -104,7 +101,7 @@ export default function PartnerLogoLinks({
               href={href(lead.slug)}
               aria-label={tS(lead.logoAlt, { name: lead.name })}
               onClick={() => onPartnerClick?.(lead.slug)}
-              // The name links below cover keyboard users, so the logo isn't a second tab stop.
+              // Keyboard users reach a brand with sub-brands through its name links.
               tabIndex={hasSubBrands ? -1 : undefined}
               sx={logoLinkStyle}
             >

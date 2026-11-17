@@ -21,11 +21,6 @@ describe('toPartnerContent', () => {
     });
   });
 
-  it('reads a sub-brand’s parent, and leaves an empty one out', () => {
-    expect(toPartnerContent(partnerStories[3]).parent).toBe('Bumble');
-    expect(toPartnerContent(partnerStories[0]).parent).toBeUndefined();
-  });
-
   it('leaves empty social links out', () => {
     const content = toPartnerContent(partnerStories[0]);
     expect(content.facebook).toBeUndefined();

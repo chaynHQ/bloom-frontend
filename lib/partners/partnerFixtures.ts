@@ -9,13 +9,7 @@ const asset = (file: string) => ({
 });
 const emptyAsset = { id: null, filename: '' };
 
-const partnerStory = (
-  slug: string,
-  name: string,
-  legalName: string,
-  published = true,
-  parent = '',
-) => ({
+const partnerStory = (slug: string, name: string, legalName: string, published = true) => ({
   slug,
   full_slug: `partners/${slug}`,
   published_at: published ? '2026-11-01T00:00:00.000Z' : null,
@@ -33,25 +27,26 @@ const partnerStory = (
     twitter: '',
     youtube: '',
     tiktok: '',
-    parent,
   },
 });
 
-// Bumble For Friends' partner story is still a draft, and shares Bumble's logo as its sub-brand.
+// Bumble For Friends' partner story is still a draft.
 export const partnerStories = [
   partnerStory('bumble', 'Bumble', 'BUMBLE HOLDING LTD'),
   partnerStory('badoo', 'Badoo', 'BADOO LTD'),
   partnerStory('fruitz', 'Fruitz', 'FRUITZ LTD'),
-  partnerStory('bff', 'Bumble For Friends', 'BUMBLE HOLDING LTD', false, 'Bumble'),
+  partnerStory('bff', 'Bumble For Friends', 'BUMBLE HOLDING LTD', false),
 ];
 
-const bumble: ActivePartner = { id: 'id-bumble', name: 'Bumble', slug: 'bumble' };
-const badoo: ActivePartner = { id: 'id-badoo', name: 'Badoo', slug: 'badoo' };
-const fruitz: ActivePartner = { id: 'id-fruitz', name: 'Fruitz', slug: 'fruitz' };
+const bumble: ActivePartner = { id: 'id-bumble', name: 'Bumble', slug: 'bumble', parentId: null };
+const badoo: ActivePartner = { id: 'id-badoo', name: 'Badoo', slug: 'badoo', parentId: null };
+const fruitz: ActivePartner = { id: 'id-fruitz', name: 'Fruitz', slug: 'fruitz', parentId: null };
+// A sub-brand of Bumble.
 const bumbleForFriends: ActivePartner = {
   id: 'id-bff',
   name: 'Bumble For Friends',
   slug: 'bff',
+  parentId: 'id-bumble',
 };
 
 // GET /v1/partner/active before and after a super admin activates Bumble For Friends.
@@ -85,6 +80,9 @@ const contentFor = (slug: string, id?: string) =>
 
 export const brandedPartners = partnerStories.map((story) => toPartnerContent(story));
 
-// The launched set today, and once Bumble For Friends is activated.
+// The launched set today, and once Bumble For Friends is activated as a sub-brand of Bumble.
 export const launchedPartners = ['bumble', 'badoo'].map((slug) => contentFor(slug, `id-${slug}`));
-export const launchedPartnersWithBff = [...launchedPartners, contentFor('bff', 'id-bff')];
+export const launchedPartnersWithBff = [
+  ...launchedPartners,
+  { ...contentFor('bff', 'id-bff'), parent: 'Bumble' },
+];

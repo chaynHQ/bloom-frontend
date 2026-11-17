@@ -39,7 +39,6 @@ describe('PartnerLogoLinks', () => {
       ['Bumble', '/welcome/bumble'],
       ['Bumble For Friends', '/welcome/bff'],
     ]);
-    // Keyboard users reach the brand through the names, so the logo isn't a duplicate tab stop.
     expect(screen.getByRole('link', { name: 'Bumble logo' }).getAttribute('tabindex')).toBe('-1');
   });
 

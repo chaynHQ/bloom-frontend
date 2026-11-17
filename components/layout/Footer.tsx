@@ -109,8 +109,8 @@ const Footer = () => {
   const launchedPartners = useLaunchedPartners();
 
   // Members and partner admins by their partner's name; anything from the URL or the referral
-  // cookie only when it is a launched partner's slug. One block per brand: a sub-brand shares its
-  // parent's logo and legal name, so the first of them found stands for both.
+  // cookie only when it is a launched partner's slug. One block per brand, from the first of its
+  // partners found.
   const partners = useMemo(() => {
     const partnersList: PartnerContent[] = [publicContent];
     const addUniquePartner = (partner?: BrandedPartner) => {

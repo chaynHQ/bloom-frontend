@@ -10,6 +10,7 @@ import { resolveLaunchedPartner } from './resolve';
 import {
   activePartners,
   activePartnersWithBff,
+  launchedPartnersWithBff,
   partnerStories,
   welcomeLinks,
 } from './partnerFixtures';
@@ -64,6 +65,31 @@ describe('loadPartnerSets', () => {
 
     expect(slugs(launched)).toEqual(['bumble', 'badoo', 'bff']);
     expect(launched.find((partner) => partner.slug === 'bff')?.name).toBe('Bumble For Friends');
+  });
+
+  it('names a sub-brand’s parent from the backend’s parentId', async () => {
+    mockSources({ active: respond(activePartnersWithBff) });
+    const { branded, launched } = await loadPartnerSets('en');
+
+    expect(launched).toEqual(launchedPartnersWithBff);
+    expect(branded.find((partner) => partner.slug === 'bff')?.parent).toBe('Bumble');
+    expect(branded.find((partner) => partner.slug === 'bumble')).not.toHaveProperty('parent');
+  });
+
+  it('leaves a sub-brand on its own when its parent is not active or has no story', async () => {
+    const bffOnly = activePartnersWithBff.filter((partner) => partner.slug !== 'bumble');
+    mockSources({ active: respond(bffOnly) });
+    expect(
+      (await loadPartnerSets('en')).launched.find((partner) => partner.slug === 'bff'),
+    ).not.toHaveProperty('parent');
+
+    mockSources({
+      stories: partnerStories.filter((story) => story.slug !== 'bumble'),
+      active: respond(activePartnersWithBff),
+    });
+    expect(
+      (await loadPartnerSets('en')).launched.find((partner) => partner.slug === 'bff'),
+    ).not.toHaveProperty('parent');
   });
 
   it('reads stories and welcome pages in STORYBLOK_ENVIRONMENT, so drafts count', async () => {

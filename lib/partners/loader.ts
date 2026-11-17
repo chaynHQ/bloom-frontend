@@ -48,12 +48,21 @@ export async function loadPartnerSets(locale: string): Promise<PartnerSets> {
   ]);
 
   const activeBySlug = new Map(activePartners.map((partner) => [partner.slug, partner]));
+  const activeById = new Map(activePartners.map((partner) => [partner.id, partner]));
+  const storyNameBySlug = new Map(stories.map((story) => [story.slug, story.content.name]));
+
+  const toPartner = (story: PartnerStory, id?: string) => {
+    const parentId = activeBySlug.get(story.slug)?.parentId;
+    const parentSlug = parentId ? activeById.get(parentId)?.slug : undefined;
+    const parent = parentSlug ? storyNameBySlug.get(parentSlug) : undefined;
+    return { ...toPartnerContent(story, id), ...(parent && { parent }) };
+  };
 
   return {
-    branded: stories.map((story) => toPartnerContent(story)),
+    branded: stories.map((story) => toPartner(story)),
     launched: stories
       .filter((story) => activeBySlug.has(story.slug) && welcomeSlugs.has(story.slug))
-      .map((story) => toPartnerContent(story, activeBySlug.get(story.slug)!.id)),
+      .map((story) => toPartner(story, activeBySlug.get(story.slug)!.id)),
   };
 }
 

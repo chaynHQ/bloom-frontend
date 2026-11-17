@@ -13,7 +13,7 @@ Do this on staging first, then production.
 | 3    | (automatic)  | Frontend        | In production, the webhook generates the lockups and illustration into the story's draft, and adds the partner to the `partners` datasource                                                                        |
 | 4    | Designer     | Storyblok       | Reload the story, review the generated images, replace any that need it, and publish again                                                                                                                         |
 | 5    | Content team | Storyblok       | Create `welcome/<slug>`, and tag courses and resources with the partner in `included_for_partners`. Publish the welcome story at launch                                                                            |
-| 6    | Super admin  | Admin dashboard | Set the therapy limit and automatic access code, create partner admins, then **activate** the partner                                                                                                              |
+| 6    | Super admin  | Admin dashboard | Set the therapy limit, automatic access code and, for a sub-brand, its parent, create partner admins, then **activate** the partner                                                                                |
 
 Publishing never launches a partner: only a super admin activating it does. A published partner story can be read through Storyblok's public API, though, so publish it only once the partnership can be public.
 
@@ -30,21 +30,18 @@ On staging, which doesn't generate images, a designer uploads the lockup and ill
 | `partnership_logo`                                                 | Asset (image)             | Yes          | The "Bloom × partner" lockup, one per language                     |
 | `illustration`                                                     | Asset (image)             | No           | The Bloom-head illustration in the partner's colour                |
 | `website`, `facebook`, `instagram`, `twitter`, `youtube`, `tiktok` | Text                      | No           | Footer links                                                       |
-| `parent`                                                           | Single option             | No           | Only for a sub-brand that shares another partner's logo, see below |
 
 The slug is the partner's permanent key: the welcome page is `/welcome/<slug>`, UTM links name it, and the backend pairs the story with the partner by it. "In partnership with" and the logos' alt text are shared app strings with the partner's name filled in (`footer.inPartnershipWith`, `alt.partnerLogo`, `alt.partnershipLogo`), so a new partner needs no translations.
 
 ### Sub-brands
 
-Bumble For Friends uses Bumble's logo, so it sets `parent` to Bumble. Partners with a parent are one brand: the register and apply-a-code pages show the brand's logo once, linked to the parent's welcome page, with a link to each partner's welcome page below it by name; the footer shows one block for the brand, from whichever of its partners the visitor belongs to or arrived through first. A partner with no parent, or whose parent isn't launched, shows on its own as usual.
-
-`parent` takes its options from the `partners` datasource, so it stores the parent's display name. Set it on the sub-brand only, never on the parent, and only one level deep. The backend also syncs it to `partner.parentId` for reporting. Each partner still keeps its own welcome page, access codes, settings and analytics.
+A sub-brand, such as Bumble For Friends of Bumble, shares its parent's logo. A super admin sets a partner's parent in the admin dashboard's partners table; it's stored in the backend as `partner.parentId` (one level only), so reports can group a brand's partners. The register and apply-a-code pages show a brand's logo once, linked to the parent's welcome page, with a link to each partner's welcome page below it by name, and the footer shows one block per brand. A sub-brand whose parent isn't active shows on its own. Each partner keeps its own welcome page, access codes, settings and analytics.
 
 ## Changing a partner
 
 - **Branding:** edit the partner story and publish. The webhook refreshes cached pages; without it they refresh within 4 hours.
 - **New images:** clear `partnership_logo` (in a language) or `illustration` and publish. Production generates the empty ones into the draft for review. Publishing any partner story with a language's lockup missing does the same, including Bumble, Badoo and Fruitz.
-- **Settings:** therapy limit, automatic access code and status are in the admin dashboard's partners table. Changes show on the site straight away.
+- **Settings:** therapy limit, automatic access code, parent and status are in the admin dashboard's partners table. Changes show on the site straight away.
 - **Taking a partner off the site:** unpublish its welcome story. **Don't deactivate it to hide it:** deactivating also deactivates its partner admins and every member's access.
 - **Never rename or move a partner story.** The backend keeps the slug it was created with, so a renamed story silently stops launching. If a slug really must change, a developer updates the partner's slug in the database too.
 
