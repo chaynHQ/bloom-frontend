@@ -39,7 +39,7 @@ The slug is the partner's permanent key: the welcome page is `/welcome/<slug>`, 
 
 ### Sub-brands
 
-A sub-brand, such as Bumble For Friends of Bumble, shares its parent's logo. The sub-brand still needs its own partner story, logo included, for its own lockup and footer. A super admin sets a partner's parent in the admin dashboard's partners table, in each environment; it's stored in the backend as `partner.parentId` (one level only), so reports can group a brand's partners. The register and apply-a-code pages show a brand's logo once, linked to the parent's welcome page, with a link to each partner's welcome page below it by name, and the footer shows one block per brand. A sub-brand whose parent isn't active shows on its own. Each partner keeps its own welcome page, access codes, settings and analytics.
+A sub-brand, such as Bumble For Friends of Bumble, has its own partner story, logo included. A super admin sets a partner's parent in the admin dashboard's partners table, in each environment; it's stored in the backend as `partner.parentId` (one level only), so reports can group a brand's partners. While a sub-brand's `logo` is the same file as its parent's, the register and apply-a-code pages show that logo once, linked to the parent's welcome page, with a link to each partner's welcome page below it by name, and the footer shows one block per brand. A sub-brand with a logo of its own, or whose parent isn't active, shows on its own. Each partner keeps its own welcome page, access codes, settings and analytics.
 
 ## Changing a partner
 

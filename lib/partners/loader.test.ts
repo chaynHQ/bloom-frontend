@@ -67,13 +67,25 @@ describe('loadPartnerSets', () => {
     expect(launched.find((partner) => partner.slug === 'bff')?.name).toBe('Bumble For Friends');
   });
 
-  it('gives a sub-brand its parent’s slug from the backend’s parentId', async () => {
+  it('gives a sub-brand that shares its parent’s logo the parent’s slug', async () => {
     mockSources({ active: respond(activePartnersWithBff) });
     const { branded, launched } = await loadPartnerSets('en');
 
     expect(launched).toEqual(launchedPartnersWithBff);
     expect(branded.find((partner) => partner.slug === 'bff')?.parentSlug).toBe('bumble');
     expect(branded.find((partner) => partner.slug === 'bumble')).not.toHaveProperty('parentSlug');
+  });
+
+  it('shows a sub-brand with its own logo as a brand of its own', async () => {
+    const stories = partnerStories.map((story) =>
+      story.slug === 'bff'
+        ? { ...story, content: { ...story.content, logo: { id: 2, filename: 'bff_logo.svg' } } }
+        : story,
+    );
+    mockSources({ stories, active: respond(activePartnersWithBff) });
+    const { branded } = await loadPartnerSets('en');
+
+    expect(branded.find((partner) => partner.slug === 'bff')).not.toHaveProperty('parentSlug');
   });
 
   it('leaves a sub-brand on its own when its parent is not active', async () => {

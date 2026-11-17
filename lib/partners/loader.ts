@@ -49,11 +49,15 @@ export async function loadPartnerSets(locale: string): Promise<PartnerSets> {
 
   const activeBySlug = new Map(activePartners.map((partner) => [partner.slug, partner]));
   const activeById = new Map(activePartners.map((partner) => [partner.id, partner]));
+  const storyBySlug = new Map(stories.map((story) => [story.slug, story]));
 
+  // A sub-brand with its own logo shows as a brand of its own.
   const toPartner = (story: PartnerStory, id?: string) => {
     const parentId = activeBySlug.get(story.slug)?.parentId;
     const parentSlug = parentId ? activeById.get(parentId)?.slug : undefined;
-    return { ...toPartnerContent(story, id), ...(parentSlug && { parentSlug }) };
+    const parentLogo = parentSlug && storyBySlug.get(parentSlug)?.content.logo?.filename;
+    const sharesLogo = !!parentLogo && parentLogo === story.content.logo?.filename;
+    return { ...toPartnerContent(story, id), ...(sharesLogo && { parentSlug }) };
   };
 
   return {

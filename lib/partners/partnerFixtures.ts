@@ -9,7 +9,12 @@ const asset = (file: string) => ({
 });
 const emptyAsset = { id: null, filename: '' };
 
-const partnerStory = (slug: string, name: string, legalName: string, published = true) => ({
+const partnerStory = (
+  slug: string,
+  name: string,
+  legalName: string,
+  { published = true, logo = `${slug}_logo.svg` } = {},
+) => ({
   slug,
   full_slug: `partners/${slug}`,
   published_at: published ? '2026-11-01T00:00:00.000Z' : null,
@@ -17,7 +22,7 @@ const partnerStory = (slug: string, name: string, legalName: string, published =
     component: 'partner',
     name,
     legal_name: legalName,
-    logo: asset(`${slug}_logo.svg`),
+    logo: asset(logo),
     brand_color: '#FFC700',
     partnership_logo: asset(`bloom_${slug}_logo.svg`),
     illustration: asset(`illustration_${slug}.svg`),
@@ -30,12 +35,15 @@ const partnerStory = (slug: string, name: string, legalName: string, published =
   },
 });
 
-// Bumble For Friends' partner story is still a draft.
+// Bumble For Friends' partner story is still a draft, and shares Bumble's logo.
 export const partnerStories = [
   partnerStory('bumble', 'Bumble', 'BUMBLE HOLDING LTD'),
   partnerStory('badoo', 'Badoo', 'BADOO LTD'),
   partnerStory('fruitz', 'Fruitz', 'FRUITZ LTD'),
-  partnerStory('bff', 'Bumble For Friends', 'BUMBLE HOLDING LTD', false),
+  partnerStory('bff', 'Bumble For Friends', 'BUMBLE HOLDING LTD', {
+    published: false,
+    logo: 'bumble_logo.svg',
+  }),
 ];
 
 const bumble: ActivePartner = { id: 'id-bumble', name: 'Bumble', slug: 'bumble', parentId: null };
