@@ -112,6 +112,9 @@ export default function PartnersTable() {
     [data],
   );
 
+  const hasSubBrands = (partner: AdminPartner) =>
+    partners.some((subBrand) => subBrand.parentId === partner.id);
+
   const update = async (partner: AdminPartner, changes: UpdatePartner) => {
     setPendingId(partner.id);
     setFeedback(null);
@@ -179,6 +182,7 @@ export default function PartnersTable() {
             <TableCell>{t('columns.status')}</TableCell>
             <TableCell>{t('columns.therapySessionsPerCode')}</TableCell>
             <TableCell>{t('columns.automaticAccessCode')}</TableCell>
+            <TableCell>{t('columns.parent')}</TableCell>
             <TableCell>{t('columns.welcomePage')}</TableCell>
             <TableCell>
               <Box component="span" sx={visuallyHidden}>
@@ -251,6 +255,26 @@ export default function PartnersTable() {
                       },
                     }}
                   />
+                </TableCell>
+                <TableCell>
+                  <Box component="span" sx={cellLabelStyle}>
+                    {t('columns.parent')}
+                  </Box>
+                  <NativeSelect
+                    value={partner.parentId ?? ''}
+                    disabled={busy || hasSubBrands(partner)}
+                    onChange={(event) => update(partner, { parentId: event.target.value || null })}
+                    inputProps={{ 'aria-label': t('parentLabel', { partner: partner.name }) }}
+                  >
+                    <option value="">{t('noParent')}</option>
+                    {partners
+                      .filter((parent) => parent.id !== partner.id && !parent.parentId)
+                      .map((parent) => (
+                        <option key={parent.id} value={parent.id}>
+                          {parent.name}
+                        </option>
+                      ))}
+                  </NativeSelect>
                 </TableCell>
                 <TableCell>
                   <Box component="span" sx={cellLabelStyle}>

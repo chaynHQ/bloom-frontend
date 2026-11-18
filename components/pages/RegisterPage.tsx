@@ -1,5 +1,6 @@
 'use client';
 
+import PartnerLogoLinks from '@/components/common/PartnerLogoLinks';
 import RegisterForm, { PartnerRegisterForm } from '@/components/forms/RegisterForm';
 import PartnerHeader from '@/components/layout/PartnerHeader';
 import { Link as i18nLink } from '@/i18n/routing';
@@ -11,7 +12,6 @@ import useReferralPartner from '@/lib/hooks/useReferralPartner';
 import { useLaunchedPartners } from '@/lib/partners/PartnersProvider';
 import { resolveLaunchedPartner } from '@/lib/partners/resolve';
 import { getImageSizes } from '@/lib/utils/imageSizes';
-import { isRemoteSvg } from '@/lib/utils/storyblokImage';
 import logEvent from '@/lib/utils/logEvent';
 import bloomLogo from '@/public/bloom_logo.svg';
 import illustrationBloomHeadYellow from '@/public/illustration_bloom_head_yellow.svg';
@@ -57,20 +57,6 @@ const imageContainerStyle = {
   height: { xs: 80, md: 80 },
   marginBottom: 3,
   marginTop: { xs: 0, md: 2 },
-} as const;
-
-const logoContainerStyle = {
-  display: 'block',
-  position: 'relative',
-  flex: 1,
-  height: 48,
-  maxWidth: 165,
-} as const;
-
-const logosContainerStyle = {
-  ...rowStyle,
-  gap: 4,
-  justifyContent: 'flex-start',
 } as const;
 
 export default function RegisterPage() {
@@ -145,36 +131,11 @@ export default function RegisterPage() {
                 {t('register.partnershipsTitle')}
               </Typography>
               <Typography>{t('register.partnershipsDescription')}</Typography>
-              <Box sx={logosContainerStyle}>
-                {allPartnersContent?.map((partner) => (
-                  <Link
-                    component={i18nLink}
-                    key={`${partner.name}-link`}
-                    aria-label={tS(partner.logoAlt, { name: partner.name })}
-                    onClick={() => logEvent(generatePartnershipPromoLogoClick(partner.slug))}
-                    href={`/welcome/${partner.slug}${codeParam && '?code=' + codeParam}`}
-                    sx={[
-                      {
-                        mt: '1rem !important',
-                      },
-                      ...(Array.isArray(logoContainerStyle)
-                        ? logoContainerStyle
-                        : [logoContainerStyle]),
-                    ]}
-                  >
-                    <Image
-                      alt={tS(partner.logoAlt, { name: partner.name })}
-                      src={partner.logo}
-                      unoptimized={isRemoteSvg(partner.logo)}
-                      fill
-                      sizes={getImageSizes(logoContainerStyle.maxWidth)}
-                      style={{
-                        objectFit: 'contain',
-                      }}
-                    />
-                  </Link>
-                ))}
-              </Box>
+              <PartnerLogoLinks
+                partners={allPartnersContent}
+                href={(slug) => `/welcome/${slug}${codeParam && '?code=' + codeParam}`}
+                onPartnerClick={(slug) => logEvent(generatePartnershipPromoLogoClick(slug))}
+              />
             </CardContent>
           </Card>
         </>

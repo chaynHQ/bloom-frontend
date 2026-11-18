@@ -48,12 +48,23 @@ export async function loadPartnerSets(locale: string): Promise<PartnerSets> {
   ]);
 
   const activeBySlug = new Map(activePartners.map((partner) => [partner.slug, partner]));
+  const activeById = new Map(activePartners.map((partner) => [partner.id, partner]));
+  const storyBySlug = new Map(stories.map((story) => [story.slug, story]));
+
+  // A sub-brand with its own logo shows as a brand of its own.
+  const toPartner = (story: PartnerStory, id?: string) => {
+    const parentId = activeBySlug.get(story.slug)?.parentId;
+    const parentSlug = parentId ? activeById.get(parentId)?.slug : undefined;
+    const parentLogo = parentSlug && storyBySlug.get(parentSlug)?.content.logo?.filename;
+    const sharesLogo = !!parentLogo && parentLogo === story.content.logo?.filename;
+    return { ...toPartnerContent(story, id), ...(sharesLogo && { parentSlug }) };
+  };
 
   return {
-    branded: stories.map((story) => toPartnerContent(story)),
+    branded: stories.map((story) => toPartner(story)),
     launched: stories
       .filter((story) => activeBySlug.has(story.slug) && welcomeSlugs.has(story.slug))
-      .map((story) => toPartnerContent(story, activeBySlug.get(story.slug)!.id)),
+      .map((story) => toPartner(story, activeBySlug.get(story.slug)!.id)),
   };
 }
 
