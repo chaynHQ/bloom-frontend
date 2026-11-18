@@ -7,7 +7,8 @@ import { useCookieReferralPartner } from '@/lib/hooks/useCookieReferralPartner';
 import { useHydratedSearchParams } from '@/lib/hooks/useHydratedSearchParams';
 import { useIsRtl } from '@/lib/hooks/useIsRtl';
 import { useBrandedPartners, useLaunchedPartners } from '@/lib/partners/PartnersProvider';
-import { findPartner, resolveLaunchedPartner } from '@/lib/partners/resolve';
+import { brandKey, findPartner, resolveLaunchedPartner } from '@/lib/partners/resolve';
+import type { BrandedPartner } from '@/lib/partners/types';
 import bloomLogo from '@/public/bloom_logo.svg';
 import comicReliefLogo from '@/public/comic_relief_logo.png';
 import communityFundLogo from '@/public/community_fund_logo.svg';
@@ -108,14 +109,12 @@ const Footer = () => {
   const launchedPartners = useLaunchedPartners();
 
   // Members and partner admins by their partner's name; anything from the URL or the referral
-  // cookie only when it is a launched partner's slug.
+  // cookie only when it is a launched partner's slug. One block per brand, from the first of its
+  // partners found.
   const partners = useMemo(() => {
     const partnersList: PartnerContent[] = [publicContent];
-    const addUniquePartner = (partner?: PartnerContent) => {
-      if (
-        partner &&
-        !partnersList.some((p) => p.name.toLowerCase() === partner.name.toLowerCase())
-      ) {
+    const addUniquePartner = (partner?: BrandedPartner) => {
+      if (partner && !partnersList.some((p) => brandKey(p) === brandKey(partner))) {
         partnersList.push(partner);
       }
     };

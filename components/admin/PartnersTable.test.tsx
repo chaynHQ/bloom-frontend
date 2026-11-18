@@ -45,12 +45,14 @@ const partner = (overrides: Partial<AdminPartner>): AdminPartner => ({
   isActive: true,
   therapySessionsPerCode: 0,
   automaticAccessCode: false,
+  parentId: null,
   createdAt: '2026-01-01T00:00:00.000Z',
   updatedAt: '2026-01-01T00:00:00.000Z',
   ...overrides,
 });
 
-// Bumble For Friends' slug differs from its name; Fruitz is inactive here to cover activation.
+// Bumble For Friends' slug differs from its name and it's a sub-brand of Bumble; Fruitz is
+// inactive here to cover activation.
 const partners = [
   partner({ id: 'badoo', name: 'Badoo', slug: 'badoo', therapySessionsPerCode: 6 }),
   partner({ id: 'bumble', name: 'Bumble', slug: 'bumble', therapySessionsPerCode: 6 }),
@@ -60,6 +62,7 @@ const partners = [
     slug: 'bff',
     therapySessionsPerCode: 0,
     automaticAccessCode: true,
+    parentId: 'bumble',
   }),
   partner({ id: 'fruitz', name: 'Fruitz', slug: 'fruitz', isActive: false }),
 ];
@@ -92,7 +95,7 @@ describe('PartnersTable', () => {
   it('offers a therapy limit from 0 to 20', () => {
     renderTable();
 
-    const select = within(row('badoo')).getByRole('combobox');
+    const select = within(row('badoo')).getByRole('combobox', { name: /Therapy sessions/ });
     const values = within(select)
       .getAllByRole('option')
       .map((option) => (option as HTMLOptionElement).value);
@@ -103,7 +106,7 @@ describe('PartnersTable', () => {
   it('changing the therapy limit sends only the limit', async () => {
     renderTable();
 
-    fireEvent.change(within(row('badoo')).getByRole('combobox'), {
+    fireEvent.change(within(row('badoo')).getByRole('combobox', { name: /Therapy sessions/ }), {
       target: { value: '3' },
     });
 
@@ -118,6 +121,43 @@ describe('PartnersTable', () => {
 
     await waitFor(() => expect(updatePartner).toHaveBeenCalledTimes(1));
     expect(updatePartner).toHaveBeenCalledWith({ id: 'bff', automaticAccessCode: false });
+  });
+
+  describe('parent partner', () => {
+    const parentSelect = (slug: string) =>
+      within(row(slug)).getByRole('combobox', { name: /Parent partner/ }) as HTMLSelectElement;
+    const optionLabels = (select: HTMLSelectElement) =>
+      within(select)
+        .getAllByRole('option')
+        .map((option) => option.textContent);
+
+    it('shows the current parent and offers every other partner that is not a sub-brand', () => {
+      renderTable();
+
+      expect(parentSelect('bff').value).toBe('bumble');
+      expect(optionLabels(parentSelect('bff'))).toEqual(['None', 'Badoo', 'Bumble', 'Fruitz']);
+      expect(optionLabels(parentSelect('badoo'))).toEqual(['None', 'Bumble', 'Fruitz']);
+    });
+
+    it('sends only the chosen parent, or null for None', async () => {
+      renderTable();
+
+      fireEvent.change(parentSelect('fruitz'), { target: { value: 'badoo' } });
+      await waitFor(() => expect(updatePartner).toHaveBeenCalledTimes(1));
+      expect(updatePartner).toHaveBeenCalledWith({ id: 'fruitz', parentId: 'badoo' });
+      await waitFor(() => expect(revalidatePartners).toHaveBeenCalledTimes(1));
+
+      fireEvent.change(parentSelect('bff'), { target: { value: '' } });
+      await waitFor(() => expect(updatePartner).toHaveBeenCalledTimes(2));
+      expect(updatePartner).toHaveBeenLastCalledWith({ id: 'bff', parentId: null });
+    });
+
+    it('cannot give a parent to a partner that has sub-brands', () => {
+      renderTable();
+
+      expect(parentSelect('bumble').disabled).toBe(true);
+      expect(parentSelect('badoo').disabled).toBe(false);
+    });
   });
 
   it('deactivating asks for confirmation first, then sends only active', async () => {
@@ -161,7 +201,11 @@ describe('PartnersTable', () => {
     fireEvent.click(within(row('bff')).getByRole('switch'));
 
     await waitFor(() =>
-      expect(within(row('badoo')).getByRole('combobox').hasAttribute('disabled')).toBe(true),
+      expect(
+        within(row('badoo'))
+          .getByRole('combobox', { name: /Therapy sessions/ })
+          .hasAttribute('disabled'),
+      ).toBe(true),
     );
     expect(within(row('badoo')).getByRole('switch').hasAttribute('disabled')).toBe(true);
     expect(
