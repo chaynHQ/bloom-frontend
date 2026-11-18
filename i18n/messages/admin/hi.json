@@ -47,6 +47,7 @@
         "status": "Status",
         "therapySessionsPerCode": "Therapy sessions per code",
         "automaticAccessCode": "Automatic access code",
+        "parent": "Parent partner",
         "welcomePage": "Welcome page",
         "actions": "Actions"
       },
@@ -54,6 +55,8 @@
       "inactive": "Inactive",
       "therapySessionsPerCodeLabel": "Therapy sessions per code for {partner}",
       "automaticAccessCodeLabel": "Automatic access code for {partner}",
+      "parentLabel": "Parent partner of {partner}",
+      "noParent": "None",
       "welcomePageLink": "View",
       "welcomePageLabel": "View the {partner} welcome page (opens in a new tab)",
       "activate": "Activate",
