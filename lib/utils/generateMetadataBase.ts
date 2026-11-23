@@ -17,16 +17,17 @@ interface MetadataBasic {
   path?: string;
   // A Storyblok story's `languages` field; leave unset for pages that exist in every locale.
   languages?: string[];
-  // A Storyblok image asset URL for the share card.
-  image?: string;
   // Private, utility and not-yet-launched pages, kept out of search results.
   noIndex?: boolean;
 }
 
 const NO_INDEX = { index: false, follow: true } as const;
 
-const SHARE_IMAGE = { width: 1200, height: 630 } as const;
-const SHARE_IMAGE_MIN_WIDTH = 600;
+// Every page shares the default image: Storyblok's header and preview images aren't designed as
+// share cards.
+function shareImage(alt: string) {
+  return { url: '/preview.png', width: 1200, height: 630, alt };
+}
 
 // Appends "• Bloom" and the section (e.g. "• Video") after the title, so search results and
 // browser tabs lead with the topic.
@@ -60,23 +61,6 @@ function trimDescription(text: string) {
   return `${cut.slice(0, cut.lastIndexOf(' ')).replace(/[\s.,;:!?—–-]+$/, '')}…`;
 }
 
-// A Storyblok image cropped to the share card's shape by Storyblok's image service, read from the
-// size in its asset path. SVGs and small images return undefined: social platforms don't render
-// the first and blur the second, so the default share image is better.
-export function storyblokShareImage(url?: string) {
-  const size = url?.match(/^https:\/\/a\.storyblok\.com\/f\/\d+\/(\d+)x(\d+)\//);
-  if (!url || !size || /\.svg$/i.test(url)) return undefined;
-  const [width, height] = [Number(size[1]), Number(size[2])];
-  const cropWidth = Math.min(
-    SHARE_IMAGE.width,
-    width,
-    Math.floor((height * SHARE_IMAGE.width) / SHARE_IMAGE.height),
-  );
-  if (cropWidth < SHARE_IMAGE_MIN_WIDTH) return undefined;
-  const cropHeight = Math.round((cropWidth * SHARE_IMAGE.height) / SHARE_IMAGE.width);
-  return { url: `${url}/m/${cropWidth}x${cropHeight}/smart`, width: cropWidth, height: cropHeight };
-}
-
 function alternatesFor(locale: string, path: string, languages?: string[]) {
   const available = languages ? storyLocales(languages) : [...routing.locales];
   const languageLinks: Record<string, string> = Object.fromEntries(
@@ -103,13 +87,11 @@ export async function generateMetadataBasic({
   locale,
   path,
   languages,
-  image,
   noIndex,
 }: MetadataBasic): Promise<Metadata> {
   const t = await getTranslations({ locale, namespace: 'Shared.metadata' });
   const metaDescription = trimDescription(toPlainText(description));
   const alternates = path === undefined ? undefined : alternatesFor(locale, path, languages);
-  const shareImage = storyblokShareImage(image);
 
   return {
     title: generateMetadataTitle(title, titleParent),
@@ -125,11 +107,7 @@ export async function generateMetadataBasic({
       siteName: 'Bloom',
       locale: openGraphLocale(locale),
       type: 'website',
-      images: [
-        shareImage
-          ? { ...shareImage, alt: title }
-          : { url: '/preview.png', ...SHARE_IMAGE, alt: t('imageAlt') },
-      ],
+      images: [shareImage(t('imageAlt'))],
     },
   };
 }
@@ -152,14 +130,7 @@ export async function generateMetadataBase(locale: string) {
       title: t('title'),
       url: localisedPath(locale, ''),
       siteName: 'Bloom',
-      images: [
-        {
-          url: '/preview.png',
-          width: 1200,
-          height: 630,
-          alt: t('imageAlt'),
-        },
-      ],
+      images: [shareImage(t('imageAlt'))],
       locale: openGraphLocale(locale),
       type: 'website',
     },
