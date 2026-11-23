@@ -13,4 +13,12 @@ describe('featureFlag', () => {
 
     expect(FeatureFlag.isUserResearchBannerEnabled()).toEqual(false);
   });
+
+  it('should return the partner survey banner value from its environment variable', () => {
+    process.env.NEXT_PUBLIC_FF_PARTNER_SURVEY_BANNER = 'true';
+    expect(FeatureFlag.isPartnerSurveyBannerEnabled()).toEqual(true);
+
+    process.env.NEXT_PUBLIC_FF_PARTNER_SURVEY_BANNER = '';
+    expect(FeatureFlag.isPartnerSurveyBannerEnabled()).toEqual(false);
+  });
 });

@@ -37,5 +37,11 @@
     "feedback": "شاركونا رأيكم",
     "feedbackShort": "رأيكم",
     "dismiss": "إغلاق"
+  },
+  "PartnerSurveyBanner": {
+    "regionLabel": "استبيان شراكة {partner} وBloom",
+    "message": "شاركونا رأيكم في <strong>شراكة {partner} وBloom</strong> من خلال استبياننا الذي يستغرق 5 دقائق، دون الكشف عن هويتكم.",
+    "takeSurvey": "المشاركة في الاستبيان",
+    "dismiss": "إغلاق"
   }
 }

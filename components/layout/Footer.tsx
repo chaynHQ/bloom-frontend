@@ -1,14 +1,15 @@
 'use client';
 
 import { PARTNER_SOCIAL_LINK_CLICKED, SOCIAL_LINK_CLICKED } from '@/lib/constants/events';
-import { PartnerContent, publicContent } from '@/lib/constants/partners';
+import { publicContent } from '@/lib/constants/partners';
+import { usePathname } from '@/i18n/routing';
 import { useTypedSelector } from '@/lib/hooks/store';
 import { useCookieReferralPartner } from '@/lib/hooks/useCookieReferralPartner';
 import { useHydratedSearchParams } from '@/lib/hooks/useHydratedSearchParams';
 import { useIsRtl } from '@/lib/hooks/useIsRtl';
+import { useUserAuthStatus } from '@/lib/hooks/useUserAuthStatus';
 import { useBrandedPartners, useLaunchedPartners } from '@/lib/partners/PartnersProvider';
-import { brandKey, findPartner, resolveLaunchedPartner } from '@/lib/partners/resolve';
-import type { BrandedPartner } from '@/lib/partners/types';
+import { getFooterPartners } from '@/lib/partners/resolve';
 import bloomLogo from '@/public/bloom_logo.svg';
 import comicReliefLogo from '@/public/comic_relief_logo.png';
 import communityFundLogo from '@/public/community_fund_logo.svg';
@@ -96,6 +97,10 @@ const fundingLogosContainerStyle = {
   gap: 4,
 } as const;
 
+// Gets "bumble" from /welcome/bumble
+const getWelcomePageSlug = (pathname: string) =>
+  pathname.startsWith('/welcome/') ? pathname.split('/')[2] : undefined;
+
 const Footer = () => {
   const tS = useTranslations('Shared');
   const searchParams = useHydratedSearchParams();
@@ -104,37 +109,38 @@ const Footer = () => {
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
   const partnerAdmin = useTypedSelector((state) => state.partnerAdmin);
   const referralPartner = useCookieReferralPartner();
+  const authStatus = useUserAuthStatus();
+  const pathname = usePathname();
 
   const brandedPartners = useBrandedPartners();
   const launchedPartners = useLaunchedPartners();
 
-  // Members and partner admins by their partner's name; anything from the URL or the referral
-  // cookie only when it is a launched partner's slug. One block per brand, from the first of its
-  // partners found.
-  const partners = useMemo(() => {
-    const partnersList: PartnerContent[] = [publicContent];
-    const addUniquePartner = (partner?: BrandedPartner) => {
-      if (partner && !partnersList.some((p) => brandKey(p) === brandKey(partner))) {
-        partnersList.push(partner);
-      }
-    };
-
-    addUniquePartner(findPartner(brandedPartners, partnerAdmin?.partner?.name));
-    partnerAccesses.forEach((partnerAccess) => {
-      addUniquePartner(findPartner(brandedPartners, partnerAccess.partner.name));
-    });
-    addUniquePartner(resolveLaunchedPartner(launchedPartners, searchParams?.get('partner')));
-    addUniquePartner(resolveLaunchedPartner(launchedPartners, referralPartner));
-
-    return partnersList;
-  }, [
-    brandedPartners,
-    launchedPartners,
-    partnerAccesses,
-    searchParams,
-    partnerAdmin,
-    referralPartner,
-  ]);
+  const partners = useMemo(
+    () =>
+      getFooterPartners({
+        branded: brandedPartners,
+        launched: launchedPartners,
+        partnerNames: [
+          partnerAdmin?.partner?.name,
+          ...partnerAccesses.map((partnerAccess) => partnerAccess.partner.name),
+        ],
+        welcomePageSlug: getWelcomePageSlug(pathname),
+        // Once someone is signed in, or may be, a partner they browsed or were referred by
+        // before isn't theirs to be branded with.
+        visitorSlugs:
+          authStatus === 'signedOut' ? [searchParams?.get('partner'), referralPartner] : [],
+      }),
+    [
+      brandedPartners,
+      launchedPartners,
+      partnerAccesses,
+      partnerAdmin,
+      pathname,
+      authStatus,
+      searchParams,
+      referralPartner,
+    ],
+  );
 
   return (
     <>
