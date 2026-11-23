@@ -37,6 +37,7 @@ NEXT_PUBLIC_STORYBLOK_TOKEN=xB5HoaLRkYs8ySylSUnZjQtt
 # FEATURE FLAGS
 NEXT_PUBLIC_FF_USER_RESEARCH_BANNER=true
 NEXT_PUBLIC_FF_REDESIGN_NEWS_BANNER=true
+NEXT_PUBLIC_FF_PARTNER_SURVEY_BANNER=true
 
 # FEEDBACK FORM
 NEXT_PUBLIC_FEEDBACK_FORM_URL=https://chayn.typeform.com/to/OY9Wdk4h?typeform-source=bloom.chayn.co
@@ -104,6 +105,8 @@ If creating new environment variables, please tag Chayn staff developers in PR /
 - `NEXT_PUBLIC_FF_USER_RESEARCH_BANNER`: This feature flag enables a banner which displays a banner message aimed at gathering users for Bloom feedback. It is intended to be turned on temporarily, for say 1-2 weeks at a time. It links to an external form which users can fill out if they would like to take part in research.
 
 - `NEXT_PUBLIC_FF_REDESIGN_NEWS_BANNER`: Enables a dismissible top banner announcing the redesign and the move of all content into the Library. English only, intended to run temporarily.
+
+- `NEXT_PUBLIC_FF_PARTNER_SURVEY_BANNER`: Shows Bumble and Badoo members their partner's survey in the top banner slot, in place of the redesign news. English only (the surveys are in English), intended to run temporarily. Surveys are set in `components/banner/PartnerSurveyBanner.tsx`.
 
 #### Storyblok Content Revalidation:
 

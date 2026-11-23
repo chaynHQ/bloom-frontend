@@ -37,5 +37,11 @@
     "feedback": "Geri bildirim gönder",
     "feedbackShort": "Geri bildirim",
     "dismiss": "Kapat"
+  },
+  "PartnerSurveyBanner": {
+    "regionLabel": "{partner} x Bloom anketi",
+    "message": "<strong>{partner} x Bloom iş birliği</strong> hakkındaki düşüncelerini 5 dakikalık anonim anketimizde bizimle paylaş.",
+    "takeSurvey": "Ankete katıl",
+    "dismiss": "Kapat"
   }
 }

@@ -234,6 +234,27 @@ Each of these is used in many places, so please confirm it once here.
 - Courses, sessions and activities now live together in the Library, so they’re easier to browse and filter 💜
 - <span dir="rtl">الدورات التدريبية والجلسات والأنشطة أصبحت الآن معاً في المكتبة، ليسهل تصفّحها وتصفيتها 💜</span>
 
+### Partner survey banner
+
+Shown to Bumble and Badoo members. `{partner}` is "Bumble" or "Badoo".
+
+**36.** `PartnerSurveyBanner.regionLabel` (read by screen readers only)
+
+- {partner} x Bloom survey
+- <span dir="rtl">استبيان شراكة {partner} وBloom</span>
+
+**37.** `PartnerSurveyBanner.message`
+
+- Tell us what you think of the &lt;strong&gt;{partner} x Bloom partnership&lt;/strong&gt; in our 5 minute anonymous survey.
+- <span dir="rtl">شاركونا رأيكم في &lt;strong&gt;شراكة {partner} وBloom&lt;/strong&gt; من خلال استبياننا الذي يستغرق 5 دقائق، دون الكشف عن هويتكم.</span>
+  - _Note: "survey" is new to the app; we used <span dir="rtl">استبيان</span>. "Partnership" follows the Fruitz banner (<span dir="rtl">شراكة Fruitz وBloom</span>)._
+
+**38.** `PartnerSurveyBanner.takeSurvey`
+
+- Take survey
+- <span dir="rtl">المشاركة في الاستبيان</span>
+  - _Note: a verbal noun, per the style guide. The redesign banner's button uses the imperative (<span dir="rtl">شاركونا رأيكم</span>). Which do you prefer for banner buttons?_
+
 ## Also changed to plural address
 
 These were not in the list above. They now use the agreed plural address; please check them too.

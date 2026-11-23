@@ -195,3 +195,24 @@
 
 - Courses, sessions and activities now live together in the Library, so they’re easier to browse and filter 💜
 - Kurslar, bölümler ve etkinlikler artık Kütüphane’de bir arada; böylece göz atmak ve filtrelemek daha kolay 💜
+
+### Partner survey banner
+
+Shown to Bumble and Badoo members. `{partner}` is "Bumble" or "Badoo", so no suffix is attached to it directly.
+
+**30.** `PartnerSurveyBanner.regionLabel` (read by screen readers only)
+
+- {partner} x Bloom survey
+- {partner} x Bloom anketi
+
+**31.** `PartnerSurveyBanner.message`
+
+- Tell us what you think of the &lt;strong&gt;{partner} x Bloom partnership&lt;/strong&gt; in our 5 minute anonymous survey.
+- &lt;strong&gt;{partner} x Bloom iş birliği&lt;/strong&gt; hakkındaki düşüncelerini 5 dakikalık anonim anketimizde bizimle paylaş.
+  - _Note: "x" follows the Fruitz banner ("Fruitz x Bloom iş birliği"). Would "{partner} ile Bloom iş birliği" read better?_
+
+**32.** `PartnerSurveyBanner.takeSurvey`
+
+- Take survey
+- Ankete katıl
+  - _Note: or "Anketi doldur"?_
