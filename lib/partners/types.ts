@@ -5,10 +5,12 @@ export type ActivePartner = {
   id: string;
   name: string;
   slug: string;
+  parentId: string | null;
 };
 
-// A partner from its `partners/<slug>` story. Only Chayn's own content has no slug.
-export type BrandedPartner = PartnerContent & { slug: string };
+// A partner from its `partners/<slug>` story. Only Chayn's own content has no slug. `parentSlug` is
+// set while a sub-brand shares its parent's logo, which shows them as one brand.
+export type BrandedPartner = PartnerContent & { slug: string; parentSlug?: string };
 
 export type PartnerSets = {
   // Every partner with a partner story: branding for its members and partner admins.

@@ -37,6 +37,7 @@ NEXT_PUBLIC_STORYBLOK_TOKEN=xB5HoaLRkYs8ySylSUnZjQtt
 # FEATURE FLAGS
 NEXT_PUBLIC_FF_USER_RESEARCH_BANNER=true
 NEXT_PUBLIC_FF_REDESIGN_NEWS_BANNER=true
+NEXT_PUBLIC_FF_PARTNER_SURVEY_BANNER=true
 
 # FEEDBACK FORM
 NEXT_PUBLIC_FEEDBACK_FORM_URL=https://chayn.typeform.com/to/OY9Wdk4h?typeform-source=bloom.chayn.co
@@ -105,6 +106,8 @@ If creating new environment variables, please tag Chayn staff developers in PR /
 
 - `NEXT_PUBLIC_FF_REDESIGN_NEWS_BANNER`: Enables a dismissible top banner announcing the redesign and the move of all content into the Library. English only, intended to run temporarily.
 
+- `NEXT_PUBLIC_FF_PARTNER_SURVEY_BANNER`: Shows Bumble and Badoo members their partner's survey in the top banner slot, in place of the redesign news. English only (the surveys are in English), intended to run temporarily. Surveys are set in `components/banner/PartnerSurveyBanner.tsx`.
+
 #### Storyblok Content Revalidation:
 
 Pages are cached and refresh from Storyblok every 4 hours. To show changes sooner, a Storyblok webhook calls `POST /api/revalidate`, which marks every page stale so it re-renders on its next visit. A redeploy alone doesn't refresh content, because Vercel's Data Cache persists across deployments.
@@ -112,8 +115,8 @@ Pages are cached and refresh from Storyblok every 4 hours. To show changes soone
 To set it up for an environment:
 
 1. Generate a random secret and add it to Vercel as `STORYBLOK_WEBHOOK_SECRET` for that environment. Without it, the route rejects every request.
-2. In Storyblok, go to Settings → Webhooks and add a webhook pointing at `https://<environment domain>/api/revalidate`, with the same secret. For production, trigger it on stories being published, unpublished, deleted and moved. For staging, which shows draft content, also trigger it on stories being saved.
-3. If the Vercel Firewall challenges requests (e.g. the Security Checkpoint), add a rule that lets `/api/revalidate` through, or Storyblok's calls will be blocked.
+2. In Storyblok, go to Settings → Webhooks and add a webhook pointing at `https://<environment domain>/api/revalidate`, with the same secret. Trigger it on stories being published, unpublished, deleted and moved. Storyblok has no event for saving a draft, so draft edits show on staging when its cache next refreshes.
+3. Add a Vercel Firewall rule that lets `/api/revalidate` through. The Security Checkpoint otherwise blocks Storyblok's calls, and nothing refreshes or generates partner images. Storyblok's webhook log (Settings → Webhooks) shows whether deliveries succeed.
 
 #### Partner Asset Generation:
 

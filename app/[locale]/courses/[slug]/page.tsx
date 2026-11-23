@@ -35,7 +35,6 @@ export async function generateMetadata({ params }: { params: Params }) {
     locale,
     path: `/courses/${slug}`,
     languages: story.content.languages,
-    image: story.content.image?.filename,
     noIndex: story.content.coming_soon || !isPublicContent(story.content.included_for_partners),
   });
 }

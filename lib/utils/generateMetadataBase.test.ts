@@ -1,9 +1,4 @@
-import {
-  generateMetadataBasic,
-  generateMetadataTitle,
-  storyblokShareImage,
-  storyLocales,
-} from './generateMetadataBase';
+import { generateMetadataBasic, generateMetadataTitle, storyLocales } from './generateMetadataBase';
 
 jest.mock('@/i18n/routing', () => ({
   routing: { locales: ['en', 'de', 'fr', 'es', 'pt', 'hi', 'ar', 'tr'], defaultLocale: 'en' },
@@ -106,12 +101,11 @@ describe('generateMetadataBasic', () => {
     expect(await descriptionOf('')).toBe(undefined);
   });
 
-  it('keeps the share image, URL and locale, and skips SVG images social sites cannot show', async () => {
+  it('keeps the default share image, URL and locale', async () => {
     const metadata = await generateMetadataBasic({
       title: 'Qigong',
       locale: 'en',
       path: '/video/qigong',
-      image: 'https://a.storyblok.com/f/1/illustration.svg',
     });
 
     expect(metadata.openGraph).toMatchObject({
@@ -119,28 +113,5 @@ describe('generateMetadataBasic', () => {
       locale: 'en_GB',
       images: [{ url: '/preview.png' }],
     });
-  });
-});
-
-describe('storyblokShareImage', () => {
-  it('crops a large Storyblok image to the share card shape', () => {
-    expect(
-      storyblokShareImage('https://a.storyblok.com/f/142459/1920x1080/88f7f39d58/points.png'),
-    ).toEqual({
-      url: 'https://a.storyblok.com/f/142459/1920x1080/88f7f39d58/points.png/m/1200x630/smart',
-      width: 1200,
-      height: 630,
-    });
-  });
-
-  it('skips images too small for a share card, SVGs and unknown sizes', () => {
-    expect(storyblokShareImage('https://a.storyblok.com/f/142459/337x180/98999e9c90/4.png')).toBe(
-      undefined,
-    );
-    expect(storyblokShareImage('https://a.storyblok.com/f/142459/1200x800/ab/i.svg')).toBe(
-      undefined,
-    );
-    expect(storyblokShareImage('https://example.com/image.png')).toBe(undefined);
-    expect(storyblokShareImage(undefined)).toBe(undefined);
   });
 });

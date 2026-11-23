@@ -31,6 +31,7 @@ export interface AdminPartner {
   isActive: boolean;
   therapySessionsPerCode: number;
   automaticAccessCode: boolean;
+  parentId: string | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -40,6 +41,7 @@ export interface UpdatePartner {
   active?: boolean;
   therapySessionsPerCode?: number;
   automaticAccessCode?: boolean;
+  parentId?: string | null;
 }
 const initialState: Partner[] = [];
 
