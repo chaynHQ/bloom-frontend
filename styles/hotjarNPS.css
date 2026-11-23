@@ -4,12 +4,22 @@
  * lifts specificity above Hotjar's repeated-class rules.
  */
 
-/* Hotjar's theme variables are set inline on this element; !important beats inline styles. */
-:is(._hj-widget-container, #hj-nps) [id^='hotjar-survey-'] {
-  --hjFeedbackAccentColor: #ffbfa4 !important;
-  --hjFeedbackAccentHoverColor: #ffcbb6 !important;
-  --hjFeedbackAccentActiveColor: #ff976a !important;
-  --hjFeedbackAccentTextColor: #000000 !important;
+/*
+ * Below md, MobileBottomNav (76px, lib/constants/banners.ts) is fixed to the bottom of the screen.
+ * Anchor the survey card to the top of the nav, and clip the part Hotjar slides down when the survey
+ * is collapsed, which would otherwise cover the nav.
+ */
+@media (max-width: 899.95px) {
+  :is(._hj-widget-container, #hj-nps) [data-testid='survey-root'] > div {
+    bottom: 76px !important;
+    left: 0 !important;
+    right: 0 !important;
+    clip-path: inset(-100vh 0 0 0) !important;
+  }
+
+  :is(._hj-widget-container, #hj-nps) [data-testid='survey-root'] > div > :has(> section) {
+    position: absolute !important;
+  }
 }
 
 :is(._hj-widget-container, #hj-nps) [data-testid='survey-root'] * {
@@ -41,6 +51,12 @@
   background-color: #ffcbb6 !important;
 }
 
+/* Keyboard focus matches the site's (theme.ts MuiButtonBase), replacing Hotjar's blue ring. */
+:is(._hj-widget-container, #hj-nps) button[kind]:focus-visible {
+  outline: 2px solid #ea0050 !important;
+  outline-offset: 2px !important;
+}
+
 /* "No thanks" on the consent step */
 :is(._hj-widget-container, #hj-nps) button[kind='secondary'] {
   background-color: transparent !important;
@@ -49,22 +65,57 @@
   font-weight: 400 !important;
 }
 
-/* Inputs */
+/* Inputs, matching the site's text fields (theme.ts MuiOutlinedInput) */
 
 :is(._hj-widget-container, #hj-nps) :is(input[type='text'], textarea) {
   border-color: rgba(0, 0, 0, 0.12) !important;
 }
 
-:is(._hj-widget-container, #hj-nps) :is(input[type='text'], textarea):is(:hover, :focus) {
-  border-color: #ff976a !important;
+:is(._hj-widget-container, #hj-nps) :is(input[type='text'], textarea):hover:not(:focus) {
+  border-color: #ea0050 !important;
 }
 
-/* NPS scale. The thumb selectors can't share a rule: one invalid pseudo-element drops the rule. */
+/* The box-shadow thickens the border to 2px without shifting the layout. */
+:is(._hj-widget-container, #hj-nps) :is(input[type='text'], textarea):focus {
+  border-color: #ffbfa4 !important;
+  box-shadow: 0 0 0 1px #ffbfa4 !important;
+  outline: none !important;
+}
+
+/*
+ * NPS scale. Hotjar draws the filled part of the track as a gradient with its blue and the score
+ * baked in, so the track is flattened. The thumb selectors can't share a rule: one invalid
+ * pseudo-element drops the whole rule.
+ */
+
+:is(._hj-widget-container, #hj-nps) input[type='range'] {
+  background: rgba(0, 0, 0, 0.1) !important;
+}
 
 :is(._hj-widget-container, #hj-nps) input[type='range']::-webkit-slider-thumb {
   background-color: #ff976a !important;
+  border-color: #ff976a !important;
 }
 
 :is(._hj-widget-container, #hj-nps) input[type='range']::-moz-range-thumb {
   background-color: #ff976a !important;
+  border-color: #ff976a !important;
+}
+
+:is(._hj-widget-container, #hj-nps) input[type='range']:hover::-webkit-slider-thumb {
+  outline-color: #ea0050 !important;
+}
+
+:is(._hj-widget-container, #hj-nps) input[type='range']:hover::-moz-range-thumb {
+  outline-color: #ea0050 !important;
+}
+
+:is(._hj-widget-container, #hj-nps) input[type='range']:focus-visible::-webkit-slider-thumb {
+  outline: 2px solid #ea0050 !important;
+  outline-offset: 2px !important;
+}
+
+:is(._hj-widget-container, #hj-nps) input[type='range']:focus-visible::-moz-range-thumb {
+  outline: 2px solid #ea0050 !important;
+  outline-offset: 2px !important;
 }
