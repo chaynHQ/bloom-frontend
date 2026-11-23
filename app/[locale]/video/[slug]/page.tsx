@@ -37,7 +37,6 @@ export async function generateMetadata({ params }: { params: Params }) {
     path: `/video/${slug}`,
     languages: story.content.languages,
     noIndex: !isPublicContent(story.content.included_for_partners),
-    image: story.content.preview_image?.filename,
   });
 }
 

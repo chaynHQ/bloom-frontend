@@ -37,5 +37,11 @@
     "feedback": "Feedback dein",
     "feedbackShort": "Feedback",
     "dismiss": "Band karein"
+  },
+  "PartnerSurveyBanner": {
+    "regionLabel": "{partner} x Bloom ka survey",
+    "message": "Humare 5 minute ke anonymous survey mein batayein ki aap <strong>{partner} x Bloom partnership</strong> ke bare mein kya sochte hain.",
+    "takeSurvey": "Survey bharein",
+    "dismiss": "Band karein"
   }
 }

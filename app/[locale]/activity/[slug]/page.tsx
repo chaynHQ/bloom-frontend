@@ -35,7 +35,6 @@ export async function generateMetadata({ params }: { params: Params }) {
     path: `/activity/${slug}`,
     languages: story.content.languages,
     noIndex: !isPublicContent(story.content.included_for_partners),
-    image: story.content.header_image?.filename,
   });
 }
 
