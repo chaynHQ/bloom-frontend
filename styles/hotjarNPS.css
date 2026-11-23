@@ -1,138 +1,70 @@
-/* Hotjar CUSTOM styles to override default hotjar CSS */
+/*
+ * Brand overrides for the Hotjar NPS survey. Hotjar's generated classes (hj-survey-xxxx) change
+ * between releases, so these rules only use stable markup. #hj-nps never matches; inside :is() it
+ * lifts specificity above Hotjar's repeated-class rules.
+ */
 
-._hj-widget-container ._hj-s3UIi__styles__globalStyles .css-1r7qyl6.css-1r7qyl6 *,
-._hj-widget-container ._hj-s3UIi__styles__globalStyles .css-sf3vvt *,
-._hj-widget-container ._hj-s3UIi__styles__globalStyles p,
-._hj-widget-container ._hj-s3UIi__styles__globalStyles .css-1xfwja.css-1xfwja.css-1xfwja p,
-._hj-widget-container ._hj-s3UIi__styles__globalStyles .css-1c8tcfs.css-1c8tcfs,
-._hj-widget-container ._hj-s3UIi__styles__globalStyles .css-k8m2z1.css-k8m2z1.css-k8m2z1,
-._hj-widget-container
-  ._hj-s3UIi__styles__globalStyles
-  .css-1ce3vb4.css-1ce3vb4.css-1ce3vb4.css-1ce3vb4.css-1ce3vb4.css-1ce3vb4.css-1ce3vb4.css-1ce3vb4.css-1ce3vb4 {
-  font-family: 'Open Sans', 'Nunito', 'roboto', 'hotjar', 'sans-serif' !important;
+/* Hotjar's theme variables are set inline on this element; !important beats inline styles. */
+:is(._hj-widget-container, #hj-nps) [id^='hotjar-survey-'] {
+  --hjFeedbackAccentColor: #ffbfa4 !important;
+  --hjFeedbackAccentHoverColor: #ffcbb6 !important;
+  --hjFeedbackAccentActiveColor: #ff976a !important;
+  --hjFeedbackAccentTextColor: #000000 !important;
 }
 
-._hj-widget-container ._hj-s3UIi__styles__globalStyles a,
-._hj-widget-container ._hj-s3UIi__styles__globalStyles .css-k8m2z1.css-k8m2z1.css-k8m2z1 {
+:is(._hj-widget-container, #hj-nps) [data-testid='survey-root'] * {
+  font-family: var(--font-open-sans), var(--font-arabic), sans-serif !important;
+}
+
+:is(._hj-widget-container, #hj-nps) a {
+  color: #000000 !important;
   text-decoration: underline !important;
-  color: #000000 !important;
 }
 
-._hj-widget-container ._hj-s3UIi__styles__globalStyles .css-1xaw8mu,
-._hj-widget-container ._hj-s3UIi__styles__globalStyles .css-1xaw8mu.css-1xaw8mu {
-  bottom: 6.25rem !important;
-  height: 2.75rem !important;
-  overflow: visible !important;
-}
+/* Buttons */
 
-/* Hotjar branding */
-.css-vp5o9w {
-  display: none !important;
-}
-
-/* Primary button styles */
-
-._hj-widget-container ._hj-s3UIi__styles__globalStyles button[type='button'],
-._hj-widget-container
-  ._hj-s3UIi__styles__globalStyles
-  .css-sm1t49.css-sm1t49.css-sm1t49.css-sm1t49.css-sm1t49.css-sm1t49.css-sm1t49.css-sm1t49.css-sm1t49,
-._hj-widget-container
-  ._hj-s3UIi__styles__globalStyles
-  .css-1ce3vb4.css-1ce3vb4.css-1ce3vb4.css-1ce3vb4.css-1ce3vb4.css-1ce3vb4.css-1ce3vb4.css-1ce3vb4.css-1ce3vb4,
-._hj-widget-container
-  ._hj-s3UIi__styles__globalStyles
-  .css-meobdt.css-meobdt.css-meobdt.css-meobdt.css-meobdt.css-meobdt.css-meobdt.css-meobdt.css-meobdt,
-.css-zwfoj4.css-zwfoj4.css-zwfoj4.css-zwfoj4.css-zwfoj4.css-zwfoj4.css-zwfoj4.css-zwfoj4.css-zwfoj4.css-zwfoj4.css-zwfoj4 {
-  background-color: #ffbfa4 !important;
-  color: #000000 !important;
-  font-weight: 500 !important;
-  box-shadow: #ffbfa4 0px 0px 0px 1px inset !important;
-  border: 1px solid #ffbfa4 !important;
+:is(._hj-widget-container, #hj-nps) button[kind] {
   border-radius: 100rem !important;
+  font-weight: 500 !important;
   min-width: 5rem !important;
+}
+
+/* Disabled primary buttons keep Hotjar's grey so they read as disabled. */
+:is(._hj-widget-container, #hj-nps) button[kind='primary']:enabled {
+  background-color: #ffbfa4 !important;
+  border: 1px solid #ffbfa4 !important;
+  color: #000000 !important;
   box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.15) !important;
 }
 
-._hj-widget-container ._hj-s3UIi__styles__globalStyles button[type='button']:hover,
-._hj-widget-container ._hj-s3UIi__styles__globalStyles button[type='button']:focus,
-._hj-widget-container
-  ._hj-s3UIi__styles__globalStyles
-  .css-sm1t49.css-sm1t49.css-sm1t49.css-sm1t49.css-sm1t49.css-sm1t49.css-sm1t49.css-sm1t49.css-sm1t49:hover,
-._hj-widget-container
-  ._hj-s3UIi__styles__globalStyles
-  .css-sm1t49.css-sm1t49.css-sm1t49.css-sm1t49.css-sm1t49.css-sm1t49.css-sm1t49.css-sm1t49.css-sm1t49:focus,
-._hj-widget-container
-  ._hj-s3UIi__styles__globalStyles
-  .css-1ce3vb4.css-1ce3vb4.css-1ce3vb4.css-1ce3vb4.css-1ce3vb4.css-1ce3vb4.css-1ce3vb4.css-1ce3vb4.css-1ce3vb4:hover,
-._hj-widget-container
-  ._hj-s3UIi__styles__globalStyles
-  .css-1ce3vb4.css-1ce3vb4.css-1ce3vb4.css-1ce3vb4.css-1ce3vb4.css-1ce3vb4.css-1ce3vb4.css-1ce3vb4.css-1ce3vb4:focus,
-.css-zwfoj4.css-zwfoj4.css-zwfoj4.css-zwfoj4.css-zwfoj4.css-zwfoj4.css-zwfoj4.css-zwfoj4.css-zwfoj4.css-zwfoj4.css-zwfoj4:focus {
-  background-color: rgb(255, 203, 182) !important;
+:is(._hj-widget-container, #hj-nps) button[kind='primary']:enabled:is(:hover, :focus-visible) {
+  background-color: #ffcbb6 !important;
 }
 
-/* Consent decline button */
-._hj-widget-container
-  ._hj-s3UIi__styles__globalStyles
-  .css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs {
+/* "No thanks" on the consent step */
+:is(._hj-widget-container, #hj-nps) button[kind='secondary'] {
+  background-color: transparent !important;
+  box-shadow: none !important;
   color: #000000 !important;
-  background-color: unset !important;
-  box-shadow: unset !important;
   font-weight: 400 !important;
 }
 
-._hj-widget-container
-  ._hj-s3UIi__styles__globalStyles
-  .css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs.css-1c8tcfs:hover:enabled {
-  color: #000000 !important;
-}
+/* Inputs */
 
-._hj-widget-container ._hj-s3UIi__styles__globalStyles .css-1xfwja.css-1xfwja.css-1xfwja div,
-._hj-widget-container ._hj-s3UIi__styles__globalStyles .css-vr45vp.css-vr45vp {
-  margin-bottom: 0 !important;
-}
-
-/* Collapse popover button */
-._hj-widget-container ._hj-s3UIi__styles__globalStyles .css-1ftaqxs.css-1ftaqxs {
-  margin-bottom: 0 !important;
-}
-
-/* Input styles */
-
-._hj-widget-container ._hj-s3UIi__styles__globalStyles input[type='text'],
-._hj-widget-container ._hj-s3UIi__styles__globalStyles textarea:focus {
+:is(._hj-widget-container, #hj-nps) :is(input[type='text'], textarea) {
   border-color: rgba(0, 0, 0, 0.12) !important;
 }
 
-._hj-widget-container ._hj-s3UIi__styles__globalStyles input[type='text']:hover,
-._hj-widget-container ._hj-s3UIi__styles__globalStyles textarea:focus:hover {
-  border-color: #ffbfa4 !important;
+:is(._hj-widget-container, #hj-nps) :is(input[type='text'], textarea):is(:hover, :focus) {
+  border-color: #ff976a !important;
 }
 
-._hj-widget-container ._hj-s3UIi__styles__globalStyles input[type='text']:focus,
-._hj-widget-container ._hj-s3UIi__styles__globalStyles textarea:focus {
-  outline: none !important;
-  border-color: #ffbfa4 !important;
-  box-shadow: none !important;
-}
+/* NPS scale. The thumb selectors can't share a rule: one invalid pseudo-element drops the rule. */
 
-/* Scales styles */
-
-._hj-widget-container ._hj-s3UIi__styles__globalStyles input[type='range' i] {
-  appearance: none;
-  background: rgba(0, 0, 0, 0.1) !important;
-}
-
-._hj-widget-container ._hj-s3UIi__styles__globalStyles input[type='range' i]::-webkit-slider-thumb {
-  appearance: none;
+:is(._hj-widget-container, #hj-nps) input[type='range']::-webkit-slider-thumb {
   background-color: #ff976a !important;
-  outline: unset !important;
-  margin-inline-start: -1px;
 }
 
-._hj-widget-container ._hj-s3UIi__styles__globalStyles input[type='range' i]::-moz-range-thumb {
-  appearance: none;
+:is(._hj-widget-container, #hj-nps) input[type='range']::-moz-range-thumb {
   background-color: #ff976a !important;
-  outline: unset !important;
-  margin-inline-start: -1px;
 }
