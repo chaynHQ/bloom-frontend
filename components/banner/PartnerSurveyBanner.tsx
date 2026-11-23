@@ -53,7 +53,6 @@ export default function PartnerSurveyBanner({ survey }: { survey: PartnerSurvey 
       actionLabel={t('takeSurvey')}
       actionHref={survey.href}
       dismissLabel={t('dismiss')}
-      dismissOnAction
       events={EVENTS}
       eventParams={eventParams}
     />

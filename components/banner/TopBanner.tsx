@@ -12,9 +12,6 @@ import RedesignNewsBanner from './RedesignNewsBanner';
 export default function TopBanner() {
   const locale = useLocale();
   const partnerAccesses = useTypedSelector((state) => state.partnerAccesses);
-  const userResolved = useTypedSelector(
-    ({ user }) => !user.authStateLoading && !user.loading && (!user.token || !!user.id),
-  );
 
   const partnerSurvey =
     FeatureFlag.isPartnerSurveyBannerEnabled() && locale === 'en'
@@ -23,11 +20,5 @@ export default function TopBanner() {
 
   if (partnerSurvey) return <PartnerSurveyBanner survey={partnerSurvey} />;
 
-  // The news shows from the first paint, so it isn't counted as viewed until the user has
-  // loaded and it's known not to give way to a survey.
-  if (FeatureFlag.isRedesignNewsBannerEnabled()) {
-    return <RedesignNewsBanner trackView={userResolved} />;
-  }
-
-  return null;
+  return FeatureFlag.isRedesignNewsBannerEnabled() ? <RedesignNewsBanner /> : null;
 }

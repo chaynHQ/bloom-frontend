@@ -1,5 +1,6 @@
 'use client';
 
+import { useIsUserLoading } from '@/lib/hooks/useIsUserLoading';
 import { useTopBannerHeight } from '@/lib/hooks/useTopBannerHeight';
 import logEvent from '@/lib/utils/logEvent';
 import CloseIcon from '@mui/icons-material/Close';
@@ -70,7 +71,7 @@ const dismissStyle = {
 } as const;
 
 export interface DismissibleTopBannerProps {
-  // Remembers a dismissal (and, with `dismissOnAction`, an action click) across visits.
+  // Remembers a dismissal or action click across visits.
   cookieName: string;
   regionLabel: string;
   // Wrap the emphasised part in <strong>.
@@ -80,11 +81,8 @@ export interface DismissibleTopBannerProps {
   actionShortLabel?: string;
   actionHref: string;
   dismissLabel: string;
-  dismissOnAction?: boolean;
   events: { viewed: string; actionClicked: string; dismissed: string };
   eventParams?: Record<string, string>;
-  // Holds back the view event until the caller knows this is the banner the visitor will keep.
-  trackView?: boolean;
 }
 
 // A dismissible announcement between the TopBar and the page. Callers decide whether it shows at
@@ -97,10 +95,8 @@ export default function DismissibleTopBanner({
   actionShortLabel,
   actionHref,
   dismissLabel,
-  dismissOnAction = false,
   events,
   eventParams,
-  trackView = true,
 }: DismissibleTopBannerProps) {
   const [open, setOpen] = useState(true);
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -110,32 +106,26 @@ export default function DismissibleTopBanner({
   // visitor who already dismissed it sees it collapse away rather than a reserved gap.
   const [interacted, setInteracted] = useState(false);
 
+  // A view counts once the user has loaded: until then a partner member may be about to get a
+  // different banner (see TopBanner).
+  const isUserLoading = useIsUserLoading();
   const viewLogged = useRef(false);
   useEffect(() => {
     if (Cookies.get(cookieName)) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setInteracted(true);
-    } else if (trackView && !viewLogged.current) {
+    } else if (!isUserLoading && !viewLogged.current) {
       viewLogged.current = true;
       logEvent(events.viewed, eventParams);
     }
-  }, [cookieName, trackView, events.viewed, eventParams]);
+  }, [cookieName, isUserLoading, events.viewed, eventParams]);
 
   useTopBannerHeight(sectionRef, open && !interacted);
 
-  const dismiss = () => {
+  const handleClick = (event: string) => {
+    logEvent(event, eventParams);
     Cookies.set(cookieName, 'true');
     setOpen(false);
-  };
-
-  const handleClickAction = () => {
-    logEvent(events.actionClicked, eventParams);
-    if (dismissOnAction) dismiss();
-  };
-
-  const handleClickDismiss = () => {
-    logEvent(events.dismissed, eventParams);
-    dismiss();
   };
 
   // Starts open; if the cookie effect finds a prior dismissal it collapses away smoothly
@@ -154,7 +144,7 @@ export default function DismissibleTopBanner({
               href={actionHref}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={handleClickAction}
+              onClick={() => handleClick(events.actionClicked)}
             >
               {actionShortLabel ? (
                 <>
@@ -173,7 +163,7 @@ export default function DismissibleTopBanner({
               size="small"
               aria-label={dismissLabel}
               sx={dismissStyle}
-              onClick={handleClickDismiss}
+              onClick={() => handleClick(events.dismissed)}
             >
               <CloseIcon fontSize="small" />
             </IconButton>

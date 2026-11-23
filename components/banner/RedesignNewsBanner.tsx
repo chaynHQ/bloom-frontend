@@ -19,7 +19,7 @@ const EVENTS = {
   dismissed: REDESIGN_BANNER_DISMISSED,
 } as const;
 
-export default function RedesignNewsBanner({ trackView }: { trackView?: boolean }) {
+export default function RedesignNewsBanner() {
   const t = useTranslations('RedesignBanner');
 
   return (
@@ -36,7 +36,6 @@ export default function RedesignNewsBanner({ trackView }: { trackView?: boolean 
       actionHref={FEEDBACK_FORM_LINK}
       dismissLabel={t('dismiss')}
       events={EVENTS}
-      trackView={trackView}
     />
   );
 }

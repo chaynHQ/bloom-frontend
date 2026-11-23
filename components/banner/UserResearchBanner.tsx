@@ -47,7 +47,6 @@ export default function UserResearchBanner() {
       actionLabel={COPY.accept}
       actionHref={USER_RESEARCH_FORM_LINK}
       dismissLabel={COPY.dismiss}
-      dismissOnAction
       events={EVENTS}
     />
   );
