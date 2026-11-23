@@ -37,5 +37,11 @@
     "feedback": "Donner votre avis",
     "feedbackShort": "Avis",
     "dismiss": "Fermer"
+  },
+  "PartnerSurveyBanner": {
+    "regionLabel": "Questionnaire sur le partenariat {partner} x Bloom",
+    "message": "Dites-nous ce que vous pensez du <strong>partenariat {partner} x Bloom</strong> en répondant à notre questionnaire anonyme de 5 minutes.",
+    "takeSurvey": "Participer",
+    "dismiss": "Fermer"
   }
 }

@@ -37,5 +37,11 @@
     "feedback": "Enviar comentários",
     "feedbackShort": "Comentários",
     "dismiss": "Fechar"
+  },
+  "PartnerSurveyBanner": {
+    "regionLabel": "Pesquisa sobre a parceria entre {partner} e Bloom",
+    "message": "Conte para nós o que você acha da <strong>parceria entre {partner} e Bloom</strong> em nossa pesquisa anônima de 5 minutos.",
+    "takeSurvey": "Fazer a pesquisa",
+    "dismiss": "Fechar"
   }
 }

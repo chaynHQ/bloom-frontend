@@ -1,4 +1,4 @@
-import type { PartnerContent } from '@/lib/constants/partners';
+import { publicContent, type PartnerContent } from '@/lib/constants/partners';
 import type { BrandedPartner } from './types';
 
 // By display name, as the backend and `included_for_partners` give it.
@@ -31,4 +31,35 @@ export function resolveLaunchedPartner(launched: BrandedPartner[], slug?: string
   if (!slug) return undefined;
   const match = slug.toLowerCase();
   return launched.find((partner) => partner.slug === match);
+}
+
+// Chayn first, then one block per brand, from the first of its partners found: the visitor's own
+// partners (as a member or partner admin) by name, then the welcome page they're on and, for
+// signed-out visitors, a `?partner=` param or referral cookie, by launched slug.
+export function getFooterPartners({
+  branded,
+  launched,
+  partnerNames,
+  welcomePageSlug,
+  visitorSlugs,
+}: {
+  branded: BrandedPartner[];
+  launched: BrandedPartner[];
+  partnerNames: (string | null | undefined)[];
+  welcomePageSlug?: string;
+  visitorSlugs: (string | null | undefined)[];
+}): PartnerContent[] {
+  const partnersList: PartnerContent[] = [publicContent];
+  const addUniquePartner = (partner?: BrandedPartner) => {
+    if (partner && !partnersList.some((p) => brandKey(p) === brandKey(partner))) {
+      partnersList.push(partner);
+    }
+  };
+
+  partnerNames.forEach((name) => addUniquePartner(findPartner(branded, name)));
+  [welcomePageSlug, ...visitorSlugs].forEach((slug) =>
+    addUniquePartner(resolveLaunchedPartner(launched, slug)),
+  );
+
+  return partnersList;
 }
