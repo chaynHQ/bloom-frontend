@@ -39,9 +39,9 @@
     "dismiss": "Kapat"
   },
   "PartnerSurveyBanner": {
-    "regionLabel": "{partner} x Bloom survey",
-    "message": "Tell us what you think of the <strong>{partner} x Bloom partnership</strong> in our 5 minute anonymous survey.",
-    "takeSurvey": "Take survey",
+    "regionLabel": "{partner} x Bloom anketi",
+    "message": "<strong>{partner} x Bloom iş birliği</strong> hakkındaki düşüncelerini 5 dakikalık anonim anketimizde bizimle paylaş.",
+    "takeSurvey": "Ankete katıl",
     "dismiss": "Kapat"
   }
 }

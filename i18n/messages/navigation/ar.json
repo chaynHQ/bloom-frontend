@@ -39,9 +39,9 @@
     "dismiss": "إغلاق"
   },
   "PartnerSurveyBanner": {
-    "regionLabel": "{partner} x Bloom survey",
-    "message": "Tell us what you think of the <strong>{partner} x Bloom partnership</strong> in our 5 minute anonymous survey.",
-    "takeSurvey": "Take survey",
+    "regionLabel": "استبيان شراكة {partner} وBloom",
+    "message": "شاركونا رأيكم في <strong>شراكة {partner} وBloom</strong> من خلال استبياننا الذي يستغرق 5 دقائق، دون الكشف عن هويتكم.",
+    "takeSurvey": "المشاركة في الاستبيان",
     "dismiss": "إغلاق"
   }
 }
