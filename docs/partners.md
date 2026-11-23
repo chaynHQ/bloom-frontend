@@ -63,7 +63,7 @@ A sub-brand, such as Bumble For Friends of Bumble, has its own partner story, lo
 - **Welcome pages** render only for launched partners, and unknown slugs render on request, so activating a partner makes its page appear without a deploy.
 - **UTM attribution:** a launched slug anywhere in the five UTM parameters credits that partner. When the data names more than one, the longest slug wins, so `utm_source=bumble&utm_campaign=bff-launch` credits Bumble: a partner's links should name only its own slug.
 - **Analytics:** partner event names use the slug in upper case, with hyphens as underscores (`BFF_PROMO_GET_STARTED_CLICKED`).
-- Chayn's own footer content is `publicContent` in `lib/constants/partners.ts`.
+- **Footer:** Chayn's own content (`publicContent` in `lib/constants/partners.ts`), then the visitor's own partners and the partner of the welcome page they're on. `?partner=` and the referral cookie only brand signed-out visitors, so someone who browsed Bumble's welcome page and then signed in as a Badoo member sees only Badoo (`getFooterPartners`).
 
 ## Image generation
 
