@@ -33,7 +33,7 @@ import Script from 'next/script';
 import { ReactNode, Suspense } from 'react';
 import { DesktopPwaBanner } from '../banner/DesktopPwaBanner';
 import { FruitzRetirementBanner } from '../banner/FruitzRetirementBanner';
-import RedesignNewsBanner from '../banner/RedesignNewsBanner';
+import TopBanner from '../banner/TopBanner';
 
 // 'latin-ext' adds the glyphs Turkish needs (ç, ğ, ı, ş, ö, ü).
 const openSans = Open_Sans({
@@ -141,7 +141,7 @@ export default async function BaseLayout({ children, locale }: BaseLayoutProps) 
                       </Suspense>
                       <TopBar />
                       {/* Sits at the top of the page flow, directly beneath the fixed TopBar. */}
-                      <RedesignNewsBanner />
+                      <TopBanner />
                       <LeaveSiteButton />
                       <DesktopPwaBanner />
 
