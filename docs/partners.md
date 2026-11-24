@@ -25,15 +25,15 @@ If nothing is generated a minute after publishing, the webhook probably didn't r
 
 ## The `partner` content type
 
-| Field                                                              | Type                      | Translatable | Notes                                                              |
-| ------------------------------------------------------------------ | ------------------------- | ------------ | ------------------------------------------------------------------ |
-| `name`                                                             | Text, required            | No           | Display name. Must equal the value used in `included_for_partners` |
-| `legal_name`                                                       | Text, required            | No           | The footer's second line, e.g. `BUMBLE HOLDING LTD`                |
-| `logo`                                                             | Asset (image), required   | No           | The partner's own logo, SVG or transparent PNG                     |
-| `brand_color`                                                      | Text, `#rrggbb`, required | No           | Colours the generated illustration                                 |
-| `partnership_logo`                                                 | Asset (image)             | Yes          | The "Bloom × partner" lockup, one per language                     |
-| `illustration`                                                     | Asset (image)             | No           | The Bloom-head illustration in the partner's colour                |
-| `website`, `facebook`, `instagram`, `twitter`, `youtube`, `tiktok` | Text                      | No           | Footer links                                                       |
+| Field                                                                           | Type                      | Translatable | Notes                                                              |
+| ------------------------------------------------------------------------------- | ------------------------- | ------------ | ------------------------------------------------------------------ |
+| `name`                                                                          | Text, required            | No           | Display name. Must equal the value used in `included_for_partners` |
+| `legal_name`                                                                    | Text, required            | No           | The footer's second line, e.g. `BUMBLE HOLDING LTD`                |
+| `logo`                                                                          | Asset (image), required   | No           | The partner's own logo, SVG or transparent PNG                     |
+| `brand_color`                                                                   | Text, `#rrggbb`, required | No           | Colours the generated illustration                                 |
+| `partnership_logo`                                                              | Asset (image)             | Yes          | The "Bloom × partner" lockup, one per language                     |
+| `illustration`                                                                  | Asset (image)             | No           | The Bloom-head illustration in the partner's colour                |
+| `website`, `facebook`, `instagram`, `twitter`, `youtube`, `tiktok`, `pinterest` | Text                      | No           | Footer links                                                       |
 
 The slug is the partner's permanent key: the welcome page is `/welcome/<slug>`, UTM links name it, and the backend pairs the story with the partner by it. "In partnership with" and the logos' alt text are shared app strings with the partner's name filled in (`footer.inPartnershipWith`, `alt.partnerLogo`, `alt.partnershipLogo`), so a new partner needs no translations.
 
