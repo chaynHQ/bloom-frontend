@@ -32,6 +32,7 @@ const partnerStory = (
     twitter: '',
     youtube: '',
     tiktok: '',
+    pinterest: '',
   },
 });
 

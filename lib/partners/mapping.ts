@@ -17,6 +17,7 @@ export interface PartnerStory {
     twitter?: string | null;
     youtube?: string | null;
     tiktok?: string | null;
+    pinterest?: string | null;
   };
 }
 
@@ -45,5 +46,6 @@ export function toPartnerContent(story: PartnerStory, id?: string): BrandedPartn
     twitter: text(content.twitter),
     youtube: text(content.youtube),
     tiktok: text(content.tiktok),
+    pinterest: text(content.pinterest),
   };
 }

@@ -17,6 +17,7 @@ export interface PartnerContent {
   instagram?: string;
   youtube?: string;
   tiktok?: string;
+  pinterest?: string;
   github?: string;
 }
 
