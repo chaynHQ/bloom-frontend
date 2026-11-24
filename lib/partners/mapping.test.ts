@@ -27,6 +27,7 @@ describe('toPartnerContent', () => {
     expect(content.twitter).toBeUndefined();
     expect(content.youtube).toBeUndefined();
     expect(content.tiktok).toBeUndefined();
+    expect(content.pinterest).toBeUndefined();
   });
 
   it('leaves a missing lockup and illustration out, so pages fall back to Bloom’s', () => {

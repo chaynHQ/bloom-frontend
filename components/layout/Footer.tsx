@@ -17,6 +17,7 @@ import tiktokLogo from '@/public/tiktok.svg';
 import FacebookIcon from '@mui/icons-material/FacebookOutlined';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import InstagramIcon from '@mui/icons-material/Instagram';
+import PinterestIcon from '@mui/icons-material/Pinterest';
 import XIcon from '@mui/icons-material/X';
 import YoutubeIcon from '@mui/icons-material/YouTube';
 import { Box, Container, IconButton, Link, Typography } from '@mui/material';
@@ -292,6 +293,16 @@ const Footer = () => {
                         }
                       >
                         <Image alt={tS('alt.tiktokLogo')} src={tiktokLogo} width={24} height={24} />
+                      </IconButton>
+                    )}
+                    {partner.pinterest && (
+                      <IconButton
+                        href={partner.pinterest}
+                        aria-label="Pinterest"
+                        target="_blank"
+                        onClick={() => logEvent(socialLinkEvent, { social_account: 'Pinterest' })}
+                      >
+                        <PinterestIcon />
                       </IconButton>
                     )}
                     {partner.github && (
